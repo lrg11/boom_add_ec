@@ -192,7 +192,7 @@ class FetchBuffer(implicit p: Parameters) extends BoomModule
   }
 
   // TODO Is this necessary?
-  when (reset.asBool) {
+  when (reset.toBool) {
     io.deq.bits.uops map { u => u.valid := false.B }
   }
 

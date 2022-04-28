@@ -1,0 +1,42 @@
+
+time make CONFIG=MediumBoomConfig
+
+
+## EC
+
+riscv64-unknown-elf-gcc -march=rv64g -mabi=lp64d -mcmodel=medany -I. -O3 -nostdlib -nostartfiles -Tlink.ld -static -DPRINTF_DISABLE_SUPPORT_FLOAT -o readec_bm readec_bm.c bench/*.c lib/crt.S lib/*.c
+
+riscv64-unknown-elf-gcc -march=rv64g -mabi=lp64d -mcmodel=medany -I. -O3 -static -o readec_std readec_std.c bench/*.c
+
+
+## CSR
+
+riscv64-unknown-elf-gcc -march=rv64g -mabi=lp64d -mcmodel=medany -I. -O3 -nostdlib -nostartfiles -Tlink.ld -static -DPRINTF_DISABLE_SUPPORT_FLOAT -o readcsr_bm readcsr_bm.c bench/*.c lib/crt.S lib/*.c
+
+time build/simulator-MediumBoomConfig barebear/readcsr_bm
+
+
+## RUNCSR
+
+riscv64-unknown-linux-gnu-gcc -O3 -o runcsr runcsr.c
+
+scp -P 2238 liangshuhao@162.105.89.151:~/barebear/runcsr Desktop
+
+
+## HSR
+
+riscv64-unknown-elf-gcc -march=rv64g -mabi=lp64d -mcmodel=medany -I. -O3 -nostdlib -nostartfiles -Tlink.ld -static -DPRINTF_DISABLE_SUPPORT_FLOAT -o readhsr_bm readhsr_bm.c bench/*.c lib/crt.S lib/*.c
+
+time build/simulator-MediumBoomConfig barebear/readhsr_bm
+
+
+## RUNHSR
+
+riscv64-unknown-linux-gnu-gcc -O3 -o runhsr runhsr.c
+
+scp -P 2238 liangshuhao@162.105.89.151:~/barebear/runhsr Desktop
+
+
+## Uni-ld
+
+riscv64-unknown-elf-gcc -march=rv64g -mabi=lp64d -mcmodel=medany -I. -O3 -nostdlib -nostartfiles -Tlink.ld -static -o a.out bench/a.s lib/crt.S lib/*.c

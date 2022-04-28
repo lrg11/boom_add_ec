@@ -1,0 +1,3 @@
+[debug] Copy resource mappings: 
+[debug] 	(/root/bossa/tools/barstools/iocell/src/main/resources/barstools/iocell/vsrc/IOCell.v,/root/bossa/tools/barstools/iocell/target/scala-2.12/classes/barstools/iocell/vsrc/IOCell.v)
+[debug] 	(/root/bossa/tools/barstools/iocell/src/main/resources/barstools/iocell/vsrc/Analog.v,/root/bossa/tools/barstools/iocell/target/scala-2.12/classes/barstools/iocell/vsrc/Analog.v)

@@ -1,0 +1,356 @@
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:62:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_f16FromRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:62:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_f16FromRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:64:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_f32FromRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:64:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_f32FromRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:66:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_f64FromRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:66:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_f64FromRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:68:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI32ToRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:68:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI32ToRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:70:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI32ToRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:70:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI32ToRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:72:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI32ToRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:72:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI32ToRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:74:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI64ToRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:74:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI64ToRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:76:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI64ToRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:76:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI64ToRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:78:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI64ToRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:78:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_UI64ToRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:80:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I32ToRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:80:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I32ToRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:82:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I32ToRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:82:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I32ToRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:84:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I32ToRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:84:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I32ToRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:86:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I64ToRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:86:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I64ToRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:88:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I64ToRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:88:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I64ToRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:90:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I64ToRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:90:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_I64ToRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:92:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToUI32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:92:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToUI32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:94:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToUI64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:94:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToUI64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:96:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToUI32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:96:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToUI32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:98:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToUI64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:98:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToUI64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:100:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToUI32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:100:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToUI32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:102:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToUI64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:102:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToUI64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:104:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToI32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:104:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToI32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:106:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToI64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:106:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToI64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:108:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToI32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:108:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToI32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:110:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToI64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:110:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToI64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:112:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToI32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:112:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToI32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:114:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToI64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:114:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToI64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:116:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:116:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:118:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:118:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF16ToRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:120:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:120:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:122:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:122:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF32ToRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:124:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:124:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:126:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:126:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_RecF64ToRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:128:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:128:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:131:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:131:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:134:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_MulAddRecF16)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:134:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_MulAddRecF16)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:136:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:136:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:139:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:139:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:142:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_MulAddRecF32)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:142:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_MulAddRecF32)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:144:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:144:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:147:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:147:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:150:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_MulAddRecF64)
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:150:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(testArgs, () => new ValExec_MulAddRecF64)
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:152:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:152:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:156:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:156:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:161:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:161:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:165:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:165:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:170:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:170:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:174:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:174:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:179:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:179:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:182:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:182:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:185:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:185:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:188:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:188:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:191:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:191:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:194:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:194:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:197:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:197:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:200:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:200:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:203:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:203:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:206:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:206:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:209:32: method execute in object Driver is deprecated (since 3.2.2): Use chisel3.stage.ChiselStage.execute. This will be removed in 3.4.
+[warn]                 chisel3.Driver.execute(
+[warn]                                ^
+[warn] /root/bossa/generators/rocket-chip/hardfloat/src/main/scala/tests.scala:209:25: object Driver in package chisel3 is deprecated (since 3.2.4): Please switch to chisel3.stage.ChiselStage
+[warn]                 chisel3.Driver.execute(
+[warn]                         ^
+[warn] there were 905 feature warnings; re-run with -feature for details
+[warn] 119 warnings found

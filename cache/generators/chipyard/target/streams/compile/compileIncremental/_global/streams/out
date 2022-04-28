@@ -1,0 +1,14 @@
+[debug] [zinc] IncrementalCompile -----------
+[debug] IncrementalCompile.incrementalCompile
+[debug] previous = Stamps for: 326 products, 25 sources, 5 libraries
+[debug] current source = Set(${BASE}/generators/chipyard/src/main/scala/DigitalTop.scala, ${BASE}/generators/chipyard/src/main/scala/clocking/DividerOnlyClockGenerator.scala, ${BASE}/generators/chipyard/src/main/scala/clocking/ClockDividerN.scala, ${BASE}/generators/chipyard/src/main/scala/unittest/UnitTestSuite.scala, ${BASE}/generators/chipyard/src/main/scala/IOBinders.scala, ${BASE}/generators/chipyard/src/main/scala/config/AbstractConfig.scala, ${BASE}/generators/chipyard/src/main/scala/stage/ChipyardCli.scala, ${BASE}/generators/chipyard/src/main/scala/stage/phases/AddDefaultTests.scala, ${BASE}/generators/chipyard/src/main/scala/ChipTop.scala, ${BASE}/generators/chipyard/src/main/scala/ConfigFragments.scala, ${BASE}/generators/chipyard/src/main/scala/config/RocketConfigs.scala, ${BASE}/generators/chipyard/src/main/scala/HarnessBinders.scala, ${BASE}/generators/chipyard/src/main/scala/CustomBusTopologies.scala, ${BASE}/generators/chipyard/src/main/scala/config/BoomConfigs.scala, ${BASE}/generators/chipyard/src/main/scala/System.scala, ${BASE}/generators/chipyard/src/main/scala/Subsystem.scala, ${BASE}/generators/chipyard/src/main/scala/stage/ChipyardStage.scala, ${BASE}/generators/chipyard/src/main/scala/Generator.scala, ${BASE}/generators/chipyard/src/main/scala/stage/ChipyardAnnotations.scala, ${BASE}/generators/chipyard/src/main/scala/TestSuites.scala, ${BASE}/generators/chipyard/src/main/scala/unittest/TestHarness.scala, ${BASE}/generators/chipyard/src/main/scala/Clocks.scala, ${BASE}/generators/chipyard/src/main/scala/clocking/ClockGroupNamePrefixer.scala, ${BASE}/generators/chipyard/src/main/scala/stage/phases/GenerateTestSuiteMakefrags.scala, ${BASE}/generators/chipyard/src/main/scala/TestHarness.scala)
+[debug] > initialChanges = InitialChanges(Changes(added = Set(), removed = Set(), changed = Set(), unmodified = ...),Set(),Set(),API Changes: Set(NamesChange(boom.exu.BoomCore,ModifiedNames(changes = UsedName(retire_insts,[Default])))))
+[debug] The boom.exu.BoomCore has the following regular definitions changed:
+[debug] 	UsedName(retire_insts,[Default]).
+[debug] All member reference dependencies will be considered within this context.
+[debug] Files invalidated by inheriting from (external) boom.exu.BoomCore: Set()
+[debug] Now invalidating by inheritance (internally).
+[debug] Getting direct dependencies of all classes transitively invalidated by inheritance.
+[debug] Getting classes that directly depend on (external) boom.exu.BoomCore.
+[debug] None of the modified names appears in source file of chipyard.ChipyardSubsystem. This dependency is not being considered for invalidation.
+[debug] No changes

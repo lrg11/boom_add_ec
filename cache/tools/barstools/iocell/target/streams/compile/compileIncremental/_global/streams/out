@@ -1,0 +1,6 @@
+[debug] [zinc] IncrementalCompile -----------
+[debug] IncrementalCompile.incrementalCompile
+[debug] previous = Stamps for: 21 products, 2 sources, 3 libraries
+[debug] current source = Set(${BASE}/tools/barstools/iocell/src/main/scala/barstools/iocell/chisel/IOCell.scala, ${BASE}/tools/barstools/iocell/src/main/scala/barstools/iocell/chisel/Analog.scala)
+[debug] > initialChanges = InitialChanges(Changes(added = Set(), removed = Set(), changed = Set(), unmodified = ...),Set(),Set(),API Changes: Set())
+[debug] No changes

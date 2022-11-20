@@ -45,7 +45,7 @@ import boom.common._
 import boom.ifu.{GlobalHistory, HasBoomFrontendParameters}
 import boom.exu.FUConstants._
 import boom.util._
-
+import boom.util.logging._
 /**
  * Top level core object that connects the Frontend to the rest of the pipeline.
  */
@@ -611,6 +611,7 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
     rename.io.kill := io.ifu.redirect_flush
     rename.io.brupdate := brupdate
 
+    rename.io.flush_table := RegNext(rob.io.flush.valid)
     rename.io.debug_rob_empty := rob.io.empty
 
     rename.io.dec_fire := dec_fire
@@ -671,6 +672,7 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
   //-------------------------------------------------------------
   //-------------------------------------------------------------
 
+  
   //-------------------------------------------------------------
   // Rename2/Dispatch pipeline logic
 
@@ -715,6 +717,34 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
     // Dispatching instructions request load/store queue entries when they can proceed.
     dis_uops(w).ldq_idx := io.lsu.dis_ldq_idx(w)
     dis_uops(w).stq_idx := io.lsu.dis_stq_idx(w)
+
+    when(dis_fire(w)){
+      dbg(
+        "type" -> "dispatch",
+        "w" -> w.U,
+        "pc" -> dis_uops(w).debug_pc.toHex,
+        "inst" ->dis_uops(w).debug_inst.toHex,
+        "ldst val" -> dis_uops(w).ldst_val,
+        "ldst" -> dis_uops(w).ldst,
+        "rob idx" -> dis_uops(w).rob_idx,
+        "pdst" -> dis_uops(w).pdst,
+        "lrs1" -> dis_uops(w).lrs1,
+        "prs1" -> dis_uops(w).prs1,
+        // "prs1_busy" -> dis_uops(w).prs1_busy,
+        // "read_rs1_rob" -> dis_uops(w).read_rs1_rob,
+        // "prs1_fix" -> (dis_uops(w).lrs1_rtype === RT_FIX),
+        "lrs2" -> dis_uops(w).lrs2,
+        "prs2" -> dis_uops(w).prs2,
+        // "prs2_busy" -> dis_uops(w).prs2_busy,
+        // "read_rs2_rob" -> dis_uops(w).read_rs2_rob,
+        // "prs2_fix" ->(dis_uops(w).lrs2_rtype === RT_FIX),
+        // "lrs3" -> dis_uops(w).lrs3,
+        // "prs3" -> dis_uops(w).prs3,
+        // "prs3_busy" -> dis_uops(w).prs3_busy,
+        // "read_rs3_rob" -> dis_uops(w).read_rs3_rob,
+      )
+    }
+
   }
 
   //-------------------------------------------------------------
@@ -1323,6 +1353,25 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
   // **** Handle Cycle-by-Cycle Printouts ****
   //-------------------------------------------------------------
   //-------------------------------------------------------------
+  for (w <- 0 until coreWidth){
+      when(rob.io.commit.valids(w)){
+        dbg(
+        "type" -> "commit",
+        "w" -> w.U,
+        "pc" -> rob.io.commit.uops(w).debug_pc.toHex,
+        "inst" -> rob.io.commit.uops(w).debug_inst.toHex,
+        "lrs1" -> rob.io.commit.uops(w).lrs1,
+        "lrs2" -> rob.io.commit.uops(w).lrs2, 
+        "ldst" -> rob.io.commit.uops(w).ldst,
+        "prs1" -> rob.io.commit.uops(w).prs1,
+        "prs2" -> rob.io.commit.uops(w).prs2,
+        "pdst" -> rob.io.commit.uops(w).pdst,
+        "rob idx" -> rob.io.commit.uops(w).rob_idx,
+        "now head" -> rob.io.rob_head_idx,
+        "now tail" -> rob.io.rob_tail_idx,
+        )
+      }
+    }
 
 
   if (COMMIT_LOG_PRINTF) {

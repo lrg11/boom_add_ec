@@ -62,6 +62,8 @@ abstract class AbstractRenameStage(
 
     val kill = Input(Bool())
 
+    val flush_table = Input(Bool())  // when exception comes, clear maptable and busytable
+
     val dec_fire  = Input(Vec(plWidth, Bool())) // will commit state updates
     val dec_uops  = Input(Vec(plWidth, new MicroOp()))
 
@@ -268,15 +270,31 @@ class RenameStage(
   maptable.io.ren_br_tags := ren2_br_tags
   maptable.io.brupdate      := io.brupdate
   maptable.io.rollback    := io.rollback
-
+  // commit lreg->preg, valid, if_float info to maptable
+  val commit_regs = Wire(Vec(plWidth, new RemapReq(lregSz, pregSz)));
+  for(i <- 0 until plWidth) {
+    commit_regs(i).valid := com_valids(i)
+    commit_regs(i).ldst := io.com_uops(i).ldst
+    commit_regs(i).pdst := io.com_uops(i).pdst
+  }
+  maptable.io.commit_regs := commit_regs
+  maptable.io.flush := io.flush_table
   // Maptable outputs.
   for ((uop, w) <- ren1_uops.zipWithIndex) {
     val mappings = maptable.io.map_resps(w)
+    uop.prs1_busy    := mappings.prs1.valid
+    uop.prs2_busy    := mappings.prs2.valid
+    uop.prs3_busy    := mappings.prs3.valid
+    uop.prs1       := mappings.prs1.bits
+    uop.prs2       := mappings.prs2.bits
+    uop.prs3       := mappings.prs3.bits // only FP has 3rd operand
+    uop.stale_pdst := mappings.stale_pdst.bits  
+    // val mappings = maptable.io.map_resps(w)
 
-    uop.prs1       := mappings.prs1
-    uop.prs2       := mappings.prs2
-    uop.prs3       := mappings.prs3 // only FP has 3rd operand
-    uop.stale_pdst := mappings.stale_pdst
+    // uop.prs1       := mappings.prs1
+    // uop.prs2       := mappings.prs2
+    // uop.prs3       := mappings.prs3 // only FP has 3rd operand
+    // uop.stale_pdst := mappings.stale_pdst
   }
 
 
@@ -293,6 +311,8 @@ class RenameStage(
   freelist.io.ren_br_tags := ren2_br_tags
   freelist.io.brupdate := io.brupdate
   freelist.io.debug.pipeline_empty := io.debug_rob_empty
+  freelist.io.flush := io.flush_table // RRAT
+  freelist.io.commit_bits := maptable.io.commit_bits // RRAT
 
   assert (ren2_alloc_reqs zip freelist.io.alloc_pregs map {case (r,p) => !r || p.bits =/= 0.U} reduce (_&&_),
            "[rename-stage] A uop is trying to allocate the zero physical register.")
@@ -310,6 +330,7 @@ class RenameStage(
   busytable.io.rebusy_reqs := ren2_alloc_reqs
   busytable.io.wb_valids := io.wakeups.map(_.valid)
   busytable.io.wb_pdsts := io.wakeups.map(_.bits.uop.pdst)
+  busytable.io.flush := io.flush_table
 
   assert (!(io.wakeups.map(x => x.valid && x.bits.uop.dst_rtype =/= rtype).reduce(_||_)),
    "[rename] Wakeup has wrong rtype.")

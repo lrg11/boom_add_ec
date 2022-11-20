@@ -1,5 +1,5 @@
 # Parameters
-CONFIG ?= MediumUniCoreConfig
+CONFIG ?= MediumBoomConfig
 THREADS ?= 8
 FST_MODE ?= 1
 EXT_PODMAN_FLAGS ?=

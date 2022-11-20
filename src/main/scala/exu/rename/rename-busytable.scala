@@ -43,6 +43,7 @@ class RenameBusyTable(
     val wb_valids = Input(Vec(numWbPorts, Bool()))
 
     val debug = new Bundle { val busytable = Output(Bits(numPregs.W)) }
+    val flush = Input(Bool())
   })
 
   val busy_table = RegInit(0.U(numPregs.W))
@@ -54,6 +55,10 @@ class RenameBusyTable(
     .map {case (uop, req) => UIntToOH(uop.pdst) & Fill(numPregs, req.asUInt)}.reduce(_|_)
 
   busy_table := busy_table_next
+
+  when(io.flush){
+    busy_table := 0.U
+  }
 
   // Read the busy table.
   for (i <- 0 until plWidth) {

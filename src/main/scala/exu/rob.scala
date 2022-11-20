@@ -440,6 +440,7 @@ class Rob(
         for (i <- 0 until numRobRows) {
           rob_val(i) := false.B
           rob_bsy(i) := false.B
+          rob_exception(i) := false.B
           rob_uop(i).debug_inst := BUBBLE
         }
       }
@@ -793,6 +794,12 @@ class Rob(
   io.empty        := empty
   io.ready        := (rob_state === s_normal) && !full && !r_xcpt_val
 
+  if (enableCommitMapTable) {
+    when(exception_thrown){
+      maybe_full := false.B
+    }
+  }
+
   //-----------------------------------------------
   //-----------------------------------------------
   //-----------------------------------------------
@@ -852,7 +859,8 @@ class Rob(
       is (s_wait_till_empty) {
         when (exception_thrown) {
           ; //rob_state := s_rollback
-        } .elsewhen (rob_tail === rob_head) {
+        // } .elsewhen (rob_tail === rob_head) {
+          } .elsewhen ( empty ) {
           rob_state := s_normal
         }
       }

@@ -7,17 +7,17 @@ import freechips.rocketchip.config.{Config}
 // ---------------------
 
 // for simulation only
-class UniCoreSmallBoomConfig extends Config(  // medium boom without tage and fpu
-  new boom.common.WithNSmallUniCoreBooms(1) ++
-  new chipyard.config.AbstractConfig)
+// class UniCoreSmallBoomConfig extends Config(  // medium boom without tage and fpu
+//   new boom.common.WithNSmallUniCoreBooms(1) ++
+//   new chipyard.config.AbstractConfig)
 
-class MediumUnicoreBoomConfig extends Config(
-  new boom.common.WithNMediumBooms(1) ++                         // medium boom config with tage and fpu
-  new chipyard.config.AbstractConfig)
+// class MediumUnicoreBoomConfig extends Config(
+//   new boom.common.WithNMediumBooms(1) ++                         // medium boom config with tage and fpu
+//   new chipyard.config.AbstractConfig)
 
-class MediumUniCoreConfig extends Config(
-  new boom.common.WithNMediumUniCoreBooms(1) ++             // medium boom with fpu but no tage
-  new chipyard.config.AbstractConfig)
+// class MediumUniCoreConfig extends Config(
+//   new boom.common.WithNMediumUniCoreBooms(1) ++             // medium boom with fpu but no tage
+//   new chipyard.config.AbstractConfig)
 
 // ---------------------
 // BOOM Configs

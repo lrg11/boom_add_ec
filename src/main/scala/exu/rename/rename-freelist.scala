@@ -16,6 +16,7 @@ import chisel3.util._
 import boom.common._
 import boom.util._
 import freechips.rocketchip.config.Parameters
+import boom.util.logging._
 
 class RenameFreeList(
   val plWidth: Int,
@@ -45,6 +46,8 @@ class RenameFreeList(
       val freelist = Output(Bits(numPregs.W))
       val isprlist = Output(Bits(numPregs.W))
     }
+    val flush = Input(Bool())
+    val commit_bits = Input(Bits(numPregs.W))
   })
   // The free list register array and its branch allocation lists.
   val free_list = RegInit(UInt(numPregs.W), ~(1.U(numPregs.W)))
@@ -74,14 +77,29 @@ class RenameFreeList(
 
   // Update the free list.
   free_list := (free_list & ~sel_mask | dealloc_mask) & ~(1.U(numPregs.W))
-
+  // dbg(
+  //   "type" -> "normal",
+  //   "freelist" -> free_list.toBin,
+  //   "sel_mask" -> (~sel_mask).toBin,
+  //   "dealloc_mask" -> dealloc_mask.toBin,
+  // )
+  // RRAT recovery
+  when(io.flush) {
+    free_list := (~io.commit_bits) & ~(1.U(numPregs.W))
+    dbg(
+      "type" -> "fuck",
+      "old" -> free_list.toBin,
+      "new" -> ((~io.commit_bits) & ~(1.U(numPregs.W))).toBin,
+      "commit_bits" -> io.commit_bits.toBin,
+    )
+  }
   // Pipeline logic | hookup outputs.
   for (w <- 0 until plWidth) {
     val can_sel = sels(w).orR
     val r_valid = RegInit(false.B)
     val r_sel   = RegEnable(OHToUInt(sels(w)), sel_fire(w))
 
-    r_valid := r_valid && !io.reqs(w) || can_sel
+    r_valid := (!io.flush) && (r_valid && !io.reqs(w) || can_sel)
     sel_fire(w) := (!r_valid || io.reqs(w)) && can_sel
 
     io.alloc_pregs(w).bits  := r_sel
@@ -90,6 +108,40 @@ class RenameFreeList(
 
   io.debug.freelist := free_list | io.alloc_pregs.map(p => UIntToOH(p.bits) & Fill(n,p.valid)).reduce(_|_)
   io.debug.isprlist := 0.U  // TODO track commit free list.
+
+  for(i <- 0 until plWidth) {
+  //   dbg(
+  //     "type" -> "dealloc",
+  //     "w" -> i.U,
+  //     "valid" -> io.dealloc_pregs(i).valid,
+  //     "pdst" -> io.dealloc_pregs(i).bits,
+  //   )
+
+    dbg(
+      "type" -> "Alloc",
+      "w" -> i.U,
+      "valid" -> io.alloc_pregs(i).valid,
+      "preg" -> io.alloc_pregs(i).bits,
+    )
+    
+  }
+
+  when((io.debug.freelist & dealloc_mask).orR){
+    dbg(
+      "type" -> "freelist assert crush",
+      "flush" -> io.flush,
+      "freelist" -> free_list.toBin,
+      "debug freelist" -> io.debug.freelist.toBin,
+      "dealloc mask" -> dealloc_mask,
+      "data" -> (io.debug.freelist & dealloc_mask),
+      "data_bin" -> (io.debug.freelist & dealloc_mask).toBin,
+    )
+  }.otherwise {
+    dbg(
+      "type" -> "freelist",
+      "freelist" -> free_list.toBin,
+    )
+  }
 
   assert (!(io.debug.freelist & dealloc_mask).orR, "[freelist] Returning a free physical register.")
   assert (!io.debug.pipeline_empty || PopCount(io.debug.freelist) >= (numPregs - numLregs - 1).U,

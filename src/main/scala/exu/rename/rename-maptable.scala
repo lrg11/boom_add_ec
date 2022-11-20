@@ -16,6 +16,7 @@ import chisel3.util._
 import boom.common._
 import boom.util._
 import freechips.rocketchip.config.Parameters
+import boom.util.logging._
 
 class MapReq(val lregSz: Int) extends Bundle
 {
@@ -27,10 +28,10 @@ class MapReq(val lregSz: Int) extends Bundle
 
 class MapResp(val pregSz: Int) extends Bundle
 {
-  val prs1 = UInt(pregSz.W)
-  val prs2 = UInt(pregSz.W)
-  val prs3 = UInt(pregSz.W)
-  val stale_pdst = UInt(pregSz.W)
+  val prs1 = Valid(UInt(pregSz.W))
+  val prs2 = Valid(UInt(pregSz.W))
+  val prs3 = Valid(UInt(pregSz.W))
+  val stale_pdst = Valid(UInt(pregSz.W))
 }
 
 class RemapReq(val lregSz: Int, val pregSz: Int) extends Bundle
@@ -64,10 +65,18 @@ class RenameMapTable(
     // Signals for restoring state following misspeculation.
     val brupdate      = Input(new BrUpdateInfo)
     val rollback    = Input(Bool())
+
+    val commit_regs = Input(Vec(plWidth, new RemapReq(lregSz, pregSz)))
+
+    // flush pipeline
+    val flush  = Input(Bool())
+    // output to freelist
+    val commit_bits = Output(Bits(numPregs.W))
   })
 
   // The map table register array and its branch snapshots.
   val map_table = RegInit(VecInit(Seq.fill(numLregs){0.U(pregSz.W)}))
+  val commit_map_table = RegInit(VecInit(Seq.fill(numLregs){0.U(pregSz.W)})) // RRAT
   val br_snapshots = Reg(Vec(maxBrCount, Vec(numLregs, UInt(pregSz.W))))
 
   // The intermediate states of the map table following modification by each pipeline slot.
@@ -77,6 +86,32 @@ class RenameMapTable(
   val remap_pdsts = io.remap_reqs map (_.pdst)
   val remap_ldsts_oh = io.remap_reqs map (req => UIntToOH(req.ldst) & Fill(numLregs, req.valid.asUInt))
 
+  val rrat_pdsts = io.commit_regs map (_.pdst)
+  val rrat_ldsts_oh = io.commit_regs map (req => UIntToOH(req.ldst) & Fill(numLregs, req.valid.asUInt))
+
+  // commit update RRAT
+  val t_commit_map_table = Wire(Vec(numLregs, UInt(pregSz.W)))
+  for (i <- 0 until numLregs) {
+    val remapped_row = (rrat_ldsts_oh.map(ldst => ldst(i)) zip rrat_pdsts)
+      .scanLeft(commit_map_table(i)) {case (pdst, (ldst, new_pdst)) => Mux(ldst, new_pdst, pdst)}
+    t_commit_map_table(i) := remapped_row(plWidth)
+  }
+  val toupt = (commit_map_table map (x => UIntToOH(x) & Fill(numPregs, true.B))).reduce(_|_)
+  dbg(
+    "type" -> "commit map table",
+    "data" -> toupt.toBin,
+  )  
+  commit_map_table := t_commit_map_table
+
+  // for(i <- 0 until numPregs) {
+  //   for (j <- 0 until numLregs) {
+  //     when (commit_map_table(j) === i.U) {
+  //       io.commit_bits(i) := true.B 
+  //     }
+  //   }
+  // }
+  io.commit_bits := (t_commit_map_table map (pdst => UIntToOH(pdst) & Fill(numPregs, true.B))).reduce(_|_)
+  
   // Figure out the new mappings seen by each pipeline slot.
   for (i <- 0 until numLregs) {
     if (i == 0 && !float) {
@@ -100,7 +135,16 @@ class RenameMapTable(
     }
   }
 
-  when (io.brupdate.b2.mispredict) {
+  when (io.flush) {
+    for(i <- 0 until numLregs){
+      map_table(i) := commit_map_table(i)
+    }
+    for(i <- 0 until maxBrCount){
+      for(j <- 0 until numLregs){
+        br_snapshots(i)(j) := 0.U
+      }
+    }
+  }.elsewhen (io.brupdate.b2.mispredict) {
     // Restore the map table to a branch snapshot.
     map_table := br_snapshots(io.brupdate.b2.uop.br_tag)
   } .otherwise {
@@ -110,13 +154,18 @@ class RenameMapTable(
 
   // Read out mappings.
   for (i <- 0 until plWidth) {
-    io.map_resps(i).prs1       := (0 until i).foldLeft(map_table(io.map_reqs(i).lrs1)) ((p,k) =>
+    io.map_resps(i).prs1.valid := !io.flush
+    io.map_resps(i).prs2.valid := !io.flush
+    io.map_resps(i).prs3.valid := !io.flush
+    io.map_resps(i).stale_pdst.valid := !io.flush
+
+    io.map_resps(i).prs1.bits       := (0 until i).foldLeft(map_table(io.map_reqs(i).lrs1)) ((p,k) =>
       Mux(bypass.B && io.remap_reqs(k).valid && io.remap_reqs(k).ldst === io.map_reqs(i).lrs1, io.remap_reqs(k).pdst, p))
-    io.map_resps(i).prs2       := (0 until i).foldLeft(map_table(io.map_reqs(i).lrs2)) ((p,k) =>
+    io.map_resps(i).prs2.bits      := (0 until i).foldLeft(map_table(io.map_reqs(i).lrs2)) ((p,k) =>
       Mux(bypass.B && io.remap_reqs(k).valid && io.remap_reqs(k).ldst === io.map_reqs(i).lrs2, io.remap_reqs(k).pdst, p))
-    io.map_resps(i).prs3       := (0 until i).foldLeft(map_table(io.map_reqs(i).lrs3)) ((p,k) =>
+    io.map_resps(i).prs3.bits       := (0 until i).foldLeft(map_table(io.map_reqs(i).lrs3)) ((p,k) =>
       Mux(bypass.B && io.remap_reqs(k).valid && io.remap_reqs(k).ldst === io.map_reqs(i).lrs3, io.remap_reqs(k).pdst, p))
-    io.map_resps(i).stale_pdst := (0 until i).foldLeft(map_table(io.map_reqs(i).ldst)) ((p,k) =>
+    io.map_resps(i).stale_pdst.bits := (0 until i).foldLeft(map_table(io.map_reqs(i).ldst)) ((p,k) =>
       Mux(bypass.B && io.remap_reqs(k).valid && io.remap_reqs(k).ldst === io.map_reqs(i).ldst, io.remap_reqs(k).pdst, p))
 
     if (!float) io.map_resps(i).prs3 := DontCare

@@ -86,12 +86,12 @@ class RenameFreeList(
   // RRAT recovery
   when(io.flush) {
     free_list := (~io.commit_bits) & ~(1.U(numPregs.W))
-    dbg(
-      "type" -> "fuck",
-      "old" -> free_list.toBin,
-      "new" -> ((~io.commit_bits) & ~(1.U(numPregs.W))).toBin,
-      "commit_bits" -> io.commit_bits.toBin,
-    )
+    // dbg(
+    //   "type" -> "fuck",
+    //   "old" -> free_list.toBin,
+    //   "new" -> ((~io.commit_bits) & ~(1.U(numPregs.W))).toBin,
+    //   "commit_bits" -> io.commit_bits.toBin,
+    // )
   }
   // Pipeline logic | hookup outputs.
   for (w <- 0 until plWidth) {
@@ -109,39 +109,23 @@ class RenameFreeList(
   io.debug.freelist := free_list | io.alloc_pregs.map(p => UIntToOH(p.bits) & Fill(n,p.valid)).reduce(_|_)
   io.debug.isprlist := 0.U  // TODO track commit free list.
 
-  for(i <- 0 until plWidth) {
+
+  // when((io.debug.freelist & dealloc_mask).orR){
   //   dbg(
-  //     "type" -> "dealloc",
-  //     "w" -> i.U,
-  //     "valid" -> io.dealloc_pregs(i).valid,
-  //     "pdst" -> io.dealloc_pregs(i).bits,
+  //     "type" -> "freelist assert crush",
+  //     "flush" -> io.flush,
+  //     "freelist" -> free_list.toBin,
+  //     "debug freelist" -> io.debug.freelist.toBin,
+  //     "dealloc mask" -> dealloc_mask,
+  //     "data" -> (io.debug.freelist & dealloc_mask),
+  //     "data_bin" -> (io.debug.freelist & dealloc_mask).toBin,
   //   )
-
-    dbg(
-      "type" -> "Alloc",
-      "w" -> i.U,
-      "valid" -> io.alloc_pregs(i).valid,
-      "preg" -> io.alloc_pregs(i).bits,
-    )
-    
-  }
-
-  when((io.debug.freelist & dealloc_mask).orR){
-    dbg(
-      "type" -> "freelist assert crush",
-      "flush" -> io.flush,
-      "freelist" -> free_list.toBin,
-      "debug freelist" -> io.debug.freelist.toBin,
-      "dealloc mask" -> dealloc_mask,
-      "data" -> (io.debug.freelist & dealloc_mask),
-      "data_bin" -> (io.debug.freelist & dealloc_mask).toBin,
-    )
-  }.otherwise {
-    dbg(
-      "type" -> "freelist",
-      "freelist" -> free_list.toBin,
-    )
-  }
+  // }.otherwise {
+  //   dbg(
+  //     "type" -> "freelist",
+  //     "freelist" -> free_list.toBin,
+  //   )
+  // }
 
   assert (!(io.debug.freelist & dealloc_mask).orR, "[freelist] Returning a free physical register.")
   assert (!io.debug.pipeline_empty || PopCount(io.debug.freelist) >= (numPregs - numLregs - 1).U,

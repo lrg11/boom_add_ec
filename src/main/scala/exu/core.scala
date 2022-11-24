@@ -718,32 +718,32 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
     dis_uops(w).ldq_idx := io.lsu.dis_ldq_idx(w)
     dis_uops(w).stq_idx := io.lsu.dis_stq_idx(w)
 
-    when(dis_fire(w)){
-      dbg(
-        "type" -> "dispatch",
-        "w" -> w.U,
-        "pc" -> dis_uops(w).debug_pc.toHex,
-        "inst" ->dis_uops(w).debug_inst.toHex,
-        "ldst val" -> dis_uops(w).ldst_val,
-        "ldst" -> dis_uops(w).ldst,
-        "rob idx" -> dis_uops(w).rob_idx,
-        "pdst" -> dis_uops(w).pdst,
-        "lrs1" -> dis_uops(w).lrs1,
-        "prs1" -> dis_uops(w).prs1,
-        // "prs1_busy" -> dis_uops(w).prs1_busy,
-        // "read_rs1_rob" -> dis_uops(w).read_rs1_rob,
-        // "prs1_fix" -> (dis_uops(w).lrs1_rtype === RT_FIX),
-        "lrs2" -> dis_uops(w).lrs2,
-        "prs2" -> dis_uops(w).prs2,
-        // "prs2_busy" -> dis_uops(w).prs2_busy,
-        // "read_rs2_rob" -> dis_uops(w).read_rs2_rob,
-        // "prs2_fix" ->(dis_uops(w).lrs2_rtype === RT_FIX),
-        // "lrs3" -> dis_uops(w).lrs3,
-        // "prs3" -> dis_uops(w).prs3,
-        // "prs3_busy" -> dis_uops(w).prs3_busy,
-        // "read_rs3_rob" -> dis_uops(w).read_rs3_rob,
-      )
-    }
+    // when(dis_fire(w)){
+    //   dbg(
+    //     "type" -> "dispatch",
+    //     "w" -> w.U,
+    //     "pc" -> dis_uops(w).debug_pc.toHex,
+    //     "inst" ->dis_uops(w).debug_inst.toHex,
+    //     "ldst val" -> dis_uops(w).ldst_val,
+    //     "ldst" -> dis_uops(w).ldst,
+    //     "rob idx" -> dis_uops(w).rob_idx,
+    //     "pdst" -> dis_uops(w).pdst,
+    //     "lrs1" -> dis_uops(w).lrs1,
+    //     "prs1" -> dis_uops(w).prs1,
+    //     // "prs1_busy" -> dis_uops(w).prs1_busy,
+    //     // "read_rs1_rob" -> dis_uops(w).read_rs1_rob,
+    //     // "prs1_fix" -> (dis_uops(w).lrs1_rtype === RT_FIX),
+    //     "lrs2" -> dis_uops(w).lrs2,
+    //     "prs2" -> dis_uops(w).prs2,
+    //     // "prs2_busy" -> dis_uops(w).prs2_busy,
+    //     // "read_rs2_rob" -> dis_uops(w).read_rs2_rob,
+    //     // "prs2_fix" ->(dis_uops(w).lrs2_rtype === RT_FIX),
+    //     // "lrs3" -> dis_uops(w).lrs3,
+    //     // "prs3" -> dis_uops(w).prs3,
+    //     // "prs3_busy" -> dis_uops(w).prs3_busy,
+    //     // "read_rs3_rob" -> dis_uops(w).read_rs3_rob,
+    //   )
+    // }
 
   }
 
@@ -1353,25 +1353,25 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
   // **** Handle Cycle-by-Cycle Printouts ****
   //-------------------------------------------------------------
   //-------------------------------------------------------------
-  for (w <- 0 until coreWidth){
-      when(rob.io.commit.valids(w)){
-        dbg(
-        "type" -> "commit",
-        "w" -> w.U,
-        "pc" -> rob.io.commit.uops(w).debug_pc.toHex,
-        "inst" -> rob.io.commit.uops(w).debug_inst.toHex,
-        "lrs1" -> rob.io.commit.uops(w).lrs1,
-        "lrs2" -> rob.io.commit.uops(w).lrs2, 
-        "ldst" -> rob.io.commit.uops(w).ldst,
-        "prs1" -> rob.io.commit.uops(w).prs1,
-        "prs2" -> rob.io.commit.uops(w).prs2,
-        "pdst" -> rob.io.commit.uops(w).pdst,
-        "rob idx" -> rob.io.commit.uops(w).rob_idx,
-        "now head" -> rob.io.rob_head_idx,
-        "now tail" -> rob.io.rob_tail_idx,
-        )
-      }
-    }
+  // for (w <- 0 until coreWidth){
+  //     when(rob.io.commit.valids(w)){
+  //       dbg(
+  //       "type" -> "commit",
+  //       "w" -> w.U,
+  //       "pc" -> rob.io.commit.uops(w).debug_pc.toHex,
+  //       "inst" -> rob.io.commit.uops(w).debug_inst.toHex,
+  //       "lrs1" -> rob.io.commit.uops(w).lrs1,
+  //       "lrs2" -> rob.io.commit.uops(w).lrs2, 
+  //       "ldst" -> rob.io.commit.uops(w).ldst,
+  //       "prs1" -> rob.io.commit.uops(w).prs1,
+  //       "prs2" -> rob.io.commit.uops(w).prs2,
+  //       "pdst" -> rob.io.commit.uops(w).pdst,
+  //       "rob idx" -> rob.io.commit.uops(w).rob_idx,
+  //       "now head" -> rob.io.rob_head_idx,
+  //       "now tail" -> rob.io.rob_tail_idx,
+  //       )
+  //     }
+  //   }
 
 
   if (COMMIT_LOG_PRINTF) {

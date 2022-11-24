@@ -96,10 +96,10 @@ class RenameMapTable(
     t_commit_map_table(i) := remapped_row(plWidth)
   }
   val toupt = (commit_map_table map (x => UIntToOH(x) & Fill(numPregs, true.B))).reduce(_|_)
-  dbg(
-    "type" -> "commit map table",
-    "data" -> toupt.toBin,
-  )  
+  // dbg(
+  //   "type" -> "commit map table",
+  //   "data" -> toupt.toBin,
+  // )  
   commit_map_table := t_commit_map_table
 
   // for(i <- 0 until numPregs) {

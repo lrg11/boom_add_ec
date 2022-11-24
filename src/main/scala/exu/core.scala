@@ -45,7 +45,7 @@ import boom.common._
 import boom.ifu.{GlobalHistory, HasBoomFrontendParameters}
 import boom.exu.FUConstants._
 import boom.util._
-import boom.util.logging._
+
 /**
  * Top level core object that connects the Frontend to the rest of the pipeline.
  */

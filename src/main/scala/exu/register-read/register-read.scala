@@ -18,6 +18,7 @@ import freechips.rocketchip.config.Parameters
 
 import boom.common._
 import boom.util._
+import boom.util.logging._
 
 /**
  * Handle the register read and bypass network for the OoO backend
@@ -169,6 +170,18 @@ class RegisterRead(
     for (b <- 0 until numTotalBypassPorts)
     {
       val bypass = io.bypass(b)
+
+      // when(0xfef43427L.U === rrd_uops(w).debug_inst || 0xfe843787L.U === rrd_uops(w).debug_inst ){
+      //   dbg(
+      //     "type" -> "bypass",
+      //     "bypass valid" -> bypass.valid,
+      //     "bypass pc" -> bypass.bits.uop.debug_pc.toHex,
+      //     "bypass pdst" -> bypass.bits.uop.pdst,
+      //     "now pc" -> rrd_uops(w).debug_pc.toHex,
+      //     "prs1" -> rrd_uops(w).prs1,
+      //     "bypass data" -> bypass.bits.data.toHex,
+      //   )
+      // }
       // can't use "io.bypass.valid(b) since it would create a combinational loop on branch kills"
       rs1_cases ++= Array((bypass.valid && (prs1 === bypass.bits.uop.pdst) && bypass.bits.uop.rf_wen
         && bypass.bits.uop.dst_rtype === RT_FIX && lrs1_rtype === RT_FIX && (prs1 =/= 0.U), bypass.bits.data))
@@ -208,6 +221,19 @@ class RegisterRead(
   // set outputs to execute pipelines
   for (w <- 0 until issueWidth) {
     val numReadPorts = numReadPortsArray(w)
+
+    //  when(rrd_uops(w).debug_pc === 0x00800046f4L.U ||rrd_uops(w).debug_inst === 0x4a17e152L.U || 0x47977171L.U === rrd_uops(w).debug_inst || 0x16139112L.U === rrd_uops(w).debug_inst){
+    //   dbg(
+    //     "type" -> "regread",
+    //     "pc" -> rrd_uops(w).debug_pc.toHex,
+    //     "rrd rs1 data" -> rrd_rs1_data(w).toHex,
+    //     "bypassed rs1 data" -> bypassed_rs1_data(w).toHex,
+    //     "rrd rs2 data" -> rrd_rs2_data(w).toHex,
+    //     "bypassed rs2 data" -> bypassed_rs2_data(w).toHex,
+    //     "rs3 data" -> rrd_rs3_data(w).toHex,
+    //   )
+    // }
+
 
     io.exe_reqs(w).valid    := exe_reg_valids(w)
     io.exe_reqs(w).bits.uop := exe_reg_uops(w)

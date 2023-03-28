@@ -15,6 +15,7 @@ import freechips.rocketchip.rocket
 import freechips.rocketchip.util.uintToBitPat
 import boom.common._
 import boom.util.{ImmGenRm, ImmGenTyp}
+import boom.util.logging._
 
 /**
  * FP Decoder for the FPU
@@ -245,4 +246,14 @@ class FPU(implicit p: Parameters) extends BoomModule with tile.HasFPUParameters
   io.resp.bits.data              := fpu_out_data
   io.resp.bits.fflags.valid      := io.resp.valid
   io.resp.bits.fflags.bits.flags := fpu_out_exc
+
+  // when(io.req.bits.uop.debug_inst === 0x051733bcL.U){
+  //   dbg(
+  //     "type" -> "exe_unit_fp",
+  //     "rob idx" -> io.req.bits.uop.rob_idx,
+  //     "rs1 data" -> io.req.bits.rs1_data.toHex,
+  //     "rs2 data" -> io.req.bits.rs2_data.toHex,
+  //     "alu out" -> fpu_out_data.toHex,
+  //   )
+  // }
 }

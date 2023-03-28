@@ -17,6 +17,7 @@ import freechips.rocketchip.util.{uintToBitPat,UIntIsOneOf}
 import FUConstants._
 import boom.common._
 import boom.util._
+import boom.util.logging._
 
 // scalastyle:off
 /**
@@ -502,6 +503,15 @@ class DecodeUnit(implicit p: Parameters) extends BoomModule
     csr_en && (io.csr_decode.read_illegal || !csr_ren && io.csr_decode.write_illegal) ||
     ((sfence || system_insn) && io.csr_decode.system_illegal)
 
+    // when(id_illegal_insn){
+    //   dbg(
+    //     "type" -> "decode illegal",
+    //     "pc" -> uop.debug_pc.toHex,
+    //     "inst" -> uop.debug_inst.toHex,
+    //     "fp val" -> cs.fp_val,
+    //     "csr_Decode fp ill" -> io.csr_decode.fp_illegal,
+    //   )
+    // }
 //     cs.div && !csr.io.status.isa('m'-'a') || TODO check for illegal div instructions
 
   def checkExceptions(x: Seq[(Bool, UInt)]) =

@@ -45,6 +45,7 @@ import boom.common._
 import boom.ifu.{GlobalHistory, HasBoomFrontendParameters}
 import boom.exu.FUConstants._
 import boom.util._
+import boom.util.logging._
 
 /**
  * Top level core object that connects the Frontend to the rest of the pipeline.
@@ -274,8 +275,24 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
 
   //val icache_blocked = !(io.ifu.fetchpacket.valid || RegNext(io.ifu.fetchpacket.valid))
   val icache_blocked = false.B
-  csr.io.counters foreach { c => c.inc := RegNext(perfEvents.evaluate(c.eventSel)) }
+  //csr.io.counters foreach { c => c.inc := RegNext(perfEvents.evaluate(c.eventSel)) }
+  csr.io.counters foreach { c => c.inc := DontCare }
 
+  val priv_debug = (RegNext(csr.io.status.prv) === 0.U)
+ // val commit_mis_br = (rob.io.commit.arch_valids zip rob.io.commit.uops).map {case (v,uop) => brupdate.b2.mispredict && v && (uop.rob_idx === brupdate.b2.uop.rob_idx)}.reduce(_||_)
+  val commit_mis_br = brupdate.b2.mispredict && (rob.io.rob_head_idx === brupdate.b2.uop.rob_idx)
+  val bpd_events = scala.collection.mutable.ArrayBuffer(
+    "user_cycle" -> Mux(priv_debug, 1.U, 0.U),
+    "user_instr" -> PopCount(rob.io.commit.arch_valids.map {case b => b && priv_debug}),
+    "br_miss" -> Mux(brupdate.b1.mispredict_mask =/= 0.U, 1.U, 0.U),
+    "br_miss_at_head" -> Mux(commit_mis_br, 1.U, 0.U),
+  )
+
+  assert (csr.io.counters.length >= bpd_events.length, "[csr] counters are fewer than events.")
+
+  for ((counter, (_, mask)) <- csr.io.counters zip bpd_events) {
+    counter.inc := RegNext(mask)
+  }
   //****************************************
   // Time Stamp Counter & Retired Instruction Counter
   // (only used for printf and vcd dumps - the actual counters are in the CSRFile)
@@ -508,6 +525,14 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
     decode_units(w).io.interrupt_cause := csr.io.interrupt_cause
 
     dec_uops(w) := decode_units(w).io.deq.uop
+
+    // when(dec_valids(w)){
+    //   dbg(
+    //     "type" -> "decode", 
+    //     "pc" -> dec_uops(w).debug_pc.toHex,
+    //     "inst" -> dec_uops(w).debug_inst.toHex,
+    //   )
+    // }
   }
 
   //-------------------------------------------------------------
@@ -701,7 +726,7 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
                       || brupdate.b2.mispredict
                       || io.ifu.redirect_flush))
 
-
+  
   io.lsu.fence_dmem := (dis_valids zip wait_for_empty_pipeline).map {case (v,w) => v && w} .reduce(_||_)
 
   val dis_stalls = dis_hazards.scanLeft(false.B) ((s,h) => s || h).takeRight(coreWidth)
@@ -761,6 +786,33 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
   for (w <- 0 until coreWidth) {
     dispatcher.io.ren_uops(w).valid := dis_fire(w)
     dispatcher.io.ren_uops(w).bits  := dis_uops(w)
+
+    // when(dis_fire(w)){
+    //   dbg(
+    //     "type" -> "dispatch",
+    //     "pc" -> dis_uops(w).debug_pc.toHex,
+    //     "inst" ->dis_uops(w).debug_inst.toHex,
+    //   )
+    // }
+
+    // when(dis_hazards(w)){
+    //   dbg(
+    //     "type" -> "dis hazard",
+    //     "w" -> w.U,
+    //     "pc" -> dis_uops(w).debug_pc.toHex,
+    //     "inst" -> dis_uops(w).debug_inst.toHex,
+    //     "valid" -> dis_valids(w),
+    //     "fire" -> dis_fire(w),
+    //     "!rob ready" -> !rob.io.ready,
+    //     "ren stall" -> ren_stalls(w),
+    //     "ldq full" -> (io.lsu.ldq_full(w) && dis_uops(w).uses_ldq),
+    //     "stq full" -> (io.lsu.stq_full(w) && dis_uops(w).uses_stq),
+    //     "!dispatcher" -> !dispatcher.io.ren_uops(w).ready,
+    //     "empty pp" -> wait_for_empty_pipeline(w),
+    //     "rocc" -> wait_for_rocc(w),
+    //     "dis prior" -> dis_prior_slot_unique(w),
+    //   )
+    // }
   }
 
   var iu_idx = 0
@@ -1317,6 +1369,20 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
   if (usingFPU) {
     fp_pipeline.io.debug_tsc_reg := debug_tsc_reg
   }
+
+// for (w <- 0 until coreWidth){
+//     when(rob.io.commit.valids(w)){
+//       dbg(
+//       "type" -> "commit",
+//       "pc" -> rob.io.commit.uops(w).debug_pc.toHex,
+//       "inst" -> rob.io.commit.uops(w).debug_inst.toHex,
+//       "ldst" -> rob.io.commit.uops(w).ldst,
+//       "rob idx" -> rob.io.commit.uops(w).rob_idx,
+//       "lrs1" -> rob.io.commit.uops(w).lrs1,
+//       "lrs2" -> rob.io.commit.uops(w).lrs2, 
+//       )
+//     }
+//   }
 
   //-------------------------------------------------------------
   //-------------------------------------------------------------

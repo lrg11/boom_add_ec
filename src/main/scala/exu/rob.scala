@@ -34,6 +34,7 @@ import freechips.rocketchip.util.Str
 
 import boom.common._
 import boom.util._
+import boom.util.logging._
 
 /**
  * IO bundle to interact with the ROB
@@ -330,6 +331,14 @@ class Rob(
       rob_predicated(rob_tail)   := false.B
       rob_fflags(rob_tail)    := 0.U
 
+      // when(io.enq_uops(w).debug_pc === 0x0000010070.U){
+      //   dbg(
+      //     "type" -> "into rob",
+      //     "inst" -> io.enq_uops(w).debug_inst.toHex,
+      //     "excep?" -> io.enq_uops(w).exception,
+      //   )
+      // }
+
       assert (rob_val(rob_tail) === false.B, "[rob] overwriting a valid entry.")
       assert ((io.enq_uops(w).rob_idx >> log2Ceil(coreWidth)) === rob_tail)
     } .elsewhen (io.enq_valids.reduce(_|_) && !rob_val(rob_tail)) {
@@ -347,6 +356,14 @@ class Rob(
         rob_bsy(row_idx)      := false.B
         rob_unsafe(row_idx)   := false.B
         rob_predicated(row_idx)  := wb_resp.bits.predicated
+
+        // dbg(
+        //   "type" -> "writeback",
+        //   "pc" -> wb_uop.debug_pc.toHex,
+        //   "inst" -> wb_uop.debug_inst.toHex,
+        //   "data" -> io.debug_wb_wdata(i).toHex,
+        //   "rob_idx" -> wb_uop.rob_idx,
+        // )
       }
       // TODO check that fflags aren't overwritten
       // TODO check that the wb is to a valid ROB entry, give it a time stamp
@@ -433,6 +450,11 @@ class Rob(
     when (rbk_row) {
       rob_val(com_idx)       := false.B
       rob_exception(com_idx) := false.B
+      // dbg(
+      //   "type" -> "rolling back",
+      //   "pc" -> rob_uop(com_idx).debug_pc.toHex,
+      //   "inst" -> rob_uop(com_idx).debug_inst.toHex,
+      // )
     }
 
     if (enableCommitMapTable) {
@@ -453,6 +475,11 @@ class Rob(
       //kill instruction if mispredict & br mask match
       when (IsKilledByBranch(io.brupdate, br_mask))
       {
+        // dbg(
+        //   "type" -> "killedByBr",
+        //   "pc" -> rob_uop(i).debug_pc.toHex,
+        //   "inst" -> rob_uop(i).debug_inst.toHex,
+        // )
         rob_val(i) := false.B
         rob_uop(i.U).debug_inst := BUBBLE
       } .elsewhen (rob_val(i)) {
@@ -588,7 +615,25 @@ class Rob(
                                                 flush_commit && flush_uop.uopc === uopERET,
                                                 refetch_inst)
 
+  // when(io.flush.valid)
+  // {
+  //   dbg(
+  //     "type" -> "fuck",
+  //     "exception_thrown" -> exception_thrown,
+  //     "flush_commit" -> flush_commit,
+  //   )
+  // }
 
+  // when(RegNext(RegNext(exception_thrown))){
+  //   dbg(
+  //     "type" -> "hehe",
+  //   )
+  // }
+  //  when(io.commit.rollback){
+  //   dbg(
+  //     "type" -> "rollback!",
+  //   )
+  // }
   // -----------------------------------------------
   // FP Exceptions
   // send fflags bits to the CSRFile to accrue
@@ -693,6 +738,14 @@ class Rob(
     rob_head_lsb := OHToUInt(PriorityEncoderOH(rob_head_vals.asUInt))
   }
 
+  // when(flush_val){
+  //   dbg(
+  //     "type" -> "rob_exp",
+  //     "flush_type" -> io.flush.bits.flush_typ,
+  //     "cause" -> io.com_xcpt.bits.cause,
+  //   )
+  // }
+
   // -----------------------------------------------
   // ROB Point-of-No-Return (PNR) Logic
   // Acts as a second head, but only waits on busy instructions which might cause misspeculation.
@@ -758,6 +811,12 @@ class Rob(
   } .elsewhen (io.brupdate.b2.mispredict) {
     rob_tail     := WrapInc(GetRowIdx(io.brupdate.b2.uop.rob_idx), numRobRows)
     rob_tail_lsb := 0.U
+    // dbg(
+    //   "type" -> "mispredict",
+    //   "mis pc" -> io.brupdate.b2.uop.debug_pc.toHex,
+    //   "mis inst" -> io.brupdate.b2.uop.debug_inst.toHex,
+    //   "rob_idx" -> io.brupdate.b2.uop.rob_idx, 
+    // )
   } .elsewhen (io.enq_valids.asUInt =/= 0.U && !io.enq_partial_stall) {
     rob_tail     := WrapInc(rob_tail, numRobRows)
     rob_tail_lsb := 0.U
@@ -852,7 +911,8 @@ class Rob(
       is (s_wait_till_empty) {
         when (exception_thrown) {
           ; //rob_state := s_rollback
-        } .elsewhen (rob_tail === rob_head) {
+        // } .elsewhen (empty) {
+         } .elsewhen (rob_tail === rob_head) {
           rob_state := s_normal
         }
       }

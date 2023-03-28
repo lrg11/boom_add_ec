@@ -29,6 +29,7 @@ import freechips.rocketchip.rocket.{PipelinedMultiplier,BP,BreakpointUnit,Causes
 import boom.common._
 import boom.ifu._
 import boom.util._
+import boom.util.logging._
 
 /**t
  * Functional unit constants
@@ -405,7 +406,14 @@ class ALUUnit(isJmpUnit: Boolean = false, numStages: Int = 1, dataWidth: Int)(im
       Cat(msb, ea(vaddrBits-1,0))
     }
 
-
+    // when(uop.debug_inst === 0x000980e7L.U){
+    //   dbg(
+    //     "type" -> "funit_rs1",
+    //     "rs1_data" -> io.req.bits.rs1_data.toHex,
+    //     "jalr_target_base" -> io.req.bits.rs1_data.asSInt.toHex,
+    //     "target_offset" -> target_offset.toHex,
+    //   )
+    // }
     val jalr_target_base = io.req.bits.rs1_data.asSInt
     val jalr_target_xlen = Wire(UInt(xLen.W))
     jalr_target_xlen := (jalr_target_base + target_offset).asUInt
@@ -442,6 +450,17 @@ class ALUUnit(isJmpUnit: Boolean = false, numStages: Int = 1, dataWidth: Int)(im
   val alu_out = Mux(io.req.bits.uop.is_sfb_shadow && io.req.bits.pred_data,
     Mux(io.req.bits.uop.ldst_is_rs1, io.req.bits.rs1_data, io.req.bits.rs2_data),
     Mux(io.req.bits.uop.uopc === uopMOV, io.req.bits.rs2_data, alu.io.out))
+   val debug_now_uop = io.req.bits.uop
+  // when(debug_now_uop.debug_inst === 0x051733bcL.U){
+  //   dbg(
+  //     "type" -> "exe_unit",
+  //     "rob idx" -> debug_now_uop.rob_idx,
+  //     "rs1 data" -> alu.io.in1.toHex,
+  //     "rs2 data" -> alu.io.in2.toHex,
+  //     "alu out" -> alu_out.toHex,
+  //     "iresp valid" -> io.resp.valid,
+  //   )
+  // }
   r_val (0) := io.req.valid
   r_data(0) := Mux(io.req.bits.uop.is_sfb_br, pc_sel === PC_BRJMP, alu_out)
   r_pred(0) := io.req.bits.uop.is_sfb_shadow && io.req.bits.pred_data

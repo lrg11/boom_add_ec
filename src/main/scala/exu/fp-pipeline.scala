@@ -21,6 +21,7 @@ import freechips.rocketchip.tile
 import boom.exu.FUConstants._
 import boom.common._
 import boom.util.{BoomCoreStringPrefix}
+import boom.util.logging._
 
 /**
  * Top level datapath that wraps the floating point issue window, regfile, and arithmetic units.
@@ -159,6 +160,17 @@ class FpPipeline(implicit p: Parameters) extends BoomModule with tile.HasFPUPara
 
   for ((ex,w) <- exe_units.withFilter(_.readsFrf).map(x=>x).zipWithIndex) {
     ex.io.req <> fregister_read.io.exe_reqs(w)
+    val tmp = fregister_read.io.exe_reqs(w)
+    // when(tmp.bits.uop.debug_inst === 0x051733bcL.U){
+    //   dbg(
+    //     "type" -> "fp-pipeline exe",
+    //     "pc" -> tmp.bits.uop.debug_pc.toHex,
+    //     "inst" -> tmp.bits.uop.debug_inst.toHex,
+    //     "rs1 data" -> tmp.bits.rs1_data.toHex,
+    //     "rs2 data" -> tmp.bits.rs2_data.toHex,
+    //     "rs3 data" -> tmp.bits.rs3_data.toHex,
+    //   )
+    // }
     require (!ex.bypassable)
   }
   require (exe_units.numTotalBypassPorts == 0)
@@ -183,7 +195,14 @@ class FpPipeline(implicit p: Parameters) extends BoomModule with tile.HasFPUPara
   // Wakeup signal is sent on cycle S0, write is now delayed until end of S1,
   // but Issue happens on S1 and RegRead doesn't happen until S2 so we're safe.
   fregfile.io.write_ports(0) := RegNext(WritePort(ll_wbarb.io.out, fpregSz, fLen+1, RT_FLT))
-
+  // when(RegNext(ll_wbarb.io.out.bits.uop.debug_inst) === 0x051733bcL.U || RegNext(ll_wbarb.io.out.bits.uop.debug_inst) === 0x02d77753L.U ){
+  //   dbg(
+  //     "type" -> "writeback-fp",
+  //     "inst" -> RegNext(ll_wbarb.io.out.bits.uop.debug_inst).toHex,
+  //     "data" -> RegNext(ll_wbarb.io.out.bits.data).toHex,
+  //     "normal" -> RegNext(io.ll_wports(0).bits.data).toHex,
+  //   )
+  // }
   assert (ll_wbarb.io.in(0).ready) // never backpressure the memory unit.
   when (ifpu_resp.valid) { assert (ifpu_resp.bits.uop.rf_wen && ifpu_resp.bits.uop.dst_rtype === RT_FLT) }
 
@@ -200,6 +219,24 @@ class FpPipeline(implicit p: Parameters) extends BoomModule with tile.HasFPUPara
       fregfile.io.write_ports(w_cnt).bits.addr := eu.io.fresp.bits.uop.pdst
       fregfile.io.write_ports(w_cnt).bits.data := eu.io.fresp.bits.data
       eu.io.fresp.ready                        := true.B
+      //  when(eu.io.fresp.bits.uop.debug_inst === 0x051733bcL.U || 0x02d77753L.U === eu.io.fresp.bits.uop.debug_inst || 0x02c77753L.U === eu.io.fresp.bits.uop.debug_inst){
+      //     dbg(
+      //       "type" -> "fp-pipeline-write",
+      //       "pc" -> eu.io.fresp.bits.uop.debug_inst.toHex,
+      //       "addr" -> eu.io.fresp.bits.uop.pdst,
+      //       "data" -> eu.io.fresp.bits.data.toHex,
+      //       //"normal" -> RegNext(io.ll_wports(0).bits.data).toHex,
+      //     )
+      //   }
+      //   when(eu.io.fresp.bits.uop.debug_inst === 0x6200f643L.U || 0x7221f743L.U === eu.io.fresp.bits.uop.debug_inst){
+      //     dbg(
+      //       "type" -> "fp-pipeline-write2",
+      //       "pc" -> eu.io.fresp.bits.uop.debug_inst.toHex,
+      //       "addr" -> eu.io.fresp.bits.uop.pdst,
+      //       "data" -> eu.io.fresp.bits.data.toHex,
+      //       //"normal" -> RegNext(io.ll_wports(0).bits.data).toHex,
+      //     )
+      //   }
       when (eu.io.fresp.valid) {
         assert(eu.io.fresp.ready, "No backpressuring the FPU")
         assert(eu.io.fresp.bits.uop.rf_wen, "rf_wen must be high here")

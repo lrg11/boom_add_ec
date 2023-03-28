@@ -286,6 +286,17 @@ class BoomFrontendIO(implicit p: Parameters) extends BoomBundle
   val flush_icache = Output(Bool())
 
   val perf = Input(new FrontendPerfEvents)
+
+  ////Enable_PerfCounter_Support: for icache information
+  val itlb_valid_access = Input(Bool())
+  val itlb_hit = Input(Bool())
+  val icache_valid_access = Input(Bool())
+  val icache_hit = Input(Bool())
+  val bpsrc_f1 = Input(Bool())
+  val bpsrc_f2 = Input(Bool())
+  val bpsrc_f3 = Input(Bool())
+  val bpsrc_core = Input(Bool())
+  
 }
 
 /**
@@ -357,7 +368,13 @@ class BoomFrontendModule(outer: BoomFrontend) extends LazyModuleImp(outer)
   val s0_replay_ppc  = Wire(UInt())
   val s0_s1_use_f3_bpd_resp = WireInit(false.B)
 
-
+  //Enable_PerfCounter_Support
+  io.cpu.icache_valid_access := icache.io.icache_valid_access
+  io.cpu.icache_hit := icache.io.resp.valid
+  io.cpu.bpsrc_f1 := s0_valid && (s0_tsrc === BSRC_1)
+  io.cpu.bpsrc_f2 := s0_valid && (s0_tsrc === BSRC_2)
+  io.cpu.bpsrc_f3 := s0_valid && (s0_tsrc === BSRC_3)
+  io.cpu.bpsrc_core := s0_valid && (s0_tsrc === BSRC_C)
 
 
   when (RegNext(reset.asBool) && !reset.asBool) {
@@ -432,6 +449,9 @@ class BoomFrontendModule(outer: BoomFrontend) extends LazyModuleImp(outer)
     s0_ghist     := f1_predicted_ghist
     s0_is_replay := false.B
   }
+
+  io.cpu.itlb_valid_access := tlb.io.req.valid
+  io.cpu.itlb_hit := tlb.io.req.valid && !s1_tlb_miss
 
   // --------------------------------------------------------
   // **** ICache Response (F2) ****
@@ -512,12 +532,12 @@ class BoomFrontendModule(outer: BoomFrontend) extends LazyModuleImp(outer)
   // **** F3 ****
   // --------------------------------------------------------
   val f3_clear = WireInit(false.B)
-  val f3 = withReset(reset.toBool || f3_clear) {
+  val f3 = withReset(reset.asBool || f3_clear) {
     Module(new Queue(new FrontendResp, 1, pipe=true, flow=false)) }
 
   // Queue up the bpd resp as well, incase f4 backpressures f3
   // This is "flow" because the response (enq) arrives in f3, not f2
-  val f3_bpd_resp = withReset(reset.toBool || f3_clear) {
+  val f3_bpd_resp = withReset(reset.asBool || f3_clear) {
     Module(new Queue(new BranchPredictionBundle, 1, pipe=true, flow=true)) }
 
 
@@ -855,7 +875,7 @@ class BoomFrontendModule(outer: BoomFrontend) extends LazyModuleImp(outer)
   // **** F4 ****
   // -------------------------------------------------------
   val f4_clear = WireInit(false.B)
-  val f4 = withReset(reset.toBool || f4_clear) {
+  val f4 = withReset(reset.asBool || f4_clear) {
     Module(new Queue(new FetchBundle, 1, pipe=true, flow=false))}
 
   val fb  = Module(new FetchBuffer)

@@ -1060,7 +1060,11 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
 
   //-------------------------------------------------------------
   // Dispatch to issue queues
-
+  when(rob.io.commit.rollback) {
+    dbg(
+      "type" -> "rollback",
+    )
+  }
   // Get uops from rename2
   for (w <- 0 until coreWidth) {
     dispatcher.io.ren_uops(w).valid := dis_fire(w)
@@ -1071,6 +1075,13 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
     //     "type" -> "dispatch",
     //     "pc" -> dis_uops(w).debug_pc.toHex,
     //     "inst" ->dis_uops(w).debug_inst.toHex,
+    //     "ldst" -> dis_uops(w).ldst,
+    //     "pdst" -> dis_uops(w).pdst,
+    //     "lrs1" -> dis_uops(w).lrs1,
+    //     "prs1" -> dis_uops(w).prs1,
+    //     "lrs2" -> dis_uops(w).lrs2,
+    //     "prs2" -> dis_uops(w).prs2,
+    //     "rob_idx" -> dis_uops(w).rob_idx,
     //   )
     // }
 

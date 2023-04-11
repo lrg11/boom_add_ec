@@ -1060,11 +1060,6 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
 
   //-------------------------------------------------------------
   // Dispatch to issue queues
-  when(rob.io.commit.rollback) {
-    dbg(
-      "type" -> "rollback",
-    )
-  }
   // Get uops from rename2
   for (w <- 0 until coreWidth) {
     dispatcher.io.ren_uops(w).valid := dis_fire(w)

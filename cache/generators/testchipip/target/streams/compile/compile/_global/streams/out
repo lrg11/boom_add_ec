@@ -1,5 +1,0 @@
-[warn] /root/bossa/generators/testchipip/src/main/scala/SPIFlash.scala:35:20: method append in object PlusArgArtefacts is deprecated (since Rocket Chip 2020.05): Use `Some(BigInt)` to specify a `default` value. This will be removed in Rocket Chip 2020.08
-[warn]   PlusArgArtefacts.append(SPIFlashPlusarg(id), 0, s"Binary image to mount to SPI flash memory ${id}")
-[warn]                    ^
-[warn] there were 514 feature warnings; re-run with -feature for details
-[warn] two warnings found

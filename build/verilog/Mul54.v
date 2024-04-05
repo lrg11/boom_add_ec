@@ -18,37 +18,37 @@ module Mul54(
   reg [63:0] _RAND_5;
   reg [127:0] _RAND_6;
 `endif // RANDOMIZE_REG_INIT
-  reg  val_s1; // @[DivSqrtRecF64.scala 134:21]
-  reg  val_s2; // @[DivSqrtRecF64.scala 135:21]
-  reg [53:0] reg_a_s1; // @[DivSqrtRecF64.scala 136:23]
-  reg [53:0] reg_b_s1; // @[DivSqrtRecF64.scala 137:23]
-  reg [53:0] reg_a_s2; // @[DivSqrtRecF64.scala 138:23]
-  reg [53:0] reg_b_s2; // @[DivSqrtRecF64.scala 139:23]
-  reg [104:0] reg_result_s3; // @[DivSqrtRecF64.scala 140:28]
-  wire [107:0] _reg_result_s3_T = reg_a_s2 * reg_b_s2; // @[DivSqrtRecF64.scala 160:36]
-  wire [104:0] _reg_result_s3_T_3 = _reg_result_s3_T[104:0] + io_c_s2; // @[DivSqrtRecF64.scala 160:55]
-  assign io_result_s3 = reg_result_s3; // @[DivSqrtRecF64.scala 163:18]
+  reg  val_s1; // @[DivSqrtRecF64.scala 98:21]
+  reg  val_s2; // @[DivSqrtRecF64.scala 99:21]
+  reg [53:0] reg_a_s1; // @[DivSqrtRecF64.scala 100:23]
+  reg [53:0] reg_b_s1; // @[DivSqrtRecF64.scala 101:23]
+  reg [53:0] reg_a_s2; // @[DivSqrtRecF64.scala 102:23]
+  reg [53:0] reg_b_s2; // @[DivSqrtRecF64.scala 103:23]
+  reg [104:0] reg_result_s3; // @[DivSqrtRecF64.scala 104:28]
+  wire [107:0] _reg_result_s3_T = reg_a_s2 * reg_b_s2; // @[DivSqrtRecF64.scala 124:36]
+  wire [104:0] _reg_result_s3_T_3 = _reg_result_s3_T[104:0] + io_c_s2; // @[DivSqrtRecF64.scala 124:55]
+  assign io_result_s3 = reg_result_s3; // @[DivSqrtRecF64.scala 127:18]
   always @(posedge clock) begin
-    val_s1 <= io_val_s0; // @[DivSqrtRecF64.scala 142:12]
-    val_s2 <= val_s1; // @[DivSqrtRecF64.scala 143:12]
-    if (io_val_s0) begin // @[DivSqrtRecF64.scala 145:22]
-      if (io_latch_a_s0) begin // @[DivSqrtRecF64.scala 146:30]
-        reg_a_s1 <= io_a_s0; // @[DivSqrtRecF64.scala 147:22]
+    val_s1 <= io_val_s0; // @[DivSqrtRecF64.scala 106:12]
+    val_s2 <= val_s1; // @[DivSqrtRecF64.scala 107:12]
+    if (io_val_s0) begin // @[DivSqrtRecF64.scala 109:22]
+      if (io_latch_a_s0) begin // @[DivSqrtRecF64.scala 110:30]
+        reg_a_s1 <= io_a_s0; // @[DivSqrtRecF64.scala 111:22]
       end
     end
-    if (io_val_s0) begin // @[DivSqrtRecF64.scala 145:22]
-      if (io_latch_b_s0) begin // @[DivSqrtRecF64.scala 149:30]
-        reg_b_s1 <= io_b_s0; // @[DivSqrtRecF64.scala 150:22]
+    if (io_val_s0) begin // @[DivSqrtRecF64.scala 109:22]
+      if (io_latch_b_s0) begin // @[DivSqrtRecF64.scala 113:30]
+        reg_b_s1 <= io_b_s0; // @[DivSqrtRecF64.scala 114:22]
       end
     end
-    if (val_s1) begin // @[DivSqrtRecF64.scala 154:19]
-      reg_a_s2 <= reg_a_s1; // @[DivSqrtRecF64.scala 155:18]
+    if (val_s1) begin // @[DivSqrtRecF64.scala 118:19]
+      reg_a_s2 <= reg_a_s1; // @[DivSqrtRecF64.scala 119:18]
     end
-    if (val_s1) begin // @[DivSqrtRecF64.scala 154:19]
-      reg_b_s2 <= reg_b_s1; // @[DivSqrtRecF64.scala 156:18]
+    if (val_s1) begin // @[DivSqrtRecF64.scala 118:19]
+      reg_b_s2 <= reg_b_s1; // @[DivSqrtRecF64.scala 120:18]
     end
-    if (val_s2) begin // @[DivSqrtRecF64.scala 159:19]
-      reg_result_s3 <= _reg_result_s3_T_3; // @[DivSqrtRecF64.scala 160:23]
+    if (val_s2) begin // @[DivSqrtRecF64.scala 123:19]
+      reg_result_s3 <= _reg_result_s3_T_3; // @[DivSqrtRecF64.scala 124:23]
     end
   end
 // Register and memory initialization

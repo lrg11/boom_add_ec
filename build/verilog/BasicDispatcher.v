@@ -3,23 +3,6 @@ module BasicDispatcher(
   input         reset,
   output        io_ren_uops_0_ready,
   input         io_ren_uops_0_valid,
-  input         io_ren_uops_0_bits_switch,
-  input         io_ren_uops_0_bits_switch_off,
-  input         io_ren_uops_0_bits_is_unicore,
-  input  [2:0]  io_ren_uops_0_bits_shift,
-  input  [1:0]  io_ren_uops_0_bits_lrs3_rtype,
-  input         io_ren_uops_0_bits_rflag,
-  input         io_ren_uops_0_bits_wflag,
-  input  [3:0]  io_ren_uops_0_bits_prflag,
-  input  [3:0]  io_ren_uops_0_bits_pwflag,
-  input         io_ren_uops_0_bits_pflag_busy,
-  input  [3:0]  io_ren_uops_0_bits_stale_pflag,
-  input  [3:0]  io_ren_uops_0_bits_op1_sel,
-  input  [3:0]  io_ren_uops_0_bits_op2_sel,
-  input  [5:0]  io_ren_uops_0_bits_split_num,
-  input  [5:0]  io_ren_uops_0_bits_self_index,
-  input  [5:0]  io_ren_uops_0_bits_rob_inst_idx,
-  input  [5:0]  io_ren_uops_0_bits_address_num,
   input  [6:0]  io_ren_uops_0_bits_uopc,
   input  [31:0] io_ren_uops_0_bits_inst,
   input  [31:0] io_ren_uops_0_bits_debug_inst,
@@ -37,7 +20,6 @@ module BasicDispatcher(
   input         io_ren_uops_0_bits_ctrl_is_load,
   input         io_ren_uops_0_bits_ctrl_is_sta,
   input         io_ren_uops_0_bits_ctrl_is_std,
-  input  [1:0]  io_ren_uops_0_bits_ctrl_op3_sel,
   input  [1:0]  io_ren_uops_0_bits_iw_state,
   input         io_ren_uops_0_bits_iw_p1_poisoned,
   input         io_ren_uops_0_bits_iw_p2_poisoned,
@@ -54,19 +36,19 @@ module BasicDispatcher(
   input  [19:0] io_ren_uops_0_bits_imm_packed,
   input  [11:0] io_ren_uops_0_bits_csr_addr,
   input  [5:0]  io_ren_uops_0_bits_rob_idx,
-  input  [4:0]  io_ren_uops_0_bits_ldq_idx,
-  input  [4:0]  io_ren_uops_0_bits_stq_idx,
+  input  [3:0]  io_ren_uops_0_bits_ldq_idx,
+  input  [3:0]  io_ren_uops_0_bits_stq_idx,
   input  [1:0]  io_ren_uops_0_bits_rxq_idx,
-  input  [6:0]  io_ren_uops_0_bits_pdst,
-  input  [6:0]  io_ren_uops_0_bits_prs1,
-  input  [6:0]  io_ren_uops_0_bits_prs2,
-  input  [6:0]  io_ren_uops_0_bits_prs3,
+  input  [5:0]  io_ren_uops_0_bits_pdst,
+  input  [5:0]  io_ren_uops_0_bits_prs1,
+  input  [5:0]  io_ren_uops_0_bits_prs2,
+  input  [5:0]  io_ren_uops_0_bits_prs3,
   input  [4:0]  io_ren_uops_0_bits_ppred,
   input         io_ren_uops_0_bits_prs1_busy,
   input         io_ren_uops_0_bits_prs2_busy,
   input         io_ren_uops_0_bits_prs3_busy,
   input         io_ren_uops_0_bits_ppred_busy,
-  input  [6:0]  io_ren_uops_0_bits_stale_pdst,
+  input  [5:0]  io_ren_uops_0_bits_stale_pdst,
   input         io_ren_uops_0_bits_exception,
   input  [63:0] io_ren_uops_0_bits_exc_cause,
   input         io_ren_uops_0_bits_bypassable,
@@ -102,23 +84,6 @@ module BasicDispatcher(
   input  [1:0]  io_ren_uops_0_bits_debug_tsrc,
   output        io_ren_uops_1_ready,
   input         io_ren_uops_1_valid,
-  input         io_ren_uops_1_bits_switch,
-  input         io_ren_uops_1_bits_switch_off,
-  input         io_ren_uops_1_bits_is_unicore,
-  input  [2:0]  io_ren_uops_1_bits_shift,
-  input  [1:0]  io_ren_uops_1_bits_lrs3_rtype,
-  input         io_ren_uops_1_bits_rflag,
-  input         io_ren_uops_1_bits_wflag,
-  input  [3:0]  io_ren_uops_1_bits_prflag,
-  input  [3:0]  io_ren_uops_1_bits_pwflag,
-  input         io_ren_uops_1_bits_pflag_busy,
-  input  [3:0]  io_ren_uops_1_bits_stale_pflag,
-  input  [3:0]  io_ren_uops_1_bits_op1_sel,
-  input  [3:0]  io_ren_uops_1_bits_op2_sel,
-  input  [5:0]  io_ren_uops_1_bits_split_num,
-  input  [5:0]  io_ren_uops_1_bits_self_index,
-  input  [5:0]  io_ren_uops_1_bits_rob_inst_idx,
-  input  [5:0]  io_ren_uops_1_bits_address_num,
   input  [6:0]  io_ren_uops_1_bits_uopc,
   input  [31:0] io_ren_uops_1_bits_inst,
   input  [31:0] io_ren_uops_1_bits_debug_inst,
@@ -136,7 +101,6 @@ module BasicDispatcher(
   input         io_ren_uops_1_bits_ctrl_is_load,
   input         io_ren_uops_1_bits_ctrl_is_sta,
   input         io_ren_uops_1_bits_ctrl_is_std,
-  input  [1:0]  io_ren_uops_1_bits_ctrl_op3_sel,
   input  [1:0]  io_ren_uops_1_bits_iw_state,
   input         io_ren_uops_1_bits_iw_p1_poisoned,
   input         io_ren_uops_1_bits_iw_p2_poisoned,
@@ -153,19 +117,19 @@ module BasicDispatcher(
   input  [19:0] io_ren_uops_1_bits_imm_packed,
   input  [11:0] io_ren_uops_1_bits_csr_addr,
   input  [5:0]  io_ren_uops_1_bits_rob_idx,
-  input  [4:0]  io_ren_uops_1_bits_ldq_idx,
-  input  [4:0]  io_ren_uops_1_bits_stq_idx,
+  input  [3:0]  io_ren_uops_1_bits_ldq_idx,
+  input  [3:0]  io_ren_uops_1_bits_stq_idx,
   input  [1:0]  io_ren_uops_1_bits_rxq_idx,
-  input  [6:0]  io_ren_uops_1_bits_pdst,
-  input  [6:0]  io_ren_uops_1_bits_prs1,
-  input  [6:0]  io_ren_uops_1_bits_prs2,
-  input  [6:0]  io_ren_uops_1_bits_prs3,
+  input  [5:0]  io_ren_uops_1_bits_pdst,
+  input  [5:0]  io_ren_uops_1_bits_prs1,
+  input  [5:0]  io_ren_uops_1_bits_prs2,
+  input  [5:0]  io_ren_uops_1_bits_prs3,
   input  [4:0]  io_ren_uops_1_bits_ppred,
   input         io_ren_uops_1_bits_prs1_busy,
   input         io_ren_uops_1_bits_prs2_busy,
   input         io_ren_uops_1_bits_prs3_busy,
   input         io_ren_uops_1_bits_ppred_busy,
-  input  [6:0]  io_ren_uops_1_bits_stale_pdst,
+  input  [5:0]  io_ren_uops_1_bits_stale_pdst,
   input         io_ren_uops_1_bits_exception,
   input  [63:0] io_ren_uops_1_bits_exc_cause,
   input         io_ren_uops_1_bits_bypassable,
@@ -201,23 +165,6 @@ module BasicDispatcher(
   input  [1:0]  io_ren_uops_1_bits_debug_tsrc,
   input         io_dis_uops_2_0_ready,
   output        io_dis_uops_2_0_valid,
-  output        io_dis_uops_2_0_bits_switch,
-  output        io_dis_uops_2_0_bits_switch_off,
-  output        io_dis_uops_2_0_bits_is_unicore,
-  output [2:0]  io_dis_uops_2_0_bits_shift,
-  output [1:0]  io_dis_uops_2_0_bits_lrs3_rtype,
-  output        io_dis_uops_2_0_bits_rflag,
-  output        io_dis_uops_2_0_bits_wflag,
-  output [3:0]  io_dis_uops_2_0_bits_prflag,
-  output [3:0]  io_dis_uops_2_0_bits_pwflag,
-  output        io_dis_uops_2_0_bits_pflag_busy,
-  output [3:0]  io_dis_uops_2_0_bits_stale_pflag,
-  output [3:0]  io_dis_uops_2_0_bits_op1_sel,
-  output [3:0]  io_dis_uops_2_0_bits_op2_sel,
-  output [5:0]  io_dis_uops_2_0_bits_split_num,
-  output [5:0]  io_dis_uops_2_0_bits_self_index,
-  output [5:0]  io_dis_uops_2_0_bits_rob_inst_idx,
-  output [5:0]  io_dis_uops_2_0_bits_address_num,
   output [6:0]  io_dis_uops_2_0_bits_uopc,
   output [31:0] io_dis_uops_2_0_bits_inst,
   output [31:0] io_dis_uops_2_0_bits_debug_inst,
@@ -235,7 +182,6 @@ module BasicDispatcher(
   output        io_dis_uops_2_0_bits_ctrl_is_load,
   output        io_dis_uops_2_0_bits_ctrl_is_sta,
   output        io_dis_uops_2_0_bits_ctrl_is_std,
-  output [1:0]  io_dis_uops_2_0_bits_ctrl_op3_sel,
   output [1:0]  io_dis_uops_2_0_bits_iw_state,
   output        io_dis_uops_2_0_bits_iw_p1_poisoned,
   output        io_dis_uops_2_0_bits_iw_p2_poisoned,
@@ -252,19 +198,19 @@ module BasicDispatcher(
   output [19:0] io_dis_uops_2_0_bits_imm_packed,
   output [11:0] io_dis_uops_2_0_bits_csr_addr,
   output [5:0]  io_dis_uops_2_0_bits_rob_idx,
-  output [4:0]  io_dis_uops_2_0_bits_ldq_idx,
-  output [4:0]  io_dis_uops_2_0_bits_stq_idx,
+  output [3:0]  io_dis_uops_2_0_bits_ldq_idx,
+  output [3:0]  io_dis_uops_2_0_bits_stq_idx,
   output [1:0]  io_dis_uops_2_0_bits_rxq_idx,
-  output [6:0]  io_dis_uops_2_0_bits_pdst,
-  output [6:0]  io_dis_uops_2_0_bits_prs1,
-  output [6:0]  io_dis_uops_2_0_bits_prs2,
-  output [6:0]  io_dis_uops_2_0_bits_prs3,
+  output [5:0]  io_dis_uops_2_0_bits_pdst,
+  output [5:0]  io_dis_uops_2_0_bits_prs1,
+  output [5:0]  io_dis_uops_2_0_bits_prs2,
+  output [5:0]  io_dis_uops_2_0_bits_prs3,
   output [4:0]  io_dis_uops_2_0_bits_ppred,
   output        io_dis_uops_2_0_bits_prs1_busy,
   output        io_dis_uops_2_0_bits_prs2_busy,
   output        io_dis_uops_2_0_bits_prs3_busy,
   output        io_dis_uops_2_0_bits_ppred_busy,
-  output [6:0]  io_dis_uops_2_0_bits_stale_pdst,
+  output [5:0]  io_dis_uops_2_0_bits_stale_pdst,
   output        io_dis_uops_2_0_bits_exception,
   output [63:0] io_dis_uops_2_0_bits_exc_cause,
   output        io_dis_uops_2_0_bits_bypassable,
@@ -300,23 +246,6 @@ module BasicDispatcher(
   output [1:0]  io_dis_uops_2_0_bits_debug_tsrc,
   input         io_dis_uops_2_1_ready,
   output        io_dis_uops_2_1_valid,
-  output        io_dis_uops_2_1_bits_switch,
-  output        io_dis_uops_2_1_bits_switch_off,
-  output        io_dis_uops_2_1_bits_is_unicore,
-  output [2:0]  io_dis_uops_2_1_bits_shift,
-  output [1:0]  io_dis_uops_2_1_bits_lrs3_rtype,
-  output        io_dis_uops_2_1_bits_rflag,
-  output        io_dis_uops_2_1_bits_wflag,
-  output [3:0]  io_dis_uops_2_1_bits_prflag,
-  output [3:0]  io_dis_uops_2_1_bits_pwflag,
-  output        io_dis_uops_2_1_bits_pflag_busy,
-  output [3:0]  io_dis_uops_2_1_bits_stale_pflag,
-  output [3:0]  io_dis_uops_2_1_bits_op1_sel,
-  output [3:0]  io_dis_uops_2_1_bits_op2_sel,
-  output [5:0]  io_dis_uops_2_1_bits_split_num,
-  output [5:0]  io_dis_uops_2_1_bits_self_index,
-  output [5:0]  io_dis_uops_2_1_bits_rob_inst_idx,
-  output [5:0]  io_dis_uops_2_1_bits_address_num,
   output [6:0]  io_dis_uops_2_1_bits_uopc,
   output [31:0] io_dis_uops_2_1_bits_inst,
   output [31:0] io_dis_uops_2_1_bits_debug_inst,
@@ -334,7 +263,6 @@ module BasicDispatcher(
   output        io_dis_uops_2_1_bits_ctrl_is_load,
   output        io_dis_uops_2_1_bits_ctrl_is_sta,
   output        io_dis_uops_2_1_bits_ctrl_is_std,
-  output [1:0]  io_dis_uops_2_1_bits_ctrl_op3_sel,
   output [1:0]  io_dis_uops_2_1_bits_iw_state,
   output        io_dis_uops_2_1_bits_iw_p1_poisoned,
   output        io_dis_uops_2_1_bits_iw_p2_poisoned,
@@ -351,19 +279,19 @@ module BasicDispatcher(
   output [19:0] io_dis_uops_2_1_bits_imm_packed,
   output [11:0] io_dis_uops_2_1_bits_csr_addr,
   output [5:0]  io_dis_uops_2_1_bits_rob_idx,
-  output [4:0]  io_dis_uops_2_1_bits_ldq_idx,
-  output [4:0]  io_dis_uops_2_1_bits_stq_idx,
+  output [3:0]  io_dis_uops_2_1_bits_ldq_idx,
+  output [3:0]  io_dis_uops_2_1_bits_stq_idx,
   output [1:0]  io_dis_uops_2_1_bits_rxq_idx,
-  output [6:0]  io_dis_uops_2_1_bits_pdst,
-  output [6:0]  io_dis_uops_2_1_bits_prs1,
-  output [6:0]  io_dis_uops_2_1_bits_prs2,
-  output [6:0]  io_dis_uops_2_1_bits_prs3,
+  output [5:0]  io_dis_uops_2_1_bits_pdst,
+  output [5:0]  io_dis_uops_2_1_bits_prs1,
+  output [5:0]  io_dis_uops_2_1_bits_prs2,
+  output [5:0]  io_dis_uops_2_1_bits_prs3,
   output [4:0]  io_dis_uops_2_1_bits_ppred,
   output        io_dis_uops_2_1_bits_prs1_busy,
   output        io_dis_uops_2_1_bits_prs2_busy,
   output        io_dis_uops_2_1_bits_prs3_busy,
   output        io_dis_uops_2_1_bits_ppred_busy,
-  output [6:0]  io_dis_uops_2_1_bits_stale_pdst,
+  output [5:0]  io_dis_uops_2_1_bits_stale_pdst,
   output        io_dis_uops_2_1_bits_exception,
   output [63:0] io_dis_uops_2_1_bits_exc_cause,
   output        io_dis_uops_2_1_bits_bypassable,
@@ -399,23 +327,6 @@ module BasicDispatcher(
   output [1:0]  io_dis_uops_2_1_bits_debug_tsrc,
   input         io_dis_uops_1_0_ready,
   output        io_dis_uops_1_0_valid,
-  output        io_dis_uops_1_0_bits_switch,
-  output        io_dis_uops_1_0_bits_switch_off,
-  output        io_dis_uops_1_0_bits_is_unicore,
-  output [2:0]  io_dis_uops_1_0_bits_shift,
-  output [1:0]  io_dis_uops_1_0_bits_lrs3_rtype,
-  output        io_dis_uops_1_0_bits_rflag,
-  output        io_dis_uops_1_0_bits_wflag,
-  output [3:0]  io_dis_uops_1_0_bits_prflag,
-  output [3:0]  io_dis_uops_1_0_bits_pwflag,
-  output        io_dis_uops_1_0_bits_pflag_busy,
-  output [3:0]  io_dis_uops_1_0_bits_stale_pflag,
-  output [3:0]  io_dis_uops_1_0_bits_op1_sel,
-  output [3:0]  io_dis_uops_1_0_bits_op2_sel,
-  output [5:0]  io_dis_uops_1_0_bits_split_num,
-  output [5:0]  io_dis_uops_1_0_bits_self_index,
-  output [5:0]  io_dis_uops_1_0_bits_rob_inst_idx,
-  output [5:0]  io_dis_uops_1_0_bits_address_num,
   output [6:0]  io_dis_uops_1_0_bits_uopc,
   output [31:0] io_dis_uops_1_0_bits_inst,
   output [31:0] io_dis_uops_1_0_bits_debug_inst,
@@ -433,7 +344,6 @@ module BasicDispatcher(
   output        io_dis_uops_1_0_bits_ctrl_is_load,
   output        io_dis_uops_1_0_bits_ctrl_is_sta,
   output        io_dis_uops_1_0_bits_ctrl_is_std,
-  output [1:0]  io_dis_uops_1_0_bits_ctrl_op3_sel,
   output [1:0]  io_dis_uops_1_0_bits_iw_state,
   output        io_dis_uops_1_0_bits_iw_p1_poisoned,
   output        io_dis_uops_1_0_bits_iw_p2_poisoned,
@@ -450,19 +360,19 @@ module BasicDispatcher(
   output [19:0] io_dis_uops_1_0_bits_imm_packed,
   output [11:0] io_dis_uops_1_0_bits_csr_addr,
   output [5:0]  io_dis_uops_1_0_bits_rob_idx,
-  output [4:0]  io_dis_uops_1_0_bits_ldq_idx,
-  output [4:0]  io_dis_uops_1_0_bits_stq_idx,
+  output [3:0]  io_dis_uops_1_0_bits_ldq_idx,
+  output [3:0]  io_dis_uops_1_0_bits_stq_idx,
   output [1:0]  io_dis_uops_1_0_bits_rxq_idx,
-  output [6:0]  io_dis_uops_1_0_bits_pdst,
-  output [6:0]  io_dis_uops_1_0_bits_prs1,
-  output [6:0]  io_dis_uops_1_0_bits_prs2,
-  output [6:0]  io_dis_uops_1_0_bits_prs3,
+  output [5:0]  io_dis_uops_1_0_bits_pdst,
+  output [5:0]  io_dis_uops_1_0_bits_prs1,
+  output [5:0]  io_dis_uops_1_0_bits_prs2,
+  output [5:0]  io_dis_uops_1_0_bits_prs3,
   output [4:0]  io_dis_uops_1_0_bits_ppred,
   output        io_dis_uops_1_0_bits_prs1_busy,
   output        io_dis_uops_1_0_bits_prs2_busy,
   output        io_dis_uops_1_0_bits_prs3_busy,
   output        io_dis_uops_1_0_bits_ppred_busy,
-  output [6:0]  io_dis_uops_1_0_bits_stale_pdst,
+  output [5:0]  io_dis_uops_1_0_bits_stale_pdst,
   output        io_dis_uops_1_0_bits_exception,
   output [63:0] io_dis_uops_1_0_bits_exc_cause,
   output        io_dis_uops_1_0_bits_bypassable,
@@ -498,23 +408,6 @@ module BasicDispatcher(
   output [1:0]  io_dis_uops_1_0_bits_debug_tsrc,
   input         io_dis_uops_1_1_ready,
   output        io_dis_uops_1_1_valid,
-  output        io_dis_uops_1_1_bits_switch,
-  output        io_dis_uops_1_1_bits_switch_off,
-  output        io_dis_uops_1_1_bits_is_unicore,
-  output [2:0]  io_dis_uops_1_1_bits_shift,
-  output [1:0]  io_dis_uops_1_1_bits_lrs3_rtype,
-  output        io_dis_uops_1_1_bits_rflag,
-  output        io_dis_uops_1_1_bits_wflag,
-  output [3:0]  io_dis_uops_1_1_bits_prflag,
-  output [3:0]  io_dis_uops_1_1_bits_pwflag,
-  output        io_dis_uops_1_1_bits_pflag_busy,
-  output [3:0]  io_dis_uops_1_1_bits_stale_pflag,
-  output [3:0]  io_dis_uops_1_1_bits_op1_sel,
-  output [3:0]  io_dis_uops_1_1_bits_op2_sel,
-  output [5:0]  io_dis_uops_1_1_bits_split_num,
-  output [5:0]  io_dis_uops_1_1_bits_self_index,
-  output [5:0]  io_dis_uops_1_1_bits_rob_inst_idx,
-  output [5:0]  io_dis_uops_1_1_bits_address_num,
   output [6:0]  io_dis_uops_1_1_bits_uopc,
   output [31:0] io_dis_uops_1_1_bits_inst,
   output [31:0] io_dis_uops_1_1_bits_debug_inst,
@@ -532,7 +425,6 @@ module BasicDispatcher(
   output        io_dis_uops_1_1_bits_ctrl_is_load,
   output        io_dis_uops_1_1_bits_ctrl_is_sta,
   output        io_dis_uops_1_1_bits_ctrl_is_std,
-  output [1:0]  io_dis_uops_1_1_bits_ctrl_op3_sel,
   output [1:0]  io_dis_uops_1_1_bits_iw_state,
   output        io_dis_uops_1_1_bits_iw_p1_poisoned,
   output        io_dis_uops_1_1_bits_iw_p2_poisoned,
@@ -549,19 +441,19 @@ module BasicDispatcher(
   output [19:0] io_dis_uops_1_1_bits_imm_packed,
   output [11:0] io_dis_uops_1_1_bits_csr_addr,
   output [5:0]  io_dis_uops_1_1_bits_rob_idx,
-  output [4:0]  io_dis_uops_1_1_bits_ldq_idx,
-  output [4:0]  io_dis_uops_1_1_bits_stq_idx,
+  output [3:0]  io_dis_uops_1_1_bits_ldq_idx,
+  output [3:0]  io_dis_uops_1_1_bits_stq_idx,
   output [1:0]  io_dis_uops_1_1_bits_rxq_idx,
-  output [6:0]  io_dis_uops_1_1_bits_pdst,
-  output [6:0]  io_dis_uops_1_1_bits_prs1,
-  output [6:0]  io_dis_uops_1_1_bits_prs2,
-  output [6:0]  io_dis_uops_1_1_bits_prs3,
+  output [5:0]  io_dis_uops_1_1_bits_pdst,
+  output [5:0]  io_dis_uops_1_1_bits_prs1,
+  output [5:0]  io_dis_uops_1_1_bits_prs2,
+  output [5:0]  io_dis_uops_1_1_bits_prs3,
   output [4:0]  io_dis_uops_1_1_bits_ppred,
   output        io_dis_uops_1_1_bits_prs1_busy,
   output        io_dis_uops_1_1_bits_prs2_busy,
   output        io_dis_uops_1_1_bits_prs3_busy,
   output        io_dis_uops_1_1_bits_ppred_busy,
-  output [6:0]  io_dis_uops_1_1_bits_stale_pdst,
+  output [5:0]  io_dis_uops_1_1_bits_stale_pdst,
   output        io_dis_uops_1_1_bits_exception,
   output [63:0] io_dis_uops_1_1_bits_exc_cause,
   output        io_dis_uops_1_1_bits_bypassable,
@@ -597,23 +489,6 @@ module BasicDispatcher(
   output [1:0]  io_dis_uops_1_1_bits_debug_tsrc,
   input         io_dis_uops_0_0_ready,
   output        io_dis_uops_0_0_valid,
-  output        io_dis_uops_0_0_bits_switch,
-  output        io_dis_uops_0_0_bits_switch_off,
-  output        io_dis_uops_0_0_bits_is_unicore,
-  output [2:0]  io_dis_uops_0_0_bits_shift,
-  output [1:0]  io_dis_uops_0_0_bits_lrs3_rtype,
-  output        io_dis_uops_0_0_bits_rflag,
-  output        io_dis_uops_0_0_bits_wflag,
-  output [3:0]  io_dis_uops_0_0_bits_prflag,
-  output [3:0]  io_dis_uops_0_0_bits_pwflag,
-  output        io_dis_uops_0_0_bits_pflag_busy,
-  output [3:0]  io_dis_uops_0_0_bits_stale_pflag,
-  output [3:0]  io_dis_uops_0_0_bits_op1_sel,
-  output [3:0]  io_dis_uops_0_0_bits_op2_sel,
-  output [5:0]  io_dis_uops_0_0_bits_split_num,
-  output [5:0]  io_dis_uops_0_0_bits_self_index,
-  output [5:0]  io_dis_uops_0_0_bits_rob_inst_idx,
-  output [5:0]  io_dis_uops_0_0_bits_address_num,
   output [6:0]  io_dis_uops_0_0_bits_uopc,
   output [31:0] io_dis_uops_0_0_bits_inst,
   output [31:0] io_dis_uops_0_0_bits_debug_inst,
@@ -631,7 +506,6 @@ module BasicDispatcher(
   output        io_dis_uops_0_0_bits_ctrl_is_load,
   output        io_dis_uops_0_0_bits_ctrl_is_sta,
   output        io_dis_uops_0_0_bits_ctrl_is_std,
-  output [1:0]  io_dis_uops_0_0_bits_ctrl_op3_sel,
   output [1:0]  io_dis_uops_0_0_bits_iw_state,
   output        io_dis_uops_0_0_bits_iw_p1_poisoned,
   output        io_dis_uops_0_0_bits_iw_p2_poisoned,
@@ -648,19 +522,19 @@ module BasicDispatcher(
   output [19:0] io_dis_uops_0_0_bits_imm_packed,
   output [11:0] io_dis_uops_0_0_bits_csr_addr,
   output [5:0]  io_dis_uops_0_0_bits_rob_idx,
-  output [4:0]  io_dis_uops_0_0_bits_ldq_idx,
-  output [4:0]  io_dis_uops_0_0_bits_stq_idx,
+  output [3:0]  io_dis_uops_0_0_bits_ldq_idx,
+  output [3:0]  io_dis_uops_0_0_bits_stq_idx,
   output [1:0]  io_dis_uops_0_0_bits_rxq_idx,
-  output [6:0]  io_dis_uops_0_0_bits_pdst,
-  output [6:0]  io_dis_uops_0_0_bits_prs1,
-  output [6:0]  io_dis_uops_0_0_bits_prs2,
-  output [6:0]  io_dis_uops_0_0_bits_prs3,
+  output [5:0]  io_dis_uops_0_0_bits_pdst,
+  output [5:0]  io_dis_uops_0_0_bits_prs1,
+  output [5:0]  io_dis_uops_0_0_bits_prs2,
+  output [5:0]  io_dis_uops_0_0_bits_prs3,
   output [4:0]  io_dis_uops_0_0_bits_ppred,
   output        io_dis_uops_0_0_bits_prs1_busy,
   output        io_dis_uops_0_0_bits_prs2_busy,
   output        io_dis_uops_0_0_bits_prs3_busy,
   output        io_dis_uops_0_0_bits_ppred_busy,
-  output [6:0]  io_dis_uops_0_0_bits_stale_pdst,
+  output [5:0]  io_dis_uops_0_0_bits_stale_pdst,
   output        io_dis_uops_0_0_bits_exception,
   output [63:0] io_dis_uops_0_0_bits_exc_cause,
   output        io_dis_uops_0_0_bits_bypassable,
@@ -696,23 +570,6 @@ module BasicDispatcher(
   output [1:0]  io_dis_uops_0_0_bits_debug_tsrc,
   input         io_dis_uops_0_1_ready,
   output        io_dis_uops_0_1_valid,
-  output        io_dis_uops_0_1_bits_switch,
-  output        io_dis_uops_0_1_bits_switch_off,
-  output        io_dis_uops_0_1_bits_is_unicore,
-  output [2:0]  io_dis_uops_0_1_bits_shift,
-  output [1:0]  io_dis_uops_0_1_bits_lrs3_rtype,
-  output        io_dis_uops_0_1_bits_rflag,
-  output        io_dis_uops_0_1_bits_wflag,
-  output [3:0]  io_dis_uops_0_1_bits_prflag,
-  output [3:0]  io_dis_uops_0_1_bits_pwflag,
-  output        io_dis_uops_0_1_bits_pflag_busy,
-  output [3:0]  io_dis_uops_0_1_bits_stale_pflag,
-  output [3:0]  io_dis_uops_0_1_bits_op1_sel,
-  output [3:0]  io_dis_uops_0_1_bits_op2_sel,
-  output [5:0]  io_dis_uops_0_1_bits_split_num,
-  output [5:0]  io_dis_uops_0_1_bits_self_index,
-  output [5:0]  io_dis_uops_0_1_bits_rob_inst_idx,
-  output [5:0]  io_dis_uops_0_1_bits_address_num,
   output [6:0]  io_dis_uops_0_1_bits_uopc,
   output [31:0] io_dis_uops_0_1_bits_inst,
   output [31:0] io_dis_uops_0_1_bits_debug_inst,
@@ -730,7 +587,6 @@ module BasicDispatcher(
   output        io_dis_uops_0_1_bits_ctrl_is_load,
   output        io_dis_uops_0_1_bits_ctrl_is_sta,
   output        io_dis_uops_0_1_bits_ctrl_is_std,
-  output [1:0]  io_dis_uops_0_1_bits_ctrl_op3_sel,
   output [1:0]  io_dis_uops_0_1_bits_iw_state,
   output        io_dis_uops_0_1_bits_iw_p1_poisoned,
   output        io_dis_uops_0_1_bits_iw_p2_poisoned,
@@ -747,19 +603,19 @@ module BasicDispatcher(
   output [19:0] io_dis_uops_0_1_bits_imm_packed,
   output [11:0] io_dis_uops_0_1_bits_csr_addr,
   output [5:0]  io_dis_uops_0_1_bits_rob_idx,
-  output [4:0]  io_dis_uops_0_1_bits_ldq_idx,
-  output [4:0]  io_dis_uops_0_1_bits_stq_idx,
+  output [3:0]  io_dis_uops_0_1_bits_ldq_idx,
+  output [3:0]  io_dis_uops_0_1_bits_stq_idx,
   output [1:0]  io_dis_uops_0_1_bits_rxq_idx,
-  output [6:0]  io_dis_uops_0_1_bits_pdst,
-  output [6:0]  io_dis_uops_0_1_bits_prs1,
-  output [6:0]  io_dis_uops_0_1_bits_prs2,
-  output [6:0]  io_dis_uops_0_1_bits_prs3,
+  output [5:0]  io_dis_uops_0_1_bits_pdst,
+  output [5:0]  io_dis_uops_0_1_bits_prs1,
+  output [5:0]  io_dis_uops_0_1_bits_prs2,
+  output [5:0]  io_dis_uops_0_1_bits_prs3,
   output [4:0]  io_dis_uops_0_1_bits_ppred,
   output        io_dis_uops_0_1_bits_prs1_busy,
   output        io_dis_uops_0_1_bits_prs2_busy,
   output        io_dis_uops_0_1_bits_prs3_busy,
   output        io_dis_uops_0_1_bits_ppred_busy,
-  output [6:0]  io_dis_uops_0_1_bits_stale_pdst,
+  output [5:0]  io_dis_uops_0_1_bits_stale_pdst,
   output        io_dis_uops_0_1_bits_exception,
   output [63:0] io_dis_uops_0_1_bits_exc_cause,
   output        io_dis_uops_0_1_bits_bypassable,
@@ -808,23 +664,6 @@ module BasicDispatcher(
   assign io_ren_uops_0_ready = ren_readys[0]; // @[dispatch.scala 50:39]
   assign io_ren_uops_1_ready = ren_readys[1]; // @[dispatch.scala 50:39]
   assign io_dis_uops_2_0_valid = io_ren_uops_0_valid & _T_18 != 3'h0; // @[dispatch.scala 58:42]
-  assign io_dis_uops_2_0_bits_switch = io_ren_uops_0_bits_switch; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_switch_off = io_ren_uops_0_bits_switch_off; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_is_unicore = io_ren_uops_0_bits_is_unicore; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_shift = io_ren_uops_0_bits_shift; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_lrs3_rtype = io_ren_uops_0_bits_lrs3_rtype; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_rflag = io_ren_uops_0_bits_rflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_wflag = io_ren_uops_0_bits_wflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_prflag = io_ren_uops_0_bits_prflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_pwflag = io_ren_uops_0_bits_pwflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_pflag_busy = io_ren_uops_0_bits_pflag_busy; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_stale_pflag = io_ren_uops_0_bits_stale_pflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_op1_sel = io_ren_uops_0_bits_op1_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_op2_sel = io_ren_uops_0_bits_op2_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_split_num = io_ren_uops_0_bits_split_num; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_self_index = io_ren_uops_0_bits_self_index; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_rob_inst_idx = io_ren_uops_0_bits_rob_inst_idx; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_address_num = io_ren_uops_0_bits_address_num; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_uopc = io_ren_uops_0_bits_uopc; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_inst = io_ren_uops_0_bits_inst; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_debug_inst = io_ren_uops_0_bits_debug_inst; // @[dispatch.scala 59:18]
@@ -842,7 +681,6 @@ module BasicDispatcher(
   assign io_dis_uops_2_0_bits_ctrl_is_load = io_ren_uops_0_bits_ctrl_is_load; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_ctrl_is_sta = io_ren_uops_0_bits_ctrl_is_sta; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_ctrl_is_std = io_ren_uops_0_bits_ctrl_is_std; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_0_bits_ctrl_op3_sel = io_ren_uops_0_bits_ctrl_op3_sel; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_iw_state = io_ren_uops_0_bits_iw_state; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_iw_p1_poisoned = io_ren_uops_0_bits_iw_p1_poisoned; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_iw_p2_poisoned = io_ren_uops_0_bits_iw_p2_poisoned; // @[dispatch.scala 59:18]
@@ -906,23 +744,6 @@ module BasicDispatcher(
   assign io_dis_uops_2_0_bits_debug_fsrc = io_ren_uops_0_bits_debug_fsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_0_bits_debug_tsrc = io_ren_uops_0_bits_debug_tsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_valid = io_ren_uops_1_valid & _T_21 != 3'h0; // @[dispatch.scala 58:42]
-  assign io_dis_uops_2_1_bits_switch = io_ren_uops_1_bits_switch; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_switch_off = io_ren_uops_1_bits_switch_off; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_is_unicore = io_ren_uops_1_bits_is_unicore; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_shift = io_ren_uops_1_bits_shift; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_lrs3_rtype = io_ren_uops_1_bits_lrs3_rtype; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_rflag = io_ren_uops_1_bits_rflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_wflag = io_ren_uops_1_bits_wflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_prflag = io_ren_uops_1_bits_prflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_pwflag = io_ren_uops_1_bits_pwflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_pflag_busy = io_ren_uops_1_bits_pflag_busy; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_stale_pflag = io_ren_uops_1_bits_stale_pflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_op1_sel = io_ren_uops_1_bits_op1_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_op2_sel = io_ren_uops_1_bits_op2_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_split_num = io_ren_uops_1_bits_split_num; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_self_index = io_ren_uops_1_bits_self_index; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_rob_inst_idx = io_ren_uops_1_bits_rob_inst_idx; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_address_num = io_ren_uops_1_bits_address_num; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_uopc = io_ren_uops_1_bits_uopc; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_inst = io_ren_uops_1_bits_inst; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_debug_inst = io_ren_uops_1_bits_debug_inst; // @[dispatch.scala 59:18]
@@ -940,7 +761,6 @@ module BasicDispatcher(
   assign io_dis_uops_2_1_bits_ctrl_is_load = io_ren_uops_1_bits_ctrl_is_load; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_ctrl_is_sta = io_ren_uops_1_bits_ctrl_is_sta; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_ctrl_is_std = io_ren_uops_1_bits_ctrl_is_std; // @[dispatch.scala 59:18]
-  assign io_dis_uops_2_1_bits_ctrl_op3_sel = io_ren_uops_1_bits_ctrl_op3_sel; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_iw_state = io_ren_uops_1_bits_iw_state; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_iw_p1_poisoned = io_ren_uops_1_bits_iw_p1_poisoned; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_iw_p2_poisoned = io_ren_uops_1_bits_iw_p2_poisoned; // @[dispatch.scala 59:18]
@@ -1004,23 +824,6 @@ module BasicDispatcher(
   assign io_dis_uops_2_1_bits_debug_fsrc = io_ren_uops_1_bits_debug_fsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_2_1_bits_debug_tsrc = io_ren_uops_1_bits_debug_tsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_valid = io_ren_uops_0_valid & _T_12 != 3'h0; // @[dispatch.scala 58:42]
-  assign io_dis_uops_1_0_bits_switch = io_ren_uops_0_bits_switch; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_switch_off = io_ren_uops_0_bits_switch_off; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_is_unicore = io_ren_uops_0_bits_is_unicore; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_shift = io_ren_uops_0_bits_shift; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_lrs3_rtype = io_ren_uops_0_bits_lrs3_rtype; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_rflag = io_ren_uops_0_bits_rflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_wflag = io_ren_uops_0_bits_wflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_prflag = io_ren_uops_0_bits_prflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_pwflag = io_ren_uops_0_bits_pwflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_pflag_busy = io_ren_uops_0_bits_pflag_busy; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_stale_pflag = io_ren_uops_0_bits_stale_pflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_op1_sel = io_ren_uops_0_bits_op1_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_op2_sel = io_ren_uops_0_bits_op2_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_split_num = io_ren_uops_0_bits_split_num; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_self_index = io_ren_uops_0_bits_self_index; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_rob_inst_idx = io_ren_uops_0_bits_rob_inst_idx; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_address_num = io_ren_uops_0_bits_address_num; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_uopc = io_ren_uops_0_bits_uopc; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_inst = io_ren_uops_0_bits_inst; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_debug_inst = io_ren_uops_0_bits_debug_inst; // @[dispatch.scala 59:18]
@@ -1038,7 +841,6 @@ module BasicDispatcher(
   assign io_dis_uops_1_0_bits_ctrl_is_load = io_ren_uops_0_bits_ctrl_is_load; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_ctrl_is_sta = io_ren_uops_0_bits_ctrl_is_sta; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_ctrl_is_std = io_ren_uops_0_bits_ctrl_is_std; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_0_bits_ctrl_op3_sel = io_ren_uops_0_bits_ctrl_op3_sel; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_iw_state = io_ren_uops_0_bits_iw_state; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_iw_p1_poisoned = io_ren_uops_0_bits_iw_p1_poisoned; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_iw_p2_poisoned = io_ren_uops_0_bits_iw_p2_poisoned; // @[dispatch.scala 59:18]
@@ -1102,23 +904,6 @@ module BasicDispatcher(
   assign io_dis_uops_1_0_bits_debug_fsrc = io_ren_uops_0_bits_debug_fsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_0_bits_debug_tsrc = io_ren_uops_0_bits_debug_tsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_valid = io_ren_uops_1_valid & _T_15 != 3'h0; // @[dispatch.scala 58:42]
-  assign io_dis_uops_1_1_bits_switch = io_ren_uops_1_bits_switch; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_switch_off = io_ren_uops_1_bits_switch_off; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_is_unicore = io_ren_uops_1_bits_is_unicore; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_shift = io_ren_uops_1_bits_shift; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_lrs3_rtype = io_ren_uops_1_bits_lrs3_rtype; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_rflag = io_ren_uops_1_bits_rflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_wflag = io_ren_uops_1_bits_wflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_prflag = io_ren_uops_1_bits_prflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_pwflag = io_ren_uops_1_bits_pwflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_pflag_busy = io_ren_uops_1_bits_pflag_busy; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_stale_pflag = io_ren_uops_1_bits_stale_pflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_op1_sel = io_ren_uops_1_bits_op1_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_op2_sel = io_ren_uops_1_bits_op2_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_split_num = io_ren_uops_1_bits_split_num; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_self_index = io_ren_uops_1_bits_self_index; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_rob_inst_idx = io_ren_uops_1_bits_rob_inst_idx; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_address_num = io_ren_uops_1_bits_address_num; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_uopc = io_ren_uops_1_bits_uopc; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_inst = io_ren_uops_1_bits_inst; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_debug_inst = io_ren_uops_1_bits_debug_inst; // @[dispatch.scala 59:18]
@@ -1136,7 +921,6 @@ module BasicDispatcher(
   assign io_dis_uops_1_1_bits_ctrl_is_load = io_ren_uops_1_bits_ctrl_is_load; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_ctrl_is_sta = io_ren_uops_1_bits_ctrl_is_sta; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_ctrl_is_std = io_ren_uops_1_bits_ctrl_is_std; // @[dispatch.scala 59:18]
-  assign io_dis_uops_1_1_bits_ctrl_op3_sel = io_ren_uops_1_bits_ctrl_op3_sel; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_iw_state = io_ren_uops_1_bits_iw_state; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_iw_p1_poisoned = io_ren_uops_1_bits_iw_p1_poisoned; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_iw_p2_poisoned = io_ren_uops_1_bits_iw_p2_poisoned; // @[dispatch.scala 59:18]
@@ -1200,23 +984,6 @@ module BasicDispatcher(
   assign io_dis_uops_1_1_bits_debug_fsrc = io_ren_uops_1_bits_debug_fsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_1_1_bits_debug_tsrc = io_ren_uops_1_bits_debug_tsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_valid = io_ren_uops_0_valid & _T_6 != 3'h0; // @[dispatch.scala 58:42]
-  assign io_dis_uops_0_0_bits_switch = io_ren_uops_0_bits_switch; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_switch_off = io_ren_uops_0_bits_switch_off; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_is_unicore = io_ren_uops_0_bits_is_unicore; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_shift = io_ren_uops_0_bits_shift; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_lrs3_rtype = io_ren_uops_0_bits_lrs3_rtype; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_rflag = io_ren_uops_0_bits_rflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_wflag = io_ren_uops_0_bits_wflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_prflag = io_ren_uops_0_bits_prflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_pwflag = io_ren_uops_0_bits_pwflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_pflag_busy = io_ren_uops_0_bits_pflag_busy; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_stale_pflag = io_ren_uops_0_bits_stale_pflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_op1_sel = io_ren_uops_0_bits_op1_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_op2_sel = io_ren_uops_0_bits_op2_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_split_num = io_ren_uops_0_bits_split_num; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_self_index = io_ren_uops_0_bits_self_index; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_rob_inst_idx = io_ren_uops_0_bits_rob_inst_idx; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_address_num = io_ren_uops_0_bits_address_num; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_uopc = io_ren_uops_0_bits_uopc; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_inst = io_ren_uops_0_bits_inst; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_debug_inst = io_ren_uops_0_bits_debug_inst; // @[dispatch.scala 59:18]
@@ -1234,7 +1001,6 @@ module BasicDispatcher(
   assign io_dis_uops_0_0_bits_ctrl_is_load = io_ren_uops_0_bits_ctrl_is_load; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_ctrl_is_sta = io_ren_uops_0_bits_ctrl_is_sta; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_ctrl_is_std = io_ren_uops_0_bits_ctrl_is_std; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_0_bits_ctrl_op3_sel = io_ren_uops_0_bits_ctrl_op3_sel; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_iw_state = io_ren_uops_0_bits_iw_state; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_iw_p1_poisoned = io_ren_uops_0_bits_iw_p1_poisoned; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_iw_p2_poisoned = io_ren_uops_0_bits_iw_p2_poisoned; // @[dispatch.scala 59:18]
@@ -1298,23 +1064,6 @@ module BasicDispatcher(
   assign io_dis_uops_0_0_bits_debug_fsrc = io_ren_uops_0_bits_debug_fsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_0_bits_debug_tsrc = io_ren_uops_0_bits_debug_tsrc; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_valid = io_ren_uops_1_valid & _T_9 != 3'h0; // @[dispatch.scala 58:42]
-  assign io_dis_uops_0_1_bits_switch = io_ren_uops_1_bits_switch; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_switch_off = io_ren_uops_1_bits_switch_off; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_is_unicore = io_ren_uops_1_bits_is_unicore; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_shift = io_ren_uops_1_bits_shift; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_lrs3_rtype = io_ren_uops_1_bits_lrs3_rtype; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_rflag = io_ren_uops_1_bits_rflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_wflag = io_ren_uops_1_bits_wflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_prflag = io_ren_uops_1_bits_prflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_pwflag = io_ren_uops_1_bits_pwflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_pflag_busy = io_ren_uops_1_bits_pflag_busy; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_stale_pflag = io_ren_uops_1_bits_stale_pflag; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_op1_sel = io_ren_uops_1_bits_op1_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_op2_sel = io_ren_uops_1_bits_op2_sel; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_split_num = io_ren_uops_1_bits_split_num; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_self_index = io_ren_uops_1_bits_self_index; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_rob_inst_idx = io_ren_uops_1_bits_rob_inst_idx; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_address_num = io_ren_uops_1_bits_address_num; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_uopc = io_ren_uops_1_bits_uopc; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_inst = io_ren_uops_1_bits_inst; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_debug_inst = io_ren_uops_1_bits_debug_inst; // @[dispatch.scala 59:18]
@@ -1332,7 +1081,6 @@ module BasicDispatcher(
   assign io_dis_uops_0_1_bits_ctrl_is_load = io_ren_uops_1_bits_ctrl_is_load; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_ctrl_is_sta = io_ren_uops_1_bits_ctrl_is_sta; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_ctrl_is_std = io_ren_uops_1_bits_ctrl_is_std; // @[dispatch.scala 59:18]
-  assign io_dis_uops_0_1_bits_ctrl_op3_sel = io_ren_uops_1_bits_ctrl_op3_sel; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_iw_state = io_ren_uops_1_bits_iw_state; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_iw_p1_poisoned = io_ren_uops_1_bits_iw_p1_poisoned; // @[dispatch.scala 59:18]
   assign io_dis_uops_0_1_bits_iw_p2_poisoned = io_ren_uops_1_bits_iw_p2_poisoned; // @[dispatch.scala 59:18]

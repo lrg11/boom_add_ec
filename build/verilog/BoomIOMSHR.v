@@ -3,23 +3,6 @@ module BoomIOMSHR(
   input         reset,
   output        io_req_ready,
   input         io_req_valid,
-  input         io_req_bits_uop_switch,
-  input         io_req_bits_uop_switch_off,
-  input         io_req_bits_uop_is_unicore,
-  input  [2:0]  io_req_bits_uop_shift,
-  input  [1:0]  io_req_bits_uop_lrs3_rtype,
-  input         io_req_bits_uop_rflag,
-  input         io_req_bits_uop_wflag,
-  input  [3:0]  io_req_bits_uop_prflag,
-  input  [3:0]  io_req_bits_uop_pwflag,
-  input         io_req_bits_uop_pflag_busy,
-  input  [3:0]  io_req_bits_uop_stale_pflag,
-  input  [3:0]  io_req_bits_uop_op1_sel,
-  input  [3:0]  io_req_bits_uop_op2_sel,
-  input  [5:0]  io_req_bits_uop_split_num,
-  input  [5:0]  io_req_bits_uop_self_index,
-  input  [5:0]  io_req_bits_uop_rob_inst_idx,
-  input  [5:0]  io_req_bits_uop_address_num,
   input  [6:0]  io_req_bits_uop_uopc,
   input  [31:0] io_req_bits_uop_inst,
   input  [31:0] io_req_bits_uop_debug_inst,
@@ -37,7 +20,6 @@ module BoomIOMSHR(
   input         io_req_bits_uop_ctrl_is_load,
   input         io_req_bits_uop_ctrl_is_sta,
   input         io_req_bits_uop_ctrl_is_std,
-  input  [1:0]  io_req_bits_uop_ctrl_op3_sel,
   input  [1:0]  io_req_bits_uop_iw_state,
   input         io_req_bits_uop_iw_p1_poisoned,
   input         io_req_bits_uop_iw_p2_poisoned,
@@ -54,19 +36,19 @@ module BoomIOMSHR(
   input  [19:0] io_req_bits_uop_imm_packed,
   input  [11:0] io_req_bits_uop_csr_addr,
   input  [5:0]  io_req_bits_uop_rob_idx,
-  input  [4:0]  io_req_bits_uop_ldq_idx,
-  input  [4:0]  io_req_bits_uop_stq_idx,
+  input  [3:0]  io_req_bits_uop_ldq_idx,
+  input  [3:0]  io_req_bits_uop_stq_idx,
   input  [1:0]  io_req_bits_uop_rxq_idx,
-  input  [6:0]  io_req_bits_uop_pdst,
-  input  [6:0]  io_req_bits_uop_prs1,
-  input  [6:0]  io_req_bits_uop_prs2,
-  input  [6:0]  io_req_bits_uop_prs3,
+  input  [5:0]  io_req_bits_uop_pdst,
+  input  [5:0]  io_req_bits_uop_prs1,
+  input  [5:0]  io_req_bits_uop_prs2,
+  input  [5:0]  io_req_bits_uop_prs3,
   input  [4:0]  io_req_bits_uop_ppred,
   input         io_req_bits_uop_prs1_busy,
   input         io_req_bits_uop_prs2_busy,
   input         io_req_bits_uop_prs3_busy,
   input         io_req_bits_uop_ppred_busy,
-  input  [6:0]  io_req_bits_uop_stale_pdst,
+  input  [5:0]  io_req_bits_uop_stale_pdst,
   input         io_req_bits_uop_exception,
   input  [63:0] io_req_bits_uop_exc_cause,
   input         io_req_bits_uop_bypassable,
@@ -105,23 +87,6 @@ module BoomIOMSHR(
   input         io_req_bits_is_hella,
   input         io_resp_ready,
   output        io_resp_valid,
-  output        io_resp_bits_uop_switch,
-  output        io_resp_bits_uop_switch_off,
-  output        io_resp_bits_uop_is_unicore,
-  output [2:0]  io_resp_bits_uop_shift,
-  output [1:0]  io_resp_bits_uop_lrs3_rtype,
-  output        io_resp_bits_uop_rflag,
-  output        io_resp_bits_uop_wflag,
-  output [3:0]  io_resp_bits_uop_prflag,
-  output [3:0]  io_resp_bits_uop_pwflag,
-  output        io_resp_bits_uop_pflag_busy,
-  output [3:0]  io_resp_bits_uop_stale_pflag,
-  output [3:0]  io_resp_bits_uop_op1_sel,
-  output [3:0]  io_resp_bits_uop_op2_sel,
-  output [5:0]  io_resp_bits_uop_split_num,
-  output [5:0]  io_resp_bits_uop_self_index,
-  output [5:0]  io_resp_bits_uop_rob_inst_idx,
-  output [5:0]  io_resp_bits_uop_address_num,
   output [6:0]  io_resp_bits_uop_uopc,
   output [31:0] io_resp_bits_uop_inst,
   output [31:0] io_resp_bits_uop_debug_inst,
@@ -139,7 +104,6 @@ module BoomIOMSHR(
   output        io_resp_bits_uop_ctrl_is_load,
   output        io_resp_bits_uop_ctrl_is_sta,
   output        io_resp_bits_uop_ctrl_is_std,
-  output [1:0]  io_resp_bits_uop_ctrl_op3_sel,
   output [1:0]  io_resp_bits_uop_iw_state,
   output        io_resp_bits_uop_iw_p1_poisoned,
   output        io_resp_bits_uop_iw_p2_poisoned,
@@ -156,19 +120,19 @@ module BoomIOMSHR(
   output [19:0] io_resp_bits_uop_imm_packed,
   output [11:0] io_resp_bits_uop_csr_addr,
   output [5:0]  io_resp_bits_uop_rob_idx,
-  output [4:0]  io_resp_bits_uop_ldq_idx,
-  output [4:0]  io_resp_bits_uop_stq_idx,
+  output [3:0]  io_resp_bits_uop_ldq_idx,
+  output [3:0]  io_resp_bits_uop_stq_idx,
   output [1:0]  io_resp_bits_uop_rxq_idx,
-  output [6:0]  io_resp_bits_uop_pdst,
-  output [6:0]  io_resp_bits_uop_prs1,
-  output [6:0]  io_resp_bits_uop_prs2,
-  output [6:0]  io_resp_bits_uop_prs3,
+  output [5:0]  io_resp_bits_uop_pdst,
+  output [5:0]  io_resp_bits_uop_prs1,
+  output [5:0]  io_resp_bits_uop_prs2,
+  output [5:0]  io_resp_bits_uop_prs3,
   output [4:0]  io_resp_bits_uop_ppred,
   output        io_resp_bits_uop_prs1_busy,
   output        io_resp_bits_uop_prs2_busy,
   output        io_resp_bits_uop_prs3_busy,
   output        io_resp_bits_uop_ppred_busy,
-  output [6:0]  io_resp_bits_uop_stale_pdst,
+  output [5:0]  io_resp_bits_uop_stale_pdst,
   output        io_resp_bits_uop_exception,
   output [63:0] io_resp_bits_uop_exc_cause,
   output        io_resp_bits_uop_bypassable,
@@ -229,7 +193,7 @@ module BoomIOMSHR(
   reg [31:0] _RAND_1;
   reg [31:0] _RAND_2;
   reg [31:0] _RAND_3;
-  reg [31:0] _RAND_4;
+  reg [63:0] _RAND_4;
   reg [31:0] _RAND_5;
   reg [31:0] _RAND_6;
   reg [31:0] _RAND_7;
@@ -246,7 +210,7 @@ module BoomIOMSHR(
   reg [31:0] _RAND_18;
   reg [31:0] _RAND_19;
   reg [31:0] _RAND_20;
-  reg [63:0] _RAND_21;
+  reg [31:0] _RAND_21;
   reg [31:0] _RAND_22;
   reg [31:0] _RAND_23;
   reg [31:0] _RAND_24;
@@ -272,7 +236,7 @@ module BoomIOMSHR(
   reg [31:0] _RAND_44;
   reg [31:0] _RAND_45;
   reg [31:0] _RAND_46;
-  reg [31:0] _RAND_47;
+  reg [63:0] _RAND_47;
   reg [31:0] _RAND_48;
   reg [31:0] _RAND_49;
   reg [31:0] _RAND_50;
@@ -290,7 +254,7 @@ module BoomIOMSHR(
   reg [31:0] _RAND_62;
   reg [31:0] _RAND_63;
   reg [31:0] _RAND_64;
-  reg [63:0] _RAND_65;
+  reg [31:0] _RAND_65;
   reg [31:0] _RAND_66;
   reg [31:0] _RAND_67;
   reg [31:0] _RAND_68;
@@ -304,46 +268,11 @@ module BoomIOMSHR(
   reg [31:0] _RAND_76;
   reg [31:0] _RAND_77;
   reg [31:0] _RAND_78;
-  reg [31:0] _RAND_79;
-  reg [31:0] _RAND_80;
-  reg [31:0] _RAND_81;
+  reg [63:0] _RAND_79;
+  reg [63:0] _RAND_80;
+  reg [63:0] _RAND_81;
   reg [31:0] _RAND_82;
-  reg [31:0] _RAND_83;
-  reg [31:0] _RAND_84;
-  reg [31:0] _RAND_85;
-  reg [31:0] _RAND_86;
-  reg [31:0] _RAND_87;
-  reg [31:0] _RAND_88;
-  reg [31:0] _RAND_89;
-  reg [31:0] _RAND_90;
-  reg [31:0] _RAND_91;
-  reg [31:0] _RAND_92;
-  reg [31:0] _RAND_93;
-  reg [31:0] _RAND_94;
-  reg [31:0] _RAND_95;
-  reg [31:0] _RAND_96;
-  reg [63:0] _RAND_97;
-  reg [63:0] _RAND_98;
-  reg [63:0] _RAND_99;
-  reg [31:0] _RAND_100;
 `endif // RANDOMIZE_REG_INIT
-  reg  req_uop_switch; // @[mshrs.scala 410:16]
-  reg  req_uop_switch_off; // @[mshrs.scala 410:16]
-  reg  req_uop_is_unicore; // @[mshrs.scala 410:16]
-  reg [2:0] req_uop_shift; // @[mshrs.scala 410:16]
-  reg [1:0] req_uop_lrs3_rtype; // @[mshrs.scala 410:16]
-  reg  req_uop_rflag; // @[mshrs.scala 410:16]
-  reg  req_uop_wflag; // @[mshrs.scala 410:16]
-  reg [3:0] req_uop_prflag; // @[mshrs.scala 410:16]
-  reg [3:0] req_uop_pwflag; // @[mshrs.scala 410:16]
-  reg  req_uop_pflag_busy; // @[mshrs.scala 410:16]
-  reg [3:0] req_uop_stale_pflag; // @[mshrs.scala 410:16]
-  reg [3:0] req_uop_op1_sel; // @[mshrs.scala 410:16]
-  reg [3:0] req_uop_op2_sel; // @[mshrs.scala 410:16]
-  reg [5:0] req_uop_split_num; // @[mshrs.scala 410:16]
-  reg [5:0] req_uop_self_index; // @[mshrs.scala 410:16]
-  reg [5:0] req_uop_rob_inst_idx; // @[mshrs.scala 410:16]
-  reg [5:0] req_uop_address_num; // @[mshrs.scala 410:16]
   reg [6:0] req_uop_uopc; // @[mshrs.scala 410:16]
   reg [31:0] req_uop_inst; // @[mshrs.scala 410:16]
   reg [31:0] req_uop_debug_inst; // @[mshrs.scala 410:16]
@@ -361,7 +290,6 @@ module BoomIOMSHR(
   reg  req_uop_ctrl_is_load; // @[mshrs.scala 410:16]
   reg  req_uop_ctrl_is_sta; // @[mshrs.scala 410:16]
   reg  req_uop_ctrl_is_std; // @[mshrs.scala 410:16]
-  reg [1:0] req_uop_ctrl_op3_sel; // @[mshrs.scala 410:16]
   reg [1:0] req_uop_iw_state; // @[mshrs.scala 410:16]
   reg  req_uop_iw_p1_poisoned; // @[mshrs.scala 410:16]
   reg  req_uop_iw_p2_poisoned; // @[mshrs.scala 410:16]
@@ -378,19 +306,19 @@ module BoomIOMSHR(
   reg [19:0] req_uop_imm_packed; // @[mshrs.scala 410:16]
   reg [11:0] req_uop_csr_addr; // @[mshrs.scala 410:16]
   reg [5:0] req_uop_rob_idx; // @[mshrs.scala 410:16]
-  reg [4:0] req_uop_ldq_idx; // @[mshrs.scala 410:16]
-  reg [4:0] req_uop_stq_idx; // @[mshrs.scala 410:16]
+  reg [3:0] req_uop_ldq_idx; // @[mshrs.scala 410:16]
+  reg [3:0] req_uop_stq_idx; // @[mshrs.scala 410:16]
   reg [1:0] req_uop_rxq_idx; // @[mshrs.scala 410:16]
-  reg [6:0] req_uop_pdst; // @[mshrs.scala 410:16]
-  reg [6:0] req_uop_prs1; // @[mshrs.scala 410:16]
-  reg [6:0] req_uop_prs2; // @[mshrs.scala 410:16]
-  reg [6:0] req_uop_prs3; // @[mshrs.scala 410:16]
+  reg [5:0] req_uop_pdst; // @[mshrs.scala 410:16]
+  reg [5:0] req_uop_prs1; // @[mshrs.scala 410:16]
+  reg [5:0] req_uop_prs2; // @[mshrs.scala 410:16]
+  reg [5:0] req_uop_prs3; // @[mshrs.scala 410:16]
   reg [4:0] req_uop_ppred; // @[mshrs.scala 410:16]
   reg  req_uop_prs1_busy; // @[mshrs.scala 410:16]
   reg  req_uop_prs2_busy; // @[mshrs.scala 410:16]
   reg  req_uop_prs3_busy; // @[mshrs.scala 410:16]
   reg  req_uop_ppred_busy; // @[mshrs.scala 410:16]
-  reg [6:0] req_uop_stale_pdst; // @[mshrs.scala 410:16]
+  reg [5:0] req_uop_stale_pdst; // @[mshrs.scala 410:16]
   reg  req_uop_exception; // @[mshrs.scala 410:16]
   reg [63:0] req_uop_exc_cause; // @[mshrs.scala 410:16]
   reg  req_uop_bypassable; // @[mshrs.scala 410:16]
@@ -569,30 +497,13 @@ module BoomIOMSHR(
   wire [55:0] _T_112 = _T_110 ? 56'hffffffffffffff : 56'h0; // @[Bitwise.scala 72:12]
   wire [55:0] hi_2 = req_uop_mem_size == 2'h0 ? _T_112 : _T_106[63:8]; // @[AMOALU.scala 42:20]
   wire  _T_115 = io_req_ready & io_req_valid; // @[Decoupled.scala 40:37]
-  wire [1:0] _GEN_100 = _T_115 ? 2'h1 : state; // @[mshrs.scala 454:24 mshrs.scala 456:11 mshrs.scala 415:22]
+  wire [1:0] _GEN_82 = _T_115 ? 2'h1 : state; // @[mshrs.scala 454:24 mshrs.scala 456:11 mshrs.scala 415:22]
   wire  _T_116 = io_mem_access_ready & io_mem_access_valid; // @[Decoupled.scala 40:37]
-  wire [1:0] _GEN_101 = _T_116 ? 2'h2 : _GEN_100; // @[mshrs.scala 458:31 mshrs.scala 459:11]
-  wire [1:0] _GEN_103 = state == 2'h2 & io_mem_ack_valid ? 2'h3 : _GEN_101; // @[mshrs.scala 461:50 mshrs.scala 462:11]
+  wire [1:0] _GEN_83 = _T_116 ? 2'h2 : _GEN_82; // @[mshrs.scala 458:31 mshrs.scala 459:11]
+  wire [1:0] _GEN_85 = state == 2'h2 & io_mem_ack_valid ? 2'h3 : _GEN_83; // @[mshrs.scala 461:50 mshrs.scala 462:11]
   wire  _T_147 = io_resp_ready & io_resp_valid; // @[Decoupled.scala 40:37]
   assign io_req_ready = state == 2'h0; // @[mshrs.scala 416:25]
   assign io_resp_valid = state == 2'h3 & _T_64; // @[mshrs.scala 450:43]
-  assign io_resp_bits_uop_switch = req_uop_switch; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_switch_off = req_uop_switch_off; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_is_unicore = req_uop_is_unicore; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_shift = req_uop_shift; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_lrs3_rtype = req_uop_lrs3_rtype; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_rflag = req_uop_rflag; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_wflag = req_uop_wflag; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_prflag = req_uop_prflag; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_pwflag = req_uop_pwflag; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_pflag_busy = req_uop_pflag_busy; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_stale_pflag = req_uop_stale_pflag; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_op1_sel = req_uop_op1_sel; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_op2_sel = req_uop_op2_sel; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_split_num = req_uop_split_num; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_self_index = req_uop_self_index; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_rob_inst_idx = req_uop_rob_inst_idx; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_address_num = req_uop_address_num; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_uopc = req_uop_uopc; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_inst = req_uop_inst; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_debug_inst = req_uop_debug_inst; // @[mshrs.scala 451:21]
@@ -610,7 +521,6 @@ module BoomIOMSHR(
   assign io_resp_bits_uop_ctrl_is_load = req_uop_ctrl_is_load; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_ctrl_is_sta = req_uop_ctrl_is_sta; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_ctrl_is_std = req_uop_ctrl_is_std; // @[mshrs.scala 451:21]
-  assign io_resp_bits_uop_ctrl_op3_sel = req_uop_ctrl_op3_sel; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_iw_state = req_uop_iw_state; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_iw_p1_poisoned = req_uop_iw_p1_poisoned; // @[mshrs.scala 451:21]
   assign io_resp_bits_uop_iw_p2_poisoned = req_uop_iw_p2_poisoned; // @[mshrs.scala 451:21]
@@ -686,57 +596,6 @@ module BoomIOMSHR(
   assign io_mem_access_bits_corrupt = 1'h0; // @[mshrs.scala 446:29]
   always @(posedge clock) begin
     if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_switch <= io_req_bits_uop_switch; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_switch_off <= io_req_bits_uop_switch_off; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_is_unicore <= io_req_bits_uop_is_unicore; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_shift <= io_req_bits_uop_shift; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_lrs3_rtype <= io_req_bits_uop_lrs3_rtype; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_rflag <= io_req_bits_uop_rflag; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_wflag <= io_req_bits_uop_wflag; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_prflag <= io_req_bits_uop_prflag; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_pwflag <= io_req_bits_uop_pwflag; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_pflag_busy <= io_req_bits_uop_pflag_busy; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_stale_pflag <= io_req_bits_uop_stale_pflag; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_op1_sel <= io_req_bits_uop_op1_sel; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_op2_sel <= io_req_bits_uop_op2_sel; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_split_num <= io_req_bits_uop_split_num; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_self_index <= io_req_bits_uop_self_index; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_rob_inst_idx <= io_req_bits_uop_rob_inst_idx; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_address_num <= io_req_bits_uop_address_num; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
       req_uop_uopc <= io_req_bits_uop_uopc; // @[mshrs.scala 455:11]
     end
     if (_T_115) begin // @[mshrs.scala 454:24]
@@ -786,9 +645,6 @@ module BoomIOMSHR(
     end
     if (_T_115) begin // @[mshrs.scala 454:24]
       req_uop_ctrl_is_std <= io_req_bits_uop_ctrl_is_std; // @[mshrs.scala 455:11]
-    end
-    if (_T_115) begin // @[mshrs.scala 454:24]
-      req_uop_ctrl_op3_sel <= io_req_bits_uop_ctrl_op3_sel; // @[mshrs.scala 455:11]
     end
     if (_T_115) begin // @[mshrs.scala 454:24]
       req_uop_iw_state <= io_req_bits_uop_iw_state; // @[mshrs.scala 455:11]
@@ -993,10 +849,10 @@ module BoomIOMSHR(
       if (~_T_64 | _T_147) begin // @[mshrs.scala 468:41]
         state <= 2'h0; // @[mshrs.scala 469:13]
       end else begin
-        state <= _GEN_103;
+        state <= _GEN_85;
       end
     end else begin
-      state <= _GEN_103;
+      state <= _GEN_85;
     end
     `ifndef SYNTHESIS
     `ifdef PRINTF_COND
@@ -1059,207 +915,171 @@ initial begin
     `endif
 `ifdef RANDOMIZE_REG_INIT
   _RAND_0 = {1{`RANDOM}};
-  req_uop_switch = _RAND_0[0:0];
+  req_uop_uopc = _RAND_0[6:0];
   _RAND_1 = {1{`RANDOM}};
-  req_uop_switch_off = _RAND_1[0:0];
+  req_uop_inst = _RAND_1[31:0];
   _RAND_2 = {1{`RANDOM}};
-  req_uop_is_unicore = _RAND_2[0:0];
+  req_uop_debug_inst = _RAND_2[31:0];
   _RAND_3 = {1{`RANDOM}};
-  req_uop_shift = _RAND_3[2:0];
-  _RAND_4 = {1{`RANDOM}};
-  req_uop_lrs3_rtype = _RAND_4[1:0];
+  req_uop_is_rvc = _RAND_3[0:0];
+  _RAND_4 = {2{`RANDOM}};
+  req_uop_debug_pc = _RAND_4[39:0];
   _RAND_5 = {1{`RANDOM}};
-  req_uop_rflag = _RAND_5[0:0];
+  req_uop_iq_type = _RAND_5[2:0];
   _RAND_6 = {1{`RANDOM}};
-  req_uop_wflag = _RAND_6[0:0];
+  req_uop_fu_code = _RAND_6[9:0];
   _RAND_7 = {1{`RANDOM}};
-  req_uop_prflag = _RAND_7[3:0];
+  req_uop_ctrl_br_type = _RAND_7[3:0];
   _RAND_8 = {1{`RANDOM}};
-  req_uop_pwflag = _RAND_8[3:0];
+  req_uop_ctrl_op1_sel = _RAND_8[1:0];
   _RAND_9 = {1{`RANDOM}};
-  req_uop_pflag_busy = _RAND_9[0:0];
+  req_uop_ctrl_op2_sel = _RAND_9[2:0];
   _RAND_10 = {1{`RANDOM}};
-  req_uop_stale_pflag = _RAND_10[3:0];
+  req_uop_ctrl_imm_sel = _RAND_10[2:0];
   _RAND_11 = {1{`RANDOM}};
-  req_uop_op1_sel = _RAND_11[3:0];
+  req_uop_ctrl_op_fcn = _RAND_11[3:0];
   _RAND_12 = {1{`RANDOM}};
-  req_uop_op2_sel = _RAND_12[3:0];
+  req_uop_ctrl_fcn_dw = _RAND_12[0:0];
   _RAND_13 = {1{`RANDOM}};
-  req_uop_split_num = _RAND_13[5:0];
+  req_uop_ctrl_csr_cmd = _RAND_13[2:0];
   _RAND_14 = {1{`RANDOM}};
-  req_uop_self_index = _RAND_14[5:0];
+  req_uop_ctrl_is_load = _RAND_14[0:0];
   _RAND_15 = {1{`RANDOM}};
-  req_uop_rob_inst_idx = _RAND_15[5:0];
+  req_uop_ctrl_is_sta = _RAND_15[0:0];
   _RAND_16 = {1{`RANDOM}};
-  req_uop_address_num = _RAND_16[5:0];
+  req_uop_ctrl_is_std = _RAND_16[0:0];
   _RAND_17 = {1{`RANDOM}};
-  req_uop_uopc = _RAND_17[6:0];
+  req_uop_iw_state = _RAND_17[1:0];
   _RAND_18 = {1{`RANDOM}};
-  req_uop_inst = _RAND_18[31:0];
+  req_uop_iw_p1_poisoned = _RAND_18[0:0];
   _RAND_19 = {1{`RANDOM}};
-  req_uop_debug_inst = _RAND_19[31:0];
+  req_uop_iw_p2_poisoned = _RAND_19[0:0];
   _RAND_20 = {1{`RANDOM}};
-  req_uop_is_rvc = _RAND_20[0:0];
-  _RAND_21 = {2{`RANDOM}};
-  req_uop_debug_pc = _RAND_21[39:0];
+  req_uop_is_br = _RAND_20[0:0];
+  _RAND_21 = {1{`RANDOM}};
+  req_uop_is_jalr = _RAND_21[0:0];
   _RAND_22 = {1{`RANDOM}};
-  req_uop_iq_type = _RAND_22[2:0];
+  req_uop_is_jal = _RAND_22[0:0];
   _RAND_23 = {1{`RANDOM}};
-  req_uop_fu_code = _RAND_23[9:0];
+  req_uop_is_sfb = _RAND_23[0:0];
   _RAND_24 = {1{`RANDOM}};
-  req_uop_ctrl_br_type = _RAND_24[3:0];
+  req_uop_br_mask = _RAND_24[11:0];
   _RAND_25 = {1{`RANDOM}};
-  req_uop_ctrl_op1_sel = _RAND_25[1:0];
+  req_uop_br_tag = _RAND_25[3:0];
   _RAND_26 = {1{`RANDOM}};
-  req_uop_ctrl_op2_sel = _RAND_26[2:0];
+  req_uop_ftq_idx = _RAND_26[4:0];
   _RAND_27 = {1{`RANDOM}};
-  req_uop_ctrl_imm_sel = _RAND_27[2:0];
+  req_uop_edge_inst = _RAND_27[0:0];
   _RAND_28 = {1{`RANDOM}};
-  req_uop_ctrl_op_fcn = _RAND_28[3:0];
+  req_uop_pc_lob = _RAND_28[5:0];
   _RAND_29 = {1{`RANDOM}};
-  req_uop_ctrl_fcn_dw = _RAND_29[0:0];
+  req_uop_taken = _RAND_29[0:0];
   _RAND_30 = {1{`RANDOM}};
-  req_uop_ctrl_csr_cmd = _RAND_30[2:0];
+  req_uop_imm_packed = _RAND_30[19:0];
   _RAND_31 = {1{`RANDOM}};
-  req_uop_ctrl_is_load = _RAND_31[0:0];
+  req_uop_csr_addr = _RAND_31[11:0];
   _RAND_32 = {1{`RANDOM}};
-  req_uop_ctrl_is_sta = _RAND_32[0:0];
+  req_uop_rob_idx = _RAND_32[5:0];
   _RAND_33 = {1{`RANDOM}};
-  req_uop_ctrl_is_std = _RAND_33[0:0];
+  req_uop_ldq_idx = _RAND_33[3:0];
   _RAND_34 = {1{`RANDOM}};
-  req_uop_ctrl_op3_sel = _RAND_34[1:0];
+  req_uop_stq_idx = _RAND_34[3:0];
   _RAND_35 = {1{`RANDOM}};
-  req_uop_iw_state = _RAND_35[1:0];
+  req_uop_rxq_idx = _RAND_35[1:0];
   _RAND_36 = {1{`RANDOM}};
-  req_uop_iw_p1_poisoned = _RAND_36[0:0];
+  req_uop_pdst = _RAND_36[5:0];
   _RAND_37 = {1{`RANDOM}};
-  req_uop_iw_p2_poisoned = _RAND_37[0:0];
+  req_uop_prs1 = _RAND_37[5:0];
   _RAND_38 = {1{`RANDOM}};
-  req_uop_is_br = _RAND_38[0:0];
+  req_uop_prs2 = _RAND_38[5:0];
   _RAND_39 = {1{`RANDOM}};
-  req_uop_is_jalr = _RAND_39[0:0];
+  req_uop_prs3 = _RAND_39[5:0];
   _RAND_40 = {1{`RANDOM}};
-  req_uop_is_jal = _RAND_40[0:0];
+  req_uop_ppred = _RAND_40[4:0];
   _RAND_41 = {1{`RANDOM}};
-  req_uop_is_sfb = _RAND_41[0:0];
+  req_uop_prs1_busy = _RAND_41[0:0];
   _RAND_42 = {1{`RANDOM}};
-  req_uop_br_mask = _RAND_42[11:0];
+  req_uop_prs2_busy = _RAND_42[0:0];
   _RAND_43 = {1{`RANDOM}};
-  req_uop_br_tag = _RAND_43[3:0];
+  req_uop_prs3_busy = _RAND_43[0:0];
   _RAND_44 = {1{`RANDOM}};
-  req_uop_ftq_idx = _RAND_44[4:0];
+  req_uop_ppred_busy = _RAND_44[0:0];
   _RAND_45 = {1{`RANDOM}};
-  req_uop_edge_inst = _RAND_45[0:0];
+  req_uop_stale_pdst = _RAND_45[5:0];
   _RAND_46 = {1{`RANDOM}};
-  req_uop_pc_lob = _RAND_46[5:0];
-  _RAND_47 = {1{`RANDOM}};
-  req_uop_taken = _RAND_47[0:0];
+  req_uop_exception = _RAND_46[0:0];
+  _RAND_47 = {2{`RANDOM}};
+  req_uop_exc_cause = _RAND_47[63:0];
   _RAND_48 = {1{`RANDOM}};
-  req_uop_imm_packed = _RAND_48[19:0];
+  req_uop_bypassable = _RAND_48[0:0];
   _RAND_49 = {1{`RANDOM}};
-  req_uop_csr_addr = _RAND_49[11:0];
+  req_uop_mem_cmd = _RAND_49[4:0];
   _RAND_50 = {1{`RANDOM}};
-  req_uop_rob_idx = _RAND_50[5:0];
+  req_uop_mem_size = _RAND_50[1:0];
   _RAND_51 = {1{`RANDOM}};
-  req_uop_ldq_idx = _RAND_51[4:0];
+  req_uop_mem_signed = _RAND_51[0:0];
   _RAND_52 = {1{`RANDOM}};
-  req_uop_stq_idx = _RAND_52[4:0];
+  req_uop_is_fence = _RAND_52[0:0];
   _RAND_53 = {1{`RANDOM}};
-  req_uop_rxq_idx = _RAND_53[1:0];
+  req_uop_is_fencei = _RAND_53[0:0];
   _RAND_54 = {1{`RANDOM}};
-  req_uop_pdst = _RAND_54[6:0];
+  req_uop_is_amo = _RAND_54[0:0];
   _RAND_55 = {1{`RANDOM}};
-  req_uop_prs1 = _RAND_55[6:0];
+  req_uop_uses_ldq = _RAND_55[0:0];
   _RAND_56 = {1{`RANDOM}};
-  req_uop_prs2 = _RAND_56[6:0];
+  req_uop_uses_stq = _RAND_56[0:0];
   _RAND_57 = {1{`RANDOM}};
-  req_uop_prs3 = _RAND_57[6:0];
+  req_uop_is_sys_pc2epc = _RAND_57[0:0];
   _RAND_58 = {1{`RANDOM}};
-  req_uop_ppred = _RAND_58[4:0];
+  req_uop_is_unique = _RAND_58[0:0];
   _RAND_59 = {1{`RANDOM}};
-  req_uop_prs1_busy = _RAND_59[0:0];
+  req_uop_flush_on_commit = _RAND_59[0:0];
   _RAND_60 = {1{`RANDOM}};
-  req_uop_prs2_busy = _RAND_60[0:0];
+  req_uop_ldst_is_rs1 = _RAND_60[0:0];
   _RAND_61 = {1{`RANDOM}};
-  req_uop_prs3_busy = _RAND_61[0:0];
+  req_uop_ldst = _RAND_61[5:0];
   _RAND_62 = {1{`RANDOM}};
-  req_uop_ppred_busy = _RAND_62[0:0];
+  req_uop_lrs1 = _RAND_62[5:0];
   _RAND_63 = {1{`RANDOM}};
-  req_uop_stale_pdst = _RAND_63[6:0];
+  req_uop_lrs2 = _RAND_63[5:0];
   _RAND_64 = {1{`RANDOM}};
-  req_uop_exception = _RAND_64[0:0];
-  _RAND_65 = {2{`RANDOM}};
-  req_uop_exc_cause = _RAND_65[63:0];
+  req_uop_lrs3 = _RAND_64[5:0];
+  _RAND_65 = {1{`RANDOM}};
+  req_uop_ldst_val = _RAND_65[0:0];
   _RAND_66 = {1{`RANDOM}};
-  req_uop_bypassable = _RAND_66[0:0];
+  req_uop_dst_rtype = _RAND_66[1:0];
   _RAND_67 = {1{`RANDOM}};
-  req_uop_mem_cmd = _RAND_67[4:0];
+  req_uop_lrs1_rtype = _RAND_67[1:0];
   _RAND_68 = {1{`RANDOM}};
-  req_uop_mem_size = _RAND_68[1:0];
+  req_uop_lrs2_rtype = _RAND_68[1:0];
   _RAND_69 = {1{`RANDOM}};
-  req_uop_mem_signed = _RAND_69[0:0];
+  req_uop_frs3_en = _RAND_69[0:0];
   _RAND_70 = {1{`RANDOM}};
-  req_uop_is_fence = _RAND_70[0:0];
+  req_uop_fp_val = _RAND_70[0:0];
   _RAND_71 = {1{`RANDOM}};
-  req_uop_is_fencei = _RAND_71[0:0];
+  req_uop_fp_single = _RAND_71[0:0];
   _RAND_72 = {1{`RANDOM}};
-  req_uop_is_amo = _RAND_72[0:0];
+  req_uop_xcpt_pf_if = _RAND_72[0:0];
   _RAND_73 = {1{`RANDOM}};
-  req_uop_uses_ldq = _RAND_73[0:0];
+  req_uop_xcpt_ae_if = _RAND_73[0:0];
   _RAND_74 = {1{`RANDOM}};
-  req_uop_uses_stq = _RAND_74[0:0];
+  req_uop_xcpt_ma_if = _RAND_74[0:0];
   _RAND_75 = {1{`RANDOM}};
-  req_uop_is_sys_pc2epc = _RAND_75[0:0];
+  req_uop_bp_debug_if = _RAND_75[0:0];
   _RAND_76 = {1{`RANDOM}};
-  req_uop_is_unique = _RAND_76[0:0];
+  req_uop_bp_xcpt_if = _RAND_76[0:0];
   _RAND_77 = {1{`RANDOM}};
-  req_uop_flush_on_commit = _RAND_77[0:0];
+  req_uop_debug_fsrc = _RAND_77[1:0];
   _RAND_78 = {1{`RANDOM}};
-  req_uop_ldst_is_rs1 = _RAND_78[0:0];
-  _RAND_79 = {1{`RANDOM}};
-  req_uop_ldst = _RAND_79[5:0];
-  _RAND_80 = {1{`RANDOM}};
-  req_uop_lrs1 = _RAND_80[5:0];
-  _RAND_81 = {1{`RANDOM}};
-  req_uop_lrs2 = _RAND_81[5:0];
+  req_uop_debug_tsrc = _RAND_78[1:0];
+  _RAND_79 = {2{`RANDOM}};
+  req_addr = _RAND_79[39:0];
+  _RAND_80 = {2{`RANDOM}};
+  req_data = _RAND_80[63:0];
+  _RAND_81 = {2{`RANDOM}};
+  grant_word = _RAND_81[63:0];
   _RAND_82 = {1{`RANDOM}};
-  req_uop_lrs3 = _RAND_82[5:0];
-  _RAND_83 = {1{`RANDOM}};
-  req_uop_ldst_val = _RAND_83[0:0];
-  _RAND_84 = {1{`RANDOM}};
-  req_uop_dst_rtype = _RAND_84[1:0];
-  _RAND_85 = {1{`RANDOM}};
-  req_uop_lrs1_rtype = _RAND_85[1:0];
-  _RAND_86 = {1{`RANDOM}};
-  req_uop_lrs2_rtype = _RAND_86[1:0];
-  _RAND_87 = {1{`RANDOM}};
-  req_uop_frs3_en = _RAND_87[0:0];
-  _RAND_88 = {1{`RANDOM}};
-  req_uop_fp_val = _RAND_88[0:0];
-  _RAND_89 = {1{`RANDOM}};
-  req_uop_fp_single = _RAND_89[0:0];
-  _RAND_90 = {1{`RANDOM}};
-  req_uop_xcpt_pf_if = _RAND_90[0:0];
-  _RAND_91 = {1{`RANDOM}};
-  req_uop_xcpt_ae_if = _RAND_91[0:0];
-  _RAND_92 = {1{`RANDOM}};
-  req_uop_xcpt_ma_if = _RAND_92[0:0];
-  _RAND_93 = {1{`RANDOM}};
-  req_uop_bp_debug_if = _RAND_93[0:0];
-  _RAND_94 = {1{`RANDOM}};
-  req_uop_bp_xcpt_if = _RAND_94[0:0];
-  _RAND_95 = {1{`RANDOM}};
-  req_uop_debug_fsrc = _RAND_95[1:0];
-  _RAND_96 = {1{`RANDOM}};
-  req_uop_debug_tsrc = _RAND_96[1:0];
-  _RAND_97 = {2{`RANDOM}};
-  req_addr = _RAND_97[39:0];
-  _RAND_98 = {2{`RANDOM}};
-  req_data = _RAND_98[63:0];
-  _RAND_99 = {2{`RANDOM}};
-  grant_word = _RAND_99[63:0];
-  _RAND_100 = {1{`RANDOM}};
-  state = _RAND_100[1:0];
+  state = _RAND_82[1:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

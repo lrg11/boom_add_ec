@@ -1,57 +1,57 @@
 module Queue_22(
-  input         clock,
-  input         reset,
-  output        io_enq_ready,
-  input         io_enq_valid,
-  input  [39:0] io_enq_bits_pc,
-  input         io_enq_bits_preds_0_taken,
-  input         io_enq_bits_preds_0_is_br,
-  input         io_enq_bits_preds_0_is_jal,
-  input         io_enq_bits_preds_0_predicted_pc_valid,
-  input  [39:0] io_enq_bits_preds_0_predicted_pc_bits,
-  input         io_enq_bits_preds_1_taken,
-  input         io_enq_bits_preds_1_is_br,
-  input         io_enq_bits_preds_1_is_jal,
-  input         io_enq_bits_preds_1_predicted_pc_valid,
-  input  [39:0] io_enq_bits_preds_1_predicted_pc_bits,
-  input         io_enq_bits_preds_2_taken,
-  input         io_enq_bits_preds_2_is_br,
-  input         io_enq_bits_preds_2_is_jal,
-  input         io_enq_bits_preds_2_predicted_pc_valid,
-  input  [39:0] io_enq_bits_preds_2_predicted_pc_bits,
-  input         io_enq_bits_preds_3_taken,
-  input         io_enq_bits_preds_3_is_br,
-  input         io_enq_bits_preds_3_is_jal,
-  input         io_enq_bits_preds_3_predicted_pc_valid,
-  input  [39:0] io_enq_bits_preds_3_predicted_pc_bits,
-  input  [44:0] io_enq_bits_meta_0,
-  input         io_enq_bits_lhist_0,
-  input         io_deq_ready,
-  output        io_deq_valid,
-  output [39:0] io_deq_bits_pc,
-  output        io_deq_bits_preds_0_taken,
-  output        io_deq_bits_preds_0_is_br,
-  output        io_deq_bits_preds_0_is_jal,
-  output        io_deq_bits_preds_0_predicted_pc_valid,
-  output [39:0] io_deq_bits_preds_0_predicted_pc_bits,
-  output        io_deq_bits_preds_1_taken,
-  output        io_deq_bits_preds_1_is_br,
-  output        io_deq_bits_preds_1_is_jal,
-  output        io_deq_bits_preds_1_predicted_pc_valid,
-  output [39:0] io_deq_bits_preds_1_predicted_pc_bits,
-  output        io_deq_bits_preds_2_taken,
-  output        io_deq_bits_preds_2_is_br,
-  output        io_deq_bits_preds_2_is_jal,
-  output        io_deq_bits_preds_2_predicted_pc_valid,
-  output [39:0] io_deq_bits_preds_2_predicted_pc_bits,
-  output        io_deq_bits_preds_3_taken,
-  output        io_deq_bits_preds_3_is_br,
-  output        io_deq_bits_preds_3_is_jal,
-  output        io_deq_bits_preds_3_predicted_pc_valid,
-  output [39:0] io_deq_bits_preds_3_predicted_pc_bits,
-  output [44:0] io_deq_bits_meta_0,
-  output        io_deq_bits_lhist_0,
-  output        io_count
+  input          clock,
+  input          reset,
+  output         io_enq_ready,
+  input          io_enq_valid,
+  input  [39:0]  io_enq_bits_pc,
+  input          io_enq_bits_preds_0_taken,
+  input          io_enq_bits_preds_0_is_br,
+  input          io_enq_bits_preds_0_is_jal,
+  input          io_enq_bits_preds_0_predicted_pc_valid,
+  input  [39:0]  io_enq_bits_preds_0_predicted_pc_bits,
+  input          io_enq_bits_preds_1_taken,
+  input          io_enq_bits_preds_1_is_br,
+  input          io_enq_bits_preds_1_is_jal,
+  input          io_enq_bits_preds_1_predicted_pc_valid,
+  input  [39:0]  io_enq_bits_preds_1_predicted_pc_bits,
+  input          io_enq_bits_preds_2_taken,
+  input          io_enq_bits_preds_2_is_br,
+  input          io_enq_bits_preds_2_is_jal,
+  input          io_enq_bits_preds_2_predicted_pc_valid,
+  input  [39:0]  io_enq_bits_preds_2_predicted_pc_bits,
+  input          io_enq_bits_preds_3_taken,
+  input          io_enq_bits_preds_3_is_br,
+  input          io_enq_bits_preds_3_is_jal,
+  input          io_enq_bits_preds_3_predicted_pc_valid,
+  input  [39:0]  io_enq_bits_preds_3_predicted_pc_bits,
+  input  [119:0] io_enq_bits_meta_0,
+  input          io_enq_bits_lhist_0,
+  input          io_deq_ready,
+  output         io_deq_valid,
+  output [39:0]  io_deq_bits_pc,
+  output         io_deq_bits_preds_0_taken,
+  output         io_deq_bits_preds_0_is_br,
+  output         io_deq_bits_preds_0_is_jal,
+  output         io_deq_bits_preds_0_predicted_pc_valid,
+  output [39:0]  io_deq_bits_preds_0_predicted_pc_bits,
+  output         io_deq_bits_preds_1_taken,
+  output         io_deq_bits_preds_1_is_br,
+  output         io_deq_bits_preds_1_is_jal,
+  output         io_deq_bits_preds_1_predicted_pc_valid,
+  output [39:0]  io_deq_bits_preds_1_predicted_pc_bits,
+  output         io_deq_bits_preds_2_taken,
+  output         io_deq_bits_preds_2_is_br,
+  output         io_deq_bits_preds_2_is_jal,
+  output         io_deq_bits_preds_2_predicted_pc_valid,
+  output [39:0]  io_deq_bits_preds_2_predicted_pc_bits,
+  output         io_deq_bits_preds_3_taken,
+  output         io_deq_bits_preds_3_is_br,
+  output         io_deq_bits_preds_3_is_jal,
+  output         io_deq_bits_preds_3_predicted_pc_valid,
+  output [39:0]  io_deq_bits_preds_3_predicted_pc_bits,
+  output [119:0] io_deq_bits_meta_0,
+  output         io_deq_bits_lhist_0,
+  output         io_count
 );
 `ifdef RANDOMIZE_MEM_INIT
   reg [63:0] _RAND_0;
@@ -75,7 +75,7 @@ module Queue_22(
   reg [31:0] _RAND_18;
   reg [31:0] _RAND_19;
   reg [63:0] _RAND_20;
-  reg [63:0] _RAND_21;
+  reg [127:0] _RAND_21;
   reg [31:0] _RAND_22;
 `endif // RANDOMIZE_MEM_INIT
 `ifdef RANDOMIZE_REG_INIT
@@ -228,10 +228,10 @@ module Queue_22(
   wire  ram_preds_3_predicted_pc_bits_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_preds_3_predicted_pc_bits_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_preds_3_predicted_pc_bits_MPORT_en; // @[Decoupled.scala 218:16]
-  reg [44:0] ram_meta_0 [0:0]; // @[Decoupled.scala 218:16]
-  wire [44:0] ram_meta_0_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
+  reg [119:0] ram_meta_0 [0:0]; // @[Decoupled.scala 218:16]
+  wire [119:0] ram_meta_0_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_io_deq_bits_MPORT_addr; // @[Decoupled.scala 218:16]
-  wire [44:0] ram_meta_0_MPORT_data; // @[Decoupled.scala 218:16]
+  wire [119:0] ram_meta_0_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_MPORT_en; // @[Decoupled.scala 218:16]
@@ -620,9 +620,9 @@ initial begin
   _RAND_20 = {2{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_preds_3_predicted_pc_bits[initvar] = _RAND_20[39:0];
-  _RAND_21 = {2{`RANDOM}};
+  _RAND_21 = {4{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
-    ram_meta_0[initvar] = _RAND_21[44:0];
+    ram_meta_0[initvar] = _RAND_21[119:0];
   _RAND_22 = {1{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_lhist_0[initvar] = _RAND_22[0:0];

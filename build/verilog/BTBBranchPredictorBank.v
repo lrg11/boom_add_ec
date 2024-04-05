@@ -1,150 +1,150 @@
 module BTBBranchPredictorBank(
-  input         clock,
-  input         reset,
-  input         io_f0_valid,
-  input  [39:0] io_f0_pc,
-  input  [3:0]  io_f0_mask,
-  input  [15:0] io_f1_ghist,
-  input         io_f1_lhist,
-  input         io_resp_in_0_f1_0_taken,
-  input         io_resp_in_0_f1_0_is_br,
-  input         io_resp_in_0_f1_0_is_jal,
-  input         io_resp_in_0_f1_0_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_0_predicted_pc_bits,
-  input         io_resp_in_0_f1_1_taken,
-  input         io_resp_in_0_f1_1_is_br,
-  input         io_resp_in_0_f1_1_is_jal,
-  input         io_resp_in_0_f1_1_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_1_predicted_pc_bits,
-  input         io_resp_in_0_f1_2_taken,
-  input         io_resp_in_0_f1_2_is_br,
-  input         io_resp_in_0_f1_2_is_jal,
-  input         io_resp_in_0_f1_2_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_2_predicted_pc_bits,
-  input         io_resp_in_0_f1_3_taken,
-  input         io_resp_in_0_f1_3_is_br,
-  input         io_resp_in_0_f1_3_is_jal,
-  input         io_resp_in_0_f1_3_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_3_predicted_pc_bits,
-  input         io_resp_in_0_f2_0_taken,
-  input         io_resp_in_0_f2_0_is_br,
-  input         io_resp_in_0_f2_0_is_jal,
-  input         io_resp_in_0_f2_0_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_0_predicted_pc_bits,
-  input         io_resp_in_0_f2_1_taken,
-  input         io_resp_in_0_f2_1_is_br,
-  input         io_resp_in_0_f2_1_is_jal,
-  input         io_resp_in_0_f2_1_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_1_predicted_pc_bits,
-  input         io_resp_in_0_f2_2_taken,
-  input         io_resp_in_0_f2_2_is_br,
-  input         io_resp_in_0_f2_2_is_jal,
-  input         io_resp_in_0_f2_2_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_2_predicted_pc_bits,
-  input         io_resp_in_0_f2_3_taken,
-  input         io_resp_in_0_f2_3_is_br,
-  input         io_resp_in_0_f2_3_is_jal,
-  input         io_resp_in_0_f2_3_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_3_predicted_pc_bits,
-  input         io_resp_in_0_f3_0_taken,
-  input         io_resp_in_0_f3_0_is_br,
-  input         io_resp_in_0_f3_0_is_jal,
-  input         io_resp_in_0_f3_0_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_0_predicted_pc_bits,
-  input         io_resp_in_0_f3_1_taken,
-  input         io_resp_in_0_f3_1_is_br,
-  input         io_resp_in_0_f3_1_is_jal,
-  input         io_resp_in_0_f3_1_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_1_predicted_pc_bits,
-  input         io_resp_in_0_f3_2_taken,
-  input         io_resp_in_0_f3_2_is_br,
-  input         io_resp_in_0_f3_2_is_jal,
-  input         io_resp_in_0_f3_2_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_2_predicted_pc_bits,
-  input         io_resp_in_0_f3_3_taken,
-  input         io_resp_in_0_f3_3_is_br,
-  input         io_resp_in_0_f3_3_is_jal,
-  input         io_resp_in_0_f3_3_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_3_predicted_pc_bits,
-  output        io_resp_f1_0_taken,
-  output        io_resp_f1_0_is_br,
-  output        io_resp_f1_0_is_jal,
-  output        io_resp_f1_0_predicted_pc_valid,
-  output [39:0] io_resp_f1_0_predicted_pc_bits,
-  output        io_resp_f1_1_taken,
-  output        io_resp_f1_1_is_br,
-  output        io_resp_f1_1_is_jal,
-  output        io_resp_f1_1_predicted_pc_valid,
-  output [39:0] io_resp_f1_1_predicted_pc_bits,
-  output        io_resp_f1_2_taken,
-  output        io_resp_f1_2_is_br,
-  output        io_resp_f1_2_is_jal,
-  output        io_resp_f1_2_predicted_pc_valid,
-  output [39:0] io_resp_f1_2_predicted_pc_bits,
-  output        io_resp_f1_3_taken,
-  output        io_resp_f1_3_is_br,
-  output        io_resp_f1_3_is_jal,
-  output        io_resp_f1_3_predicted_pc_valid,
-  output [39:0] io_resp_f1_3_predicted_pc_bits,
-  output        io_resp_f2_0_taken,
-  output        io_resp_f2_0_is_br,
-  output        io_resp_f2_0_is_jal,
-  output        io_resp_f2_0_predicted_pc_valid,
-  output [39:0] io_resp_f2_0_predicted_pc_bits,
-  output        io_resp_f2_1_taken,
-  output        io_resp_f2_1_is_br,
-  output        io_resp_f2_1_is_jal,
-  output        io_resp_f2_1_predicted_pc_valid,
-  output [39:0] io_resp_f2_1_predicted_pc_bits,
-  output        io_resp_f2_2_taken,
-  output        io_resp_f2_2_is_br,
-  output        io_resp_f2_2_is_jal,
-  output        io_resp_f2_2_predicted_pc_valid,
-  output [39:0] io_resp_f2_2_predicted_pc_bits,
-  output        io_resp_f2_3_taken,
-  output        io_resp_f2_3_is_br,
-  output        io_resp_f2_3_is_jal,
-  output        io_resp_f2_3_predicted_pc_valid,
-  output [39:0] io_resp_f2_3_predicted_pc_bits,
-  output        io_resp_f3_0_taken,
-  output        io_resp_f3_0_is_br,
-  output        io_resp_f3_0_is_jal,
-  output        io_resp_f3_0_predicted_pc_valid,
-  output [39:0] io_resp_f3_0_predicted_pc_bits,
-  output        io_resp_f3_1_taken,
-  output        io_resp_f3_1_is_br,
-  output        io_resp_f3_1_is_jal,
-  output        io_resp_f3_1_predicted_pc_valid,
-  output [39:0] io_resp_f3_1_predicted_pc_bits,
-  output        io_resp_f3_2_taken,
-  output        io_resp_f3_2_is_br,
-  output        io_resp_f3_2_is_jal,
-  output        io_resp_f3_2_predicted_pc_valid,
-  output [39:0] io_resp_f3_2_predicted_pc_bits,
-  output        io_resp_f3_3_taken,
-  output        io_resp_f3_3_is_br,
-  output        io_resp_f3_3_is_jal,
-  output        io_resp_f3_3_predicted_pc_valid,
-  output [39:0] io_resp_f3_3_predicted_pc_bits,
-  output [44:0] io_f3_meta,
-  input         io_f3_fire,
-  input         io_update_valid,
-  input         io_update_bits_is_mispredict_update,
-  input         io_update_bits_is_repair_update,
-  input  [3:0]  io_update_bits_btb_mispredicts,
-  input  [39:0] io_update_bits_pc,
-  input  [3:0]  io_update_bits_br_mask,
-  input         io_update_bits_cfi_idx_valid,
-  input  [1:0]  io_update_bits_cfi_idx_bits,
-  input         io_update_bits_cfi_taken,
-  input         io_update_bits_cfi_mispredicted,
-  input         io_update_bits_cfi_is_br,
-  input         io_update_bits_cfi_is_jal,
-  input         io_update_bits_cfi_is_jalr,
-  input  [15:0] io_update_bits_ghist,
-  input         io_update_bits_lhist,
-  input  [39:0] io_update_bits_target,
-  input  [44:0] io_update_bits_meta
+  input          clock,
+  input          reset,
+  input          io_f0_valid,
+  input  [39:0]  io_f0_pc,
+  input  [3:0]   io_f0_mask,
+  input  [63:0]  io_f1_ghist,
+  input          io_f1_lhist,
+  input          io_resp_in_0_f1_0_taken,
+  input          io_resp_in_0_f1_0_is_br,
+  input          io_resp_in_0_f1_0_is_jal,
+  input          io_resp_in_0_f1_0_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_0_predicted_pc_bits,
+  input          io_resp_in_0_f1_1_taken,
+  input          io_resp_in_0_f1_1_is_br,
+  input          io_resp_in_0_f1_1_is_jal,
+  input          io_resp_in_0_f1_1_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_1_predicted_pc_bits,
+  input          io_resp_in_0_f1_2_taken,
+  input          io_resp_in_0_f1_2_is_br,
+  input          io_resp_in_0_f1_2_is_jal,
+  input          io_resp_in_0_f1_2_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_2_predicted_pc_bits,
+  input          io_resp_in_0_f1_3_taken,
+  input          io_resp_in_0_f1_3_is_br,
+  input          io_resp_in_0_f1_3_is_jal,
+  input          io_resp_in_0_f1_3_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_3_predicted_pc_bits,
+  input          io_resp_in_0_f2_0_taken,
+  input          io_resp_in_0_f2_0_is_br,
+  input          io_resp_in_0_f2_0_is_jal,
+  input          io_resp_in_0_f2_0_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_0_predicted_pc_bits,
+  input          io_resp_in_0_f2_1_taken,
+  input          io_resp_in_0_f2_1_is_br,
+  input          io_resp_in_0_f2_1_is_jal,
+  input          io_resp_in_0_f2_1_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_1_predicted_pc_bits,
+  input          io_resp_in_0_f2_2_taken,
+  input          io_resp_in_0_f2_2_is_br,
+  input          io_resp_in_0_f2_2_is_jal,
+  input          io_resp_in_0_f2_2_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_2_predicted_pc_bits,
+  input          io_resp_in_0_f2_3_taken,
+  input          io_resp_in_0_f2_3_is_br,
+  input          io_resp_in_0_f2_3_is_jal,
+  input          io_resp_in_0_f2_3_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_3_predicted_pc_bits,
+  input          io_resp_in_0_f3_0_taken,
+  input          io_resp_in_0_f3_0_is_br,
+  input          io_resp_in_0_f3_0_is_jal,
+  input          io_resp_in_0_f3_0_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_0_predicted_pc_bits,
+  input          io_resp_in_0_f3_1_taken,
+  input          io_resp_in_0_f3_1_is_br,
+  input          io_resp_in_0_f3_1_is_jal,
+  input          io_resp_in_0_f3_1_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_1_predicted_pc_bits,
+  input          io_resp_in_0_f3_2_taken,
+  input          io_resp_in_0_f3_2_is_br,
+  input          io_resp_in_0_f3_2_is_jal,
+  input          io_resp_in_0_f3_2_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_2_predicted_pc_bits,
+  input          io_resp_in_0_f3_3_taken,
+  input          io_resp_in_0_f3_3_is_br,
+  input          io_resp_in_0_f3_3_is_jal,
+  input          io_resp_in_0_f3_3_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_3_predicted_pc_bits,
+  output         io_resp_f1_0_taken,
+  output         io_resp_f1_0_is_br,
+  output         io_resp_f1_0_is_jal,
+  output         io_resp_f1_0_predicted_pc_valid,
+  output [39:0]  io_resp_f1_0_predicted_pc_bits,
+  output         io_resp_f1_1_taken,
+  output         io_resp_f1_1_is_br,
+  output         io_resp_f1_1_is_jal,
+  output         io_resp_f1_1_predicted_pc_valid,
+  output [39:0]  io_resp_f1_1_predicted_pc_bits,
+  output         io_resp_f1_2_taken,
+  output         io_resp_f1_2_is_br,
+  output         io_resp_f1_2_is_jal,
+  output         io_resp_f1_2_predicted_pc_valid,
+  output [39:0]  io_resp_f1_2_predicted_pc_bits,
+  output         io_resp_f1_3_taken,
+  output         io_resp_f1_3_is_br,
+  output         io_resp_f1_3_is_jal,
+  output         io_resp_f1_3_predicted_pc_valid,
+  output [39:0]  io_resp_f1_3_predicted_pc_bits,
+  output         io_resp_f2_0_taken,
+  output         io_resp_f2_0_is_br,
+  output         io_resp_f2_0_is_jal,
+  output         io_resp_f2_0_predicted_pc_valid,
+  output [39:0]  io_resp_f2_0_predicted_pc_bits,
+  output         io_resp_f2_1_taken,
+  output         io_resp_f2_1_is_br,
+  output         io_resp_f2_1_is_jal,
+  output         io_resp_f2_1_predicted_pc_valid,
+  output [39:0]  io_resp_f2_1_predicted_pc_bits,
+  output         io_resp_f2_2_taken,
+  output         io_resp_f2_2_is_br,
+  output         io_resp_f2_2_is_jal,
+  output         io_resp_f2_2_predicted_pc_valid,
+  output [39:0]  io_resp_f2_2_predicted_pc_bits,
+  output         io_resp_f2_3_taken,
+  output         io_resp_f2_3_is_br,
+  output         io_resp_f2_3_is_jal,
+  output         io_resp_f2_3_predicted_pc_valid,
+  output [39:0]  io_resp_f2_3_predicted_pc_bits,
+  output         io_resp_f3_0_taken,
+  output         io_resp_f3_0_is_br,
+  output         io_resp_f3_0_is_jal,
+  output         io_resp_f3_0_predicted_pc_valid,
+  output [39:0]  io_resp_f3_0_predicted_pc_bits,
+  output         io_resp_f3_1_taken,
+  output         io_resp_f3_1_is_br,
+  output         io_resp_f3_1_is_jal,
+  output         io_resp_f3_1_predicted_pc_valid,
+  output [39:0]  io_resp_f3_1_predicted_pc_bits,
+  output         io_resp_f3_2_taken,
+  output         io_resp_f3_2_is_br,
+  output         io_resp_f3_2_is_jal,
+  output         io_resp_f3_2_predicted_pc_valid,
+  output [39:0]  io_resp_f3_2_predicted_pc_bits,
+  output         io_resp_f3_3_taken,
+  output         io_resp_f3_3_is_br,
+  output         io_resp_f3_3_is_jal,
+  output         io_resp_f3_3_predicted_pc_valid,
+  output [39:0]  io_resp_f3_3_predicted_pc_bits,
+  output [119:0] io_f3_meta,
+  input          io_f3_fire,
+  input          io_update_valid,
+  input          io_update_bits_is_mispredict_update,
+  input          io_update_bits_is_repair_update,
+  input  [3:0]   io_update_bits_btb_mispredicts,
+  input  [39:0]  io_update_bits_pc,
+  input  [3:0]   io_update_bits_br_mask,
+  input          io_update_bits_cfi_idx_valid,
+  input  [1:0]   io_update_bits_cfi_idx_bits,
+  input          io_update_bits_cfi_taken,
+  input          io_update_bits_cfi_mispredicted,
+  input          io_update_bits_cfi_is_br,
+  input          io_update_bits_cfi_is_jal,
+  input          io_update_bits_cfi_is_jalr,
+  input  [63:0]  io_update_bits_ghist,
+  input          io_update_bits_lhist,
+  input  [39:0]  io_update_bits_target,
+  input  [119:0] io_update_bits_meta
 );
 `ifdef RANDOMIZE_MEM_INIT
   reg [31:0] _RAND_0;
@@ -213,7 +213,7 @@ module BTBBranchPredictorBank(
   reg [31:0] _RAND_61;
   reg [31:0] _RAND_62;
   reg [63:0] _RAND_63;
-  reg [63:0] _RAND_64;
+  reg [127:0] _RAND_64;
   reg [63:0] _RAND_65;
   reg [31:0] _RAND_66;
   reg [31:0] _RAND_67;
@@ -276,159 +276,159 @@ module BTBBranchPredictorBank(
   reg [31:0] _RAND_124;
   reg [31:0] _RAND_125;
 `endif // RANDOMIZE_REG_INIT
-  reg [31:0] meta_0_0 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_0_0_MPORT_2_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_0_MPORT_2_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_0_0_MPORT_5_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_0_MPORT_5_addr; // @[btb.scala 65:47]
+  reg [30:0] meta_0_0 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_0_0_MPORT_2_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_0_MPORT_2_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_0_0_MPORT_5_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_0_MPORT_5_addr; // @[btb.scala 65:47]
   wire  meta_0_0_MPORT_5_mask; // @[btb.scala 65:47]
   wire  meta_0_0_MPORT_5_en; // @[btb.scala 65:47]
   reg  meta_0_0_MPORT_2_en_pipe_0;
-  reg [5:0] meta_0_0_MPORT_2_addr_pipe_0;
-  reg [31:0] meta_0_1 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_0_1_MPORT_2_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_1_MPORT_2_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_0_1_MPORT_5_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_1_MPORT_5_addr; // @[btb.scala 65:47]
+  reg [6:0] meta_0_0_MPORT_2_addr_pipe_0;
+  reg [30:0] meta_0_1 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_0_1_MPORT_2_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_1_MPORT_2_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_0_1_MPORT_5_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_1_MPORT_5_addr; // @[btb.scala 65:47]
   wire  meta_0_1_MPORT_5_mask; // @[btb.scala 65:47]
   wire  meta_0_1_MPORT_5_en; // @[btb.scala 65:47]
   reg  meta_0_1_MPORT_2_en_pipe_0;
-  reg [5:0] meta_0_1_MPORT_2_addr_pipe_0;
-  reg [31:0] meta_0_2 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_0_2_MPORT_2_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_2_MPORT_2_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_0_2_MPORT_5_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_2_MPORT_5_addr; // @[btb.scala 65:47]
+  reg [6:0] meta_0_1_MPORT_2_addr_pipe_0;
+  reg [30:0] meta_0_2 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_0_2_MPORT_2_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_2_MPORT_2_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_0_2_MPORT_5_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_2_MPORT_5_addr; // @[btb.scala 65:47]
   wire  meta_0_2_MPORT_5_mask; // @[btb.scala 65:47]
   wire  meta_0_2_MPORT_5_en; // @[btb.scala 65:47]
   reg  meta_0_2_MPORT_2_en_pipe_0;
-  reg [5:0] meta_0_2_MPORT_2_addr_pipe_0;
-  reg [31:0] meta_0_3 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_0_3_MPORT_2_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_3_MPORT_2_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_0_3_MPORT_5_data; // @[btb.scala 65:47]
-  wire [5:0] meta_0_3_MPORT_5_addr; // @[btb.scala 65:47]
+  reg [6:0] meta_0_2_MPORT_2_addr_pipe_0;
+  reg [30:0] meta_0_3 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_0_3_MPORT_2_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_3_MPORT_2_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_0_3_MPORT_5_data; // @[btb.scala 65:47]
+  wire [6:0] meta_0_3_MPORT_5_addr; // @[btb.scala 65:47]
   wire  meta_0_3_MPORT_5_mask; // @[btb.scala 65:47]
   wire  meta_0_3_MPORT_5_en; // @[btb.scala 65:47]
   reg  meta_0_3_MPORT_2_en_pipe_0;
-  reg [5:0] meta_0_3_MPORT_2_addr_pipe_0;
-  reg [31:0] meta_1_0 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_1_0_MPORT_3_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_0_MPORT_3_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_1_0_MPORT_7_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_0_MPORT_7_addr; // @[btb.scala 65:47]
+  reg [6:0] meta_0_3_MPORT_2_addr_pipe_0;
+  reg [30:0] meta_1_0 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_1_0_MPORT_3_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_0_MPORT_3_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_1_0_MPORT_7_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_0_MPORT_7_addr; // @[btb.scala 65:47]
   wire  meta_1_0_MPORT_7_mask; // @[btb.scala 65:47]
   wire  meta_1_0_MPORT_7_en; // @[btb.scala 65:47]
   reg  meta_1_0_MPORT_3_en_pipe_0;
-  reg [5:0] meta_1_0_MPORT_3_addr_pipe_0;
-  reg [31:0] meta_1_1 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_1_1_MPORT_3_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_1_MPORT_3_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_1_1_MPORT_7_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_1_MPORT_7_addr; // @[btb.scala 65:47]
+  reg [6:0] meta_1_0_MPORT_3_addr_pipe_0;
+  reg [30:0] meta_1_1 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_1_1_MPORT_3_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_1_MPORT_3_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_1_1_MPORT_7_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_1_MPORT_7_addr; // @[btb.scala 65:47]
   wire  meta_1_1_MPORT_7_mask; // @[btb.scala 65:47]
   wire  meta_1_1_MPORT_7_en; // @[btb.scala 65:47]
   reg  meta_1_1_MPORT_3_en_pipe_0;
-  reg [5:0] meta_1_1_MPORT_3_addr_pipe_0;
-  reg [31:0] meta_1_2 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_1_2_MPORT_3_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_2_MPORT_3_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_1_2_MPORT_7_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_2_MPORT_7_addr; // @[btb.scala 65:47]
+  reg [6:0] meta_1_1_MPORT_3_addr_pipe_0;
+  reg [30:0] meta_1_2 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_1_2_MPORT_3_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_2_MPORT_3_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_1_2_MPORT_7_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_2_MPORT_7_addr; // @[btb.scala 65:47]
   wire  meta_1_2_MPORT_7_mask; // @[btb.scala 65:47]
   wire  meta_1_2_MPORT_7_en; // @[btb.scala 65:47]
   reg  meta_1_2_MPORT_3_en_pipe_0;
-  reg [5:0] meta_1_2_MPORT_3_addr_pipe_0;
-  reg [31:0] meta_1_3 [0:63]; // @[btb.scala 65:47]
-  wire [31:0] meta_1_3_MPORT_3_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_3_MPORT_3_addr; // @[btb.scala 65:47]
-  wire [31:0] meta_1_3_MPORT_7_data; // @[btb.scala 65:47]
-  wire [5:0] meta_1_3_MPORT_7_addr; // @[btb.scala 65:47]
+  reg [6:0] meta_1_2_MPORT_3_addr_pipe_0;
+  reg [30:0] meta_1_3 [0:127]; // @[btb.scala 65:47]
+  wire [30:0] meta_1_3_MPORT_3_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_3_MPORT_3_addr; // @[btb.scala 65:47]
+  wire [30:0] meta_1_3_MPORT_7_data; // @[btb.scala 65:47]
+  wire [6:0] meta_1_3_MPORT_7_addr; // @[btb.scala 65:47]
   wire  meta_1_3_MPORT_7_mask; // @[btb.scala 65:47]
   wire  meta_1_3_MPORT_7_en; // @[btb.scala 65:47]
   reg  meta_1_3_MPORT_3_en_pipe_0;
-  reg [5:0] meta_1_3_MPORT_3_addr_pipe_0;
-  reg [13:0] btb_0_0 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] meta_1_3_MPORT_3_addr_pipe_0;
+  reg [13:0] btb_0_0 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_0_0_MPORT_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_0_MPORT_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_0_MPORT_addr; // @[btb.scala 66:47]
   wire [13:0] btb_0_0_MPORT_4_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_0_MPORT_4_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_0_MPORT_4_addr; // @[btb.scala 66:47]
   wire  btb_0_0_MPORT_4_mask; // @[btb.scala 66:47]
   wire  btb_0_0_MPORT_4_en; // @[btb.scala 66:47]
   reg  btb_0_0_MPORT_en_pipe_0;
-  reg [5:0] btb_0_0_MPORT_addr_pipe_0;
-  reg [13:0] btb_0_1 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] btb_0_0_MPORT_addr_pipe_0;
+  reg [13:0] btb_0_1 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_0_1_MPORT_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_1_MPORT_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_1_MPORT_addr; // @[btb.scala 66:47]
   wire [13:0] btb_0_1_MPORT_4_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_1_MPORT_4_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_1_MPORT_4_addr; // @[btb.scala 66:47]
   wire  btb_0_1_MPORT_4_mask; // @[btb.scala 66:47]
   wire  btb_0_1_MPORT_4_en; // @[btb.scala 66:47]
   reg  btb_0_1_MPORT_en_pipe_0;
-  reg [5:0] btb_0_1_MPORT_addr_pipe_0;
-  reg [13:0] btb_0_2 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] btb_0_1_MPORT_addr_pipe_0;
+  reg [13:0] btb_0_2 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_0_2_MPORT_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_2_MPORT_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_2_MPORT_addr; // @[btb.scala 66:47]
   wire [13:0] btb_0_2_MPORT_4_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_2_MPORT_4_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_2_MPORT_4_addr; // @[btb.scala 66:47]
   wire  btb_0_2_MPORT_4_mask; // @[btb.scala 66:47]
   wire  btb_0_2_MPORT_4_en; // @[btb.scala 66:47]
   reg  btb_0_2_MPORT_en_pipe_0;
-  reg [5:0] btb_0_2_MPORT_addr_pipe_0;
-  reg [13:0] btb_0_3 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] btb_0_2_MPORT_addr_pipe_0;
+  reg [13:0] btb_0_3 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_0_3_MPORT_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_3_MPORT_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_3_MPORT_addr; // @[btb.scala 66:47]
   wire [13:0] btb_0_3_MPORT_4_data; // @[btb.scala 66:47]
-  wire [5:0] btb_0_3_MPORT_4_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_0_3_MPORT_4_addr; // @[btb.scala 66:47]
   wire  btb_0_3_MPORT_4_mask; // @[btb.scala 66:47]
   wire  btb_0_3_MPORT_4_en; // @[btb.scala 66:47]
   reg  btb_0_3_MPORT_en_pipe_0;
-  reg [5:0] btb_0_3_MPORT_addr_pipe_0;
-  reg [13:0] btb_1_0 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] btb_0_3_MPORT_addr_pipe_0;
+  reg [13:0] btb_1_0 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_1_0_MPORT_1_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_0_MPORT_1_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_0_MPORT_1_addr; // @[btb.scala 66:47]
   wire [13:0] btb_1_0_MPORT_6_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_0_MPORT_6_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_0_MPORT_6_addr; // @[btb.scala 66:47]
   wire  btb_1_0_MPORT_6_mask; // @[btb.scala 66:47]
   wire  btb_1_0_MPORT_6_en; // @[btb.scala 66:47]
   reg  btb_1_0_MPORT_1_en_pipe_0;
-  reg [5:0] btb_1_0_MPORT_1_addr_pipe_0;
-  reg [13:0] btb_1_1 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] btb_1_0_MPORT_1_addr_pipe_0;
+  reg [13:0] btb_1_1 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_1_1_MPORT_1_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_1_MPORT_1_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_1_MPORT_1_addr; // @[btb.scala 66:47]
   wire [13:0] btb_1_1_MPORT_6_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_1_MPORT_6_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_1_MPORT_6_addr; // @[btb.scala 66:47]
   wire  btb_1_1_MPORT_6_mask; // @[btb.scala 66:47]
   wire  btb_1_1_MPORT_6_en; // @[btb.scala 66:47]
   reg  btb_1_1_MPORT_1_en_pipe_0;
-  reg [5:0] btb_1_1_MPORT_1_addr_pipe_0;
-  reg [13:0] btb_1_2 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] btb_1_1_MPORT_1_addr_pipe_0;
+  reg [13:0] btb_1_2 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_1_2_MPORT_1_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_2_MPORT_1_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_2_MPORT_1_addr; // @[btb.scala 66:47]
   wire [13:0] btb_1_2_MPORT_6_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_2_MPORT_6_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_2_MPORT_6_addr; // @[btb.scala 66:47]
   wire  btb_1_2_MPORT_6_mask; // @[btb.scala 66:47]
   wire  btb_1_2_MPORT_6_en; // @[btb.scala 66:47]
   reg  btb_1_2_MPORT_1_en_pipe_0;
-  reg [5:0] btb_1_2_MPORT_1_addr_pipe_0;
-  reg [13:0] btb_1_3 [0:63]; // @[btb.scala 66:47]
+  reg [6:0] btb_1_2_MPORT_1_addr_pipe_0;
+  reg [13:0] btb_1_3 [0:127]; // @[btb.scala 66:47]
   wire [13:0] btb_1_3_MPORT_1_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_3_MPORT_1_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_3_MPORT_1_addr; // @[btb.scala 66:47]
   wire [13:0] btb_1_3_MPORT_6_data; // @[btb.scala 66:47]
-  wire [5:0] btb_1_3_MPORT_6_addr; // @[btb.scala 66:47]
+  wire [6:0] btb_1_3_MPORT_6_addr; // @[btb.scala 66:47]
   wire  btb_1_3_MPORT_6_mask; // @[btb.scala 66:47]
   wire  btb_1_3_MPORT_6_en; // @[btb.scala 66:47]
   reg  btb_1_3_MPORT_1_en_pipe_0;
-  reg [5:0] btb_1_3_MPORT_1_addr_pipe_0;
-  reg [39:0] ebtb [0:63]; // @[btb.scala 67:29]
+  reg [6:0] btb_1_3_MPORT_1_addr_pipe_0;
+  reg [39:0] ebtb [0:127]; // @[btb.scala 67:29]
   wire [39:0] ebtb_s1_req_rebtb_data; // @[btb.scala 67:29]
-  wire [5:0] ebtb_s1_req_rebtb_addr; // @[btb.scala 67:29]
+  wire [6:0] ebtb_s1_req_rebtb_addr; // @[btb.scala 67:29]
   wire [39:0] ebtb_MPORT_8_data; // @[btb.scala 67:29]
-  wire [5:0] ebtb_MPORT_8_addr; // @[btb.scala 67:29]
+  wire [6:0] ebtb_MPORT_8_addr; // @[btb.scala 67:29]
   wire  ebtb_MPORT_8_mask; // @[btb.scala 67:29]
   wire  ebtb_MPORT_8_en; // @[btb.scala 67:29]
   reg  ebtb_s1_req_rebtb_en_pipe_0;
-  reg [5:0] ebtb_s1_req_rebtb_addr_pipe_0;
+  reg [6:0] ebtb_s1_req_rebtb_addr_pipe_0;
   wire [36:0] s0_idx = io_f0_pc[39:3]; // @[frontend.scala 163:35]
   reg [36:0] s1_idx; // @[predictor.scala 163:29]
   reg  s1_valid; // @[predictor.scala 168:25]
@@ -443,15 +443,15 @@ module BTBBranchPredictorBank(
   reg [1:0] s1_update__bits_cfi_idx_bits; // @[predictor.scala 184:30]
   reg  s1_update__bits_cfi_taken; // @[predictor.scala 184:30]
   reg [39:0] s1_update__bits_target; // @[predictor.scala 184:30]
-  reg [44:0] s1_update__bits_meta; // @[predictor.scala 184:30]
+  reg [119:0] s1_update__bits_meta; // @[predictor.scala 184:30]
   reg [36:0] s1_update_idx; // @[predictor.scala 185:30]
   reg  REG_write_way; // @[btb.scala 53:32]
   reg  f3_meta_write_way; // @[btb.scala 53:24]
   reg  doing_reset; // @[btb.scala 60:28]
-  reg [5:0] reset_idx; // @[btb.scala 61:28]
-  wire [5:0] _GEN_158 = {{5'd0}, doing_reset}; // @[btb.scala 62:26]
-  wire [5:0] _T_1 = reset_idx + _GEN_158; // @[btb.scala 62:26]
-  wire  _GEN_0 = reset_idx == 6'h3f ? 1'h0 : doing_reset; // @[btb.scala 63:36 btb.scala 63:50 btb.scala 60:28]
+  reg [6:0] reset_idx; // @[btb.scala 61:28]
+  wire [6:0] _GEN_158 = {{6'd0}, doing_reset}; // @[btb.scala 62:26]
+  wire [6:0] _T_1 = reset_idx + _GEN_158; // @[btb.scala 62:26]
+  wire  _GEN_0 = reset_idx == 7'h7f ? 1'h0 : doing_reset; // @[btb.scala 63:36 btb.scala 63:50 btb.scala 60:28]
   wire [13:0] _WIRE_2 = btb_0_0_MPORT_data;
   wire  s1_req_rbtb_0_0_extended = _WIRE_2[0]; // @[btb.scala 73:93]
   wire [12:0] s1_req_rbtb_0_0_offset = _WIRE_2[13:1]; // @[btb.scala 73:93]
@@ -476,31 +476,31 @@ module BTBBranchPredictorBank(
   wire [13:0] _WIRE_18 = btb_1_3_MPORT_1_data;
   wire  s1_req_rbtb_1_3_extended = _WIRE_18[0]; // @[btb.scala 73:93]
   wire [12:0] s1_req_rbtb_1_3_offset = _WIRE_18[13:1]; // @[btb.scala 73:93]
-  wire [31:0] _WIRE_22 = meta_0_0_MPORT_2_data;
-  wire [30:0] s1_req_rmeta_0_0_tag = _WIRE_22[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_0_0_is_br = _WIRE_22[31]; // @[btb.scala 74:93]
-  wire [31:0] _WIRE_24 = meta_0_1_MPORT_2_data;
-  wire [30:0] s1_req_rmeta_0_1_tag = _WIRE_24[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_0_1_is_br = _WIRE_24[31]; // @[btb.scala 74:93]
-  wire [31:0] _WIRE_26 = meta_0_2_MPORT_2_data;
-  wire [30:0] s1_req_rmeta_0_2_tag = _WIRE_26[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_0_2_is_br = _WIRE_26[31]; // @[btb.scala 74:93]
-  wire [31:0] _WIRE_28 = meta_0_3_MPORT_2_data;
-  wire [30:0] s1_req_rmeta_0_3_tag = _WIRE_28[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_0_3_is_br = _WIRE_28[31]; // @[btb.scala 74:93]
-  wire [31:0] _WIRE_32 = meta_1_0_MPORT_3_data;
-  wire [30:0] s1_req_rmeta_1_0_tag = _WIRE_32[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_1_0_is_br = _WIRE_32[31]; // @[btb.scala 74:93]
-  wire [31:0] _WIRE_34 = meta_1_1_MPORT_3_data;
-  wire [30:0] s1_req_rmeta_1_1_tag = _WIRE_34[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_1_1_is_br = _WIRE_34[31]; // @[btb.scala 74:93]
-  wire [31:0] _WIRE_36 = meta_1_2_MPORT_3_data;
-  wire [30:0] s1_req_rmeta_1_2_tag = _WIRE_36[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_1_2_is_br = _WIRE_36[31]; // @[btb.scala 74:93]
-  wire [31:0] _WIRE_38 = meta_1_3_MPORT_3_data;
-  wire [30:0] s1_req_rmeta_1_3_tag = _WIRE_38[30:0]; // @[btb.scala 74:93]
-  wire  s1_req_rmeta_1_3_is_br = _WIRE_38[31]; // @[btb.scala 74:93]
-  wire [30:0] s1_req_tag = s1_idx[36:6]; // @[btb.scala 76:29]
+  wire [30:0] _WIRE_22 = meta_0_0_MPORT_2_data;
+  wire [29:0] s1_req_rmeta_0_0_tag = _WIRE_22[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_0_0_is_br = _WIRE_22[30]; // @[btb.scala 74:93]
+  wire [30:0] _WIRE_24 = meta_0_1_MPORT_2_data;
+  wire [29:0] s1_req_rmeta_0_1_tag = _WIRE_24[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_0_1_is_br = _WIRE_24[30]; // @[btb.scala 74:93]
+  wire [30:0] _WIRE_26 = meta_0_2_MPORT_2_data;
+  wire [29:0] s1_req_rmeta_0_2_tag = _WIRE_26[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_0_2_is_br = _WIRE_26[30]; // @[btb.scala 74:93]
+  wire [30:0] _WIRE_28 = meta_0_3_MPORT_2_data;
+  wire [29:0] s1_req_rmeta_0_3_tag = _WIRE_28[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_0_3_is_br = _WIRE_28[30]; // @[btb.scala 74:93]
+  wire [30:0] _WIRE_32 = meta_1_0_MPORT_3_data;
+  wire [29:0] s1_req_rmeta_1_0_tag = _WIRE_32[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_1_0_is_br = _WIRE_32[30]; // @[btb.scala 74:93]
+  wire [30:0] _WIRE_34 = meta_1_1_MPORT_3_data;
+  wire [29:0] s1_req_rmeta_1_1_tag = _WIRE_34[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_1_1_is_br = _WIRE_34[30]; // @[btb.scala 74:93]
+  wire [30:0] _WIRE_36 = meta_1_2_MPORT_3_data;
+  wire [29:0] s1_req_rmeta_1_2_tag = _WIRE_36[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_1_2_is_br = _WIRE_36[30]; // @[btb.scala 74:93]
+  wire [30:0] _WIRE_38 = meta_1_3_MPORT_3_data;
+  wire [29:0] s1_req_rmeta_1_3_tag = _WIRE_38[29:0]; // @[btb.scala 74:93]
+  wire  s1_req_rmeta_1_3_is_br = _WIRE_38[30]; // @[btb.scala 74:93]
+  wire [29:0] s1_req_tag = s1_idx[36:7]; // @[btb.scala 76:29]
   wire  s1_hit_ohs_0_0 = s1_req_rmeta_0_0_tag == s1_req_tag; // @[btb.scala 84:30]
   wire  s1_hit_ohs_0_1 = s1_req_rmeta_1_0_tag == s1_req_tag; // @[btb.scala 84:30]
   wire  s1_hit_ohs_1_0 = s1_req_rmeta_0_1_tag == s1_req_tag; // @[btb.scala 84:30]
@@ -616,194 +616,192 @@ module BTBBranchPredictorBank(
   reg  REG_47; // @[btb.scala 116:28]
   reg  REG_48; // @[btb.scala 116:20]
   wire  _GEN_75 = REG_48 | io_resp_in_0_f3_3_taken; // @[btb.scala 116:45 btb.scala 117:34 btb.scala 103:19]
-  wire [278:0] _T_145 = {s1_req_rmeta_1_3_tag,s1_req_rmeta_1_2_tag,s1_req_rmeta_1_1_tag,s1_req_rmeta_1_0_tag,
+  wire [269:0] _T_145 = {s1_req_rmeta_1_3_tag,s1_req_rmeta_1_2_tag,s1_req_rmeta_1_1_tag,s1_req_rmeta_1_0_tag,
     s1_req_rmeta_0_3_tag,s1_req_rmeta_0_2_tag,s1_req_rmeta_0_1_tag,s1_req_rmeta_0_0_tag,s1_req_tag}; // @[Cat.scala 30:58]
-  wire  _T_454 = _T_145[0] ^ _T_145[1] ^ _T_145[2] ^ _T_145[3] ^ _T_145[4] ^ _T_145[5] ^ _T_145[6] ^ _T_145[7] ^ _T_145[
+  wire  _T_445 = _T_145[0] ^ _T_145[1] ^ _T_145[2] ^ _T_145[3] ^ _T_145[4] ^ _T_145[5] ^ _T_145[6] ^ _T_145[7] ^ _T_145[
     8] ^ _T_145[9] ^ _T_145[10] ^ _T_145[11] ^ _T_145[12] ^ _T_145[13] ^ _T_145[14] ^ _T_145[15] ^ _T_145[16] ^ _T_145[
     17] ^ _T_145[18] ^ _T_145[19] ^ _T_145[20] ^ _T_145[21] ^ _T_145[22] ^ _T_145[23] ^ _T_145[24] ^ _T_145[25] ^ _T_145
     [26] ^ _T_145[27] ^ _T_145[28] ^ _T_145[29] ^ _T_145[30]; // @[btb.scala 129:20]
-  wire  _T_484 = _T_454 ^ _T_145[31] ^ _T_145[32] ^ _T_145[33] ^ _T_145[34] ^ _T_145[35] ^ _T_145[36] ^ _T_145[37] ^
+  wire  _T_475 = _T_445 ^ _T_145[31] ^ _T_145[32] ^ _T_145[33] ^ _T_145[34] ^ _T_145[35] ^ _T_145[36] ^ _T_145[37] ^
     _T_145[38] ^ _T_145[39] ^ _T_145[40] ^ _T_145[41] ^ _T_145[42] ^ _T_145[43] ^ _T_145[44] ^ _T_145[45] ^ _T_145[46]
      ^ _T_145[47] ^ _T_145[48] ^ _T_145[49] ^ _T_145[50] ^ _T_145[51] ^ _T_145[52] ^ _T_145[53] ^ _T_145[54] ^ _T_145[55
     ] ^ _T_145[56] ^ _T_145[57] ^ _T_145[58] ^ _T_145[59] ^ _T_145[60]; // @[btb.scala 129:20]
-  wire  _T_514 = _T_484 ^ _T_145[61] ^ _T_145[62] ^ _T_145[63] ^ _T_145[64] ^ _T_145[65] ^ _T_145[66] ^ _T_145[67] ^
+  wire  _T_505 = _T_475 ^ _T_145[61] ^ _T_145[62] ^ _T_145[63] ^ _T_145[64] ^ _T_145[65] ^ _T_145[66] ^ _T_145[67] ^
     _T_145[68] ^ _T_145[69] ^ _T_145[70] ^ _T_145[71] ^ _T_145[72] ^ _T_145[73] ^ _T_145[74] ^ _T_145[75] ^ _T_145[76]
      ^ _T_145[77] ^ _T_145[78] ^ _T_145[79] ^ _T_145[80] ^ _T_145[81] ^ _T_145[82] ^ _T_145[83] ^ _T_145[84] ^ _T_145[85
     ] ^ _T_145[86] ^ _T_145[87] ^ _T_145[88] ^ _T_145[89] ^ _T_145[90]; // @[btb.scala 129:20]
-  wire  _T_544 = _T_514 ^ _T_145[91] ^ _T_145[92] ^ _T_145[93] ^ _T_145[94] ^ _T_145[95] ^ _T_145[96] ^ _T_145[97] ^
+  wire  _T_535 = _T_505 ^ _T_145[91] ^ _T_145[92] ^ _T_145[93] ^ _T_145[94] ^ _T_145[95] ^ _T_145[96] ^ _T_145[97] ^
     _T_145[98] ^ _T_145[99] ^ _T_145[100] ^ _T_145[101] ^ _T_145[102] ^ _T_145[103] ^ _T_145[104] ^ _T_145[105] ^ _T_145
     [106] ^ _T_145[107] ^ _T_145[108] ^ _T_145[109] ^ _T_145[110] ^ _T_145[111] ^ _T_145[112] ^ _T_145[113] ^ _T_145[114
     ] ^ _T_145[115] ^ _T_145[116] ^ _T_145[117] ^ _T_145[118] ^ _T_145[119] ^ _T_145[120]; // @[btb.scala 129:20]
-  wire  _T_574 = _T_544 ^ _T_145[121] ^ _T_145[122] ^ _T_145[123] ^ _T_145[124] ^ _T_145[125] ^ _T_145[126] ^ _T_145[127
+  wire  _T_565 = _T_535 ^ _T_145[121] ^ _T_145[122] ^ _T_145[123] ^ _T_145[124] ^ _T_145[125] ^ _T_145[126] ^ _T_145[127
     ] ^ _T_145[128] ^ _T_145[129] ^ _T_145[130] ^ _T_145[131] ^ _T_145[132] ^ _T_145[133] ^ _T_145[134] ^ _T_145[135] ^
     _T_145[136] ^ _T_145[137] ^ _T_145[138] ^ _T_145[139] ^ _T_145[140] ^ _T_145[141] ^ _T_145[142] ^ _T_145[143] ^
     _T_145[144] ^ _T_145[145] ^ _T_145[146] ^ _T_145[147] ^ _T_145[148] ^ _T_145[149] ^ _T_145[150]; // @[btb.scala 129:20]
-  wire  _T_604 = _T_574 ^ _T_145[151] ^ _T_145[152] ^ _T_145[153] ^ _T_145[154] ^ _T_145[155] ^ _T_145[156] ^ _T_145[157
+  wire  _T_595 = _T_565 ^ _T_145[151] ^ _T_145[152] ^ _T_145[153] ^ _T_145[154] ^ _T_145[155] ^ _T_145[156] ^ _T_145[157
     ] ^ _T_145[158] ^ _T_145[159] ^ _T_145[160] ^ _T_145[161] ^ _T_145[162] ^ _T_145[163] ^ _T_145[164] ^ _T_145[165] ^
     _T_145[166] ^ _T_145[167] ^ _T_145[168] ^ _T_145[169] ^ _T_145[170] ^ _T_145[171] ^ _T_145[172] ^ _T_145[173] ^
     _T_145[174] ^ _T_145[175] ^ _T_145[176] ^ _T_145[177] ^ _T_145[178] ^ _T_145[179] ^ _T_145[180]; // @[btb.scala 129:20]
-  wire  _T_634 = _T_604 ^ _T_145[181] ^ _T_145[182] ^ _T_145[183] ^ _T_145[184] ^ _T_145[185] ^ _T_145[186] ^ _T_145[187
+  wire  _T_625 = _T_595 ^ _T_145[181] ^ _T_145[182] ^ _T_145[183] ^ _T_145[184] ^ _T_145[185] ^ _T_145[186] ^ _T_145[187
     ] ^ _T_145[188] ^ _T_145[189] ^ _T_145[190] ^ _T_145[191] ^ _T_145[192] ^ _T_145[193] ^ _T_145[194] ^ _T_145[195] ^
     _T_145[196] ^ _T_145[197] ^ _T_145[198] ^ _T_145[199] ^ _T_145[200] ^ _T_145[201] ^ _T_145[202] ^ _T_145[203] ^
     _T_145[204] ^ _T_145[205] ^ _T_145[206] ^ _T_145[207] ^ _T_145[208] ^ _T_145[209] ^ _T_145[210]; // @[btb.scala 129:20]
-  wire  _T_664 = _T_634 ^ _T_145[211] ^ _T_145[212] ^ _T_145[213] ^ _T_145[214] ^ _T_145[215] ^ _T_145[216] ^ _T_145[217
+  wire  _T_655 = _T_625 ^ _T_145[211] ^ _T_145[212] ^ _T_145[213] ^ _T_145[214] ^ _T_145[215] ^ _T_145[216] ^ _T_145[217
     ] ^ _T_145[218] ^ _T_145[219] ^ _T_145[220] ^ _T_145[221] ^ _T_145[222] ^ _T_145[223] ^ _T_145[224] ^ _T_145[225] ^
     _T_145[226] ^ _T_145[227] ^ _T_145[228] ^ _T_145[229] ^ _T_145[230] ^ _T_145[231] ^ _T_145[232] ^ _T_145[233] ^
     _T_145[234] ^ _T_145[235] ^ _T_145[236] ^ _T_145[237] ^ _T_145[238] ^ _T_145[239] ^ _T_145[240]; // @[btb.scala 129:20]
-  wire  _T_694 = _T_664 ^ _T_145[241] ^ _T_145[242] ^ _T_145[243] ^ _T_145[244] ^ _T_145[245] ^ _T_145[246] ^ _T_145[247
-    ] ^ _T_145[248] ^ _T_145[249] ^ _T_145[250] ^ _T_145[251] ^ _T_145[252] ^ _T_145[253] ^ _T_145[254] ^ _T_145[255] ^
-    _T_145[256] ^ _T_145[257] ^ _T_145[258] ^ _T_145[259] ^ _T_145[260] ^ _T_145[261] ^ _T_145[262] ^ _T_145[263] ^
-    _T_145[264] ^ _T_145[265] ^ _T_145[266] ^ _T_145[267] ^ _T_145[268] ^ _T_145[269] ^ _T_145[270]; // @[btb.scala 129:20]
-  wire  alloc_way = _T_694 ^ _T_145[271] ^ _T_145[272] ^ _T_145[273] ^ _T_145[274] ^ _T_145[275] ^ _T_145[276] ^ _T_145[
-    277] ^ _T_145[278]; // @[btb.scala 129:20]
-  wire [1:0] _T_705 = {s1_hit_ohs_0_1,s1_hit_ohs_0_0}; // @[btb.scala 134:38]
-  wire [1:0] _T_706 = {s1_hit_ohs_1_1,s1_hit_ohs_1_0}; // @[btb.scala 134:38]
-  wire [1:0] _T_707 = {s1_hit_ohs_2_1,s1_hit_ohs_2_0}; // @[btb.scala 134:38]
-  wire [1:0] _T_708 = {s1_hit_ohs_3_1,s1_hit_ohs_3_0}; // @[btb.scala 134:38]
-  wire [1:0] _T_709 = _T_705 | _T_706; // @[btb.scala 134:54]
-  wire [1:0] _T_710 = _T_709 | _T_707; // @[btb.scala 134:54]
-  wire [1:0] _T_711 = _T_710 | _T_708; // @[btb.scala 134:54]
+  wire  alloc_way = _T_655 ^ _T_145[241] ^ _T_145[242] ^ _T_145[243] ^ _T_145[244] ^ _T_145[245] ^ _T_145[246] ^ _T_145[
+    247] ^ _T_145[248] ^ _T_145[249] ^ _T_145[250] ^ _T_145[251] ^ _T_145[252] ^ _T_145[253] ^ _T_145[254] ^ _T_145[255]
+     ^ _T_145[256] ^ _T_145[257] ^ _T_145[258] ^ _T_145[259] ^ _T_145[260] ^ _T_145[261] ^ _T_145[262] ^ _T_145[263] ^
+    _T_145[264] ^ _T_145[265] ^ _T_145[266] ^ _T_145[267] ^ _T_145[268] ^ _T_145[269]; // @[btb.scala 129:20]
+  wire [1:0] _T_687 = {s1_hit_ohs_0_1,s1_hit_ohs_0_0}; // @[btb.scala 134:38]
+  wire [1:0] _T_688 = {s1_hit_ohs_1_1,s1_hit_ohs_1_0}; // @[btb.scala 134:38]
+  wire [1:0] _T_689 = {s1_hit_ohs_2_1,s1_hit_ohs_2_0}; // @[btb.scala 134:38]
+  wire [1:0] _T_690 = {s1_hit_ohs_3_1,s1_hit_ohs_3_0}; // @[btb.scala 134:38]
+  wire [1:0] _T_691 = _T_687 | _T_688; // @[btb.scala 134:54]
+  wire [1:0] _T_692 = _T_691 | _T_689; // @[btb.scala 134:54]
+  wire [1:0] _T_693 = _T_692 | _T_690; // @[btb.scala 134:54]
   wire  s1_update_meta_write_way = s1_update__bits_meta[0];
-  wire [2:0] _T_720 = {s1_update__bits_cfi_idx_bits, 1'h0}; // @[btb.scala 143:55]
-  wire [39:0] _GEN_163 = {{37'd0}, _T_720}; // @[btb.scala 143:24]
-  wire [39:0] _T_723 = s1_update__bits_pc + _GEN_163; // @[btb.scala 143:62]
-  wire [39:0] new_offset_value = $signed(s1_update__bits_target) - $signed(_T_723); // @[btb.scala 142:56]
-  wire  _T_727 = $signed(new_offset_value) < -40'sh1000; // @[btb.scala 145:46]
-  wire  offset_is_extended = $signed(new_offset_value) > 40'shfff | _T_727; // @[btb.scala 144:65]
-  wire [3:0] _T_728 = 4'h1 << s1_update__bits_cfi_idx_bits; // @[OneHot.scala 58:35]
-  wire  _T_732 = s1_update__bits_btb_mispredicts != 4'h0; // @[predictor.scala 94:50]
-  wire  _T_734 = ~(s1_update__bits_is_mispredict_update | s1_update__bits_is_repair_update | _T_732); // @[predictor.scala 96:26]
-  wire  _T_735 = s1_update__bits_cfi_idx_valid & s1_update__valid & s1_update__bits_cfi_taken & _T_734; // @[btb.scala 152:97]
-  wire [3:0] _T_737 = _T_735 ? 4'hf : 4'h0; // @[Bitwise.scala 72:12]
-  wire [3:0] s1_update_wbtb_mask = _T_728 & _T_737; // @[btb.scala 151:58]
-  wire [3:0] _T_738 = s1_update_wbtb_mask | s1_update__bits_br_mask; // @[btb.scala 154:52]
-  wire  _T_743 = s1_update__valid & _T_734; // @[btb.scala 155:38]
-  wire [3:0] _T_745 = _T_743 ? 4'hf : 4'h0; // @[Bitwise.scala 72:12]
-  wire [3:0] _T_747 = s1_update__valid ? 4'hf : 4'h0; // @[Bitwise.scala 72:12]
-  wire [3:0] _T_748 = _T_747 & s1_update__bits_btb_mispredicts; // @[btb.scala 156:40]
-  wire [3:0] _T_749 = _T_745 | _T_748; // @[btb.scala 155:74]
-  wire [3:0] s1_update_wmeta_mask = _T_738 & _T_749; // @[btb.scala 154:78]
-  wire [30:0] s1_update_wmeta_data_0_tag = s1_update__bits_btb_mispredicts[0] ? 31'h0 : s1_update_idx[36:6]; // @[btb.scala 162:43]
+  wire [2:0] _T_702 = {s1_update__bits_cfi_idx_bits, 1'h0}; // @[btb.scala 143:55]
+  wire [39:0] _GEN_163 = {{37'd0}, _T_702}; // @[btb.scala 143:24]
+  wire [39:0] _T_705 = s1_update__bits_pc + _GEN_163; // @[btb.scala 143:62]
+  wire [39:0] new_offset_value = $signed(s1_update__bits_target) - $signed(_T_705); // @[btb.scala 142:56]
+  wire  _T_709 = $signed(new_offset_value) < -40'sh1000; // @[btb.scala 145:46]
+  wire  offset_is_extended = $signed(new_offset_value) > 40'shfff | _T_709; // @[btb.scala 144:65]
+  wire [3:0] _T_710 = 4'h1 << s1_update__bits_cfi_idx_bits; // @[OneHot.scala 58:35]
+  wire  _T_714 = s1_update__bits_btb_mispredicts != 4'h0; // @[predictor.scala 94:50]
+  wire  _T_716 = ~(s1_update__bits_is_mispredict_update | s1_update__bits_is_repair_update | _T_714); // @[predictor.scala 96:26]
+  wire  _T_717 = s1_update__bits_cfi_idx_valid & s1_update__valid & s1_update__bits_cfi_taken & _T_716; // @[btb.scala 152:97]
+  wire [3:0] _T_719 = _T_717 ? 4'hf : 4'h0; // @[Bitwise.scala 72:12]
+  wire [3:0] s1_update_wbtb_mask = _T_710 & _T_719; // @[btb.scala 151:58]
+  wire [3:0] _T_720 = s1_update_wbtb_mask | s1_update__bits_br_mask; // @[btb.scala 154:52]
+  wire  _T_725 = s1_update__valid & _T_716; // @[btb.scala 155:38]
+  wire [3:0] _T_727 = _T_725 ? 4'hf : 4'h0; // @[Bitwise.scala 72:12]
+  wire [3:0] _T_729 = s1_update__valid ? 4'hf : 4'h0; // @[Bitwise.scala 72:12]
+  wire [3:0] _T_730 = _T_729 & s1_update__bits_btb_mispredicts; // @[btb.scala 156:40]
+  wire [3:0] _T_731 = _T_727 | _T_730; // @[btb.scala 155:74]
+  wire [3:0] s1_update_wmeta_mask = _T_720 & _T_731; // @[btb.scala 154:78]
+  wire [29:0] s1_update_wmeta_data_0_tag = s1_update__bits_btb_mispredicts[0] ? 30'h0 : s1_update_idx[36:7]; // @[btb.scala 162:43]
   wire  s1_update_wmeta_data_0_is_br = s1_update__bits_br_mask[0]; // @[btb.scala 163:62]
-  wire [30:0] s1_update_wmeta_data_1_tag = s1_update__bits_btb_mispredicts[1] ? 31'h0 : s1_update_idx[36:6]; // @[btb.scala 162:43]
+  wire [29:0] s1_update_wmeta_data_1_tag = s1_update__bits_btb_mispredicts[1] ? 30'h0 : s1_update_idx[36:7]; // @[btb.scala 162:43]
   wire  s1_update_wmeta_data_1_is_br = s1_update__bits_br_mask[1]; // @[btb.scala 163:62]
-  wire [30:0] s1_update_wmeta_data_2_tag = s1_update__bits_btb_mispredicts[2] ? 31'h0 : s1_update_idx[36:6]; // @[btb.scala 162:43]
+  wire [29:0] s1_update_wmeta_data_2_tag = s1_update__bits_btb_mispredicts[2] ? 30'h0 : s1_update_idx[36:7]; // @[btb.scala 162:43]
   wire  s1_update_wmeta_data_2_is_br = s1_update__bits_br_mask[2]; // @[btb.scala 163:62]
-  wire [30:0] s1_update_wmeta_data_3_tag = s1_update__bits_btb_mispredicts[3] ? 31'h0 : s1_update_idx[36:6]; // @[btb.scala 162:43]
+  wire [29:0] s1_update_wmeta_data_3_tag = s1_update__bits_btb_mispredicts[3] ? 30'h0 : s1_update_idx[36:7]; // @[btb.scala 162:43]
   wire  s1_update_wmeta_data_3_is_br = s1_update__bits_br_mask[3]; // @[btb.scala 163:62]
-  wire  _T_766 = ~s1_update_meta_write_way; // @[btb.scala 167:51]
-  wire [36:0] _T_769 = doing_reset ? {{31'd0}, reset_idx} : s1_update_idx; // @[btb.scala 169:12]
+  wire  _T_748 = ~s1_update_meta_write_way; // @[btb.scala 167:51]
+  wire [36:0] _T_751 = doing_reset ? {{30'd0}, reset_idx} : s1_update_idx; // @[btb.scala 169:12]
   wire [12:0] hi_2 = new_offset_value[12:0]; // @[btb.scala 174:61]
-  wire [13:0] _T_770 = {hi_2,offset_is_extended}; // @[btb.scala 174:61]
-  wire [3:0] _T_776 = doing_reset ? 4'hf : s1_update_wbtb_mask; // @[btb.scala 175:12]
-  wire [31:0] _T_784 = {s1_update_wmeta_data_0_is_br,s1_update_wmeta_data_0_tag}; // @[btb.scala 185:46]
-  wire [31:0] _T_785 = {s1_update_wmeta_data_1_is_br,s1_update_wmeta_data_1_tag}; // @[btb.scala 185:46]
-  wire [31:0] _T_786 = {s1_update_wmeta_data_2_is_br,s1_update_wmeta_data_2_tag}; // @[btb.scala 185:46]
-  wire [31:0] _T_787 = {s1_update_wmeta_data_3_is_br,s1_update_wmeta_data_3_tag}; // @[btb.scala 185:46]
-  wire [3:0] _T_790 = doing_reset ? 4'hf : s1_update_wmeta_mask; // @[btb.scala 186:12]
-  wire  _T_828 = s1_update_wbtb_mask != 4'h0; // @[btb.scala 194:29]
+  wire [13:0] _T_752 = {hi_2,offset_is_extended}; // @[btb.scala 174:61]
+  wire [3:0] _T_758 = doing_reset ? 4'hf : s1_update_wbtb_mask; // @[btb.scala 175:12]
+  wire [30:0] _T_766 = {s1_update_wmeta_data_0_is_br,s1_update_wmeta_data_0_tag}; // @[btb.scala 185:46]
+  wire [30:0] _T_767 = {s1_update_wmeta_data_1_is_br,s1_update_wmeta_data_1_tag}; // @[btb.scala 185:46]
+  wire [30:0] _T_768 = {s1_update_wmeta_data_2_is_br,s1_update_wmeta_data_2_tag}; // @[btb.scala 185:46]
+  wire [30:0] _T_769 = {s1_update_wmeta_data_3_is_br,s1_update_wmeta_data_3_tag}; // @[btb.scala 185:46]
+  wire [3:0] _T_772 = doing_reset ? 4'hf : s1_update_wmeta_mask; // @[btb.scala 186:12]
+  wire  _T_810 = s1_update_wbtb_mask != 4'h0; // @[btb.scala 194:29]
   assign meta_0_0_MPORT_2_addr = meta_0_0_MPORT_2_addr_pipe_0;
   assign meta_0_0_MPORT_2_data = meta_0_0[meta_0_0_MPORT_2_addr]; // @[btb.scala 65:47]
-  assign meta_0_0_MPORT_5_data = doing_reset ? 32'h0 : _T_784;
-  assign meta_0_0_MPORT_5_addr = _T_769[5:0];
-  assign meta_0_0_MPORT_5_mask = _T_790[0];
-  assign meta_0_0_MPORT_5_en = doing_reset | _T_766;
+  assign meta_0_0_MPORT_5_data = doing_reset ? 31'h0 : _T_766;
+  assign meta_0_0_MPORT_5_addr = _T_751[6:0];
+  assign meta_0_0_MPORT_5_mask = _T_772[0];
+  assign meta_0_0_MPORT_5_en = doing_reset | _T_748;
   assign meta_0_1_MPORT_2_addr = meta_0_1_MPORT_2_addr_pipe_0;
   assign meta_0_1_MPORT_2_data = meta_0_1[meta_0_1_MPORT_2_addr]; // @[btb.scala 65:47]
-  assign meta_0_1_MPORT_5_data = doing_reset ? 32'h0 : _T_785;
-  assign meta_0_1_MPORT_5_addr = _T_769[5:0];
-  assign meta_0_1_MPORT_5_mask = _T_790[1];
-  assign meta_0_1_MPORT_5_en = doing_reset | _T_766;
+  assign meta_0_1_MPORT_5_data = doing_reset ? 31'h0 : _T_767;
+  assign meta_0_1_MPORT_5_addr = _T_751[6:0];
+  assign meta_0_1_MPORT_5_mask = _T_772[1];
+  assign meta_0_1_MPORT_5_en = doing_reset | _T_748;
   assign meta_0_2_MPORT_2_addr = meta_0_2_MPORT_2_addr_pipe_0;
   assign meta_0_2_MPORT_2_data = meta_0_2[meta_0_2_MPORT_2_addr]; // @[btb.scala 65:47]
-  assign meta_0_2_MPORT_5_data = doing_reset ? 32'h0 : _T_786;
-  assign meta_0_2_MPORT_5_addr = _T_769[5:0];
-  assign meta_0_2_MPORT_5_mask = _T_790[2];
-  assign meta_0_2_MPORT_5_en = doing_reset | _T_766;
+  assign meta_0_2_MPORT_5_data = doing_reset ? 31'h0 : _T_768;
+  assign meta_0_2_MPORT_5_addr = _T_751[6:0];
+  assign meta_0_2_MPORT_5_mask = _T_772[2];
+  assign meta_0_2_MPORT_5_en = doing_reset | _T_748;
   assign meta_0_3_MPORT_2_addr = meta_0_3_MPORT_2_addr_pipe_0;
   assign meta_0_3_MPORT_2_data = meta_0_3[meta_0_3_MPORT_2_addr]; // @[btb.scala 65:47]
-  assign meta_0_3_MPORT_5_data = doing_reset ? 32'h0 : _T_787;
-  assign meta_0_3_MPORT_5_addr = _T_769[5:0];
-  assign meta_0_3_MPORT_5_mask = _T_790[3];
-  assign meta_0_3_MPORT_5_en = doing_reset | _T_766;
+  assign meta_0_3_MPORT_5_data = doing_reset ? 31'h0 : _T_769;
+  assign meta_0_3_MPORT_5_addr = _T_751[6:0];
+  assign meta_0_3_MPORT_5_mask = _T_772[3];
+  assign meta_0_3_MPORT_5_en = doing_reset | _T_748;
   assign meta_1_0_MPORT_3_addr = meta_1_0_MPORT_3_addr_pipe_0;
   assign meta_1_0_MPORT_3_data = meta_1_0[meta_1_0_MPORT_3_addr]; // @[btb.scala 65:47]
-  assign meta_1_0_MPORT_7_data = doing_reset ? 32'h0 : _T_784;
-  assign meta_1_0_MPORT_7_addr = _T_769[5:0];
-  assign meta_1_0_MPORT_7_mask = _T_790[0];
+  assign meta_1_0_MPORT_7_data = doing_reset ? 31'h0 : _T_766;
+  assign meta_1_0_MPORT_7_addr = _T_751[6:0];
+  assign meta_1_0_MPORT_7_mask = _T_772[0];
   assign meta_1_0_MPORT_7_en = doing_reset | s1_update_meta_write_way;
   assign meta_1_1_MPORT_3_addr = meta_1_1_MPORT_3_addr_pipe_0;
   assign meta_1_1_MPORT_3_data = meta_1_1[meta_1_1_MPORT_3_addr]; // @[btb.scala 65:47]
-  assign meta_1_1_MPORT_7_data = doing_reset ? 32'h0 : _T_785;
-  assign meta_1_1_MPORT_7_addr = _T_769[5:0];
-  assign meta_1_1_MPORT_7_mask = _T_790[1];
+  assign meta_1_1_MPORT_7_data = doing_reset ? 31'h0 : _T_767;
+  assign meta_1_1_MPORT_7_addr = _T_751[6:0];
+  assign meta_1_1_MPORT_7_mask = _T_772[1];
   assign meta_1_1_MPORT_7_en = doing_reset | s1_update_meta_write_way;
   assign meta_1_2_MPORT_3_addr = meta_1_2_MPORT_3_addr_pipe_0;
   assign meta_1_2_MPORT_3_data = meta_1_2[meta_1_2_MPORT_3_addr]; // @[btb.scala 65:47]
-  assign meta_1_2_MPORT_7_data = doing_reset ? 32'h0 : _T_786;
-  assign meta_1_2_MPORT_7_addr = _T_769[5:0];
-  assign meta_1_2_MPORT_7_mask = _T_790[2];
+  assign meta_1_2_MPORT_7_data = doing_reset ? 31'h0 : _T_768;
+  assign meta_1_2_MPORT_7_addr = _T_751[6:0];
+  assign meta_1_2_MPORT_7_mask = _T_772[2];
   assign meta_1_2_MPORT_7_en = doing_reset | s1_update_meta_write_way;
   assign meta_1_3_MPORT_3_addr = meta_1_3_MPORT_3_addr_pipe_0;
   assign meta_1_3_MPORT_3_data = meta_1_3[meta_1_3_MPORT_3_addr]; // @[btb.scala 65:47]
-  assign meta_1_3_MPORT_7_data = doing_reset ? 32'h0 : _T_787;
-  assign meta_1_3_MPORT_7_addr = _T_769[5:0];
-  assign meta_1_3_MPORT_7_mask = _T_790[3];
+  assign meta_1_3_MPORT_7_data = doing_reset ? 31'h0 : _T_769;
+  assign meta_1_3_MPORT_7_addr = _T_751[6:0];
+  assign meta_1_3_MPORT_7_mask = _T_772[3];
   assign meta_1_3_MPORT_7_en = doing_reset | s1_update_meta_write_way;
   assign btb_0_0_MPORT_addr = btb_0_0_MPORT_addr_pipe_0;
   assign btb_0_0_MPORT_data = btb_0_0[btb_0_0_MPORT_addr]; // @[btb.scala 66:47]
-  assign btb_0_0_MPORT_4_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_0_0_MPORT_4_addr = _T_769[5:0];
-  assign btb_0_0_MPORT_4_mask = _T_776[0];
-  assign btb_0_0_MPORT_4_en = doing_reset | _T_766;
+  assign btb_0_0_MPORT_4_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_0_0_MPORT_4_addr = _T_751[6:0];
+  assign btb_0_0_MPORT_4_mask = _T_758[0];
+  assign btb_0_0_MPORT_4_en = doing_reset | _T_748;
   assign btb_0_1_MPORT_addr = btb_0_1_MPORT_addr_pipe_0;
   assign btb_0_1_MPORT_data = btb_0_1[btb_0_1_MPORT_addr]; // @[btb.scala 66:47]
-  assign btb_0_1_MPORT_4_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_0_1_MPORT_4_addr = _T_769[5:0];
-  assign btb_0_1_MPORT_4_mask = _T_776[1];
-  assign btb_0_1_MPORT_4_en = doing_reset | _T_766;
+  assign btb_0_1_MPORT_4_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_0_1_MPORT_4_addr = _T_751[6:0];
+  assign btb_0_1_MPORT_4_mask = _T_758[1];
+  assign btb_0_1_MPORT_4_en = doing_reset | _T_748;
   assign btb_0_2_MPORT_addr = btb_0_2_MPORT_addr_pipe_0;
   assign btb_0_2_MPORT_data = btb_0_2[btb_0_2_MPORT_addr]; // @[btb.scala 66:47]
-  assign btb_0_2_MPORT_4_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_0_2_MPORT_4_addr = _T_769[5:0];
-  assign btb_0_2_MPORT_4_mask = _T_776[2];
-  assign btb_0_2_MPORT_4_en = doing_reset | _T_766;
+  assign btb_0_2_MPORT_4_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_0_2_MPORT_4_addr = _T_751[6:0];
+  assign btb_0_2_MPORT_4_mask = _T_758[2];
+  assign btb_0_2_MPORT_4_en = doing_reset | _T_748;
   assign btb_0_3_MPORT_addr = btb_0_3_MPORT_addr_pipe_0;
   assign btb_0_3_MPORT_data = btb_0_3[btb_0_3_MPORT_addr]; // @[btb.scala 66:47]
-  assign btb_0_3_MPORT_4_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_0_3_MPORT_4_addr = _T_769[5:0];
-  assign btb_0_3_MPORT_4_mask = _T_776[3];
-  assign btb_0_3_MPORT_4_en = doing_reset | _T_766;
+  assign btb_0_3_MPORT_4_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_0_3_MPORT_4_addr = _T_751[6:0];
+  assign btb_0_3_MPORT_4_mask = _T_758[3];
+  assign btb_0_3_MPORT_4_en = doing_reset | _T_748;
   assign btb_1_0_MPORT_1_addr = btb_1_0_MPORT_1_addr_pipe_0;
   assign btb_1_0_MPORT_1_data = btb_1_0[btb_1_0_MPORT_1_addr]; // @[btb.scala 66:47]
-  assign btb_1_0_MPORT_6_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_1_0_MPORT_6_addr = _T_769[5:0];
-  assign btb_1_0_MPORT_6_mask = _T_776[0];
+  assign btb_1_0_MPORT_6_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_1_0_MPORT_6_addr = _T_751[6:0];
+  assign btb_1_0_MPORT_6_mask = _T_758[0];
   assign btb_1_0_MPORT_6_en = doing_reset | s1_update_meta_write_way;
   assign btb_1_1_MPORT_1_addr = btb_1_1_MPORT_1_addr_pipe_0;
   assign btb_1_1_MPORT_1_data = btb_1_1[btb_1_1_MPORT_1_addr]; // @[btb.scala 66:47]
-  assign btb_1_1_MPORT_6_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_1_1_MPORT_6_addr = _T_769[5:0];
-  assign btb_1_1_MPORT_6_mask = _T_776[1];
+  assign btb_1_1_MPORT_6_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_1_1_MPORT_6_addr = _T_751[6:0];
+  assign btb_1_1_MPORT_6_mask = _T_758[1];
   assign btb_1_1_MPORT_6_en = doing_reset | s1_update_meta_write_way;
   assign btb_1_2_MPORT_1_addr = btb_1_2_MPORT_1_addr_pipe_0;
   assign btb_1_2_MPORT_1_data = btb_1_2[btb_1_2_MPORT_1_addr]; // @[btb.scala 66:47]
-  assign btb_1_2_MPORT_6_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_1_2_MPORT_6_addr = _T_769[5:0];
-  assign btb_1_2_MPORT_6_mask = _T_776[2];
+  assign btb_1_2_MPORT_6_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_1_2_MPORT_6_addr = _T_751[6:0];
+  assign btb_1_2_MPORT_6_mask = _T_758[2];
   assign btb_1_2_MPORT_6_en = doing_reset | s1_update_meta_write_way;
   assign btb_1_3_MPORT_1_addr = btb_1_3_MPORT_1_addr_pipe_0;
   assign btb_1_3_MPORT_1_data = btb_1_3[btb_1_3_MPORT_1_addr]; // @[btb.scala 66:47]
-  assign btb_1_3_MPORT_6_data = doing_reset ? 14'h0 : _T_770;
-  assign btb_1_3_MPORT_6_addr = _T_769[5:0];
-  assign btb_1_3_MPORT_6_mask = _T_776[3];
+  assign btb_1_3_MPORT_6_data = doing_reset ? 14'h0 : _T_752;
+  assign btb_1_3_MPORT_6_addr = _T_751[6:0];
+  assign btb_1_3_MPORT_6_mask = _T_758[3];
   assign btb_1_3_MPORT_6_en = doing_reset | s1_update_meta_write_way;
   assign ebtb_s1_req_rebtb_addr = ebtb_s1_req_rebtb_addr_pipe_0;
   assign ebtb_s1_req_rebtb_data = ebtb[ebtb_s1_req_rebtb_addr]; // @[btb.scala 67:29]
   assign ebtb_MPORT_8_data = s1_update__bits_target;
-  assign ebtb_MPORT_8_addr = s1_update_idx[5:0];
+  assign ebtb_MPORT_8_addr = s1_update_idx[6:0];
   assign ebtb_MPORT_8_mask = 1'h1;
-  assign ebtb_MPORT_8_en = _T_828 & offset_is_extended;
+  assign ebtb_MPORT_8_en = _T_810 & offset_is_extended;
   assign io_resp_f1_0_taken = io_resp_in_0_f1_0_taken; // @[predictor.scala 158:11]
   assign io_resp_f1_0_is_br = io_resp_in_0_f1_0_is_br; // @[predictor.scala 158:11]
   assign io_resp_f1_0_is_jal = io_resp_in_0_f1_0_is_jal; // @[predictor.scala 158:11]
@@ -864,126 +862,126 @@ module BTBBranchPredictorBank(
   assign io_resp_f3_3_is_jal = REG_43 ? REG_46 : io_resp_in_0_f3_3_is_jal; // @[btb.scala 112:41 btb.scala 115:34 btb.scala 103:19]
   assign io_resp_f3_3_predicted_pc_valid = REG_43 ? REG_44_valid : io_resp_in_0_f3_3_predicted_pc_valid; // @[btb.scala 112:41 btb.scala 113:34 btb.scala 103:19]
   assign io_resp_f3_3_predicted_pc_bits = REG_43 ? REG_44_bits : io_resp_in_0_f3_3_predicted_pc_bits; // @[btb.scala 112:41 btb.scala 113:34 btb.scala 103:19]
-  assign io_f3_meta = {{44'd0}, f3_meta_write_way}; // @[btb.scala 56:14]
+  assign io_f3_meta = {{119'd0}, f3_meta_write_way}; // @[btb.scala 56:14]
   always @(posedge clock) begin
     if(meta_0_0_MPORT_5_en & meta_0_0_MPORT_5_mask) begin
       meta_0_0[meta_0_0_MPORT_5_addr] <= meta_0_0_MPORT_5_data; // @[btb.scala 65:47]
     end
     meta_0_0_MPORT_2_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_0_0_MPORT_2_addr_pipe_0 <= s0_idx[5:0];
+      meta_0_0_MPORT_2_addr_pipe_0 <= s0_idx[6:0];
     end
     if(meta_0_1_MPORT_5_en & meta_0_1_MPORT_5_mask) begin
       meta_0_1[meta_0_1_MPORT_5_addr] <= meta_0_1_MPORT_5_data; // @[btb.scala 65:47]
     end
     meta_0_1_MPORT_2_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_0_1_MPORT_2_addr_pipe_0 <= s0_idx[5:0];
+      meta_0_1_MPORT_2_addr_pipe_0 <= s0_idx[6:0];
     end
     if(meta_0_2_MPORT_5_en & meta_0_2_MPORT_5_mask) begin
       meta_0_2[meta_0_2_MPORT_5_addr] <= meta_0_2_MPORT_5_data; // @[btb.scala 65:47]
     end
     meta_0_2_MPORT_2_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_0_2_MPORT_2_addr_pipe_0 <= s0_idx[5:0];
+      meta_0_2_MPORT_2_addr_pipe_0 <= s0_idx[6:0];
     end
     if(meta_0_3_MPORT_5_en & meta_0_3_MPORT_5_mask) begin
       meta_0_3[meta_0_3_MPORT_5_addr] <= meta_0_3_MPORT_5_data; // @[btb.scala 65:47]
     end
     meta_0_3_MPORT_2_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_0_3_MPORT_2_addr_pipe_0 <= s0_idx[5:0];
+      meta_0_3_MPORT_2_addr_pipe_0 <= s0_idx[6:0];
     end
     if(meta_1_0_MPORT_7_en & meta_1_0_MPORT_7_mask) begin
       meta_1_0[meta_1_0_MPORT_7_addr] <= meta_1_0_MPORT_7_data; // @[btb.scala 65:47]
     end
     meta_1_0_MPORT_3_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_1_0_MPORT_3_addr_pipe_0 <= s0_idx[5:0];
+      meta_1_0_MPORT_3_addr_pipe_0 <= s0_idx[6:0];
     end
     if(meta_1_1_MPORT_7_en & meta_1_1_MPORT_7_mask) begin
       meta_1_1[meta_1_1_MPORT_7_addr] <= meta_1_1_MPORT_7_data; // @[btb.scala 65:47]
     end
     meta_1_1_MPORT_3_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_1_1_MPORT_3_addr_pipe_0 <= s0_idx[5:0];
+      meta_1_1_MPORT_3_addr_pipe_0 <= s0_idx[6:0];
     end
     if(meta_1_2_MPORT_7_en & meta_1_2_MPORT_7_mask) begin
       meta_1_2[meta_1_2_MPORT_7_addr] <= meta_1_2_MPORT_7_data; // @[btb.scala 65:47]
     end
     meta_1_2_MPORT_3_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_1_2_MPORT_3_addr_pipe_0 <= s0_idx[5:0];
+      meta_1_2_MPORT_3_addr_pipe_0 <= s0_idx[6:0];
     end
     if(meta_1_3_MPORT_7_en & meta_1_3_MPORT_7_mask) begin
       meta_1_3[meta_1_3_MPORT_7_addr] <= meta_1_3_MPORT_7_data; // @[btb.scala 65:47]
     end
     meta_1_3_MPORT_3_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      meta_1_3_MPORT_3_addr_pipe_0 <= s0_idx[5:0];
+      meta_1_3_MPORT_3_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_0_0_MPORT_4_en & btb_0_0_MPORT_4_mask) begin
       btb_0_0[btb_0_0_MPORT_4_addr] <= btb_0_0_MPORT_4_data; // @[btb.scala 66:47]
     end
     btb_0_0_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_0_0_MPORT_addr_pipe_0 <= s0_idx[5:0];
+      btb_0_0_MPORT_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_0_1_MPORT_4_en & btb_0_1_MPORT_4_mask) begin
       btb_0_1[btb_0_1_MPORT_4_addr] <= btb_0_1_MPORT_4_data; // @[btb.scala 66:47]
     end
     btb_0_1_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_0_1_MPORT_addr_pipe_0 <= s0_idx[5:0];
+      btb_0_1_MPORT_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_0_2_MPORT_4_en & btb_0_2_MPORT_4_mask) begin
       btb_0_2[btb_0_2_MPORT_4_addr] <= btb_0_2_MPORT_4_data; // @[btb.scala 66:47]
     end
     btb_0_2_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_0_2_MPORT_addr_pipe_0 <= s0_idx[5:0];
+      btb_0_2_MPORT_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_0_3_MPORT_4_en & btb_0_3_MPORT_4_mask) begin
       btb_0_3[btb_0_3_MPORT_4_addr] <= btb_0_3_MPORT_4_data; // @[btb.scala 66:47]
     end
     btb_0_3_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_0_3_MPORT_addr_pipe_0 <= s0_idx[5:0];
+      btb_0_3_MPORT_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_1_0_MPORT_6_en & btb_1_0_MPORT_6_mask) begin
       btb_1_0[btb_1_0_MPORT_6_addr] <= btb_1_0_MPORT_6_data; // @[btb.scala 66:47]
     end
     btb_1_0_MPORT_1_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_1_0_MPORT_1_addr_pipe_0 <= s0_idx[5:0];
+      btb_1_0_MPORT_1_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_1_1_MPORT_6_en & btb_1_1_MPORT_6_mask) begin
       btb_1_1[btb_1_1_MPORT_6_addr] <= btb_1_1_MPORT_6_data; // @[btb.scala 66:47]
     end
     btb_1_1_MPORT_1_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_1_1_MPORT_1_addr_pipe_0 <= s0_idx[5:0];
+      btb_1_1_MPORT_1_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_1_2_MPORT_6_en & btb_1_2_MPORT_6_mask) begin
       btb_1_2[btb_1_2_MPORT_6_addr] <= btb_1_2_MPORT_6_data; // @[btb.scala 66:47]
     end
     btb_1_2_MPORT_1_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_1_2_MPORT_1_addr_pipe_0 <= s0_idx[5:0];
+      btb_1_2_MPORT_1_addr_pipe_0 <= s0_idx[6:0];
     end
     if(btb_1_3_MPORT_6_en & btb_1_3_MPORT_6_mask) begin
       btb_1_3[btb_1_3_MPORT_6_addr] <= btb_1_3_MPORT_6_data; // @[btb.scala 66:47]
     end
     btb_1_3_MPORT_1_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      btb_1_3_MPORT_1_addr_pipe_0 <= s0_idx[5:0];
+      btb_1_3_MPORT_1_addr_pipe_0 <= s0_idx[6:0];
     end
     if(ebtb_MPORT_8_en & ebtb_MPORT_8_mask) begin
       ebtb[ebtb_MPORT_8_addr] <= ebtb_MPORT_8_data; // @[btb.scala 67:29]
     end
     ebtb_s1_req_rebtb_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      ebtb_s1_req_rebtb_addr_pipe_0 <= s0_idx[5:0];
+      ebtb_s1_req_rebtb_addr_pipe_0 <= s0_idx[6:0];
     end
     s1_idx <= io_f0_pc[39:3]; // @[frontend.scala 163:35]
     s1_valid <= io_f0_valid; // @[predictor.scala 168:25]
@@ -1001,7 +999,7 @@ module BTBBranchPredictorBank(
     s1_update__bits_meta <= io_update_bits_meta; // @[predictor.scala 184:30]
     s1_update_idx <= io_update_bits_pc[39:3]; // @[frontend.scala 163:35]
     if (s1_hits_0 | s1_hits_1 | s1_hits_2 | s1_hits_3) begin // @[btb.scala 133:27]
-      if (_T_711[0]) begin // @[Mux.scala 47:69]
+      if (_T_693[0]) begin // @[Mux.scala 47:69]
         REG_write_way <= 1'h0;
       end else begin
         REG_write_way <= 1'h1;
@@ -1012,7 +1010,7 @@ module BTBBranchPredictorBank(
     f3_meta_write_way <= REG_write_way; // @[btb.scala 53:24]
     doing_reset <= reset | _GEN_0; // @[btb.scala 60:28 btb.scala 60:28]
     if (reset) begin // @[btb.scala 61:28]
-      reset_idx <= 6'h0; // @[btb.scala 61:28]
+      reset_idx <= 7'h0; // @[btb.scala 61:28]
     end else begin
       reset_idx <= _T_1; // @[btb.scala 62:13]
     end
@@ -1126,126 +1124,126 @@ initial begin
     `endif
 `ifdef RANDOMIZE_MEM_INIT
   _RAND_0 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_0_0[initvar] = _RAND_0[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_0_0[initvar] = _RAND_0[30:0];
   _RAND_3 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_0_1[initvar] = _RAND_3[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_0_1[initvar] = _RAND_3[30:0];
   _RAND_6 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_0_2[initvar] = _RAND_6[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_0_2[initvar] = _RAND_6[30:0];
   _RAND_9 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_0_3[initvar] = _RAND_9[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_0_3[initvar] = _RAND_9[30:0];
   _RAND_12 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_1_0[initvar] = _RAND_12[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_1_0[initvar] = _RAND_12[30:0];
   _RAND_15 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_1_1[initvar] = _RAND_15[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_1_1[initvar] = _RAND_15[30:0];
   _RAND_18 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_1_2[initvar] = _RAND_18[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_1_2[initvar] = _RAND_18[30:0];
   _RAND_21 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
-    meta_1_3[initvar] = _RAND_21[31:0];
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
+    meta_1_3[initvar] = _RAND_21[30:0];
   _RAND_24 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_0_0[initvar] = _RAND_24[13:0];
   _RAND_27 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_0_1[initvar] = _RAND_27[13:0];
   _RAND_30 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_0_2[initvar] = _RAND_30[13:0];
   _RAND_33 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_0_3[initvar] = _RAND_33[13:0];
   _RAND_36 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_1_0[initvar] = _RAND_36[13:0];
   _RAND_39 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_1_1[initvar] = _RAND_39[13:0];
   _RAND_42 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_1_2[initvar] = _RAND_42[13:0];
   _RAND_45 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     btb_1_3[initvar] = _RAND_45[13:0];
   _RAND_48 = {2{`RANDOM}};
-  for (initvar = 0; initvar < 64; initvar = initvar+1)
+  for (initvar = 0; initvar < 128; initvar = initvar+1)
     ebtb[initvar] = _RAND_48[39:0];
 `endif // RANDOMIZE_MEM_INIT
 `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {1{`RANDOM}};
   meta_0_0_MPORT_2_en_pipe_0 = _RAND_1[0:0];
   _RAND_2 = {1{`RANDOM}};
-  meta_0_0_MPORT_2_addr_pipe_0 = _RAND_2[5:0];
+  meta_0_0_MPORT_2_addr_pipe_0 = _RAND_2[6:0];
   _RAND_4 = {1{`RANDOM}};
   meta_0_1_MPORT_2_en_pipe_0 = _RAND_4[0:0];
   _RAND_5 = {1{`RANDOM}};
-  meta_0_1_MPORT_2_addr_pipe_0 = _RAND_5[5:0];
+  meta_0_1_MPORT_2_addr_pipe_0 = _RAND_5[6:0];
   _RAND_7 = {1{`RANDOM}};
   meta_0_2_MPORT_2_en_pipe_0 = _RAND_7[0:0];
   _RAND_8 = {1{`RANDOM}};
-  meta_0_2_MPORT_2_addr_pipe_0 = _RAND_8[5:0];
+  meta_0_2_MPORT_2_addr_pipe_0 = _RAND_8[6:0];
   _RAND_10 = {1{`RANDOM}};
   meta_0_3_MPORT_2_en_pipe_0 = _RAND_10[0:0];
   _RAND_11 = {1{`RANDOM}};
-  meta_0_3_MPORT_2_addr_pipe_0 = _RAND_11[5:0];
+  meta_0_3_MPORT_2_addr_pipe_0 = _RAND_11[6:0];
   _RAND_13 = {1{`RANDOM}};
   meta_1_0_MPORT_3_en_pipe_0 = _RAND_13[0:0];
   _RAND_14 = {1{`RANDOM}};
-  meta_1_0_MPORT_3_addr_pipe_0 = _RAND_14[5:0];
+  meta_1_0_MPORT_3_addr_pipe_0 = _RAND_14[6:0];
   _RAND_16 = {1{`RANDOM}};
   meta_1_1_MPORT_3_en_pipe_0 = _RAND_16[0:0];
   _RAND_17 = {1{`RANDOM}};
-  meta_1_1_MPORT_3_addr_pipe_0 = _RAND_17[5:0];
+  meta_1_1_MPORT_3_addr_pipe_0 = _RAND_17[6:0];
   _RAND_19 = {1{`RANDOM}};
   meta_1_2_MPORT_3_en_pipe_0 = _RAND_19[0:0];
   _RAND_20 = {1{`RANDOM}};
-  meta_1_2_MPORT_3_addr_pipe_0 = _RAND_20[5:0];
+  meta_1_2_MPORT_3_addr_pipe_0 = _RAND_20[6:0];
   _RAND_22 = {1{`RANDOM}};
   meta_1_3_MPORT_3_en_pipe_0 = _RAND_22[0:0];
   _RAND_23 = {1{`RANDOM}};
-  meta_1_3_MPORT_3_addr_pipe_0 = _RAND_23[5:0];
+  meta_1_3_MPORT_3_addr_pipe_0 = _RAND_23[6:0];
   _RAND_25 = {1{`RANDOM}};
   btb_0_0_MPORT_en_pipe_0 = _RAND_25[0:0];
   _RAND_26 = {1{`RANDOM}};
-  btb_0_0_MPORT_addr_pipe_0 = _RAND_26[5:0];
+  btb_0_0_MPORT_addr_pipe_0 = _RAND_26[6:0];
   _RAND_28 = {1{`RANDOM}};
   btb_0_1_MPORT_en_pipe_0 = _RAND_28[0:0];
   _RAND_29 = {1{`RANDOM}};
-  btb_0_1_MPORT_addr_pipe_0 = _RAND_29[5:0];
+  btb_0_1_MPORT_addr_pipe_0 = _RAND_29[6:0];
   _RAND_31 = {1{`RANDOM}};
   btb_0_2_MPORT_en_pipe_0 = _RAND_31[0:0];
   _RAND_32 = {1{`RANDOM}};
-  btb_0_2_MPORT_addr_pipe_0 = _RAND_32[5:0];
+  btb_0_2_MPORT_addr_pipe_0 = _RAND_32[6:0];
   _RAND_34 = {1{`RANDOM}};
   btb_0_3_MPORT_en_pipe_0 = _RAND_34[0:0];
   _RAND_35 = {1{`RANDOM}};
-  btb_0_3_MPORT_addr_pipe_0 = _RAND_35[5:0];
+  btb_0_3_MPORT_addr_pipe_0 = _RAND_35[6:0];
   _RAND_37 = {1{`RANDOM}};
   btb_1_0_MPORT_1_en_pipe_0 = _RAND_37[0:0];
   _RAND_38 = {1{`RANDOM}};
-  btb_1_0_MPORT_1_addr_pipe_0 = _RAND_38[5:0];
+  btb_1_0_MPORT_1_addr_pipe_0 = _RAND_38[6:0];
   _RAND_40 = {1{`RANDOM}};
   btb_1_1_MPORT_1_en_pipe_0 = _RAND_40[0:0];
   _RAND_41 = {1{`RANDOM}};
-  btb_1_1_MPORT_1_addr_pipe_0 = _RAND_41[5:0];
+  btb_1_1_MPORT_1_addr_pipe_0 = _RAND_41[6:0];
   _RAND_43 = {1{`RANDOM}};
   btb_1_2_MPORT_1_en_pipe_0 = _RAND_43[0:0];
   _RAND_44 = {1{`RANDOM}};
-  btb_1_2_MPORT_1_addr_pipe_0 = _RAND_44[5:0];
+  btb_1_2_MPORT_1_addr_pipe_0 = _RAND_44[6:0];
   _RAND_46 = {1{`RANDOM}};
   btb_1_3_MPORT_1_en_pipe_0 = _RAND_46[0:0];
   _RAND_47 = {1{`RANDOM}};
-  btb_1_3_MPORT_1_addr_pipe_0 = _RAND_47[5:0];
+  btb_1_3_MPORT_1_addr_pipe_0 = _RAND_47[6:0];
   _RAND_49 = {1{`RANDOM}};
   ebtb_s1_req_rebtb_en_pipe_0 = _RAND_49[0:0];
   _RAND_50 = {1{`RANDOM}};
-  ebtb_s1_req_rebtb_addr_pipe_0 = _RAND_50[5:0];
+  ebtb_s1_req_rebtb_addr_pipe_0 = _RAND_50[6:0];
   _RAND_51 = {2{`RANDOM}};
   s1_idx = _RAND_51[36:0];
   _RAND_52 = {1{`RANDOM}};
@@ -1272,8 +1270,8 @@ initial begin
   s1_update__bits_cfi_taken = _RAND_62[0:0];
   _RAND_63 = {2{`RANDOM}};
   s1_update__bits_target = _RAND_63[39:0];
-  _RAND_64 = {2{`RANDOM}};
-  s1_update__bits_meta = _RAND_64[44:0];
+  _RAND_64 = {4{`RANDOM}};
+  s1_update__bits_meta = _RAND_64[119:0];
   _RAND_65 = {2{`RANDOM}};
   s1_update_idx = _RAND_65[36:0];
   _RAND_66 = {1{`RANDOM}};
@@ -1283,7 +1281,7 @@ initial begin
   _RAND_68 = {1{`RANDOM}};
   doing_reset = _RAND_68[0:0];
   _RAND_69 = {1{`RANDOM}};
-  reset_idx = _RAND_69[5:0];
+  reset_idx = _RAND_69[6:0];
   _RAND_70 = {1{`RANDOM}};
   REG_1 = _RAND_70[0:0];
   _RAND_71 = {1{`RANDOM}};

@@ -146,7 +146,7 @@ class WithNMediumBooms(n: Int = 1, overrideIdOffset: Option[Int] = None) extends
                 IssueParams(issueWidth=1, numEntries=12, iqType=IQT_MEM.litValue, dispatchWidth=2),
                 IssueParams(issueWidth=2, numEntries=20, iqType=IQT_INT.litValue, dispatchWidth=2),
                 IssueParams(issueWidth=1, numEntries=16, iqType=IQT_FP.litValue , dispatchWidth=2)),
-              numIntPhysRegisters = 80,
+              numIntPhysRegisters = 64,
               numFpPhysRegisters = 64,
               numLdqEntries = 16,
               numStqEntries = 16,

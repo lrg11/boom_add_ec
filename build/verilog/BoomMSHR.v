@@ -9,23 +9,6 @@ module BoomMSHR(
   input         io_clear_prefetch,
   input  [11:0] io_brupdate_b1_resolve_mask,
   input  [11:0] io_brupdate_b1_mispredict_mask,
-  input         io_brupdate_b2_uop_switch,
-  input         io_brupdate_b2_uop_switch_off,
-  input         io_brupdate_b2_uop_is_unicore,
-  input  [2:0]  io_brupdate_b2_uop_shift,
-  input  [1:0]  io_brupdate_b2_uop_lrs3_rtype,
-  input         io_brupdate_b2_uop_rflag,
-  input         io_brupdate_b2_uop_wflag,
-  input  [3:0]  io_brupdate_b2_uop_prflag,
-  input  [3:0]  io_brupdate_b2_uop_pwflag,
-  input         io_brupdate_b2_uop_pflag_busy,
-  input  [3:0]  io_brupdate_b2_uop_stale_pflag,
-  input  [3:0]  io_brupdate_b2_uop_op1_sel,
-  input  [3:0]  io_brupdate_b2_uop_op2_sel,
-  input  [5:0]  io_brupdate_b2_uop_split_num,
-  input  [5:0]  io_brupdate_b2_uop_self_index,
-  input  [5:0]  io_brupdate_b2_uop_rob_inst_idx,
-  input  [5:0]  io_brupdate_b2_uop_address_num,
   input  [6:0]  io_brupdate_b2_uop_uopc,
   input  [31:0] io_brupdate_b2_uop_inst,
   input  [31:0] io_brupdate_b2_uop_debug_inst,
@@ -43,7 +26,6 @@ module BoomMSHR(
   input         io_brupdate_b2_uop_ctrl_is_load,
   input         io_brupdate_b2_uop_ctrl_is_sta,
   input         io_brupdate_b2_uop_ctrl_is_std,
-  input  [1:0]  io_brupdate_b2_uop_ctrl_op3_sel,
   input  [1:0]  io_brupdate_b2_uop_iw_state,
   input         io_brupdate_b2_uop_iw_p1_poisoned,
   input         io_brupdate_b2_uop_iw_p2_poisoned,
@@ -60,19 +42,19 @@ module BoomMSHR(
   input  [19:0] io_brupdate_b2_uop_imm_packed,
   input  [11:0] io_brupdate_b2_uop_csr_addr,
   input  [5:0]  io_brupdate_b2_uop_rob_idx,
-  input  [4:0]  io_brupdate_b2_uop_ldq_idx,
-  input  [4:0]  io_brupdate_b2_uop_stq_idx,
+  input  [3:0]  io_brupdate_b2_uop_ldq_idx,
+  input  [3:0]  io_brupdate_b2_uop_stq_idx,
   input  [1:0]  io_brupdate_b2_uop_rxq_idx,
-  input  [6:0]  io_brupdate_b2_uop_pdst,
-  input  [6:0]  io_brupdate_b2_uop_prs1,
-  input  [6:0]  io_brupdate_b2_uop_prs2,
-  input  [6:0]  io_brupdate_b2_uop_prs3,
+  input  [5:0]  io_brupdate_b2_uop_pdst,
+  input  [5:0]  io_brupdate_b2_uop_prs1,
+  input  [5:0]  io_brupdate_b2_uop_prs2,
+  input  [5:0]  io_brupdate_b2_uop_prs3,
   input  [4:0]  io_brupdate_b2_uop_ppred,
   input         io_brupdate_b2_uop_prs1_busy,
   input         io_brupdate_b2_uop_prs2_busy,
   input         io_brupdate_b2_uop_prs3_busy,
   input         io_brupdate_b2_uop_ppred_busy,
-  input  [6:0]  io_brupdate_b2_uop_stale_pdst,
+  input  [5:0]  io_brupdate_b2_uop_stale_pdst,
   input         io_brupdate_b2_uop_exception,
   input  [63:0] io_brupdate_b2_uop_exc_cause,
   input         io_brupdate_b2_uop_bypassable,
@@ -112,27 +94,10 @@ module BoomMSHR(
   input  [2:0]  io_brupdate_b2_cfi_type,
   input  [1:0]  io_brupdate_b2_pc_sel,
   input  [39:0] io_brupdate_b2_jalr_target,
-  input  [31:0] io_brupdate_b2_target_offset,
+  input  [20:0] io_brupdate_b2_target_offset,
   input         io_exception,
   input  [5:0]  io_rob_pnr_idx,
   input  [5:0]  io_rob_head_idx,
-  input         io_req_uop_switch,
-  input         io_req_uop_switch_off,
-  input         io_req_uop_is_unicore,
-  input  [2:0]  io_req_uop_shift,
-  input  [1:0]  io_req_uop_lrs3_rtype,
-  input         io_req_uop_rflag,
-  input         io_req_uop_wflag,
-  input  [3:0]  io_req_uop_prflag,
-  input  [3:0]  io_req_uop_pwflag,
-  input         io_req_uop_pflag_busy,
-  input  [3:0]  io_req_uop_stale_pflag,
-  input  [3:0]  io_req_uop_op1_sel,
-  input  [3:0]  io_req_uop_op2_sel,
-  input  [5:0]  io_req_uop_split_num,
-  input  [5:0]  io_req_uop_self_index,
-  input  [5:0]  io_req_uop_rob_inst_idx,
-  input  [5:0]  io_req_uop_address_num,
   input  [6:0]  io_req_uop_uopc,
   input  [31:0] io_req_uop_inst,
   input  [31:0] io_req_uop_debug_inst,
@@ -150,7 +115,6 @@ module BoomMSHR(
   input         io_req_uop_ctrl_is_load,
   input         io_req_uop_ctrl_is_sta,
   input         io_req_uop_ctrl_is_std,
-  input  [1:0]  io_req_uop_ctrl_op3_sel,
   input  [1:0]  io_req_uop_iw_state,
   input         io_req_uop_iw_p1_poisoned,
   input         io_req_uop_iw_p2_poisoned,
@@ -167,19 +131,19 @@ module BoomMSHR(
   input  [19:0] io_req_uop_imm_packed,
   input  [11:0] io_req_uop_csr_addr,
   input  [5:0]  io_req_uop_rob_idx,
-  input  [4:0]  io_req_uop_ldq_idx,
-  input  [4:0]  io_req_uop_stq_idx,
+  input  [3:0]  io_req_uop_ldq_idx,
+  input  [3:0]  io_req_uop_stq_idx,
   input  [1:0]  io_req_uop_rxq_idx,
-  input  [6:0]  io_req_uop_pdst,
-  input  [6:0]  io_req_uop_prs1,
-  input  [6:0]  io_req_uop_prs2,
-  input  [6:0]  io_req_uop_prs3,
+  input  [5:0]  io_req_uop_pdst,
+  input  [5:0]  io_req_uop_prs1,
+  input  [5:0]  io_req_uop_prs2,
+  input  [5:0]  io_req_uop_prs3,
   input  [4:0]  io_req_uop_ppred,
   input         io_req_uop_prs1_busy,
   input         io_req_uop_prs2_busy,
   input         io_req_uop_prs3_busy,
   input         io_req_uop_ppred_busy,
-  input  [6:0]  io_req_uop_stale_pdst,
+  input  [5:0]  io_req_uop_stale_pdst,
   input         io_req_uop_exception,
   input  [63:0] io_req_uop_exc_cause,
   input         io_req_uop_bypassable,
@@ -219,13 +183,13 @@ module BoomMSHR(
   input         io_req_tag_match,
   input  [1:0]  io_req_old_meta_coh_state,
   input  [19:0] io_req_old_meta_tag,
-  input         io_req_way_en,
+  input  [3:0]  io_req_way_en,
   input  [4:0]  io_req_sdq_id,
   input         io_req_is_probe,
   output        io_idx_valid,
   output [5:0]  io_idx_bits,
   output        io_way_valid,
-  output        io_way_bits,
+  output [3:0]  io_way_bits,
   output        io_tag_valid,
   output [27:0] io_tag_bits,
   input         io_mem_acquire_ready,
@@ -255,21 +219,21 @@ module BoomMSHR(
   input  [39:0] io_prober_state_bits,
   input         io_refill_ready,
   output        io_refill_valid,
-  output        io_refill_bits_way_en,
+  output [3:0]  io_refill_bits_way_en,
   output [11:0] io_refill_bits_addr,
   output        io_refill_bits_wmask,
   output [63:0] io_refill_bits_data,
   input         io_meta_write_ready,
   output        io_meta_write_valid,
   output [5:0]  io_meta_write_bits_idx,
-  output        io_meta_write_bits_way_en,
+  output [3:0]  io_meta_write_bits_way_en,
   output [19:0] io_meta_write_bits_tag,
   output [1:0]  io_meta_write_bits_data_coh_state,
   output [19:0] io_meta_write_bits_data_tag,
   input         io_meta_read_ready,
   output        io_meta_read_valid,
   output [5:0]  io_meta_read_bits_idx,
-  output        io_meta_read_bits_way_en,
+  output [3:0]  io_meta_read_bits_way_en,
   output [19:0] io_meta_read_bits_tag,
   input         io_meta_resp_valid,
   input  [1:0]  io_meta_resp_bits_coh_state,
@@ -280,7 +244,7 @@ module BoomMSHR(
   output [5:0]  io_wb_req_bits_idx,
   output [1:0]  io_wb_req_bits_source,
   output [2:0]  io_wb_req_bits_param,
-  output        io_wb_req_bits_way_en,
+  output [3:0]  io_wb_req_bits_way_en,
   output        io_wb_req_bits_voluntary,
   output        io_commit_val,
   output [39:0] io_commit_addr,
@@ -297,23 +261,6 @@ module BoomMSHR(
   output [63:0] io_lb_write_bits_data,
   input         io_replay_ready,
   output        io_replay_valid,
-  output        io_replay_bits_uop_switch,
-  output        io_replay_bits_uop_switch_off,
-  output        io_replay_bits_uop_is_unicore,
-  output [2:0]  io_replay_bits_uop_shift,
-  output [1:0]  io_replay_bits_uop_lrs3_rtype,
-  output        io_replay_bits_uop_rflag,
-  output        io_replay_bits_uop_wflag,
-  output [3:0]  io_replay_bits_uop_prflag,
-  output [3:0]  io_replay_bits_uop_pwflag,
-  output        io_replay_bits_uop_pflag_busy,
-  output [3:0]  io_replay_bits_uop_stale_pflag,
-  output [3:0]  io_replay_bits_uop_op1_sel,
-  output [3:0]  io_replay_bits_uop_op2_sel,
-  output [5:0]  io_replay_bits_uop_split_num,
-  output [5:0]  io_replay_bits_uop_self_index,
-  output [5:0]  io_replay_bits_uop_rob_inst_idx,
-  output [5:0]  io_replay_bits_uop_address_num,
   output [6:0]  io_replay_bits_uop_uopc,
   output [31:0] io_replay_bits_uop_inst,
   output [31:0] io_replay_bits_uop_debug_inst,
@@ -331,7 +278,6 @@ module BoomMSHR(
   output        io_replay_bits_uop_ctrl_is_load,
   output        io_replay_bits_uop_ctrl_is_sta,
   output        io_replay_bits_uop_ctrl_is_std,
-  output [1:0]  io_replay_bits_uop_ctrl_op3_sel,
   output [1:0]  io_replay_bits_uop_iw_state,
   output        io_replay_bits_uop_iw_p1_poisoned,
   output        io_replay_bits_uop_iw_p2_poisoned,
@@ -348,19 +294,19 @@ module BoomMSHR(
   output [19:0] io_replay_bits_uop_imm_packed,
   output [11:0] io_replay_bits_uop_csr_addr,
   output [5:0]  io_replay_bits_uop_rob_idx,
-  output [4:0]  io_replay_bits_uop_ldq_idx,
-  output [4:0]  io_replay_bits_uop_stq_idx,
+  output [3:0]  io_replay_bits_uop_ldq_idx,
+  output [3:0]  io_replay_bits_uop_stq_idx,
   output [1:0]  io_replay_bits_uop_rxq_idx,
-  output [6:0]  io_replay_bits_uop_pdst,
-  output [6:0]  io_replay_bits_uop_prs1,
-  output [6:0]  io_replay_bits_uop_prs2,
-  output [6:0]  io_replay_bits_uop_prs3,
+  output [5:0]  io_replay_bits_uop_pdst,
+  output [5:0]  io_replay_bits_uop_prs1,
+  output [5:0]  io_replay_bits_uop_prs2,
+  output [5:0]  io_replay_bits_uop_prs3,
   output [4:0]  io_replay_bits_uop_ppred,
   output        io_replay_bits_uop_prs1_busy,
   output        io_replay_bits_uop_prs2_busy,
   output        io_replay_bits_uop_prs3_busy,
   output        io_replay_bits_uop_ppred_busy,
-  output [6:0]  io_replay_bits_uop_stale_pdst,
+  output [5:0]  io_replay_bits_uop_stale_pdst,
   output        io_replay_bits_uop_exception,
   output [63:0] io_replay_bits_uop_exc_cause,
   output        io_replay_bits_uop_bypassable,
@@ -400,27 +346,10 @@ module BoomMSHR(
   output        io_replay_bits_tag_match,
   output [1:0]  io_replay_bits_old_meta_coh_state,
   output [19:0] io_replay_bits_old_meta_tag,
-  output        io_replay_bits_way_en,
+  output [3:0]  io_replay_bits_way_en,
   output [4:0]  io_replay_bits_sdq_id,
   input         io_resp_ready,
   output        io_resp_valid,
-  output        io_resp_bits_uop_switch,
-  output        io_resp_bits_uop_switch_off,
-  output        io_resp_bits_uop_is_unicore,
-  output [2:0]  io_resp_bits_uop_shift,
-  output [1:0]  io_resp_bits_uop_lrs3_rtype,
-  output        io_resp_bits_uop_rflag,
-  output        io_resp_bits_uop_wflag,
-  output [3:0]  io_resp_bits_uop_prflag,
-  output [3:0]  io_resp_bits_uop_pwflag,
-  output        io_resp_bits_uop_pflag_busy,
-  output [3:0]  io_resp_bits_uop_stale_pflag,
-  output [3:0]  io_resp_bits_uop_op1_sel,
-  output [3:0]  io_resp_bits_uop_op2_sel,
-  output [5:0]  io_resp_bits_uop_split_num,
-  output [5:0]  io_resp_bits_uop_self_index,
-  output [5:0]  io_resp_bits_uop_rob_inst_idx,
-  output [5:0]  io_resp_bits_uop_address_num,
   output [6:0]  io_resp_bits_uop_uopc,
   output [31:0] io_resp_bits_uop_inst,
   output [31:0] io_resp_bits_uop_debug_inst,
@@ -438,7 +367,6 @@ module BoomMSHR(
   output        io_resp_bits_uop_ctrl_is_load,
   output        io_resp_bits_uop_ctrl_is_sta,
   output        io_resp_bits_uop_ctrl_is_std,
-  output [1:0]  io_resp_bits_uop_ctrl_op3_sel,
   output [1:0]  io_resp_bits_uop_iw_state,
   output        io_resp_bits_uop_iw_p1_poisoned,
   output        io_resp_bits_uop_iw_p2_poisoned,
@@ -455,19 +383,19 @@ module BoomMSHR(
   output [19:0] io_resp_bits_uop_imm_packed,
   output [11:0] io_resp_bits_uop_csr_addr,
   output [5:0]  io_resp_bits_uop_rob_idx,
-  output [4:0]  io_resp_bits_uop_ldq_idx,
-  output [4:0]  io_resp_bits_uop_stq_idx,
+  output [3:0]  io_resp_bits_uop_ldq_idx,
+  output [3:0]  io_resp_bits_uop_stq_idx,
   output [1:0]  io_resp_bits_uop_rxq_idx,
-  output [6:0]  io_resp_bits_uop_pdst,
-  output [6:0]  io_resp_bits_uop_prs1,
-  output [6:0]  io_resp_bits_uop_prs2,
-  output [6:0]  io_resp_bits_uop_prs3,
+  output [5:0]  io_resp_bits_uop_pdst,
+  output [5:0]  io_resp_bits_uop_prs1,
+  output [5:0]  io_resp_bits_uop_prs2,
+  output [5:0]  io_resp_bits_uop_prs3,
   output [4:0]  io_resp_bits_uop_ppred,
   output        io_resp_bits_uop_prs1_busy,
   output        io_resp_bits_uop_prs2_busy,
   output        io_resp_bits_uop_prs3_busy,
   output        io_resp_bits_uop_ppred_busy,
-  output [6:0]  io_resp_bits_uop_stale_pdst,
+  output [5:0]  io_resp_bits_uop_stale_pdst,
   output        io_resp_bits_uop_exception,
   output [63:0] io_resp_bits_uop_exc_cause,
   output        io_resp_bits_uop_bypassable,
@@ -527,23 +455,6 @@ module BoomMSHR(
   wire  rpq_reset; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_ready; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_valid; // @[mshrs.scala 128:19]
-  wire  rpq_io_enq_bits_uop_switch; // @[mshrs.scala 128:19]
-  wire  rpq_io_enq_bits_uop_switch_off; // @[mshrs.scala 128:19]
-  wire  rpq_io_enq_bits_uop_is_unicore; // @[mshrs.scala 128:19]
-  wire [2:0] rpq_io_enq_bits_uop_shift; // @[mshrs.scala 128:19]
-  wire [1:0] rpq_io_enq_bits_uop_lrs3_rtype; // @[mshrs.scala 128:19]
-  wire  rpq_io_enq_bits_uop_rflag; // @[mshrs.scala 128:19]
-  wire  rpq_io_enq_bits_uop_wflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_enq_bits_uop_prflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_enq_bits_uop_pwflag; // @[mshrs.scala 128:19]
-  wire  rpq_io_enq_bits_uop_pflag_busy; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_enq_bits_uop_stale_pflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_enq_bits_uop_op1_sel; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_enq_bits_uop_op2_sel; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_enq_bits_uop_split_num; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_enq_bits_uop_self_index; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_enq_bits_uop_rob_inst_idx; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_enq_bits_uop_address_num; // @[mshrs.scala 128:19]
   wire [6:0] rpq_io_enq_bits_uop_uopc; // @[mshrs.scala 128:19]
   wire [31:0] rpq_io_enq_bits_uop_inst; // @[mshrs.scala 128:19]
   wire [31:0] rpq_io_enq_bits_uop_debug_inst; // @[mshrs.scala 128:19]
@@ -561,7 +472,6 @@ module BoomMSHR(
   wire  rpq_io_enq_bits_uop_ctrl_is_load; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_ctrl_is_sta; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_ctrl_is_std; // @[mshrs.scala 128:19]
-  wire [1:0] rpq_io_enq_bits_uop_ctrl_op3_sel; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_enq_bits_uop_iw_state; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_iw_p1_poisoned; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_iw_p2_poisoned; // @[mshrs.scala 128:19]
@@ -578,19 +488,19 @@ module BoomMSHR(
   wire [19:0] rpq_io_enq_bits_uop_imm_packed; // @[mshrs.scala 128:19]
   wire [11:0] rpq_io_enq_bits_uop_csr_addr; // @[mshrs.scala 128:19]
   wire [5:0] rpq_io_enq_bits_uop_rob_idx; // @[mshrs.scala 128:19]
-  wire [4:0] rpq_io_enq_bits_uop_ldq_idx; // @[mshrs.scala 128:19]
-  wire [4:0] rpq_io_enq_bits_uop_stq_idx; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_enq_bits_uop_ldq_idx; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_enq_bits_uop_stq_idx; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_enq_bits_uop_rxq_idx; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_enq_bits_uop_pdst; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_enq_bits_uop_prs1; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_enq_bits_uop_prs2; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_enq_bits_uop_prs3; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_enq_bits_uop_pdst; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_enq_bits_uop_prs1; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_enq_bits_uop_prs2; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_enq_bits_uop_prs3; // @[mshrs.scala 128:19]
   wire [4:0] rpq_io_enq_bits_uop_ppred; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_prs1_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_prs2_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_prs3_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_ppred_busy; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_enq_bits_uop_stale_pdst; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_enq_bits_uop_stale_pdst; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_exception; // @[mshrs.scala 128:19]
   wire [63:0] rpq_io_enq_bits_uop_exc_cause; // @[mshrs.scala 128:19]
   wire  rpq_io_enq_bits_uop_bypassable; // @[mshrs.scala 128:19]
@@ -630,27 +540,10 @@ module BoomMSHR(
   wire  rpq_io_enq_bits_tag_match; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_enq_bits_old_meta_coh_state; // @[mshrs.scala 128:19]
   wire [19:0] rpq_io_enq_bits_old_meta_tag; // @[mshrs.scala 128:19]
-  wire  rpq_io_enq_bits_way_en; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_enq_bits_way_en; // @[mshrs.scala 128:19]
   wire [4:0] rpq_io_enq_bits_sdq_id; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_ready; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_valid; // @[mshrs.scala 128:19]
-  wire  rpq_io_deq_bits_uop_switch; // @[mshrs.scala 128:19]
-  wire  rpq_io_deq_bits_uop_switch_off; // @[mshrs.scala 128:19]
-  wire  rpq_io_deq_bits_uop_is_unicore; // @[mshrs.scala 128:19]
-  wire [2:0] rpq_io_deq_bits_uop_shift; // @[mshrs.scala 128:19]
-  wire [1:0] rpq_io_deq_bits_uop_lrs3_rtype; // @[mshrs.scala 128:19]
-  wire  rpq_io_deq_bits_uop_rflag; // @[mshrs.scala 128:19]
-  wire  rpq_io_deq_bits_uop_wflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_deq_bits_uop_prflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_deq_bits_uop_pwflag; // @[mshrs.scala 128:19]
-  wire  rpq_io_deq_bits_uop_pflag_busy; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_deq_bits_uop_stale_pflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_deq_bits_uop_op1_sel; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_deq_bits_uop_op2_sel; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_deq_bits_uop_split_num; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_deq_bits_uop_self_index; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_deq_bits_uop_rob_inst_idx; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_deq_bits_uop_address_num; // @[mshrs.scala 128:19]
   wire [6:0] rpq_io_deq_bits_uop_uopc; // @[mshrs.scala 128:19]
   wire [31:0] rpq_io_deq_bits_uop_inst; // @[mshrs.scala 128:19]
   wire [31:0] rpq_io_deq_bits_uop_debug_inst; // @[mshrs.scala 128:19]
@@ -668,7 +561,6 @@ module BoomMSHR(
   wire  rpq_io_deq_bits_uop_ctrl_is_load; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_ctrl_is_sta; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_ctrl_is_std; // @[mshrs.scala 128:19]
-  wire [1:0] rpq_io_deq_bits_uop_ctrl_op3_sel; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_deq_bits_uop_iw_state; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_iw_p1_poisoned; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_iw_p2_poisoned; // @[mshrs.scala 128:19]
@@ -685,19 +577,19 @@ module BoomMSHR(
   wire [19:0] rpq_io_deq_bits_uop_imm_packed; // @[mshrs.scala 128:19]
   wire [11:0] rpq_io_deq_bits_uop_csr_addr; // @[mshrs.scala 128:19]
   wire [5:0] rpq_io_deq_bits_uop_rob_idx; // @[mshrs.scala 128:19]
-  wire [4:0] rpq_io_deq_bits_uop_ldq_idx; // @[mshrs.scala 128:19]
-  wire [4:0] rpq_io_deq_bits_uop_stq_idx; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_deq_bits_uop_ldq_idx; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_deq_bits_uop_stq_idx; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_deq_bits_uop_rxq_idx; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_deq_bits_uop_pdst; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_deq_bits_uop_prs1; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_deq_bits_uop_prs2; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_deq_bits_uop_prs3; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_deq_bits_uop_pdst; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_deq_bits_uop_prs1; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_deq_bits_uop_prs2; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_deq_bits_uop_prs3; // @[mshrs.scala 128:19]
   wire [4:0] rpq_io_deq_bits_uop_ppred; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_prs1_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_prs2_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_prs3_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_ppred_busy; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_deq_bits_uop_stale_pdst; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_deq_bits_uop_stale_pdst; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_exception; // @[mshrs.scala 128:19]
   wire [63:0] rpq_io_deq_bits_uop_exc_cause; // @[mshrs.scala 128:19]
   wire  rpq_io_deq_bits_uop_bypassable; // @[mshrs.scala 128:19]
@@ -737,27 +629,10 @@ module BoomMSHR(
   wire  rpq_io_deq_bits_tag_match; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_deq_bits_old_meta_coh_state; // @[mshrs.scala 128:19]
   wire [19:0] rpq_io_deq_bits_old_meta_tag; // @[mshrs.scala 128:19]
-  wire  rpq_io_deq_bits_way_en; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_deq_bits_way_en; // @[mshrs.scala 128:19]
   wire [4:0] rpq_io_deq_bits_sdq_id; // @[mshrs.scala 128:19]
   wire [11:0] rpq_io_brupdate_b1_resolve_mask; // @[mshrs.scala 128:19]
   wire [11:0] rpq_io_brupdate_b1_mispredict_mask; // @[mshrs.scala 128:19]
-  wire  rpq_io_brupdate_b2_uop_switch; // @[mshrs.scala 128:19]
-  wire  rpq_io_brupdate_b2_uop_switch_off; // @[mshrs.scala 128:19]
-  wire  rpq_io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 128:19]
-  wire [2:0] rpq_io_brupdate_b2_uop_shift; // @[mshrs.scala 128:19]
-  wire [1:0] rpq_io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 128:19]
-  wire  rpq_io_brupdate_b2_uop_rflag; // @[mshrs.scala 128:19]
-  wire  rpq_io_brupdate_b2_uop_wflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_brupdate_b2_uop_prflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_brupdate_b2_uop_pwflag; // @[mshrs.scala 128:19]
-  wire  rpq_io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 128:19]
-  wire [3:0] rpq_io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_brupdate_b2_uop_split_num; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_brupdate_b2_uop_self_index; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 128:19]
-  wire [5:0] rpq_io_brupdate_b2_uop_address_num; // @[mshrs.scala 128:19]
   wire [6:0] rpq_io_brupdate_b2_uop_uopc; // @[mshrs.scala 128:19]
   wire [31:0] rpq_io_brupdate_b2_uop_inst; // @[mshrs.scala 128:19]
   wire [31:0] rpq_io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 128:19]
@@ -775,7 +650,6 @@ module BoomMSHR(
   wire  rpq_io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 128:19]
-  wire [1:0] rpq_io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_brupdate_b2_uop_iw_state; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 128:19]
@@ -792,19 +666,19 @@ module BoomMSHR(
   wire [19:0] rpq_io_brupdate_b2_uop_imm_packed; // @[mshrs.scala 128:19]
   wire [11:0] rpq_io_brupdate_b2_uop_csr_addr; // @[mshrs.scala 128:19]
   wire [5:0] rpq_io_brupdate_b2_uop_rob_idx; // @[mshrs.scala 128:19]
-  wire [4:0] rpq_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 128:19]
-  wire [4:0] rpq_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 128:19]
+  wire [3:0] rpq_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_brupdate_b2_uop_rxq_idx; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_brupdate_b2_uop_pdst; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_brupdate_b2_uop_prs1; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_brupdate_b2_uop_prs2; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_brupdate_b2_uop_prs3; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_brupdate_b2_uop_pdst; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_brupdate_b2_uop_prs1; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_brupdate_b2_uop_prs2; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_brupdate_b2_uop_prs3; // @[mshrs.scala 128:19]
   wire [4:0] rpq_io_brupdate_b2_uop_ppred; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_prs1_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_prs2_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_prs3_busy; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_ppred_busy; // @[mshrs.scala 128:19]
-  wire [6:0] rpq_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 128:19]
+  wire [5:0] rpq_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_exception; // @[mshrs.scala 128:19]
   wire [63:0] rpq_io_brupdate_b2_uop_exc_cause; // @[mshrs.scala 128:19]
   wire  rpq_io_brupdate_b2_uop_bypassable; // @[mshrs.scala 128:19]
@@ -844,7 +718,7 @@ module BoomMSHR(
   wire [2:0] rpq_io_brupdate_b2_cfi_type; // @[mshrs.scala 128:19]
   wire [1:0] rpq_io_brupdate_b2_pc_sel; // @[mshrs.scala 128:19]
   wire [39:0] rpq_io_brupdate_b2_jalr_target; // @[mshrs.scala 128:19]
-  wire [31:0] rpq_io_brupdate_b2_target_offset; // @[mshrs.scala 128:19]
+  wire [20:0] rpq_io_brupdate_b2_target_offset; // @[mshrs.scala 128:19]
   wire  rpq_io_flush; // @[mshrs.scala 128:19]
   wire  rpq_io_empty; // @[mshrs.scala 128:19]
   wire [3:0] rpq_io_count; // @[mshrs.scala 128:19]
@@ -853,7 +727,7 @@ module BoomMSHR(
   reg [39:0] req_addr; // @[mshrs.scala 109:20]
   reg [1:0] req_old_meta_coh_state; // @[mshrs.scala 109:20]
   reg [19:0] req_old_meta_tag; // @[mshrs.scala 109:20]
-  reg  req_way_en; // @[mshrs.scala 109:20]
+  reg [3:0] req_way_en; // @[mshrs.scala 109:20]
   wire [5:0] req_idx = req_addr[11:6]; // @[mshrs.scala 110:25]
   wire [27:0] req_tag = req_addr[39:12]; // @[mshrs.scala 111:26]
   wire [39:0] req_block_addr = {req_addr[39:6], 6'h0}; // @[mshrs.scala 112:51]
@@ -1074,22 +948,22 @@ module BoomMSHR(
   wire [4:0] _GEN_9 = io_req_tag_match ? _GEN_7 : 5'h1; // @[mshrs.scala 187:29 mshrs.scala 199:19]
   wire  _GEN_10 = _T_244 ? 1'h0 : grantack_valid; // @[mshrs.scala 208:45 mshrs.scala 181:20 mshrs.scala 138:21]
   wire [2:0] _GEN_11 = _T_244 ? 3'h0 : refill_ctr; // @[mshrs.scala 208:45 mshrs.scala 182:16 mshrs.scala 139:24]
-  wire  _GEN_13 = _T_244 ? io_req_way_en : req_way_en; // @[mshrs.scala 208:45 mshrs.scala 184:9 mshrs.scala 109:20]
+  wire [3:0] _GEN_13 = _T_244 ? io_req_way_en : req_way_en; // @[mshrs.scala 208:45 mshrs.scala 184:9 mshrs.scala 109:20]
   wire [19:0] _GEN_14 = _T_244 ? io_req_old_meta_tag : req_old_meta_tag; // @[mshrs.scala 208:45 mshrs.scala 184:9 mshrs.scala 109:20]
   wire [1:0] _GEN_15 = _T_244 ? io_req_old_meta_coh_state : req_old_meta_coh_state; // @[mshrs.scala 208:45 mshrs.scala 184:9 mshrs.scala 109:20]
   wire [39:0] _GEN_19 = _T_244 ? io_req_addr : req_addr; // @[mshrs.scala 208:45 mshrs.scala 184:9 mshrs.scala 109:20]
   wire [4:0] _GEN_49 = _T_244 ? io_req_uop_mem_cmd : _GEN_4; // @[mshrs.scala 208:45 mshrs.scala 184:9]
-  wire  _GEN_117 = _T_244 ? _T_344 : req_needs_wb; // @[mshrs.scala 208:45 mshrs.scala 186:18 mshrs.scala 113:29]
-  wire [1:0] _GEN_118 = _T_244 ? _GEN_8 : _GEN_5; // @[mshrs.scala 208:45]
-  wire [4:0] _GEN_119 = _T_244 ? _GEN_9 : state; // @[mshrs.scala 208:45 mshrs.scala 209:13 mshrs.scala 107:22]
+  wire  _GEN_99 = _T_244 ? _T_344 : req_needs_wb; // @[mshrs.scala 208:45 mshrs.scala 186:18 mshrs.scala 113:29]
+  wire [1:0] _GEN_100 = _T_244 ? _GEN_8 : _GEN_5; // @[mshrs.scala 208:45]
+  wire [4:0] _GEN_101 = _T_244 ? _GEN_9 : state; // @[mshrs.scala 208:45 mshrs.scala 209:13 mshrs.scala 107:22]
   wire [33:0] _T_423 = {req_tag,req_idx}; // @[Cat.scala 30:58]
   wire [39:0] _T_424 = {_T_423, 6'h0}; // @[mshrs.scala 216:47]
   wire  _T_425 = io_mem_acquire_ready & io_mem_acquire_valid; // @[Decoupled.scala 40:37]
-  wire  _GEN_122 = beats1_opdata & io_mem_grant_valid; // @[mshrs.scala 223:44 mshrs.scala 225:31 mshrs.scala 169:26]
+  wire  _GEN_104 = beats1_opdata & io_mem_grant_valid; // @[mshrs.scala 223:44 mshrs.scala 225:31 mshrs.scala 169:26]
   wire  _T_432 = io_mem_grant_bits_opcode[2] & ~io_mem_grant_bits_opcode[1]; // @[Edges.scala 70:40]
   wire [4:0] _T_433 = grant_had_data ? 5'h3 : 5'hc; // @[mshrs.scala 239:19]
-  wire [4:0] _GEN_129 = refill_done ? _T_433 : state; // @[mshrs.scala 236:24 mshrs.scala 239:13 mshrs.scala 107:22]
-  wire [1:0] _GEN_131 = refill_done ? coh_on_grant_state : _GEN_5; // @[mshrs.scala 236:24 mshrs.scala 242:15]
+  wire [4:0] _GEN_111 = refill_done ? _T_433 : state; // @[mshrs.scala 236:24 mshrs.scala 239:13 mshrs.scala 107:22]
+  wire [1:0] _GEN_113 = refill_done ? coh_on_grant_state : _GEN_5; // @[mshrs.scala 236:24 mshrs.scala 242:15]
   wire  _T_442 = rpq_io_deq_bits_uop_mem_cmd == 5'h6; // @[Consts.scala 81:48]
   wire  _T_444 = rpq_io_deq_bits_uop_mem_cmd == 5'h7; // @[Consts.scala 81:65]
   wire  _T_446 = rpq_io_deq_bits_uop_mem_cmd == 5'h4; // @[package.scala 15:47]
@@ -1132,17 +1006,17 @@ module BoomMSHR(
   wire  _T_526 = rpq_io_deq_ready & rpq_io_deq_valid; // @[Decoupled.scala 40:37]
   wire  _T_528 = rpq_io_empty & ~commit_line; // @[mshrs.scala 271:31]
   wire  _T_529 = rpq_io_enq_ready & rpq_io_enq_valid; // @[Decoupled.scala 40:37]
-  wire [4:0] _GEN_132 = ~_T_529 ? 5'he : state; // @[mshrs.scala 273:33 mshrs.scala 274:15 mshrs.scala 107:22]
+  wire [4:0] _GEN_114 = ~_T_529 ? 5'he : state; // @[mshrs.scala 273:33 mshrs.scala 274:15 mshrs.scala 107:22]
   wire  _T_533 = rpq_io_empty | rpq_io_deq_valid & ~_T_490; // @[mshrs.scala 277:31]
-  wire [4:0] _GEN_135 = rpq_io_empty | rpq_io_deq_valid & ~_T_490 ? 5'h4 : state; // @[mshrs.scala 277:69 mshrs.scala 281:13 mshrs.scala 107:22]
-  wire [4:0] _GEN_136 = _T_528 ? _GEN_132 : _GEN_135; // @[mshrs.scala 272:5]
-  wire  _GEN_138 = _T_528 ? 1'h0 : _T_533; // @[mshrs.scala 272:5 mshrs.scala 164:26]
-  wire  _GEN_139 = _T_526 | commit_line; // @[mshrs.scala 268:30 mshrs.scala 269:21 mshrs.scala 140:24]
-  wire [4:0] _GEN_140 = _T_526 ? state : _GEN_136; // @[mshrs.scala 268:30 mshrs.scala 107:22]
-  wire  _GEN_142 = _T_526 ? 1'h0 : _GEN_138; // @[mshrs.scala 268:30 mshrs.scala 164:26]
+  wire [4:0] _GEN_117 = rpq_io_empty | rpq_io_deq_valid & ~_T_490 ? 5'h4 : state; // @[mshrs.scala 277:69 mshrs.scala 281:13 mshrs.scala 107:22]
+  wire [4:0] _GEN_118 = _T_528 ? _GEN_114 : _GEN_117; // @[mshrs.scala 272:5]
+  wire  _GEN_120 = _T_528 ? 1'h0 : _T_533; // @[mshrs.scala 272:5 mshrs.scala 164:26]
+  wire  _GEN_121 = _T_526 | commit_line; // @[mshrs.scala 268:30 mshrs.scala 269:21 mshrs.scala 140:24]
+  wire [4:0] _GEN_122 = _T_526 ? state : _GEN_118; // @[mshrs.scala 268:30 mshrs.scala 107:22]
+  wire  _GEN_124 = _T_526 ? 1'h0 : _GEN_120; // @[mshrs.scala 268:30 mshrs.scala 164:26]
   wire  _T_536 = ~grantack_valid; // @[mshrs.scala 284:53]
   wire  _T_541 = io_meta_read_ready & io_meta_read_valid; // @[Decoupled.scala 40:37]
-  wire [4:0] _GEN_143 = _T_541 ? 5'h5 : state; // @[mshrs.scala 288:32 mshrs.scala 289:13 mshrs.scala 107:22]
+  wire [4:0] _GEN_125 = _T_541 ? 5'h5 : state; // @[mshrs.scala 288:32 mshrs.scala 289:13 mshrs.scala 107:22]
   wire  _T_542 = state == 5'h5; // @[mshrs.scala 291:22]
   wire  _T_543 = state == 5'h6; // @[mshrs.scala 293:22]
   wire [3:0] _T_549 = {2'h2,io_meta_resp_bits_coh_state}; // @[Cat.scala 30:58]
@@ -1165,21 +1039,21 @@ module BoomMSHR(
   wire [4:0] _T_611 = _T_607 ? 5'h7 : 5'hb; // @[mshrs.scala 296:17]
   wire [4:0] _T_612 = ~io_meta_resp_valid ? 5'h4 : _T_611; // @[mshrs.scala 295:17]
   wire  _T_613 = state == 5'h7; // @[mshrs.scala 297:22]
-  wire [4:0] _GEN_144 = _T_255 ? 5'h9 : state; // @[mshrs.scala 304:33 mshrs.scala 305:18 mshrs.scala 107:22]
+  wire [4:0] _GEN_126 = _T_255 ? 5'h9 : state; // @[mshrs.scala 304:33 mshrs.scala 305:18 mshrs.scala 107:22]
   wire  _T_615 = state == 5'h9; // @[mshrs.scala 307:22]
   wire  _T_616 = io_wb_req_ready & io_wb_req_valid; // @[Decoupled.scala 40:37]
-  wire [4:0] _GEN_145 = _T_616 ? 5'ha : state; // @[mshrs.scala 316:29 mshrs.scala 317:13 mshrs.scala 107:22]
+  wire [4:0] _GEN_127 = _T_616 ? 5'ha : state; // @[mshrs.scala 316:29 mshrs.scala 317:13 mshrs.scala 107:22]
   wire  _T_617 = state == 5'ha; // @[mshrs.scala 319:22]
-  wire [4:0] _GEN_146 = io_wb_resp ? 5'hb : state; // @[mshrs.scala 320:23 mshrs.scala 321:13 mshrs.scala 107:22]
+  wire [4:0] _GEN_128 = io_wb_resp ? 5'hb : state; // @[mshrs.scala 320:23 mshrs.scala 321:13 mshrs.scala 107:22]
   wire  _T_618 = state == 5'hb; // @[mshrs.scala 323:22]
   wire [5:0] _T_620 = {refill_ctr, 3'h0}; // @[mshrs.scala 329:59]
-  wire [39:0] _GEN_4292 = {{34'd0}, _T_620}; // @[mshrs.scala 329:45]
-  wire [39:0] _T_621 = req_block_addr | _GEN_4292; // @[mshrs.scala 329:45]
+  wire [39:0] _GEN_3644 = {{34'd0}, _T_620}; // @[mshrs.scala 329:45]
+  wire [39:0] _T_621 = req_block_addr | _GEN_3644; // @[mshrs.scala 329:45]
   wire  _T_623 = io_refill_ready & io_refill_valid; // @[Decoupled.scala 40:37]
   wire [2:0] _T_625 = refill_ctr + 3'h1; // @[mshrs.scala 334:32]
-  wire [4:0] _GEN_147 = refill_ctr == 3'h7 ? 5'hc : state; // @[mshrs.scala 335:52 mshrs.scala 336:15 mshrs.scala 107:22]
-  wire [2:0] _GEN_148 = _T_623 ? _T_625 : refill_ctr; // @[mshrs.scala 333:29 mshrs.scala 334:18 mshrs.scala 139:24]
-  wire [4:0] _GEN_149 = _T_623 ? _GEN_147 : state; // @[mshrs.scala 333:29 mshrs.scala 107:22]
+  wire [4:0] _GEN_129 = refill_ctr == 3'h7 ? 5'hc : state; // @[mshrs.scala 335:52 mshrs.scala 336:15 mshrs.scala 107:22]
+  wire [2:0] _GEN_130 = _T_623 ? _T_625 : refill_ctr; // @[mshrs.scala 333:29 mshrs.scala 334:18 mshrs.scala 139:24]
+  wire [4:0] _GEN_131 = _T_623 ? _GEN_129 : state; // @[mshrs.scala 333:29 mshrs.scala 107:22]
   wire  _T_627 = state == 5'hc; // @[mshrs.scala 339:22]
   wire  _T_629 = io_replay_ready & io_replay_valid; // @[Decoupled.scala 40:37]
   wire  _T_653 = _T_629 & _T_486; // @[mshrs.scala 343:28]
@@ -1210,298 +1084,281 @@ module BoomMSHR(
   wire  _T_700 = 4'h3 == _T_654; // @[Misc.scala 48:20]
   wire  _T_701 = _T_700 | (_T_697 | (_T_694 | (_T_691 | (_T_688 | (_T_685 | _T_682))))); // @[Misc.scala 34:9]
   wire [1:0] meta_6_state = _T_700 ? 2'h3 : _T_699; // @[Misc.scala 34:36]
-  wire [1:0] _GEN_150 = _T_629 & _T_486 ? meta_6_state : _GEN_5; // @[mshrs.scala 343:69 mshrs.scala 347:15]
-  wire [4:0] _GEN_151 = rpq_io_empty & ~rpq_io_enq_valid ? 5'hd : state; // @[mshrs.scala 349:46 mshrs.scala 350:13 mshrs.scala 107:22]
-  wire [4:0] _GEN_152 = _T_255 ? 5'he : state; // @[mshrs.scala 358:33 mshrs.scala 359:13 mshrs.scala 107:22]
+  wire [1:0] _GEN_132 = _T_629 & _T_486 ? meta_6_state : _GEN_5; // @[mshrs.scala 343:69 mshrs.scala 347:15]
+  wire [4:0] _GEN_133 = rpq_io_empty & ~rpq_io_enq_valid ? 5'hd : state; // @[mshrs.scala 349:46 mshrs.scala 350:13 mshrs.scala 107:22]
+  wire [4:0] _GEN_134 = _T_255 ? 5'he : state; // @[mshrs.scala 358:33 mshrs.scala 359:13 mshrs.scala 107:22]
   wire  _T_711 = io_mem_finish_ready & io_mem_finish_valid; // @[Decoupled.scala 40:37]
-  wire  _GEN_154 = _T_711 | _T_536 ? 1'h0 : grantack_valid; // @[mshrs.scala 365:52 mshrs.scala 366:22 mshrs.scala 138:21]
-  wire [4:0] _GEN_155 = _T_711 | _T_536 ? 5'hf : state; // @[mshrs.scala 365:52 mshrs.scala 367:13 mshrs.scala 107:22]
+  wire  _GEN_136 = _T_711 | _T_536 ? 1'h0 : grantack_valid; // @[mshrs.scala 365:52 mshrs.scala 366:22 mshrs.scala 138:21]
+  wire [4:0] _GEN_137 = _T_711 | _T_536 ? 5'hf : state; // @[mshrs.scala 365:52 mshrs.scala 367:13 mshrs.scala 107:22]
   wire  _T_719 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch; // @[mshrs.scala 373:47]
-  wire [1:0] _GEN_156 = _T_223 ? _T_224 : 2'h0; // @[mshrs.scala 377:21 mshrs.scala 378:17 mshrs.scala 381:17]
-  wire [4:0] _GEN_157 = _T_223 ? 5'h4 : 5'h1; // @[mshrs.scala 377:21 mshrs.scala 379:15 mshrs.scala 382:15]
-  wire  _GEN_162 = _T_244 ? 1'h0 : grant_had_data; // @[mshrs.scala 384:52 mshrs.scala 385:22 mshrs.scala 141:27]
-  wire [1:0] _GEN_273 = _T_245 ? _GEN_156 : _GEN_118; // @[mshrs.scala 375:52]
-  wire [4:0] _GEN_274 = _T_245 ? _GEN_157 : _GEN_119; // @[mshrs.scala 375:52]
-  wire  _GEN_275 = _T_245 ? grant_had_data : _GEN_162; // @[mshrs.scala 375:52 mshrs.scala 141:27]
-  wire  _GEN_276 = _T_245 ? grantack_valid : _GEN_10; // @[mshrs.scala 375:52 mshrs.scala 138:21]
-  wire [2:0] _GEN_277 = _T_245 ? refill_ctr : _GEN_11; // @[mshrs.scala 375:52 mshrs.scala 139:24]
-  wire  _GEN_279 = _T_245 ? req_way_en : _GEN_13; // @[mshrs.scala 375:52 mshrs.scala 109:20]
-  wire [19:0] _GEN_280 = _T_245 ? req_old_meta_tag : _GEN_14; // @[mshrs.scala 375:52 mshrs.scala 109:20]
-  wire [1:0] _GEN_281 = _T_245 ? req_old_meta_coh_state : _GEN_15; // @[mshrs.scala 375:52 mshrs.scala 109:20]
-  wire [39:0] _GEN_285 = _T_245 ? req_addr : _GEN_19; // @[mshrs.scala 375:52 mshrs.scala 109:20]
-  wire [4:0] _GEN_315 = _T_245 ? _GEN_4 : _GEN_49; // @[mshrs.scala 375:52]
-  wire  _GEN_383 = _T_245 ? req_needs_wb : _GEN_117; // @[mshrs.scala 375:52 mshrs.scala 113:29]
-  wire [4:0] _GEN_384 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? 5'h0 : _GEN_274; // @[mshrs.scala 373:69 mshrs.scala 374:13]
-  wire [1:0] _GEN_385 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? _GEN_5 : _GEN_273; // @[mshrs.scala 373:69]
-  wire  _GEN_386 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? grant_had_data : _GEN_275; // @[mshrs.scala 373:69 mshrs.scala 141:27]
-  wire  _GEN_387 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? grantack_valid : _GEN_276; // @[mshrs.scala 373:69 mshrs.scala 138:21]
-  wire [2:0] _GEN_388 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? refill_ctr : _GEN_277; // @[mshrs.scala 373:69 mshrs.scala 139:24]
-  wire  _GEN_390 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_way_en : _GEN_279; // @[mshrs.scala 373:69 mshrs.scala 109:20]
-  wire [19:0] _GEN_391 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_old_meta_tag : _GEN_280; // @[mshrs.scala 373:69 mshrs.scala 109:20]
-  wire [1:0] _GEN_392 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_old_meta_coh_state : _GEN_281; // @[mshrs.scala 373:69 mshrs.scala 109:20]
-  wire [39:0] _GEN_396 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_addr : _GEN_285; // @[mshrs.scala 373:69 mshrs.scala 109:20]
-  wire [4:0] _GEN_426 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? _GEN_4 : _GEN_315; // @[mshrs.scala 373:69]
-  wire  _GEN_494 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_needs_wb : _GEN_383; // @[mshrs.scala 373:69 mshrs.scala 113:29]
-  wire [4:0] _GEN_496 = _T_271 ? _GEN_384 : state; // @[mshrs.scala 371:38 mshrs.scala 107:22]
-  wire [1:0] _GEN_497 = _T_271 ? _GEN_385 : _GEN_5; // @[mshrs.scala 371:38]
-  wire  _GEN_498 = _T_271 ? _GEN_386 : grant_had_data; // @[mshrs.scala 371:38 mshrs.scala 141:27]
-  wire  _GEN_499 = _T_271 ? _GEN_387 : grantack_valid; // @[mshrs.scala 371:38 mshrs.scala 138:21]
-  wire [2:0] _GEN_500 = _T_271 ? _GEN_388 : refill_ctr; // @[mshrs.scala 371:38 mshrs.scala 139:24]
-  wire  _GEN_502 = _T_271 ? _GEN_390 : req_way_en; // @[mshrs.scala 371:38 mshrs.scala 109:20]
-  wire [19:0] _GEN_503 = _T_271 ? _GEN_391 : req_old_meta_tag; // @[mshrs.scala 371:38 mshrs.scala 109:20]
-  wire [1:0] _GEN_504 = _T_271 ? _GEN_392 : req_old_meta_coh_state; // @[mshrs.scala 371:38 mshrs.scala 109:20]
-  wire [39:0] _GEN_508 = _T_271 ? _GEN_396 : req_addr; // @[mshrs.scala 371:38 mshrs.scala 109:20]
-  wire [4:0] _GEN_538 = _T_271 ? _GEN_426 : _GEN_4; // @[mshrs.scala 371:38]
-  wire  _GEN_606 = _T_271 ? _GEN_494 : req_needs_wb; // @[mshrs.scala 371:38 mshrs.scala 113:29]
-  wire [4:0] _GEN_607 = _T_232 ? 5'h0 : _GEN_496; // @[mshrs.scala 369:42 mshrs.scala 370:11]
-  wire  _GEN_608 = _T_232 ? 1'h0 : _T_271; // @[mshrs.scala 369:42 mshrs.scala 157:26]
-  wire [1:0] _GEN_609 = _T_232 ? _GEN_5 : _GEN_497; // @[mshrs.scala 369:42]
-  wire  _GEN_610 = _T_232 ? grant_had_data : _GEN_498; // @[mshrs.scala 369:42 mshrs.scala 141:27]
-  wire  _GEN_611 = _T_232 ? grantack_valid : _GEN_499; // @[mshrs.scala 369:42 mshrs.scala 138:21]
-  wire [2:0] _GEN_612 = _T_232 ? refill_ctr : _GEN_500; // @[mshrs.scala 369:42 mshrs.scala 139:24]
-  wire  _GEN_614 = _T_232 ? req_way_en : _GEN_502; // @[mshrs.scala 369:42 mshrs.scala 109:20]
-  wire [19:0] _GEN_615 = _T_232 ? req_old_meta_tag : _GEN_503; // @[mshrs.scala 369:42 mshrs.scala 109:20]
-  wire [1:0] _GEN_616 = _T_232 ? req_old_meta_coh_state : _GEN_504; // @[mshrs.scala 369:42 mshrs.scala 109:20]
-  wire [39:0] _GEN_620 = _T_232 ? req_addr : _GEN_508; // @[mshrs.scala 369:42 mshrs.scala 109:20]
-  wire [4:0] _GEN_650 = _T_232 ? _GEN_4 : _GEN_538; // @[mshrs.scala 369:42]
-  wire  _GEN_718 = _T_232 ? req_needs_wb : _GEN_606; // @[mshrs.scala 369:42 mshrs.scala 113:29]
-  wire  _GEN_719 = _T_231 & grantack_valid; // @[mshrs.scala 362:42 mshrs.scala 363:25 mshrs.scala 168:26]
-  wire  _GEN_721 = _T_231 ? _GEN_154 : _GEN_611; // @[mshrs.scala 362:42]
-  wire [4:0] _GEN_722 = _T_231 ? _GEN_155 : _GEN_607; // @[mshrs.scala 362:42]
-  wire  _GEN_723 = _T_231 ? 1'h0 : _GEN_608; // @[mshrs.scala 362:42 mshrs.scala 157:26]
-  wire [1:0] _GEN_724 = _T_231 ? _GEN_5 : _GEN_609; // @[mshrs.scala 362:42]
-  wire  _GEN_725 = _T_231 ? grant_had_data : _GEN_610; // @[mshrs.scala 362:42 mshrs.scala 141:27]
-  wire [2:0] _GEN_726 = _T_231 ? refill_ctr : _GEN_612; // @[mshrs.scala 362:42 mshrs.scala 139:24]
-  wire  _GEN_728 = _T_231 ? req_way_en : _GEN_614; // @[mshrs.scala 362:42 mshrs.scala 109:20]
-  wire [19:0] _GEN_729 = _T_231 ? req_old_meta_tag : _GEN_615; // @[mshrs.scala 362:42 mshrs.scala 109:20]
-  wire [1:0] _GEN_730 = _T_231 ? req_old_meta_coh_state : _GEN_616; // @[mshrs.scala 362:42 mshrs.scala 109:20]
-  wire [39:0] _GEN_734 = _T_231 ? req_addr : _GEN_620; // @[mshrs.scala 362:42 mshrs.scala 109:20]
-  wire [4:0] _GEN_764 = _T_231 ? _GEN_4 : _GEN_650; // @[mshrs.scala 362:42]
-  wire  _GEN_832 = _T_231 ? req_needs_wb : _GEN_718; // @[mshrs.scala 362:42 mshrs.scala 113:29]
-  wire [4:0] _GEN_838 = _T_230 ? _GEN_152 : _GEN_722; // @[mshrs.scala 352:44]
-  wire  _GEN_840 = _T_230 ? 1'h0 : _GEN_719; // @[mshrs.scala 352:44 mshrs.scala 168:26]
-  wire  _GEN_842 = _T_230 ? grantack_valid : _GEN_721; // @[mshrs.scala 352:44 mshrs.scala 138:21]
-  wire  _GEN_843 = _T_230 ? 1'h0 : _GEN_723; // @[mshrs.scala 352:44 mshrs.scala 157:26]
-  wire [1:0] _GEN_844 = _T_230 ? _GEN_5 : _GEN_724; // @[mshrs.scala 352:44]
-  wire  _GEN_845 = _T_230 ? grant_had_data : _GEN_725; // @[mshrs.scala 352:44 mshrs.scala 141:27]
-  wire [2:0] _GEN_846 = _T_230 ? refill_ctr : _GEN_726; // @[mshrs.scala 352:44 mshrs.scala 139:24]
-  wire  _GEN_848 = _T_230 ? req_way_en : _GEN_728; // @[mshrs.scala 352:44 mshrs.scala 109:20]
-  wire [19:0] _GEN_849 = _T_230 ? req_old_meta_tag : _GEN_729; // @[mshrs.scala 352:44 mshrs.scala 109:20]
-  wire [1:0] _GEN_850 = _T_230 ? req_old_meta_coh_state : _GEN_730; // @[mshrs.scala 352:44 mshrs.scala 109:20]
-  wire [39:0] _GEN_854 = _T_230 ? req_addr : _GEN_734; // @[mshrs.scala 352:44 mshrs.scala 109:20]
-  wire [4:0] _GEN_884 = _T_230 ? _GEN_4 : _GEN_764; // @[mshrs.scala 352:44]
-  wire  _GEN_952 = _T_230 ? req_needs_wb : _GEN_832; // @[mshrs.scala 352:44 mshrs.scala 113:29]
-  wire  _GEN_1058 = state == 5'hc & rpq_io_deq_valid; // @[mshrs.scala 339:39 mshrs.scala 340:15 mshrs.scala 161:26]
-  wire  _GEN_1059 = state == 5'hc & io_replay_ready; // @[mshrs.scala 339:39 mshrs.scala 340:15 mshrs.scala 135:20]
-  wire [1:0] _GEN_1060 = state == 5'hc ? _GEN_150 : _GEN_844; // @[mshrs.scala 339:39]
-  wire [4:0] _GEN_1061 = state == 5'hc ? _GEN_151 : _GEN_838; // @[mshrs.scala 339:39]
-  wire  _GEN_1062 = state == 5'hc ? 1'h0 : _T_230; // @[mshrs.scala 339:39 mshrs.scala 156:26]
-  wire  _GEN_1068 = state == 5'hc ? 1'h0 : _GEN_840; // @[mshrs.scala 339:39 mshrs.scala 168:26]
-  wire  _GEN_1070 = state == 5'hc ? grantack_valid : _GEN_842; // @[mshrs.scala 339:39 mshrs.scala 138:21]
-  wire  _GEN_1071 = state == 5'hc ? 1'h0 : _GEN_843; // @[mshrs.scala 339:39 mshrs.scala 157:26]
-  wire  _GEN_1072 = state == 5'hc ? grant_had_data : _GEN_845; // @[mshrs.scala 339:39 mshrs.scala 141:27]
-  wire [2:0] _GEN_1073 = state == 5'hc ? refill_ctr : _GEN_846; // @[mshrs.scala 339:39 mshrs.scala 139:24]
-  wire  _GEN_1075 = state == 5'hc ? req_way_en : _GEN_848; // @[mshrs.scala 339:39 mshrs.scala 109:20]
-  wire [19:0] _GEN_1076 = state == 5'hc ? req_old_meta_tag : _GEN_849; // @[mshrs.scala 339:39 mshrs.scala 109:20]
-  wire [1:0] _GEN_1077 = state == 5'hc ? req_old_meta_coh_state : _GEN_850; // @[mshrs.scala 339:39 mshrs.scala 109:20]
-  wire [39:0] _GEN_1081 = state == 5'hc ? req_addr : _GEN_854; // @[mshrs.scala 339:39 mshrs.scala 109:20]
-  wire [4:0] _GEN_1111 = state == 5'hc ? _GEN_4 : _GEN_884; // @[mshrs.scala 339:39]
-  wire  _GEN_1179 = state == 5'hc ? req_needs_wb : _GEN_952; // @[mshrs.scala 339:39 mshrs.scala 113:29]
-  wire  _GEN_1183 = state == 5'hb & _T_499; // @[mshrs.scala 323:41 mshrs.scala 328:27 mshrs.scala 160:26]
-  wire [2:0] _GEN_1188 = state == 5'hb ? _GEN_148 : _GEN_1073; // @[mshrs.scala 323:41]
-  wire [4:0] _GEN_1189 = state == 5'hb ? _GEN_149 : _GEN_1061; // @[mshrs.scala 323:41]
-  wire  _GEN_1295 = state == 5'hb ? 1'h0 : _GEN_1058; // @[mshrs.scala 323:41 mshrs.scala 161:26]
-  wire  _GEN_1296 = state == 5'hb ? 1'h0 : _GEN_1059; // @[mshrs.scala 323:41 mshrs.scala 135:20]
-  wire [1:0] _GEN_1297 = state == 5'hb ? _GEN_5 : _GEN_1060; // @[mshrs.scala 323:41]
-  wire  _GEN_1298 = state == 5'hb ? 1'h0 : _GEN_1062; // @[mshrs.scala 323:41 mshrs.scala 156:26]
-  wire  _GEN_1304 = state == 5'hb ? 1'h0 : _GEN_1068; // @[mshrs.scala 323:41 mshrs.scala 168:26]
-  wire  _GEN_1306 = state == 5'hb ? grantack_valid : _GEN_1070; // @[mshrs.scala 323:41 mshrs.scala 138:21]
-  wire  _GEN_1307 = state == 5'hb ? 1'h0 : _GEN_1071; // @[mshrs.scala 323:41 mshrs.scala 157:26]
-  wire  _GEN_1308 = state == 5'hb ? grant_had_data : _GEN_1072; // @[mshrs.scala 323:41 mshrs.scala 141:27]
-  wire  _GEN_1310 = state == 5'hb ? req_way_en : _GEN_1075; // @[mshrs.scala 323:41 mshrs.scala 109:20]
-  wire [19:0] _GEN_1311 = state == 5'hb ? req_old_meta_tag : _GEN_1076; // @[mshrs.scala 323:41 mshrs.scala 109:20]
-  wire [1:0] _GEN_1312 = state == 5'hb ? req_old_meta_coh_state : _GEN_1077; // @[mshrs.scala 323:41 mshrs.scala 109:20]
-  wire [39:0] _GEN_1316 = state == 5'hb ? req_addr : _GEN_1081; // @[mshrs.scala 323:41 mshrs.scala 109:20]
-  wire [4:0] _GEN_1346 = state == 5'hb ? _GEN_4 : _GEN_1111; // @[mshrs.scala 323:41]
-  wire  _GEN_1414 = state == 5'hb ? req_needs_wb : _GEN_1179; // @[mshrs.scala 323:41 mshrs.scala 113:29]
-  wire [4:0] _GEN_1415 = state == 5'ha ? _GEN_146 : _GEN_1189; // @[mshrs.scala 319:37]
-  wire  _GEN_1416 = state == 5'ha ? 1'h0 : _T_618; // @[mshrs.scala 319:37 mshrs.scala 170:26]
-  wire  _GEN_1419 = state == 5'ha ? 1'h0 : _GEN_1183; // @[mshrs.scala 319:37 mshrs.scala 160:26]
-  wire [2:0] _GEN_1424 = state == 5'ha ? refill_ctr : _GEN_1188; // @[mshrs.scala 319:37 mshrs.scala 139:24]
-  wire  _GEN_1530 = state == 5'ha ? 1'h0 : _GEN_1295; // @[mshrs.scala 319:37 mshrs.scala 161:26]
-  wire  _GEN_1531 = state == 5'ha ? 1'h0 : _GEN_1296; // @[mshrs.scala 319:37 mshrs.scala 135:20]
-  wire [1:0] _GEN_1532 = state == 5'ha ? _GEN_5 : _GEN_1297; // @[mshrs.scala 319:37]
-  wire  _GEN_1533 = state == 5'ha ? 1'h0 : _GEN_1298; // @[mshrs.scala 319:37 mshrs.scala 156:26]
-  wire  _GEN_1539 = state == 5'ha ? 1'h0 : _GEN_1304; // @[mshrs.scala 319:37 mshrs.scala 168:26]
-  wire  _GEN_1541 = state == 5'ha ? grantack_valid : _GEN_1306; // @[mshrs.scala 319:37 mshrs.scala 138:21]
-  wire  _GEN_1542 = state == 5'ha ? 1'h0 : _GEN_1307; // @[mshrs.scala 319:37 mshrs.scala 157:26]
-  wire  _GEN_1543 = state == 5'ha ? grant_had_data : _GEN_1308; // @[mshrs.scala 319:37 mshrs.scala 141:27]
-  wire  _GEN_1545 = state == 5'ha ? req_way_en : _GEN_1310; // @[mshrs.scala 319:37 mshrs.scala 109:20]
-  wire [19:0] _GEN_1546 = state == 5'ha ? req_old_meta_tag : _GEN_1311; // @[mshrs.scala 319:37 mshrs.scala 109:20]
-  wire [1:0] _GEN_1547 = state == 5'ha ? req_old_meta_coh_state : _GEN_1312; // @[mshrs.scala 319:37 mshrs.scala 109:20]
-  wire [39:0] _GEN_1551 = state == 5'ha ? req_addr : _GEN_1316; // @[mshrs.scala 319:37 mshrs.scala 109:20]
-  wire [4:0] _GEN_1581 = state == 5'ha ? _GEN_4 : _GEN_1346; // @[mshrs.scala 319:37]
-  wire  _GEN_1649 = state == 5'ha ? req_needs_wb : _GEN_1414; // @[mshrs.scala 319:37 mshrs.scala 113:29]
-  wire [4:0] _GEN_1657 = state == 5'h9 ? _GEN_145 : _GEN_1415; // @[mshrs.scala 307:36]
-  wire  _GEN_1658 = state == 5'h9 ? 1'h0 : _GEN_1416; // @[mshrs.scala 307:36 mshrs.scala 170:26]
-  wire  _GEN_1661 = state == 5'h9 ? 1'h0 : _GEN_1419; // @[mshrs.scala 307:36 mshrs.scala 160:26]
-  wire [2:0] _GEN_1666 = state == 5'h9 ? refill_ctr : _GEN_1424; // @[mshrs.scala 307:36 mshrs.scala 139:24]
-  wire  _GEN_1772 = state == 5'h9 ? 1'h0 : _GEN_1530; // @[mshrs.scala 307:36 mshrs.scala 161:26]
-  wire  _GEN_1773 = state == 5'h9 ? 1'h0 : _GEN_1531; // @[mshrs.scala 307:36 mshrs.scala 135:20]
-  wire [1:0] _GEN_1774 = state == 5'h9 ? _GEN_5 : _GEN_1532; // @[mshrs.scala 307:36]
-  wire  _GEN_1775 = state == 5'h9 ? 1'h0 : _GEN_1533; // @[mshrs.scala 307:36 mshrs.scala 156:26]
-  wire  _GEN_1781 = state == 5'h9 ? 1'h0 : _GEN_1539; // @[mshrs.scala 307:36 mshrs.scala 168:26]
-  wire  _GEN_1783 = state == 5'h9 ? grantack_valid : _GEN_1541; // @[mshrs.scala 307:36 mshrs.scala 138:21]
-  wire  _GEN_1784 = state == 5'h9 ? 1'h0 : _GEN_1542; // @[mshrs.scala 307:36 mshrs.scala 157:26]
-  wire  _GEN_1785 = state == 5'h9 ? grant_had_data : _GEN_1543; // @[mshrs.scala 307:36 mshrs.scala 141:27]
-  wire  _GEN_1787 = state == 5'h9 ? req_way_en : _GEN_1545; // @[mshrs.scala 307:36 mshrs.scala 109:20]
-  wire [19:0] _GEN_1788 = state == 5'h9 ? req_old_meta_tag : _GEN_1546; // @[mshrs.scala 307:36 mshrs.scala 109:20]
-  wire [1:0] _GEN_1789 = state == 5'h9 ? req_old_meta_coh_state : _GEN_1547; // @[mshrs.scala 307:36 mshrs.scala 109:20]
-  wire [39:0] _GEN_1793 = state == 5'h9 ? req_addr : _GEN_1551; // @[mshrs.scala 307:36 mshrs.scala 109:20]
-  wire [4:0] _GEN_1823 = state == 5'h9 ? _GEN_4 : _GEN_1581; // @[mshrs.scala 307:36]
-  wire  _GEN_1891 = state == 5'h9 ? req_needs_wb : _GEN_1649; // @[mshrs.scala 307:36 mshrs.scala 113:29]
-  wire  _GEN_1892 = state == 5'h7 | _GEN_1775; // @[mshrs.scala 297:40 mshrs.scala 298:33]
-  wire [4:0] _GEN_1897 = state == 5'h7 ? _GEN_144 : _GEN_1657; // @[mshrs.scala 297:40]
-  wire  _GEN_1898 = state == 5'h7 ? 1'h0 : _T_615; // @[mshrs.scala 297:40 mshrs.scala 162:26]
-  wire  _GEN_1905 = state == 5'h7 ? 1'h0 : _GEN_1658; // @[mshrs.scala 297:40 mshrs.scala 170:26]
-  wire  _GEN_1908 = state == 5'h7 ? 1'h0 : _GEN_1661; // @[mshrs.scala 297:40 mshrs.scala 160:26]
-  wire [2:0] _GEN_1913 = state == 5'h7 ? refill_ctr : _GEN_1666; // @[mshrs.scala 297:40 mshrs.scala 139:24]
-  wire  _GEN_2019 = state == 5'h7 ? 1'h0 : _GEN_1772; // @[mshrs.scala 297:40 mshrs.scala 161:26]
-  wire  _GEN_2020 = state == 5'h7 ? 1'h0 : _GEN_1773; // @[mshrs.scala 297:40 mshrs.scala 135:20]
-  wire [1:0] _GEN_2021 = state == 5'h7 ? _GEN_5 : _GEN_1774; // @[mshrs.scala 297:40]
-  wire  _GEN_2023 = state == 5'h7 ? 1'h0 : _GEN_1781; // @[mshrs.scala 297:40 mshrs.scala 168:26]
-  wire  _GEN_2025 = state == 5'h7 ? grantack_valid : _GEN_1783; // @[mshrs.scala 297:40 mshrs.scala 138:21]
-  wire  _GEN_2026 = state == 5'h7 ? 1'h0 : _GEN_1784; // @[mshrs.scala 297:40 mshrs.scala 157:26]
-  wire  _GEN_2027 = state == 5'h7 ? grant_had_data : _GEN_1785; // @[mshrs.scala 297:40 mshrs.scala 141:27]
-  wire  _GEN_2029 = state == 5'h7 ? req_way_en : _GEN_1787; // @[mshrs.scala 297:40 mshrs.scala 109:20]
-  wire [19:0] _GEN_2030 = state == 5'h7 ? req_old_meta_tag : _GEN_1788; // @[mshrs.scala 297:40 mshrs.scala 109:20]
-  wire [1:0] _GEN_2031 = state == 5'h7 ? req_old_meta_coh_state : _GEN_1789; // @[mshrs.scala 297:40 mshrs.scala 109:20]
-  wire [39:0] _GEN_2035 = state == 5'h7 ? req_addr : _GEN_1793; // @[mshrs.scala 297:40 mshrs.scala 109:20]
-  wire [4:0] _GEN_2065 = state == 5'h7 ? _GEN_4 : _GEN_1823; // @[mshrs.scala 297:40]
-  wire  _GEN_2133 = state == 5'h7 ? req_needs_wb : _GEN_1891; // @[mshrs.scala 297:40 mshrs.scala 113:29]
-  wire [4:0] _GEN_2134 = state == 5'h6 ? _T_612 : _GEN_1897; // @[mshrs.scala 293:41 mshrs.scala 295:11]
-  wire  _GEN_2135 = state == 5'h6 ? 1'h0 : _GEN_1892; // @[mshrs.scala 293:41 mshrs.scala 156:26]
-  wire  _GEN_2140 = state == 5'h6 ? 1'h0 : _GEN_1898; // @[mshrs.scala 293:41 mshrs.scala 162:26]
-  wire  _GEN_2147 = state == 5'h6 ? 1'h0 : _GEN_1905; // @[mshrs.scala 293:41 mshrs.scala 170:26]
-  wire  _GEN_2150 = state == 5'h6 ? 1'h0 : _GEN_1908; // @[mshrs.scala 293:41 mshrs.scala 160:26]
-  wire [2:0] _GEN_2155 = state == 5'h6 ? refill_ctr : _GEN_1913; // @[mshrs.scala 293:41 mshrs.scala 139:24]
-  wire  _GEN_2261 = state == 5'h6 ? 1'h0 : _GEN_2019; // @[mshrs.scala 293:41 mshrs.scala 161:26]
-  wire  _GEN_2262 = state == 5'h6 ? 1'h0 : _GEN_2020; // @[mshrs.scala 293:41 mshrs.scala 135:20]
-  wire [1:0] _GEN_2263 = state == 5'h6 ? _GEN_5 : _GEN_2021; // @[mshrs.scala 293:41]
-  wire  _GEN_2265 = state == 5'h6 ? 1'h0 : _GEN_2023; // @[mshrs.scala 293:41 mshrs.scala 168:26]
-  wire  _GEN_2267 = state == 5'h6 ? grantack_valid : _GEN_2025; // @[mshrs.scala 293:41 mshrs.scala 138:21]
-  wire  _GEN_2268 = state == 5'h6 ? 1'h0 : _GEN_2026; // @[mshrs.scala 293:41 mshrs.scala 157:26]
-  wire  _GEN_2269 = state == 5'h6 ? grant_had_data : _GEN_2027; // @[mshrs.scala 293:41 mshrs.scala 141:27]
-  wire  _GEN_2271 = state == 5'h6 ? req_way_en : _GEN_2029; // @[mshrs.scala 293:41 mshrs.scala 109:20]
-  wire [19:0] _GEN_2272 = state == 5'h6 ? req_old_meta_tag : _GEN_2030; // @[mshrs.scala 293:41 mshrs.scala 109:20]
-  wire [1:0] _GEN_2273 = state == 5'h6 ? req_old_meta_coh_state : _GEN_2031; // @[mshrs.scala 293:41 mshrs.scala 109:20]
-  wire [39:0] _GEN_2277 = state == 5'h6 ? req_addr : _GEN_2035; // @[mshrs.scala 293:41 mshrs.scala 109:20]
-  wire [4:0] _GEN_2307 = state == 5'h6 ? _GEN_4 : _GEN_2065; // @[mshrs.scala 293:41]
-  wire  _GEN_2375 = state == 5'h6 ? req_needs_wb : _GEN_2133; // @[mshrs.scala 293:41 mshrs.scala 113:29]
-  wire [4:0] _GEN_2376 = state == 5'h5 ? 5'h6 : _GEN_2134; // @[mshrs.scala 291:41 mshrs.scala 292:11]
-  wire  _GEN_2377 = state == 5'h5 ? 1'h0 : _GEN_2135; // @[mshrs.scala 291:41 mshrs.scala 156:26]
-  wire  _GEN_2382 = state == 5'h5 ? 1'h0 : _GEN_2140; // @[mshrs.scala 291:41 mshrs.scala 162:26]
-  wire  _GEN_2389 = state == 5'h5 ? 1'h0 : _GEN_2147; // @[mshrs.scala 291:41 mshrs.scala 170:26]
-  wire  _GEN_2392 = state == 5'h5 ? 1'h0 : _GEN_2150; // @[mshrs.scala 291:41 mshrs.scala 160:26]
-  wire [2:0] _GEN_2397 = state == 5'h5 ? refill_ctr : _GEN_2155; // @[mshrs.scala 291:41 mshrs.scala 139:24]
-  wire  _GEN_2503 = state == 5'h5 ? 1'h0 : _GEN_2261; // @[mshrs.scala 291:41 mshrs.scala 161:26]
-  wire  _GEN_2504 = state == 5'h5 ? 1'h0 : _GEN_2262; // @[mshrs.scala 291:41 mshrs.scala 135:20]
-  wire [1:0] _GEN_2505 = state == 5'h5 ? _GEN_5 : _GEN_2263; // @[mshrs.scala 291:41]
-  wire  _GEN_2507 = state == 5'h5 ? 1'h0 : _GEN_2265; // @[mshrs.scala 291:41 mshrs.scala 168:26]
-  wire  _GEN_2509 = state == 5'h5 ? grantack_valid : _GEN_2267; // @[mshrs.scala 291:41 mshrs.scala 138:21]
-  wire  _GEN_2510 = state == 5'h5 ? 1'h0 : _GEN_2268; // @[mshrs.scala 291:41 mshrs.scala 157:26]
-  wire  _GEN_2511 = state == 5'h5 ? grant_had_data : _GEN_2269; // @[mshrs.scala 291:41 mshrs.scala 141:27]
-  wire  _GEN_2513 = state == 5'h5 ? req_way_en : _GEN_2271; // @[mshrs.scala 291:41 mshrs.scala 109:20]
-  wire [19:0] _GEN_2514 = state == 5'h5 ? req_old_meta_tag : _GEN_2272; // @[mshrs.scala 291:41 mshrs.scala 109:20]
-  wire [1:0] _GEN_2515 = state == 5'h5 ? req_old_meta_coh_state : _GEN_2273; // @[mshrs.scala 291:41 mshrs.scala 109:20]
-  wire [39:0] _GEN_2519 = state == 5'h5 ? req_addr : _GEN_2277; // @[mshrs.scala 291:41 mshrs.scala 109:20]
-  wire [4:0] _GEN_2549 = state == 5'h5 ? _GEN_4 : _GEN_2307; // @[mshrs.scala 291:41]
-  wire  _GEN_2617 = state == 5'h5 ? req_needs_wb : _GEN_2375; // @[mshrs.scala 291:41 mshrs.scala 113:29]
-  wire  _GEN_2618 = _T_264 & (~io_prober_state_valid | ~grantack_valid | io_prober_state_bits[11:6] != req_idx); // @[mshrs.scala 283:39 mshrs.scala 284:24 mshrs.scala 167:26]
-  wire [4:0] _GEN_2622 = _T_264 ? _GEN_143 : _GEN_2376; // @[mshrs.scala 283:39]
-  wire  _GEN_2623 = _T_264 ? 1'h0 : _GEN_2377; // @[mshrs.scala 283:39 mshrs.scala 156:26]
-  wire  _GEN_2628 = _T_264 ? 1'h0 : _GEN_2382; // @[mshrs.scala 283:39 mshrs.scala 162:26]
-  wire  _GEN_2635 = _T_264 ? 1'h0 : _GEN_2389; // @[mshrs.scala 283:39 mshrs.scala 170:26]
-  wire  _GEN_2638 = _T_264 ? 1'h0 : _GEN_2392; // @[mshrs.scala 283:39 mshrs.scala 160:26]
-  wire [2:0] _GEN_2643 = _T_264 ? refill_ctr : _GEN_2397; // @[mshrs.scala 283:39 mshrs.scala 139:24]
-  wire  _GEN_2749 = _T_264 ? 1'h0 : _GEN_2503; // @[mshrs.scala 283:39 mshrs.scala 161:26]
-  wire  _GEN_2750 = _T_264 ? 1'h0 : _GEN_2504; // @[mshrs.scala 283:39 mshrs.scala 135:20]
-  wire [1:0] _GEN_2751 = _T_264 ? _GEN_5 : _GEN_2505; // @[mshrs.scala 283:39]
-  wire  _GEN_2753 = _T_264 ? 1'h0 : _GEN_2507; // @[mshrs.scala 283:39 mshrs.scala 168:26]
-  wire  _GEN_2755 = _T_264 ? grantack_valid : _GEN_2509; // @[mshrs.scala 283:39 mshrs.scala 138:21]
-  wire  _GEN_2756 = _T_264 ? 1'h0 : _GEN_2510; // @[mshrs.scala 283:39 mshrs.scala 157:26]
-  wire  _GEN_2757 = _T_264 ? grant_had_data : _GEN_2511; // @[mshrs.scala 283:39 mshrs.scala 141:27]
-  wire  _GEN_2759 = _T_264 ? req_way_en : _GEN_2513; // @[mshrs.scala 283:39 mshrs.scala 109:20]
-  wire [19:0] _GEN_2760 = _T_264 ? req_old_meta_tag : _GEN_2514; // @[mshrs.scala 283:39 mshrs.scala 109:20]
-  wire [1:0] _GEN_2761 = _T_264 ? req_old_meta_coh_state : _GEN_2515; // @[mshrs.scala 283:39 mshrs.scala 109:20]
-  wire [39:0] _GEN_2765 = _T_264 ? req_addr : _GEN_2519; // @[mshrs.scala 283:39 mshrs.scala 109:20]
-  wire [4:0] _GEN_2795 = _T_264 ? _GEN_4 : _GEN_2549; // @[mshrs.scala 283:39]
-  wire  _GEN_2863 = _T_264 ? req_needs_wb : _GEN_2617; // @[mshrs.scala 283:39 mshrs.scala 113:29]
-  wire  _GEN_2864 = _T_260 ? io_resp_ready & io_lb_read_ready & _T_490 : _GEN_2750; // @[mshrs.scala 245:45 mshrs.scala 259:28]
-  wire  _GEN_2865 = _T_260 ? rpq_io_deq_valid & _T_490 : _GEN_2635; // @[mshrs.scala 245:45 mshrs.scala 260:28]
-  wire [36:0] _GEN_2867 = _T_260 ? rpq_io_deq_bits_addr[39:3] : {{34'd0}, refill_ctr}; // @[mshrs.scala 245:45 mshrs.scala 262:28]
-  wire  _GEN_2868 = _T_260 & (rpq_io_deq_valid & _T_499 & _T_490); // @[mshrs.scala 245:45 mshrs.scala 264:23 mshrs.scala 163:26]
-  wire [4:0] _GEN_2969 = _T_260 ? _GEN_140 : _GEN_2622; // @[mshrs.scala 245:45]
-  wire  _GEN_2971 = _T_260 & _GEN_142; // @[mshrs.scala 245:45 mshrs.scala 164:26]
-  wire  _GEN_2972 = _T_260 ? 1'h0 : _GEN_2618; // @[mshrs.scala 245:45 mshrs.scala 167:26]
-  wire  _GEN_2976 = _T_260 ? 1'h0 : _GEN_2623; // @[mshrs.scala 245:45 mshrs.scala 156:26]
-  wire  _GEN_2981 = _T_260 ? 1'h0 : _GEN_2628; // @[mshrs.scala 245:45 mshrs.scala 162:26]
-  wire  _GEN_2988 = _T_260 ? 1'h0 : _GEN_2638; // @[mshrs.scala 245:45 mshrs.scala 160:26]
-  wire  _GEN_3099 = _T_260 ? 1'h0 : _GEN_2749; // @[mshrs.scala 245:45 mshrs.scala 161:26]
-  wire [1:0] _GEN_3100 = _T_260 ? _GEN_5 : _GEN_2751; // @[mshrs.scala 245:45]
-  wire  _GEN_3101 = _T_260 ? 1'h0 : _GEN_2753; // @[mshrs.scala 245:45 mshrs.scala 168:26]
-  wire  _GEN_3104 = _T_260 ? 1'h0 : _GEN_2756; // @[mshrs.scala 245:45 mshrs.scala 157:26]
-  wire  _GEN_3211 = _T_260 ? req_needs_wb : _GEN_2863; // @[mshrs.scala 245:45 mshrs.scala 113:29]
-  wire  _GEN_3213 = _T_259 & _GEN_122; // @[mshrs.scala 222:41 mshrs.scala 169:26]
-  wire  _GEN_3223 = _T_259 ? 1'h0 : _GEN_2864; // @[mshrs.scala 222:41 mshrs.scala 135:20]
-  wire  _GEN_3224 = _T_259 ? 1'h0 : _GEN_2865; // @[mshrs.scala 222:41 mshrs.scala 170:26]
-  wire  _GEN_3227 = _T_259 ? 1'h0 : _GEN_2868; // @[mshrs.scala 222:41 mshrs.scala 163:26]
-  wire  _GEN_3328 = _T_259 ? 1'h0 : _GEN_2971; // @[mshrs.scala 222:41 mshrs.scala 164:26]
-  wire  _GEN_3329 = _T_259 ? 1'h0 : _GEN_2972; // @[mshrs.scala 222:41 mshrs.scala 167:26]
-  wire  _GEN_3333 = _T_259 ? 1'h0 : _GEN_2976; // @[mshrs.scala 222:41 mshrs.scala 156:26]
-  wire  _GEN_3338 = _T_259 ? 1'h0 : _GEN_2981; // @[mshrs.scala 222:41 mshrs.scala 162:26]
-  wire  _GEN_3345 = _T_259 ? 1'h0 : _GEN_2988; // @[mshrs.scala 222:41 mshrs.scala 160:26]
-  wire  _GEN_3456 = _T_259 ? 1'h0 : _GEN_3099; // @[mshrs.scala 222:41 mshrs.scala 161:26]
-  wire  _GEN_3457 = _T_259 ? 1'h0 : _GEN_3101; // @[mshrs.scala 222:41 mshrs.scala 168:26]
-  wire  _GEN_3459 = _T_259 ? 1'h0 : _GEN_3104; // @[mshrs.scala 222:41 mshrs.scala 157:26]
-  wire  _GEN_3577 = _T_258 ? 1'h0 : _GEN_3213; // @[mshrs.scala 211:40 mshrs.scala 169:26]
-  wire  _GEN_3586 = _T_258 ? 1'h0 : _GEN_3223; // @[mshrs.scala 211:40 mshrs.scala 135:20]
-  wire  _GEN_3587 = _T_258 ? 1'h0 : _GEN_3224; // @[mshrs.scala 211:40 mshrs.scala 170:26]
-  wire  _GEN_3590 = _T_258 ? 1'h0 : _GEN_3227; // @[mshrs.scala 211:40 mshrs.scala 163:26]
-  wire  _GEN_3691 = _T_258 ? 1'h0 : _GEN_3328; // @[mshrs.scala 211:40 mshrs.scala 164:26]
-  wire  _GEN_3692 = _T_258 ? 1'h0 : _GEN_3329; // @[mshrs.scala 211:40 mshrs.scala 167:26]
-  wire  _GEN_3696 = _T_258 ? 1'h0 : _GEN_3333; // @[mshrs.scala 211:40 mshrs.scala 156:26]
-  wire  _GEN_3701 = _T_258 ? 1'h0 : _GEN_3338; // @[mshrs.scala 211:40 mshrs.scala 162:26]
-  wire  _GEN_3708 = _T_258 ? 1'h0 : _GEN_3345; // @[mshrs.scala 211:40 mshrs.scala 160:26]
-  wire  _GEN_3819 = _T_258 ? 1'h0 : _GEN_3456; // @[mshrs.scala 211:40 mshrs.scala 161:26]
-  wire  _GEN_3820 = _T_258 ? 1'h0 : _GEN_3457; // @[mshrs.scala 211:40 mshrs.scala 168:26]
-  wire  _GEN_3822 = _T_258 ? 1'h0 : _GEN_3459; // @[mshrs.scala 211:40 mshrs.scala 157:26]
-  wire  _GEN_4293 = _T_229 & _T_244; // @[mshrs.scala 183:11]
-  wire  _GEN_4303 = ~_T_229 & ~_T_258; // @[mshrs.scala 240:13]
-  wire  _GEN_4331 = _GEN_4303 & ~_T_259 & ~_T_260 & ~_T_264 & ~_T_542 & ~_T_543 & ~_T_613 & ~_T_615 & ~_T_617 & ~_T_618; // @[mshrs.scala 346:13]
-  wire  _GEN_4391 = _GEN_4331 & ~_T_627 & ~_T_230 & ~_T_231 & ~_T_232 & _T_271 & ~_T_719 & ~_T_245 & _T_244; // @[mshrs.scala 183:11]
+  wire [1:0] _GEN_138 = _T_223 ? _T_224 : 2'h0; // @[mshrs.scala 377:21 mshrs.scala 378:17 mshrs.scala 381:17]
+  wire [4:0] _GEN_139 = _T_223 ? 5'h4 : 5'h1; // @[mshrs.scala 377:21 mshrs.scala 379:15 mshrs.scala 382:15]
+  wire  _GEN_144 = _T_244 ? 1'h0 : grant_had_data; // @[mshrs.scala 384:52 mshrs.scala 385:22 mshrs.scala 141:27]
+  wire [1:0] _GEN_237 = _T_245 ? _GEN_138 : _GEN_100; // @[mshrs.scala 375:52]
+  wire [4:0] _GEN_238 = _T_245 ? _GEN_139 : _GEN_101; // @[mshrs.scala 375:52]
+  wire  _GEN_239 = _T_245 ? grant_had_data : _GEN_144; // @[mshrs.scala 375:52 mshrs.scala 141:27]
+  wire  _GEN_240 = _T_245 ? grantack_valid : _GEN_10; // @[mshrs.scala 375:52 mshrs.scala 138:21]
+  wire [2:0] _GEN_241 = _T_245 ? refill_ctr : _GEN_11; // @[mshrs.scala 375:52 mshrs.scala 139:24]
+  wire [3:0] _GEN_243 = _T_245 ? req_way_en : _GEN_13; // @[mshrs.scala 375:52 mshrs.scala 109:20]
+  wire [19:0] _GEN_244 = _T_245 ? req_old_meta_tag : _GEN_14; // @[mshrs.scala 375:52 mshrs.scala 109:20]
+  wire [1:0] _GEN_245 = _T_245 ? req_old_meta_coh_state : _GEN_15; // @[mshrs.scala 375:52 mshrs.scala 109:20]
+  wire [39:0] _GEN_249 = _T_245 ? req_addr : _GEN_19; // @[mshrs.scala 375:52 mshrs.scala 109:20]
+  wire [4:0] _GEN_279 = _T_245 ? _GEN_4 : _GEN_49; // @[mshrs.scala 375:52]
+  wire  _GEN_329 = _T_245 ? req_needs_wb : _GEN_99; // @[mshrs.scala 375:52 mshrs.scala 113:29]
+  wire [4:0] _GEN_330 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? 5'h0 : _GEN_238; // @[mshrs.scala 373:69 mshrs.scala 374:13]
+  wire [1:0] _GEN_331 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? _GEN_5 : _GEN_237; // @[mshrs.scala 373:69]
+  wire  _GEN_332 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? grant_had_data : _GEN_239; // @[mshrs.scala 373:69 mshrs.scala 141:27]
+  wire  _GEN_333 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? grantack_valid : _GEN_240; // @[mshrs.scala 373:69 mshrs.scala 138:21]
+  wire [2:0] _GEN_334 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? refill_ctr : _GEN_241; // @[mshrs.scala 373:69 mshrs.scala 139:24]
+  wire [3:0] _GEN_336 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_way_en : _GEN_243; // @[mshrs.scala 373:69 mshrs.scala 109:20]
+  wire [19:0] _GEN_337 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_old_meta_tag : _GEN_244; // @[mshrs.scala 373:69 mshrs.scala 109:20]
+  wire [1:0] _GEN_338 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_old_meta_coh_state : _GEN_245; // @[mshrs.scala 373:69 mshrs.scala 109:20]
+  wire [39:0] _GEN_342 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_addr : _GEN_249; // @[mshrs.scala 373:69 mshrs.scala 109:20]
+  wire [4:0] _GEN_372 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? _GEN_4 : _GEN_279; // @[mshrs.scala 373:69]
+  wire  _GEN_422 = io_req_sec_val & ~io_req_sec_rdy | io_clear_prefetch ? req_needs_wb : _GEN_329; // @[mshrs.scala 373:69 mshrs.scala 113:29]
+  wire [4:0] _GEN_424 = _T_271 ? _GEN_330 : state; // @[mshrs.scala 371:38 mshrs.scala 107:22]
+  wire [1:0] _GEN_425 = _T_271 ? _GEN_331 : _GEN_5; // @[mshrs.scala 371:38]
+  wire  _GEN_426 = _T_271 ? _GEN_332 : grant_had_data; // @[mshrs.scala 371:38 mshrs.scala 141:27]
+  wire  _GEN_427 = _T_271 ? _GEN_333 : grantack_valid; // @[mshrs.scala 371:38 mshrs.scala 138:21]
+  wire [2:0] _GEN_428 = _T_271 ? _GEN_334 : refill_ctr; // @[mshrs.scala 371:38 mshrs.scala 139:24]
+  wire [3:0] _GEN_430 = _T_271 ? _GEN_336 : req_way_en; // @[mshrs.scala 371:38 mshrs.scala 109:20]
+  wire [19:0] _GEN_431 = _T_271 ? _GEN_337 : req_old_meta_tag; // @[mshrs.scala 371:38 mshrs.scala 109:20]
+  wire [1:0] _GEN_432 = _T_271 ? _GEN_338 : req_old_meta_coh_state; // @[mshrs.scala 371:38 mshrs.scala 109:20]
+  wire [39:0] _GEN_436 = _T_271 ? _GEN_342 : req_addr; // @[mshrs.scala 371:38 mshrs.scala 109:20]
+  wire [4:0] _GEN_466 = _T_271 ? _GEN_372 : _GEN_4; // @[mshrs.scala 371:38]
+  wire  _GEN_516 = _T_271 ? _GEN_422 : req_needs_wb; // @[mshrs.scala 371:38 mshrs.scala 113:29]
+  wire [4:0] _GEN_517 = _T_232 ? 5'h0 : _GEN_424; // @[mshrs.scala 369:42 mshrs.scala 370:11]
+  wire  _GEN_518 = _T_232 ? 1'h0 : _T_271; // @[mshrs.scala 369:42 mshrs.scala 157:26]
+  wire [1:0] _GEN_519 = _T_232 ? _GEN_5 : _GEN_425; // @[mshrs.scala 369:42]
+  wire  _GEN_520 = _T_232 ? grant_had_data : _GEN_426; // @[mshrs.scala 369:42 mshrs.scala 141:27]
+  wire  _GEN_521 = _T_232 ? grantack_valid : _GEN_427; // @[mshrs.scala 369:42 mshrs.scala 138:21]
+  wire [2:0] _GEN_522 = _T_232 ? refill_ctr : _GEN_428; // @[mshrs.scala 369:42 mshrs.scala 139:24]
+  wire [3:0] _GEN_524 = _T_232 ? req_way_en : _GEN_430; // @[mshrs.scala 369:42 mshrs.scala 109:20]
+  wire [19:0] _GEN_525 = _T_232 ? req_old_meta_tag : _GEN_431; // @[mshrs.scala 369:42 mshrs.scala 109:20]
+  wire [1:0] _GEN_526 = _T_232 ? req_old_meta_coh_state : _GEN_432; // @[mshrs.scala 369:42 mshrs.scala 109:20]
+  wire [39:0] _GEN_530 = _T_232 ? req_addr : _GEN_436; // @[mshrs.scala 369:42 mshrs.scala 109:20]
+  wire [4:0] _GEN_560 = _T_232 ? _GEN_4 : _GEN_466; // @[mshrs.scala 369:42]
+  wire  _GEN_610 = _T_232 ? req_needs_wb : _GEN_516; // @[mshrs.scala 369:42 mshrs.scala 113:29]
+  wire  _GEN_611 = _T_231 & grantack_valid; // @[mshrs.scala 362:42 mshrs.scala 363:25 mshrs.scala 168:26]
+  wire  _GEN_613 = _T_231 ? _GEN_136 : _GEN_521; // @[mshrs.scala 362:42]
+  wire [4:0] _GEN_614 = _T_231 ? _GEN_137 : _GEN_517; // @[mshrs.scala 362:42]
+  wire  _GEN_615 = _T_231 ? 1'h0 : _GEN_518; // @[mshrs.scala 362:42 mshrs.scala 157:26]
+  wire [1:0] _GEN_616 = _T_231 ? _GEN_5 : _GEN_519; // @[mshrs.scala 362:42]
+  wire  _GEN_617 = _T_231 ? grant_had_data : _GEN_520; // @[mshrs.scala 362:42 mshrs.scala 141:27]
+  wire [2:0] _GEN_618 = _T_231 ? refill_ctr : _GEN_522; // @[mshrs.scala 362:42 mshrs.scala 139:24]
+  wire [3:0] _GEN_620 = _T_231 ? req_way_en : _GEN_524; // @[mshrs.scala 362:42 mshrs.scala 109:20]
+  wire [19:0] _GEN_621 = _T_231 ? req_old_meta_tag : _GEN_525; // @[mshrs.scala 362:42 mshrs.scala 109:20]
+  wire [1:0] _GEN_622 = _T_231 ? req_old_meta_coh_state : _GEN_526; // @[mshrs.scala 362:42 mshrs.scala 109:20]
+  wire [39:0] _GEN_626 = _T_231 ? req_addr : _GEN_530; // @[mshrs.scala 362:42 mshrs.scala 109:20]
+  wire [4:0] _GEN_656 = _T_231 ? _GEN_4 : _GEN_560; // @[mshrs.scala 362:42]
+  wire  _GEN_706 = _T_231 ? req_needs_wb : _GEN_610; // @[mshrs.scala 362:42 mshrs.scala 113:29]
+  wire [4:0] _GEN_712 = _T_230 ? _GEN_134 : _GEN_614; // @[mshrs.scala 352:44]
+  wire  _GEN_714 = _T_230 ? 1'h0 : _GEN_611; // @[mshrs.scala 352:44 mshrs.scala 168:26]
+  wire  _GEN_716 = _T_230 ? grantack_valid : _GEN_613; // @[mshrs.scala 352:44 mshrs.scala 138:21]
+  wire  _GEN_717 = _T_230 ? 1'h0 : _GEN_615; // @[mshrs.scala 352:44 mshrs.scala 157:26]
+  wire [1:0] _GEN_718 = _T_230 ? _GEN_5 : _GEN_616; // @[mshrs.scala 352:44]
+  wire  _GEN_719 = _T_230 ? grant_had_data : _GEN_617; // @[mshrs.scala 352:44 mshrs.scala 141:27]
+  wire [2:0] _GEN_720 = _T_230 ? refill_ctr : _GEN_618; // @[mshrs.scala 352:44 mshrs.scala 139:24]
+  wire [3:0] _GEN_722 = _T_230 ? req_way_en : _GEN_620; // @[mshrs.scala 352:44 mshrs.scala 109:20]
+  wire [19:0] _GEN_723 = _T_230 ? req_old_meta_tag : _GEN_621; // @[mshrs.scala 352:44 mshrs.scala 109:20]
+  wire [1:0] _GEN_724 = _T_230 ? req_old_meta_coh_state : _GEN_622; // @[mshrs.scala 352:44 mshrs.scala 109:20]
+  wire [39:0] _GEN_728 = _T_230 ? req_addr : _GEN_626; // @[mshrs.scala 352:44 mshrs.scala 109:20]
+  wire [4:0] _GEN_758 = _T_230 ? _GEN_4 : _GEN_656; // @[mshrs.scala 352:44]
+  wire  _GEN_808 = _T_230 ? req_needs_wb : _GEN_706; // @[mshrs.scala 352:44 mshrs.scala 113:29]
+  wire  _GEN_896 = state == 5'hc & rpq_io_deq_valid; // @[mshrs.scala 339:39 mshrs.scala 340:15 mshrs.scala 161:26]
+  wire  _GEN_897 = state == 5'hc & io_replay_ready; // @[mshrs.scala 339:39 mshrs.scala 340:15 mshrs.scala 135:20]
+  wire [1:0] _GEN_898 = state == 5'hc ? _GEN_132 : _GEN_718; // @[mshrs.scala 339:39]
+  wire [4:0] _GEN_899 = state == 5'hc ? _GEN_133 : _GEN_712; // @[mshrs.scala 339:39]
+  wire  _GEN_900 = state == 5'hc ? 1'h0 : _T_230; // @[mshrs.scala 339:39 mshrs.scala 156:26]
+  wire  _GEN_906 = state == 5'hc ? 1'h0 : _GEN_714; // @[mshrs.scala 339:39 mshrs.scala 168:26]
+  wire  _GEN_908 = state == 5'hc ? grantack_valid : _GEN_716; // @[mshrs.scala 339:39 mshrs.scala 138:21]
+  wire  _GEN_909 = state == 5'hc ? 1'h0 : _GEN_717; // @[mshrs.scala 339:39 mshrs.scala 157:26]
+  wire  _GEN_910 = state == 5'hc ? grant_had_data : _GEN_719; // @[mshrs.scala 339:39 mshrs.scala 141:27]
+  wire [2:0] _GEN_911 = state == 5'hc ? refill_ctr : _GEN_720; // @[mshrs.scala 339:39 mshrs.scala 139:24]
+  wire [3:0] _GEN_913 = state == 5'hc ? req_way_en : _GEN_722; // @[mshrs.scala 339:39 mshrs.scala 109:20]
+  wire [19:0] _GEN_914 = state == 5'hc ? req_old_meta_tag : _GEN_723; // @[mshrs.scala 339:39 mshrs.scala 109:20]
+  wire [1:0] _GEN_915 = state == 5'hc ? req_old_meta_coh_state : _GEN_724; // @[mshrs.scala 339:39 mshrs.scala 109:20]
+  wire [39:0] _GEN_919 = state == 5'hc ? req_addr : _GEN_728; // @[mshrs.scala 339:39 mshrs.scala 109:20]
+  wire [4:0] _GEN_949 = state == 5'hc ? _GEN_4 : _GEN_758; // @[mshrs.scala 339:39]
+  wire  _GEN_999 = state == 5'hc ? req_needs_wb : _GEN_808; // @[mshrs.scala 339:39 mshrs.scala 113:29]
+  wire  _GEN_1003 = state == 5'hb & _T_499; // @[mshrs.scala 323:41 mshrs.scala 328:27 mshrs.scala 160:26]
+  wire [2:0] _GEN_1008 = state == 5'hb ? _GEN_130 : _GEN_911; // @[mshrs.scala 323:41]
+  wire [4:0] _GEN_1009 = state == 5'hb ? _GEN_131 : _GEN_899; // @[mshrs.scala 323:41]
+  wire  _GEN_1097 = state == 5'hb ? 1'h0 : _GEN_896; // @[mshrs.scala 323:41 mshrs.scala 161:26]
+  wire  _GEN_1098 = state == 5'hb ? 1'h0 : _GEN_897; // @[mshrs.scala 323:41 mshrs.scala 135:20]
+  wire [1:0] _GEN_1099 = state == 5'hb ? _GEN_5 : _GEN_898; // @[mshrs.scala 323:41]
+  wire  _GEN_1100 = state == 5'hb ? 1'h0 : _GEN_900; // @[mshrs.scala 323:41 mshrs.scala 156:26]
+  wire  _GEN_1106 = state == 5'hb ? 1'h0 : _GEN_906; // @[mshrs.scala 323:41 mshrs.scala 168:26]
+  wire  _GEN_1108 = state == 5'hb ? grantack_valid : _GEN_908; // @[mshrs.scala 323:41 mshrs.scala 138:21]
+  wire  _GEN_1109 = state == 5'hb ? 1'h0 : _GEN_909; // @[mshrs.scala 323:41 mshrs.scala 157:26]
+  wire  _GEN_1110 = state == 5'hb ? grant_had_data : _GEN_910; // @[mshrs.scala 323:41 mshrs.scala 141:27]
+  wire [3:0] _GEN_1112 = state == 5'hb ? req_way_en : _GEN_913; // @[mshrs.scala 323:41 mshrs.scala 109:20]
+  wire [19:0] _GEN_1113 = state == 5'hb ? req_old_meta_tag : _GEN_914; // @[mshrs.scala 323:41 mshrs.scala 109:20]
+  wire [1:0] _GEN_1114 = state == 5'hb ? req_old_meta_coh_state : _GEN_915; // @[mshrs.scala 323:41 mshrs.scala 109:20]
+  wire [39:0] _GEN_1118 = state == 5'hb ? req_addr : _GEN_919; // @[mshrs.scala 323:41 mshrs.scala 109:20]
+  wire [4:0] _GEN_1148 = state == 5'hb ? _GEN_4 : _GEN_949; // @[mshrs.scala 323:41]
+  wire  _GEN_1198 = state == 5'hb ? req_needs_wb : _GEN_999; // @[mshrs.scala 323:41 mshrs.scala 113:29]
+  wire [4:0] _GEN_1199 = state == 5'ha ? _GEN_128 : _GEN_1009; // @[mshrs.scala 319:37]
+  wire  _GEN_1200 = state == 5'ha ? 1'h0 : _T_618; // @[mshrs.scala 319:37 mshrs.scala 170:26]
+  wire  _GEN_1203 = state == 5'ha ? 1'h0 : _GEN_1003; // @[mshrs.scala 319:37 mshrs.scala 160:26]
+  wire [2:0] _GEN_1208 = state == 5'ha ? refill_ctr : _GEN_1008; // @[mshrs.scala 319:37 mshrs.scala 139:24]
+  wire  _GEN_1296 = state == 5'ha ? 1'h0 : _GEN_1097; // @[mshrs.scala 319:37 mshrs.scala 161:26]
+  wire  _GEN_1297 = state == 5'ha ? 1'h0 : _GEN_1098; // @[mshrs.scala 319:37 mshrs.scala 135:20]
+  wire [1:0] _GEN_1298 = state == 5'ha ? _GEN_5 : _GEN_1099; // @[mshrs.scala 319:37]
+  wire  _GEN_1299 = state == 5'ha ? 1'h0 : _GEN_1100; // @[mshrs.scala 319:37 mshrs.scala 156:26]
+  wire  _GEN_1305 = state == 5'ha ? 1'h0 : _GEN_1106; // @[mshrs.scala 319:37 mshrs.scala 168:26]
+  wire  _GEN_1307 = state == 5'ha ? grantack_valid : _GEN_1108; // @[mshrs.scala 319:37 mshrs.scala 138:21]
+  wire  _GEN_1308 = state == 5'ha ? 1'h0 : _GEN_1109; // @[mshrs.scala 319:37 mshrs.scala 157:26]
+  wire  _GEN_1309 = state == 5'ha ? grant_had_data : _GEN_1110; // @[mshrs.scala 319:37 mshrs.scala 141:27]
+  wire [3:0] _GEN_1311 = state == 5'ha ? req_way_en : _GEN_1112; // @[mshrs.scala 319:37 mshrs.scala 109:20]
+  wire [19:0] _GEN_1312 = state == 5'ha ? req_old_meta_tag : _GEN_1113; // @[mshrs.scala 319:37 mshrs.scala 109:20]
+  wire [1:0] _GEN_1313 = state == 5'ha ? req_old_meta_coh_state : _GEN_1114; // @[mshrs.scala 319:37 mshrs.scala 109:20]
+  wire [39:0] _GEN_1317 = state == 5'ha ? req_addr : _GEN_1118; // @[mshrs.scala 319:37 mshrs.scala 109:20]
+  wire [4:0] _GEN_1347 = state == 5'ha ? _GEN_4 : _GEN_1148; // @[mshrs.scala 319:37]
+  wire  _GEN_1397 = state == 5'ha ? req_needs_wb : _GEN_1198; // @[mshrs.scala 319:37 mshrs.scala 113:29]
+  wire [4:0] _GEN_1405 = state == 5'h9 ? _GEN_127 : _GEN_1199; // @[mshrs.scala 307:36]
+  wire  _GEN_1406 = state == 5'h9 ? 1'h0 : _GEN_1200; // @[mshrs.scala 307:36 mshrs.scala 170:26]
+  wire  _GEN_1409 = state == 5'h9 ? 1'h0 : _GEN_1203; // @[mshrs.scala 307:36 mshrs.scala 160:26]
+  wire [2:0] _GEN_1414 = state == 5'h9 ? refill_ctr : _GEN_1208; // @[mshrs.scala 307:36 mshrs.scala 139:24]
+  wire  _GEN_1502 = state == 5'h9 ? 1'h0 : _GEN_1296; // @[mshrs.scala 307:36 mshrs.scala 161:26]
+  wire  _GEN_1503 = state == 5'h9 ? 1'h0 : _GEN_1297; // @[mshrs.scala 307:36 mshrs.scala 135:20]
+  wire [1:0] _GEN_1504 = state == 5'h9 ? _GEN_5 : _GEN_1298; // @[mshrs.scala 307:36]
+  wire  _GEN_1505 = state == 5'h9 ? 1'h0 : _GEN_1299; // @[mshrs.scala 307:36 mshrs.scala 156:26]
+  wire  _GEN_1511 = state == 5'h9 ? 1'h0 : _GEN_1305; // @[mshrs.scala 307:36 mshrs.scala 168:26]
+  wire  _GEN_1513 = state == 5'h9 ? grantack_valid : _GEN_1307; // @[mshrs.scala 307:36 mshrs.scala 138:21]
+  wire  _GEN_1514 = state == 5'h9 ? 1'h0 : _GEN_1308; // @[mshrs.scala 307:36 mshrs.scala 157:26]
+  wire  _GEN_1515 = state == 5'h9 ? grant_had_data : _GEN_1309; // @[mshrs.scala 307:36 mshrs.scala 141:27]
+  wire [3:0] _GEN_1517 = state == 5'h9 ? req_way_en : _GEN_1311; // @[mshrs.scala 307:36 mshrs.scala 109:20]
+  wire [19:0] _GEN_1518 = state == 5'h9 ? req_old_meta_tag : _GEN_1312; // @[mshrs.scala 307:36 mshrs.scala 109:20]
+  wire [1:0] _GEN_1519 = state == 5'h9 ? req_old_meta_coh_state : _GEN_1313; // @[mshrs.scala 307:36 mshrs.scala 109:20]
+  wire [39:0] _GEN_1523 = state == 5'h9 ? req_addr : _GEN_1317; // @[mshrs.scala 307:36 mshrs.scala 109:20]
+  wire [4:0] _GEN_1553 = state == 5'h9 ? _GEN_4 : _GEN_1347; // @[mshrs.scala 307:36]
+  wire  _GEN_1603 = state == 5'h9 ? req_needs_wb : _GEN_1397; // @[mshrs.scala 307:36 mshrs.scala 113:29]
+  wire  _GEN_1604 = state == 5'h7 | _GEN_1505; // @[mshrs.scala 297:40 mshrs.scala 298:33]
+  wire [4:0] _GEN_1609 = state == 5'h7 ? _GEN_126 : _GEN_1405; // @[mshrs.scala 297:40]
+  wire  _GEN_1610 = state == 5'h7 ? 1'h0 : _T_615; // @[mshrs.scala 297:40 mshrs.scala 162:26]
+  wire  _GEN_1617 = state == 5'h7 ? 1'h0 : _GEN_1406; // @[mshrs.scala 297:40 mshrs.scala 170:26]
+  wire  _GEN_1620 = state == 5'h7 ? 1'h0 : _GEN_1409; // @[mshrs.scala 297:40 mshrs.scala 160:26]
+  wire [2:0] _GEN_1625 = state == 5'h7 ? refill_ctr : _GEN_1414; // @[mshrs.scala 297:40 mshrs.scala 139:24]
+  wire  _GEN_1713 = state == 5'h7 ? 1'h0 : _GEN_1502; // @[mshrs.scala 297:40 mshrs.scala 161:26]
+  wire  _GEN_1714 = state == 5'h7 ? 1'h0 : _GEN_1503; // @[mshrs.scala 297:40 mshrs.scala 135:20]
+  wire [1:0] _GEN_1715 = state == 5'h7 ? _GEN_5 : _GEN_1504; // @[mshrs.scala 297:40]
+  wire  _GEN_1717 = state == 5'h7 ? 1'h0 : _GEN_1511; // @[mshrs.scala 297:40 mshrs.scala 168:26]
+  wire  _GEN_1719 = state == 5'h7 ? grantack_valid : _GEN_1513; // @[mshrs.scala 297:40 mshrs.scala 138:21]
+  wire  _GEN_1720 = state == 5'h7 ? 1'h0 : _GEN_1514; // @[mshrs.scala 297:40 mshrs.scala 157:26]
+  wire  _GEN_1721 = state == 5'h7 ? grant_had_data : _GEN_1515; // @[mshrs.scala 297:40 mshrs.scala 141:27]
+  wire [3:0] _GEN_1723 = state == 5'h7 ? req_way_en : _GEN_1517; // @[mshrs.scala 297:40 mshrs.scala 109:20]
+  wire [19:0] _GEN_1724 = state == 5'h7 ? req_old_meta_tag : _GEN_1518; // @[mshrs.scala 297:40 mshrs.scala 109:20]
+  wire [1:0] _GEN_1725 = state == 5'h7 ? req_old_meta_coh_state : _GEN_1519; // @[mshrs.scala 297:40 mshrs.scala 109:20]
+  wire [39:0] _GEN_1729 = state == 5'h7 ? req_addr : _GEN_1523; // @[mshrs.scala 297:40 mshrs.scala 109:20]
+  wire [4:0] _GEN_1759 = state == 5'h7 ? _GEN_4 : _GEN_1553; // @[mshrs.scala 297:40]
+  wire  _GEN_1809 = state == 5'h7 ? req_needs_wb : _GEN_1603; // @[mshrs.scala 297:40 mshrs.scala 113:29]
+  wire [4:0] _GEN_1810 = state == 5'h6 ? _T_612 : _GEN_1609; // @[mshrs.scala 293:41 mshrs.scala 295:11]
+  wire  _GEN_1811 = state == 5'h6 ? 1'h0 : _GEN_1604; // @[mshrs.scala 293:41 mshrs.scala 156:26]
+  wire  _GEN_1816 = state == 5'h6 ? 1'h0 : _GEN_1610; // @[mshrs.scala 293:41 mshrs.scala 162:26]
+  wire  _GEN_1823 = state == 5'h6 ? 1'h0 : _GEN_1617; // @[mshrs.scala 293:41 mshrs.scala 170:26]
+  wire  _GEN_1826 = state == 5'h6 ? 1'h0 : _GEN_1620; // @[mshrs.scala 293:41 mshrs.scala 160:26]
+  wire [2:0] _GEN_1831 = state == 5'h6 ? refill_ctr : _GEN_1625; // @[mshrs.scala 293:41 mshrs.scala 139:24]
+  wire  _GEN_1919 = state == 5'h6 ? 1'h0 : _GEN_1713; // @[mshrs.scala 293:41 mshrs.scala 161:26]
+  wire  _GEN_1920 = state == 5'h6 ? 1'h0 : _GEN_1714; // @[mshrs.scala 293:41 mshrs.scala 135:20]
+  wire [1:0] _GEN_1921 = state == 5'h6 ? _GEN_5 : _GEN_1715; // @[mshrs.scala 293:41]
+  wire  _GEN_1923 = state == 5'h6 ? 1'h0 : _GEN_1717; // @[mshrs.scala 293:41 mshrs.scala 168:26]
+  wire  _GEN_1925 = state == 5'h6 ? grantack_valid : _GEN_1719; // @[mshrs.scala 293:41 mshrs.scala 138:21]
+  wire  _GEN_1926 = state == 5'h6 ? 1'h0 : _GEN_1720; // @[mshrs.scala 293:41 mshrs.scala 157:26]
+  wire  _GEN_1927 = state == 5'h6 ? grant_had_data : _GEN_1721; // @[mshrs.scala 293:41 mshrs.scala 141:27]
+  wire [3:0] _GEN_1929 = state == 5'h6 ? req_way_en : _GEN_1723; // @[mshrs.scala 293:41 mshrs.scala 109:20]
+  wire [19:0] _GEN_1930 = state == 5'h6 ? req_old_meta_tag : _GEN_1724; // @[mshrs.scala 293:41 mshrs.scala 109:20]
+  wire [1:0] _GEN_1931 = state == 5'h6 ? req_old_meta_coh_state : _GEN_1725; // @[mshrs.scala 293:41 mshrs.scala 109:20]
+  wire [39:0] _GEN_1935 = state == 5'h6 ? req_addr : _GEN_1729; // @[mshrs.scala 293:41 mshrs.scala 109:20]
+  wire [4:0] _GEN_1965 = state == 5'h6 ? _GEN_4 : _GEN_1759; // @[mshrs.scala 293:41]
+  wire  _GEN_2015 = state == 5'h6 ? req_needs_wb : _GEN_1809; // @[mshrs.scala 293:41 mshrs.scala 113:29]
+  wire [4:0] _GEN_2016 = state == 5'h5 ? 5'h6 : _GEN_1810; // @[mshrs.scala 291:41 mshrs.scala 292:11]
+  wire  _GEN_2017 = state == 5'h5 ? 1'h0 : _GEN_1811; // @[mshrs.scala 291:41 mshrs.scala 156:26]
+  wire  _GEN_2022 = state == 5'h5 ? 1'h0 : _GEN_1816; // @[mshrs.scala 291:41 mshrs.scala 162:26]
+  wire  _GEN_2029 = state == 5'h5 ? 1'h0 : _GEN_1823; // @[mshrs.scala 291:41 mshrs.scala 170:26]
+  wire  _GEN_2032 = state == 5'h5 ? 1'h0 : _GEN_1826; // @[mshrs.scala 291:41 mshrs.scala 160:26]
+  wire [2:0] _GEN_2037 = state == 5'h5 ? refill_ctr : _GEN_1831; // @[mshrs.scala 291:41 mshrs.scala 139:24]
+  wire  _GEN_2125 = state == 5'h5 ? 1'h0 : _GEN_1919; // @[mshrs.scala 291:41 mshrs.scala 161:26]
+  wire  _GEN_2126 = state == 5'h5 ? 1'h0 : _GEN_1920; // @[mshrs.scala 291:41 mshrs.scala 135:20]
+  wire [1:0] _GEN_2127 = state == 5'h5 ? _GEN_5 : _GEN_1921; // @[mshrs.scala 291:41]
+  wire  _GEN_2129 = state == 5'h5 ? 1'h0 : _GEN_1923; // @[mshrs.scala 291:41 mshrs.scala 168:26]
+  wire  _GEN_2131 = state == 5'h5 ? grantack_valid : _GEN_1925; // @[mshrs.scala 291:41 mshrs.scala 138:21]
+  wire  _GEN_2132 = state == 5'h5 ? 1'h0 : _GEN_1926; // @[mshrs.scala 291:41 mshrs.scala 157:26]
+  wire  _GEN_2133 = state == 5'h5 ? grant_had_data : _GEN_1927; // @[mshrs.scala 291:41 mshrs.scala 141:27]
+  wire [3:0] _GEN_2135 = state == 5'h5 ? req_way_en : _GEN_1929; // @[mshrs.scala 291:41 mshrs.scala 109:20]
+  wire [19:0] _GEN_2136 = state == 5'h5 ? req_old_meta_tag : _GEN_1930; // @[mshrs.scala 291:41 mshrs.scala 109:20]
+  wire [1:0] _GEN_2137 = state == 5'h5 ? req_old_meta_coh_state : _GEN_1931; // @[mshrs.scala 291:41 mshrs.scala 109:20]
+  wire [39:0] _GEN_2141 = state == 5'h5 ? req_addr : _GEN_1935; // @[mshrs.scala 291:41 mshrs.scala 109:20]
+  wire [4:0] _GEN_2171 = state == 5'h5 ? _GEN_4 : _GEN_1965; // @[mshrs.scala 291:41]
+  wire  _GEN_2221 = state == 5'h5 ? req_needs_wb : _GEN_2015; // @[mshrs.scala 291:41 mshrs.scala 113:29]
+  wire  _GEN_2222 = _T_264 & (~io_prober_state_valid | ~grantack_valid | io_prober_state_bits[11:6] != req_idx); // @[mshrs.scala 283:39 mshrs.scala 284:24 mshrs.scala 167:26]
+  wire [4:0] _GEN_2226 = _T_264 ? _GEN_125 : _GEN_2016; // @[mshrs.scala 283:39]
+  wire  _GEN_2227 = _T_264 ? 1'h0 : _GEN_2017; // @[mshrs.scala 283:39 mshrs.scala 156:26]
+  wire  _GEN_2232 = _T_264 ? 1'h0 : _GEN_2022; // @[mshrs.scala 283:39 mshrs.scala 162:26]
+  wire  _GEN_2239 = _T_264 ? 1'h0 : _GEN_2029; // @[mshrs.scala 283:39 mshrs.scala 170:26]
+  wire  _GEN_2242 = _T_264 ? 1'h0 : _GEN_2032; // @[mshrs.scala 283:39 mshrs.scala 160:26]
+  wire [2:0] _GEN_2247 = _T_264 ? refill_ctr : _GEN_2037; // @[mshrs.scala 283:39 mshrs.scala 139:24]
+  wire  _GEN_2335 = _T_264 ? 1'h0 : _GEN_2125; // @[mshrs.scala 283:39 mshrs.scala 161:26]
+  wire  _GEN_2336 = _T_264 ? 1'h0 : _GEN_2126; // @[mshrs.scala 283:39 mshrs.scala 135:20]
+  wire [1:0] _GEN_2337 = _T_264 ? _GEN_5 : _GEN_2127; // @[mshrs.scala 283:39]
+  wire  _GEN_2339 = _T_264 ? 1'h0 : _GEN_2129; // @[mshrs.scala 283:39 mshrs.scala 168:26]
+  wire  _GEN_2341 = _T_264 ? grantack_valid : _GEN_2131; // @[mshrs.scala 283:39 mshrs.scala 138:21]
+  wire  _GEN_2342 = _T_264 ? 1'h0 : _GEN_2132; // @[mshrs.scala 283:39 mshrs.scala 157:26]
+  wire  _GEN_2343 = _T_264 ? grant_had_data : _GEN_2133; // @[mshrs.scala 283:39 mshrs.scala 141:27]
+  wire [3:0] _GEN_2345 = _T_264 ? req_way_en : _GEN_2135; // @[mshrs.scala 283:39 mshrs.scala 109:20]
+  wire [19:0] _GEN_2346 = _T_264 ? req_old_meta_tag : _GEN_2136; // @[mshrs.scala 283:39 mshrs.scala 109:20]
+  wire [1:0] _GEN_2347 = _T_264 ? req_old_meta_coh_state : _GEN_2137; // @[mshrs.scala 283:39 mshrs.scala 109:20]
+  wire [39:0] _GEN_2351 = _T_264 ? req_addr : _GEN_2141; // @[mshrs.scala 283:39 mshrs.scala 109:20]
+  wire [4:0] _GEN_2381 = _T_264 ? _GEN_4 : _GEN_2171; // @[mshrs.scala 283:39]
+  wire  _GEN_2431 = _T_264 ? req_needs_wb : _GEN_2221; // @[mshrs.scala 283:39 mshrs.scala 113:29]
+  wire  _GEN_2432 = _T_260 ? io_resp_ready & io_lb_read_ready & _T_490 : _GEN_2336; // @[mshrs.scala 245:45 mshrs.scala 259:28]
+  wire  _GEN_2433 = _T_260 ? rpq_io_deq_valid & _T_490 : _GEN_2239; // @[mshrs.scala 245:45 mshrs.scala 260:28]
+  wire [36:0] _GEN_2435 = _T_260 ? rpq_io_deq_bits_addr[39:3] : {{34'd0}, refill_ctr}; // @[mshrs.scala 245:45 mshrs.scala 262:28]
+  wire  _GEN_2436 = _T_260 & (rpq_io_deq_valid & _T_499 & _T_490); // @[mshrs.scala 245:45 mshrs.scala 264:23 mshrs.scala 163:26]
+  wire [4:0] _GEN_2519 = _T_260 ? _GEN_122 : _GEN_2226; // @[mshrs.scala 245:45]
+  wire  _GEN_2521 = _T_260 & _GEN_124; // @[mshrs.scala 245:45 mshrs.scala 164:26]
+  wire  _GEN_2522 = _T_260 ? 1'h0 : _GEN_2222; // @[mshrs.scala 245:45 mshrs.scala 167:26]
+  wire  _GEN_2526 = _T_260 ? 1'h0 : _GEN_2227; // @[mshrs.scala 245:45 mshrs.scala 156:26]
+  wire  _GEN_2531 = _T_260 ? 1'h0 : _GEN_2232; // @[mshrs.scala 245:45 mshrs.scala 162:26]
+  wire  _GEN_2538 = _T_260 ? 1'h0 : _GEN_2242; // @[mshrs.scala 245:45 mshrs.scala 160:26]
+  wire  _GEN_2631 = _T_260 ? 1'h0 : _GEN_2335; // @[mshrs.scala 245:45 mshrs.scala 161:26]
+  wire [1:0] _GEN_2632 = _T_260 ? _GEN_5 : _GEN_2337; // @[mshrs.scala 245:45]
+  wire  _GEN_2633 = _T_260 ? 1'h0 : _GEN_2339; // @[mshrs.scala 245:45 mshrs.scala 168:26]
+  wire  _GEN_2636 = _T_260 ? 1'h0 : _GEN_2342; // @[mshrs.scala 245:45 mshrs.scala 157:26]
+  wire  _GEN_2725 = _T_260 ? req_needs_wb : _GEN_2431; // @[mshrs.scala 245:45 mshrs.scala 113:29]
+  wire  _GEN_2727 = _T_259 & _GEN_104; // @[mshrs.scala 222:41 mshrs.scala 169:26]
+  wire  _GEN_2737 = _T_259 ? 1'h0 : _GEN_2432; // @[mshrs.scala 222:41 mshrs.scala 135:20]
+  wire  _GEN_2738 = _T_259 ? 1'h0 : _GEN_2433; // @[mshrs.scala 222:41 mshrs.scala 170:26]
+  wire  _GEN_2741 = _T_259 ? 1'h0 : _GEN_2436; // @[mshrs.scala 222:41 mshrs.scala 163:26]
+  wire  _GEN_2824 = _T_259 ? 1'h0 : _GEN_2521; // @[mshrs.scala 222:41 mshrs.scala 164:26]
+  wire  _GEN_2825 = _T_259 ? 1'h0 : _GEN_2522; // @[mshrs.scala 222:41 mshrs.scala 167:26]
+  wire  _GEN_2829 = _T_259 ? 1'h0 : _GEN_2526; // @[mshrs.scala 222:41 mshrs.scala 156:26]
+  wire  _GEN_2834 = _T_259 ? 1'h0 : _GEN_2531; // @[mshrs.scala 222:41 mshrs.scala 162:26]
+  wire  _GEN_2841 = _T_259 ? 1'h0 : _GEN_2538; // @[mshrs.scala 222:41 mshrs.scala 160:26]
+  wire  _GEN_2934 = _T_259 ? 1'h0 : _GEN_2631; // @[mshrs.scala 222:41 mshrs.scala 161:26]
+  wire  _GEN_2935 = _T_259 ? 1'h0 : _GEN_2633; // @[mshrs.scala 222:41 mshrs.scala 168:26]
+  wire  _GEN_2937 = _T_259 ? 1'h0 : _GEN_2636; // @[mshrs.scala 222:41 mshrs.scala 157:26]
+  wire  _GEN_3037 = _T_258 ? 1'h0 : _GEN_2727; // @[mshrs.scala 211:40 mshrs.scala 169:26]
+  wire  _GEN_3046 = _T_258 ? 1'h0 : _GEN_2737; // @[mshrs.scala 211:40 mshrs.scala 135:20]
+  wire  _GEN_3047 = _T_258 ? 1'h0 : _GEN_2738; // @[mshrs.scala 211:40 mshrs.scala 170:26]
+  wire  _GEN_3050 = _T_258 ? 1'h0 : _GEN_2741; // @[mshrs.scala 211:40 mshrs.scala 163:26]
+  wire  _GEN_3133 = _T_258 ? 1'h0 : _GEN_2824; // @[mshrs.scala 211:40 mshrs.scala 164:26]
+  wire  _GEN_3134 = _T_258 ? 1'h0 : _GEN_2825; // @[mshrs.scala 211:40 mshrs.scala 167:26]
+  wire  _GEN_3138 = _T_258 ? 1'h0 : _GEN_2829; // @[mshrs.scala 211:40 mshrs.scala 156:26]
+  wire  _GEN_3143 = _T_258 ? 1'h0 : _GEN_2834; // @[mshrs.scala 211:40 mshrs.scala 162:26]
+  wire  _GEN_3150 = _T_258 ? 1'h0 : _GEN_2841; // @[mshrs.scala 211:40 mshrs.scala 160:26]
+  wire  _GEN_3243 = _T_258 ? 1'h0 : _GEN_2934; // @[mshrs.scala 211:40 mshrs.scala 161:26]
+  wire  _GEN_3244 = _T_258 ? 1'h0 : _GEN_2935; // @[mshrs.scala 211:40 mshrs.scala 168:26]
+  wire  _GEN_3246 = _T_258 ? 1'h0 : _GEN_2937; // @[mshrs.scala 211:40 mshrs.scala 157:26]
+  wire  _GEN_3645 = _T_229 & _T_244; // @[mshrs.scala 183:11]
+  wire  _GEN_3655 = ~_T_229 & ~_T_258; // @[mshrs.scala 240:13]
+  wire  _GEN_3683 = _GEN_3655 & ~_T_259 & ~_T_260 & ~_T_264 & ~_T_542 & ~_T_543 & ~_T_613 & ~_T_615 & ~_T_617 & ~_T_618; // @[mshrs.scala 346:13]
+  wire  _GEN_3743 = _GEN_3683 & ~_T_627 & ~_T_230 & ~_T_231 & ~_T_232 & _T_271 & ~_T_719 & ~_T_245 & _T_244; // @[mshrs.scala 183:11]
   BranchKillableQueue rpq ( // @[mshrs.scala 128:19]
     .clock(rpq_clock),
     .reset(rpq_reset),
     .io_enq_ready(rpq_io_enq_ready),
     .io_enq_valid(rpq_io_enq_valid),
-    .io_enq_bits_uop_switch(rpq_io_enq_bits_uop_switch),
-    .io_enq_bits_uop_switch_off(rpq_io_enq_bits_uop_switch_off),
-    .io_enq_bits_uop_is_unicore(rpq_io_enq_bits_uop_is_unicore),
-    .io_enq_bits_uop_shift(rpq_io_enq_bits_uop_shift),
-    .io_enq_bits_uop_lrs3_rtype(rpq_io_enq_bits_uop_lrs3_rtype),
-    .io_enq_bits_uop_rflag(rpq_io_enq_bits_uop_rflag),
-    .io_enq_bits_uop_wflag(rpq_io_enq_bits_uop_wflag),
-    .io_enq_bits_uop_prflag(rpq_io_enq_bits_uop_prflag),
-    .io_enq_bits_uop_pwflag(rpq_io_enq_bits_uop_pwflag),
-    .io_enq_bits_uop_pflag_busy(rpq_io_enq_bits_uop_pflag_busy),
-    .io_enq_bits_uop_stale_pflag(rpq_io_enq_bits_uop_stale_pflag),
-    .io_enq_bits_uop_op1_sel(rpq_io_enq_bits_uop_op1_sel),
-    .io_enq_bits_uop_op2_sel(rpq_io_enq_bits_uop_op2_sel),
-    .io_enq_bits_uop_split_num(rpq_io_enq_bits_uop_split_num),
-    .io_enq_bits_uop_self_index(rpq_io_enq_bits_uop_self_index),
-    .io_enq_bits_uop_rob_inst_idx(rpq_io_enq_bits_uop_rob_inst_idx),
-    .io_enq_bits_uop_address_num(rpq_io_enq_bits_uop_address_num),
     .io_enq_bits_uop_uopc(rpq_io_enq_bits_uop_uopc),
     .io_enq_bits_uop_inst(rpq_io_enq_bits_uop_inst),
     .io_enq_bits_uop_debug_inst(rpq_io_enq_bits_uop_debug_inst),
@@ -1519,7 +1376,6 @@ module BoomMSHR(
     .io_enq_bits_uop_ctrl_is_load(rpq_io_enq_bits_uop_ctrl_is_load),
     .io_enq_bits_uop_ctrl_is_sta(rpq_io_enq_bits_uop_ctrl_is_sta),
     .io_enq_bits_uop_ctrl_is_std(rpq_io_enq_bits_uop_ctrl_is_std),
-    .io_enq_bits_uop_ctrl_op3_sel(rpq_io_enq_bits_uop_ctrl_op3_sel),
     .io_enq_bits_uop_iw_state(rpq_io_enq_bits_uop_iw_state),
     .io_enq_bits_uop_iw_p1_poisoned(rpq_io_enq_bits_uop_iw_p1_poisoned),
     .io_enq_bits_uop_iw_p2_poisoned(rpq_io_enq_bits_uop_iw_p2_poisoned),
@@ -1592,23 +1448,6 @@ module BoomMSHR(
     .io_enq_bits_sdq_id(rpq_io_enq_bits_sdq_id),
     .io_deq_ready(rpq_io_deq_ready),
     .io_deq_valid(rpq_io_deq_valid),
-    .io_deq_bits_uop_switch(rpq_io_deq_bits_uop_switch),
-    .io_deq_bits_uop_switch_off(rpq_io_deq_bits_uop_switch_off),
-    .io_deq_bits_uop_is_unicore(rpq_io_deq_bits_uop_is_unicore),
-    .io_deq_bits_uop_shift(rpq_io_deq_bits_uop_shift),
-    .io_deq_bits_uop_lrs3_rtype(rpq_io_deq_bits_uop_lrs3_rtype),
-    .io_deq_bits_uop_rflag(rpq_io_deq_bits_uop_rflag),
-    .io_deq_bits_uop_wflag(rpq_io_deq_bits_uop_wflag),
-    .io_deq_bits_uop_prflag(rpq_io_deq_bits_uop_prflag),
-    .io_deq_bits_uop_pwflag(rpq_io_deq_bits_uop_pwflag),
-    .io_deq_bits_uop_pflag_busy(rpq_io_deq_bits_uop_pflag_busy),
-    .io_deq_bits_uop_stale_pflag(rpq_io_deq_bits_uop_stale_pflag),
-    .io_deq_bits_uop_op1_sel(rpq_io_deq_bits_uop_op1_sel),
-    .io_deq_bits_uop_op2_sel(rpq_io_deq_bits_uop_op2_sel),
-    .io_deq_bits_uop_split_num(rpq_io_deq_bits_uop_split_num),
-    .io_deq_bits_uop_self_index(rpq_io_deq_bits_uop_self_index),
-    .io_deq_bits_uop_rob_inst_idx(rpq_io_deq_bits_uop_rob_inst_idx),
-    .io_deq_bits_uop_address_num(rpq_io_deq_bits_uop_address_num),
     .io_deq_bits_uop_uopc(rpq_io_deq_bits_uop_uopc),
     .io_deq_bits_uop_inst(rpq_io_deq_bits_uop_inst),
     .io_deq_bits_uop_debug_inst(rpq_io_deq_bits_uop_debug_inst),
@@ -1626,7 +1465,6 @@ module BoomMSHR(
     .io_deq_bits_uop_ctrl_is_load(rpq_io_deq_bits_uop_ctrl_is_load),
     .io_deq_bits_uop_ctrl_is_sta(rpq_io_deq_bits_uop_ctrl_is_sta),
     .io_deq_bits_uop_ctrl_is_std(rpq_io_deq_bits_uop_ctrl_is_std),
-    .io_deq_bits_uop_ctrl_op3_sel(rpq_io_deq_bits_uop_ctrl_op3_sel),
     .io_deq_bits_uop_iw_state(rpq_io_deq_bits_uop_iw_state),
     .io_deq_bits_uop_iw_p1_poisoned(rpq_io_deq_bits_uop_iw_p1_poisoned),
     .io_deq_bits_uop_iw_p2_poisoned(rpq_io_deq_bits_uop_iw_p2_poisoned),
@@ -1699,23 +1537,6 @@ module BoomMSHR(
     .io_deq_bits_sdq_id(rpq_io_deq_bits_sdq_id),
     .io_brupdate_b1_resolve_mask(rpq_io_brupdate_b1_resolve_mask),
     .io_brupdate_b1_mispredict_mask(rpq_io_brupdate_b1_mispredict_mask),
-    .io_brupdate_b2_uop_switch(rpq_io_brupdate_b2_uop_switch),
-    .io_brupdate_b2_uop_switch_off(rpq_io_brupdate_b2_uop_switch_off),
-    .io_brupdate_b2_uop_is_unicore(rpq_io_brupdate_b2_uop_is_unicore),
-    .io_brupdate_b2_uop_shift(rpq_io_brupdate_b2_uop_shift),
-    .io_brupdate_b2_uop_lrs3_rtype(rpq_io_brupdate_b2_uop_lrs3_rtype),
-    .io_brupdate_b2_uop_rflag(rpq_io_brupdate_b2_uop_rflag),
-    .io_brupdate_b2_uop_wflag(rpq_io_brupdate_b2_uop_wflag),
-    .io_brupdate_b2_uop_prflag(rpq_io_brupdate_b2_uop_prflag),
-    .io_brupdate_b2_uop_pwflag(rpq_io_brupdate_b2_uop_pwflag),
-    .io_brupdate_b2_uop_pflag_busy(rpq_io_brupdate_b2_uop_pflag_busy),
-    .io_brupdate_b2_uop_stale_pflag(rpq_io_brupdate_b2_uop_stale_pflag),
-    .io_brupdate_b2_uop_op1_sel(rpq_io_brupdate_b2_uop_op1_sel),
-    .io_brupdate_b2_uop_op2_sel(rpq_io_brupdate_b2_uop_op2_sel),
-    .io_brupdate_b2_uop_split_num(rpq_io_brupdate_b2_uop_split_num),
-    .io_brupdate_b2_uop_self_index(rpq_io_brupdate_b2_uop_self_index),
-    .io_brupdate_b2_uop_rob_inst_idx(rpq_io_brupdate_b2_uop_rob_inst_idx),
-    .io_brupdate_b2_uop_address_num(rpq_io_brupdate_b2_uop_address_num),
     .io_brupdate_b2_uop_uopc(rpq_io_brupdate_b2_uop_uopc),
     .io_brupdate_b2_uop_inst(rpq_io_brupdate_b2_uop_inst),
     .io_brupdate_b2_uop_debug_inst(rpq_io_brupdate_b2_uop_debug_inst),
@@ -1733,7 +1554,6 @@ module BoomMSHR(
     .io_brupdate_b2_uop_ctrl_is_load(rpq_io_brupdate_b2_uop_ctrl_is_load),
     .io_brupdate_b2_uop_ctrl_is_sta(rpq_io_brupdate_b2_uop_ctrl_is_sta),
     .io_brupdate_b2_uop_ctrl_is_std(rpq_io_brupdate_b2_uop_ctrl_is_std),
-    .io_brupdate_b2_uop_ctrl_op3_sel(rpq_io_brupdate_b2_uop_ctrl_op3_sel),
     .io_brupdate_b2_uop_iw_state(rpq_io_brupdate_b2_uop_iw_state),
     .io_brupdate_b2_uop_iw_p1_poisoned(rpq_io_brupdate_b2_uop_iw_p1_poisoned),
     .io_brupdate_b2_uop_iw_p2_poisoned(rpq_io_brupdate_b2_uop_iw_p2_poisoned),
@@ -1807,7 +1627,7 @@ module BoomMSHR(
     .io_empty(rpq_io_empty),
     .io_count(rpq_io_count)
   );
-  assign io_req_pri_rdy = _T_229 | _GEN_3822; // @[mshrs.scala 204:30 mshrs.scala 205:20]
+  assign io_req_pri_rdy = _T_229 | _GEN_3246; // @[mshrs.scala 204:30 mshrs.scala 205:20]
   assign io_req_sec_rdy = sec_rdy & rpq_io_enq_ready; // @[mshrs.scala 158:37]
   assign io_idx_valid = state != 5'h0; // @[mshrs.scala 149:25]
   assign io_idx_bits = req_addr[11:6]; // @[mshrs.scala 110:25]
@@ -1825,58 +1645,41 @@ module BoomMSHR(
   assign io_mem_acquire_bits_data = 64'h0; // @[Edges.scala 345:17 Edges.scala 352:15]
   assign io_mem_acquire_bits_corrupt = 1'h0; // @[Edges.scala 345:17 Edges.scala 353:15]
   assign io_mem_grant_ready = beats1_opdata ? io_lb_write_ready : 1'h1; // @[mshrs.scala 223:44 mshrs.scala 224:31 mshrs.scala 230:31]
-  assign io_mem_finish_valid = _T_229 ? 1'h0 : _GEN_3820; // @[mshrs.scala 204:30 mshrs.scala 168:26]
+  assign io_mem_finish_valid = _T_229 ? 1'h0 : _GEN_3244; // @[mshrs.scala 204:30 mshrs.scala 168:26]
   assign io_mem_finish_bits_sink = grantack_bits_sink; // @[mshrs.scala 362:42 mshrs.scala 364:25]
-  assign io_refill_valid = _T_229 ? 1'h0 : _GEN_3708; // @[mshrs.scala 204:30 mshrs.scala 160:26]
+  assign io_refill_valid = _T_229 ? 1'h0 : _GEN_3150; // @[mshrs.scala 204:30 mshrs.scala 160:26]
   assign io_refill_bits_way_en = req_way_en; // @[mshrs.scala 323:41 mshrs.scala 330:27]
   assign io_refill_bits_addr = _T_621[11:0];
   assign io_refill_bits_wmask = 1'h1; // @[mshrs.scala 331:30]
   assign io_refill_bits_data = io_lb_resp; // @[mshrs.scala 323:41 mshrs.scala 332:27]
-  assign io_meta_write_valid = _T_229 ? 1'h0 : _GEN_3696; // @[mshrs.scala 204:30 mshrs.scala 156:26]
+  assign io_meta_write_valid = _T_229 ? 1'h0 : _GEN_3138; // @[mshrs.scala 204:30 mshrs.scala 156:26]
   assign io_meta_write_bits_idx = req_addr[11:6]; // @[mshrs.scala 110:25]
   assign io_meta_write_bits_way_en = req_way_en; // @[mshrs.scala 297:40 mshrs.scala 302:33]
   assign io_meta_write_bits_tag = 20'h0;
   assign io_meta_write_bits_data_coh_state = state == 5'h7 ? coh_on_clear_state : new_coh_state; // @[mshrs.scala 297:40 mshrs.scala 300:33]
   assign io_meta_write_bits_data_tag = req_tag[19:0];
-  assign io_meta_read_valid = _T_229 ? 1'h0 : _GEN_3692; // @[mshrs.scala 204:30 mshrs.scala 167:26]
+  assign io_meta_read_valid = _T_229 ? 1'h0 : _GEN_3134; // @[mshrs.scala 204:30 mshrs.scala 167:26]
   assign io_meta_read_bits_idx = req_addr[11:6]; // @[mshrs.scala 110:25]
   assign io_meta_read_bits_way_en = req_way_en; // @[mshrs.scala 283:39 mshrs.scala 287:30]
   assign io_meta_read_bits_tag = req_tag[19:0];
-  assign io_wb_req_valid = _T_229 ? 1'h0 : _GEN_3701; // @[mshrs.scala 204:30 mshrs.scala 162:26]
+  assign io_wb_req_valid = _T_229 ? 1'h0 : _GEN_3143; // @[mshrs.scala 204:30 mshrs.scala 162:26]
   assign io_wb_req_bits_tag = req_old_meta_tag; // @[mshrs.scala 307:36 mshrs.scala 310:30]
   assign io_wb_req_bits_idx = req_addr[11:6]; // @[mshrs.scala 110:25]
   assign io_wb_req_bits_source = {{1'd0}, io_id}; // @[mshrs.scala 307:36 mshrs.scala 314:30]
   assign io_wb_req_bits_param = _T_63 ? 3'h3 : _T_61; // @[Misc.scala 37:36]
   assign io_wb_req_bits_way_en = req_way_en; // @[mshrs.scala 307:36 mshrs.scala 313:30]
   assign io_wb_req_bits_voluntary = 1'h1; // @[mshrs.scala 307:36 mshrs.scala 315:30]
-  assign io_commit_val = _T_229 ? 1'h0 : _GEN_3691; // @[mshrs.scala 204:30 mshrs.scala 164:26]
+  assign io_commit_val = _T_229 ? 1'h0 : _GEN_3133; // @[mshrs.scala 204:30 mshrs.scala 164:26]
   assign io_commit_addr = req_addr; // @[mshrs.scala 165:26]
   assign io_commit_coh_state = 4'hc == _T_114 ? 2'h3 : _T_124; // @[Mux.scala 80:57]
-  assign io_lb_read_valid = _T_229 ? 1'h0 : _GEN_3587; // @[mshrs.scala 204:30 mshrs.scala 170:26]
+  assign io_lb_read_valid = _T_229 ? 1'h0 : _GEN_3047; // @[mshrs.scala 204:30 mshrs.scala 170:26]
   assign io_lb_read_bits_id = io_id; // @[mshrs.scala 245:45 mshrs.scala 261:28]
-  assign io_lb_read_bits_offset = _GEN_2867[2:0];
-  assign io_lb_write_valid = _T_229 ? 1'h0 : _GEN_3577; // @[mshrs.scala 204:30 mshrs.scala 169:26]
+  assign io_lb_read_bits_offset = _GEN_2435[2:0];
+  assign io_lb_write_valid = _T_229 ? 1'h0 : _GEN_3037; // @[mshrs.scala 204:30 mshrs.scala 169:26]
   assign io_lb_write_bits_id = io_id; // @[mshrs.scala 223:44 mshrs.scala 226:31]
   assign io_lb_write_bits_offset = refill_address_inc[5:3];
   assign io_lb_write_bits_data = io_mem_grant_bits_data; // @[mshrs.scala 223:44 mshrs.scala 228:31]
-  assign io_replay_valid = _T_229 ? 1'h0 : _GEN_3819; // @[mshrs.scala 204:30 mshrs.scala 161:26]
-  assign io_replay_bits_uop_switch = rpq_io_deq_bits_uop_switch; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_switch_off = rpq_io_deq_bits_uop_switch_off; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_is_unicore = rpq_io_deq_bits_uop_is_unicore; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_shift = rpq_io_deq_bits_uop_shift; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_lrs3_rtype = rpq_io_deq_bits_uop_lrs3_rtype; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_rflag = rpq_io_deq_bits_uop_rflag; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_wflag = rpq_io_deq_bits_uop_wflag; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_prflag = rpq_io_deq_bits_uop_prflag; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_pwflag = rpq_io_deq_bits_uop_pwflag; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_pflag_busy = rpq_io_deq_bits_uop_pflag_busy; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_stale_pflag = rpq_io_deq_bits_uop_stale_pflag; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_op1_sel = rpq_io_deq_bits_uop_op1_sel; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_op2_sel = rpq_io_deq_bits_uop_op2_sel; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_split_num = rpq_io_deq_bits_uop_split_num; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_self_index = rpq_io_deq_bits_uop_self_index; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_rob_inst_idx = rpq_io_deq_bits_uop_rob_inst_idx; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_address_num = rpq_io_deq_bits_uop_address_num; // @[mshrs.scala 339:39 mshrs.scala 340:15]
+  assign io_replay_valid = _T_229 ? 1'h0 : _GEN_3243; // @[mshrs.scala 204:30 mshrs.scala 161:26]
   assign io_replay_bits_uop_uopc = rpq_io_deq_bits_uop_uopc; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_uop_inst = rpq_io_deq_bits_uop_inst; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_uop_debug_inst = rpq_io_deq_bits_uop_debug_inst; // @[mshrs.scala 339:39 mshrs.scala 340:15]
@@ -1894,7 +1697,6 @@ module BoomMSHR(
   assign io_replay_bits_uop_ctrl_is_load = rpq_io_deq_bits_uop_ctrl_is_load; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_uop_ctrl_is_sta = rpq_io_deq_bits_uop_ctrl_is_sta; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_uop_ctrl_is_std = rpq_io_deq_bits_uop_ctrl_is_std; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_replay_bits_uop_ctrl_op3_sel = rpq_io_deq_bits_uop_ctrl_op3_sel; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_uop_iw_state = rpq_io_deq_bits_uop_iw_state; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_uop_iw_p1_poisoned = rpq_io_deq_bits_uop_iw_p1_poisoned; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_uop_iw_p2_poisoned = rpq_io_deq_bits_uop_iw_p2_poisoned; // @[mshrs.scala 339:39 mshrs.scala 340:15]
@@ -1965,24 +1767,7 @@ module BoomMSHR(
   assign io_replay_bits_old_meta_tag = rpq_io_deq_bits_old_meta_tag; // @[mshrs.scala 339:39 mshrs.scala 340:15]
   assign io_replay_bits_way_en = req_way_en; // @[mshrs.scala 339:39 mshrs.scala 341:30]
   assign io_replay_bits_sdq_id = rpq_io_deq_bits_sdq_id; // @[mshrs.scala 339:39 mshrs.scala 340:15]
-  assign io_resp_valid = _T_229 ? 1'h0 : _GEN_3590; // @[mshrs.scala 204:30 mshrs.scala 163:26]
-  assign io_resp_bits_uop_switch = rpq_io_deq_bits_uop_switch; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_switch_off = rpq_io_deq_bits_uop_switch_off; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_is_unicore = rpq_io_deq_bits_uop_is_unicore; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_shift = rpq_io_deq_bits_uop_shift; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_lrs3_rtype = rpq_io_deq_bits_uop_lrs3_rtype; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_rflag = rpq_io_deq_bits_uop_rflag; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_wflag = rpq_io_deq_bits_uop_wflag; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_prflag = rpq_io_deq_bits_uop_prflag; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_pwflag = rpq_io_deq_bits_uop_pwflag; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_pflag_busy = rpq_io_deq_bits_uop_pflag_busy; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_stale_pflag = rpq_io_deq_bits_uop_stale_pflag; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_op1_sel = rpq_io_deq_bits_uop_op1_sel; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_op2_sel = rpq_io_deq_bits_uop_op2_sel; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_split_num = rpq_io_deq_bits_uop_split_num; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_self_index = rpq_io_deq_bits_uop_self_index; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_rob_inst_idx = rpq_io_deq_bits_uop_rob_inst_idx; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_address_num = rpq_io_deq_bits_uop_address_num; // @[mshrs.scala 245:45 mshrs.scala 265:23]
+  assign io_resp_valid = _T_229 ? 1'h0 : _GEN_3050; // @[mshrs.scala 204:30 mshrs.scala 163:26]
   assign io_resp_bits_uop_uopc = rpq_io_deq_bits_uop_uopc; // @[mshrs.scala 245:45 mshrs.scala 265:23]
   assign io_resp_bits_uop_inst = rpq_io_deq_bits_uop_inst; // @[mshrs.scala 245:45 mshrs.scala 265:23]
   assign io_resp_bits_uop_debug_inst = rpq_io_deq_bits_uop_debug_inst; // @[mshrs.scala 245:45 mshrs.scala 265:23]
@@ -2000,7 +1785,6 @@ module BoomMSHR(
   assign io_resp_bits_uop_ctrl_is_load = rpq_io_deq_bits_uop_ctrl_is_load; // @[mshrs.scala 245:45 mshrs.scala 265:23]
   assign io_resp_bits_uop_ctrl_is_sta = rpq_io_deq_bits_uop_ctrl_is_sta; // @[mshrs.scala 245:45 mshrs.scala 265:23]
   assign io_resp_bits_uop_ctrl_is_std = rpq_io_deq_bits_uop_ctrl_is_std; // @[mshrs.scala 245:45 mshrs.scala 265:23]
-  assign io_resp_bits_uop_ctrl_op3_sel = rpq_io_deq_bits_uop_ctrl_op3_sel; // @[mshrs.scala 245:45 mshrs.scala 265:23]
   assign io_resp_bits_uop_iw_state = rpq_io_deq_bits_uop_iw_state; // @[mshrs.scala 245:45 mshrs.scala 265:23]
   assign io_resp_bits_uop_iw_p1_poisoned = rpq_io_deq_bits_uop_iw_p1_poisoned; // @[mshrs.scala 245:45 mshrs.scala 265:23]
   assign io_resp_bits_uop_iw_p2_poisoned = rpq_io_deq_bits_uop_iw_p2_poisoned; // @[mshrs.scala 245:45 mshrs.scala 265:23]
@@ -2069,23 +1853,6 @@ module BoomMSHR(
   assign rpq_clock = clock;
   assign rpq_reset = reset;
   assign rpq_io_enq_valid = (io_req_pri_val & io_req_pri_rdy | io_req_sec_val & io_req_sec_rdy) & ~_T_249; // @[mshrs.scala 133:98]
-  assign rpq_io_enq_bits_uop_switch = io_req_uop_switch; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_switch_off = io_req_uop_switch_off; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_is_unicore = io_req_uop_is_unicore; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_shift = io_req_uop_shift; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_lrs3_rtype = io_req_uop_lrs3_rtype; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_rflag = io_req_uop_rflag; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_wflag = io_req_uop_wflag; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_prflag = io_req_uop_prflag; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_pwflag = io_req_uop_pwflag; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_pflag_busy = io_req_uop_pflag_busy; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_stale_pflag = io_req_uop_stale_pflag; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_op1_sel = io_req_uop_op1_sel; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_op2_sel = io_req_uop_op2_sel; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_split_num = io_req_uop_split_num; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_self_index = io_req_uop_self_index; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_rob_inst_idx = io_req_uop_rob_inst_idx; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_address_num = io_req_uop_address_num; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_uopc = io_req_uop_uopc; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_inst = io_req_uop_inst; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_debug_inst = io_req_uop_debug_inst; // @[mshrs.scala 134:20]
@@ -2103,7 +1870,6 @@ module BoomMSHR(
   assign rpq_io_enq_bits_uop_ctrl_is_load = io_req_uop_ctrl_is_load; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_ctrl_is_sta = io_req_uop_ctrl_is_sta; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_ctrl_is_std = io_req_uop_ctrl_is_std; // @[mshrs.scala 134:20]
-  assign rpq_io_enq_bits_uop_ctrl_op3_sel = io_req_uop_ctrl_op3_sel; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_iw_state = io_req_uop_iw_state; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_iw_p1_poisoned = io_req_uop_iw_p1_poisoned; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_uop_iw_p2_poisoned = io_req_uop_iw_p2_poisoned; // @[mshrs.scala 134:20]
@@ -2174,26 +1940,9 @@ module BoomMSHR(
   assign rpq_io_enq_bits_old_meta_tag = io_req_old_meta_tag; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_way_en = io_req_way_en; // @[mshrs.scala 134:20]
   assign rpq_io_enq_bits_sdq_id = io_req_sdq_id; // @[mshrs.scala 134:20]
-  assign rpq_io_deq_ready = _T_229 ? 1'h0 : _GEN_3586; // @[mshrs.scala 204:30 mshrs.scala 135:20]
+  assign rpq_io_deq_ready = _T_229 ? 1'h0 : _GEN_3046; // @[mshrs.scala 204:30 mshrs.scala 135:20]
   assign rpq_io_brupdate_b1_resolve_mask = io_brupdate_b1_resolve_mask; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b1_mispredict_mask = io_brupdate_b1_mispredict_mask; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_switch = io_brupdate_b2_uop_switch; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_switch_off = io_brupdate_b2_uop_switch_off; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_is_unicore = io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_shift = io_brupdate_b2_uop_shift; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_lrs3_rtype = io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_rflag = io_brupdate_b2_uop_rflag; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_wflag = io_brupdate_b2_uop_wflag; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_prflag = io_brupdate_b2_uop_prflag; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_pwflag = io_brupdate_b2_uop_pwflag; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_pflag_busy = io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_stale_pflag = io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_op1_sel = io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_op2_sel = io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_split_num = io_brupdate_b2_uop_split_num; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_self_index = io_brupdate_b2_uop_self_index; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_rob_inst_idx = io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_address_num = io_brupdate_b2_uop_address_num; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_uopc = io_brupdate_b2_uop_uopc; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_inst = io_brupdate_b2_uop_inst; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_debug_inst = io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 129:19]
@@ -2211,7 +1960,6 @@ module BoomMSHR(
   assign rpq_io_brupdate_b2_uop_ctrl_is_load = io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_ctrl_is_sta = io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_ctrl_is_std = io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 129:19]
-  assign rpq_io_brupdate_b2_uop_ctrl_op3_sel = io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_iw_state = io_brupdate_b2_uop_iw_state; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_iw_p1_poisoned = io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 129:19]
   assign rpq_io_brupdate_b2_uop_iw_p2_poisoned = io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 129:19]
@@ -2298,9 +2046,9 @@ module BoomMSHR(
         state <= 5'h2; // @[mshrs.scala 220:13]
       end
     end else if (_T_259) begin // @[mshrs.scala 222:41]
-      state <= _GEN_129;
+      state <= _GEN_111;
     end else begin
-      state <= _GEN_2969;
+      state <= _GEN_2519;
     end
     if (_T_229) begin // @[mshrs.scala 204:30]
       if (_T_244) begin // @[mshrs.scala 208:45]
@@ -2315,7 +2063,7 @@ module BoomMSHR(
     end else if (_T_260) begin // @[mshrs.scala 245:45]
       req_uop_mem_cmd <= _GEN_4;
     end else begin
-      req_uop_mem_cmd <= _GEN_2795;
+      req_uop_mem_cmd <= _GEN_2381;
     end
     if (_T_229) begin // @[mshrs.scala 204:30]
       if (_T_244) begin // @[mshrs.scala 208:45]
@@ -2324,7 +2072,7 @@ module BoomMSHR(
     end else if (!(_T_258)) begin // @[mshrs.scala 211:40]
       if (!(_T_259)) begin // @[mshrs.scala 222:41]
         if (!(_T_260)) begin // @[mshrs.scala 245:45]
-          req_addr <= _GEN_2765;
+          req_addr <= _GEN_2351;
         end
       end
     end
@@ -2335,7 +2083,7 @@ module BoomMSHR(
     end else if (!(_T_258)) begin // @[mshrs.scala 211:40]
       if (!(_T_259)) begin // @[mshrs.scala 222:41]
         if (!(_T_260)) begin // @[mshrs.scala 245:45]
-          req_old_meta_coh_state <= _GEN_2761;
+          req_old_meta_coh_state <= _GEN_2347;
         end
       end
     end
@@ -2346,7 +2094,7 @@ module BoomMSHR(
     end else if (!(_T_258)) begin // @[mshrs.scala 211:40]
       if (!(_T_259)) begin // @[mshrs.scala 222:41]
         if (!(_T_260)) begin // @[mshrs.scala 245:45]
-          req_old_meta_tag <= _GEN_2760;
+          req_old_meta_tag <= _GEN_2346;
         end
       end
     end
@@ -2357,7 +2105,7 @@ module BoomMSHR(
     end else if (!(_T_258)) begin // @[mshrs.scala 211:40]
       if (!(_T_259)) begin // @[mshrs.scala 222:41]
         if (!(_T_260)) begin // @[mshrs.scala 245:45]
-          req_way_en <= _GEN_2759;
+          req_way_en <= _GEN_2345;
         end
       end
     end
@@ -2369,7 +2117,7 @@ module BoomMSHR(
       end
     end else if (!(_T_258)) begin // @[mshrs.scala 211:40]
       if (!(_T_259)) begin // @[mshrs.scala 222:41]
-        req_needs_wb <= _GEN_3211;
+        req_needs_wb <= _GEN_2725;
       end
     end
     if (reset) begin // @[mshrs.scala 115:24]
@@ -2387,9 +2135,9 @@ module BoomMSHR(
     end else if (_T_258) begin // @[mshrs.scala 211:40]
       new_coh_state <= _GEN_5;
     end else if (_T_259) begin // @[mshrs.scala 222:41]
-      new_coh_state <= _GEN_131;
+      new_coh_state <= _GEN_113;
     end else begin
-      new_coh_state <= _GEN_3100;
+      new_coh_state <= _GEN_2632;
     end
     if (reset) begin // @[Edges.scala 228:27]
       counter <= 9'h0; // @[Edges.scala 228:27]
@@ -2414,7 +2162,7 @@ module BoomMSHR(
           grantack_valid <= _T_432; // @[mshrs.scala 237:22]
         end
       end else if (!(_T_260)) begin // @[mshrs.scala 245:45]
-        grantack_valid <= _GEN_2755;
+        grantack_valid <= _GEN_2341;
       end
     end
     if (!(_T_229)) begin // @[mshrs.scala 204:30]
@@ -2433,7 +2181,7 @@ module BoomMSHR(
     end else if (!(_T_258)) begin // @[mshrs.scala 211:40]
       if (!(_T_259)) begin // @[mshrs.scala 222:41]
         if (!(_T_260)) begin // @[mshrs.scala 245:45]
-          refill_ctr <= _GEN_2643;
+          refill_ctr <= _GEN_2247;
         end
       end
     end
@@ -2444,7 +2192,7 @@ module BoomMSHR(
             commit_line <= 1'h0; // @[mshrs.scala 241:19]
           end
         end else if (_T_260) begin // @[mshrs.scala 245:45]
-          commit_line <= _GEN_139;
+          commit_line <= _GEN_121;
         end
       end
     end
@@ -2456,7 +2204,7 @@ module BoomMSHR(
           grant_had_data <= beats1_opdata; // @[mshrs.scala 234:22]
         end
       end else if (!(_T_260)) begin // @[mshrs.scala 245:45]
-        grant_had_data <= _GEN_2757;
+        grant_had_data <= _GEN_2343;
       end
     end
     if (reset) begin // @[mshrs.scala 145:28]
@@ -2515,7 +2263,7 @@ module BoomMSHR(
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_4293 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
+        if (_GEN_3645 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
           $fwrite(32'h80000002,"Assertion failed\n    at mshrs.scala:190 assert(isWrite(io.req.uop.mem_cmd))\n"); // @[mshrs.scala 190:15]
         end
     `ifdef PRINTF_COND
@@ -2526,7 +2274,7 @@ module BoomMSHR(
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_4293 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
+        if (_GEN_3645 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
           $fatal; // @[mshrs.scala 190:15]
         end
     `ifdef STOP_COND
@@ -2559,7 +2307,7 @@ module BoomMSHR(
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_4303 & ~_T_259 & ~_T_260 & ~_T_264 & ~_T_542 & ~_T_543 & ~_T_613 & ~_T_615 & ~_T_617 & ~_T_618 & _T_627
+        if (_GEN_3655 & ~_T_259 & ~_T_260 & ~_T_264 & ~_T_542 & ~_T_543 & ~_T_613 & ~_T_615 & ~_T_617 & ~_T_618 & _T_627
            & _T_653 & ~(_T_701 | reset)) begin
           $fwrite(32'h80000002,
             "Assertion failed: We still don't have permissions for this store\n    at mshrs.scala:346 assert(is_hit, \"We still don't have permissions for this store\")\n"
@@ -2573,7 +2321,7 @@ module BoomMSHR(
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_4303 & ~_T_259 & ~_T_260 & ~_T_264 & ~_T_542 & ~_T_543 & ~_T_613 & ~_T_615 & ~_T_617 & ~_T_618 & _T_627
+        if (_GEN_3655 & ~_T_259 & ~_T_260 & ~_T_264 & ~_T_542 & ~_T_543 & ~_T_613 & ~_T_615 & ~_T_617 & ~_T_618 & _T_627
            & _T_653 & ~(_T_701 | reset)) begin
           $fatal; // @[mshrs.scala 346:13]
         end
@@ -2585,7 +2333,7 @@ module BoomMSHR(
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_4331 & ~_T_627 & ~_T_230 & ~_T_231 & ~_T_232 & _T_271 & ~_T_719 & ~_T_245 & _T_244 & ~(rpq_io_enq_ready
+        if (_GEN_3683 & ~_T_627 & ~_T_230 & ~_T_231 & ~_T_232 & _T_271 & ~_T_719 & ~_T_245 & _T_244 & ~(rpq_io_enq_ready
            | reset)) begin
           $fwrite(32'h80000002,"Assertion failed\n    at mshrs.scala:183 assert(rpq.io.enq.ready)\n"); // @[mshrs.scala 183:11]
         end
@@ -2597,7 +2345,7 @@ module BoomMSHR(
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_4331 & ~_T_627 & ~_T_230 & ~_T_231 & ~_T_232 & _T_271 & ~_T_719 & ~_T_245 & _T_244 & ~(rpq_io_enq_ready
+        if (_GEN_3683 & ~_T_627 & ~_T_230 & ~_T_231 & ~_T_232 & _T_271 & ~_T_719 & ~_T_245 & _T_244 & ~(rpq_io_enq_ready
            | reset)) begin
           $fatal; // @[mshrs.scala 183:11]
         end
@@ -2609,7 +2357,7 @@ module BoomMSHR(
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (_GEN_4391 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
+        if (_GEN_3743 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
           $fwrite(32'h80000002,"Assertion failed\n    at mshrs.scala:190 assert(isWrite(io.req.uop.mem_cmd))\n"); // @[mshrs.scala 190:15]
         end
     `ifdef PRINTF_COND
@@ -2620,7 +2368,7 @@ module BoomMSHR(
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (_GEN_4391 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
+        if (_GEN_3743 & io_req_tag_match & _T_394 & ~(c_cat_hi_3 | reset)) begin
           $fatal; // @[mshrs.scala 190:15]
         end
     `ifdef STOP_COND
@@ -2675,7 +2423,7 @@ initial begin
   _RAND_4 = {1{`RANDOM}};
   req_old_meta_tag = _RAND_4[19:0];
   _RAND_5 = {1{`RANDOM}};
-  req_way_en = _RAND_5[0:0];
+  req_way_en = _RAND_5[3:0];
   _RAND_6 = {1{`RANDOM}};
   req_needs_wb = _RAND_6[0:0];
   _RAND_7 = {1{`RANDOM}};

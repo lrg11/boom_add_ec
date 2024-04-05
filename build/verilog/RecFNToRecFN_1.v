@@ -25,7 +25,7 @@ module RecFNToRecFN_1(
   wire [22:0] rawIn_out_sig_lo = io_in[22:0]; // @[rawFloatFromRecFN.scala 60:51]
   wire [1:0] rawIn_out_sig_hi = {1'h0,rawIn_out_sig_hi_lo}; // @[Cat.scala 30:58]
   wire [24:0] rawIn__sig = {1'h0,rawIn_out_sig_hi_lo,rawIn_out_sig_lo}; // @[Cat.scala 30:58]
-  RoundAnyRawFNToRecFN_7 roundAnyRawFNToRecFN ( // @[RecFNToRecFN.scala 72:19]
+  RoundAnyRawFNToRecFN_5 roundAnyRawFNToRecFN ( // @[RecFNToRecFN.scala 72:19]
     .io_invalidExc(roundAnyRawFNToRecFN_io_invalidExc),
     .io_infiniteExc(roundAnyRawFNToRecFN_io_infiniteExc),
     .io_in_isNaN(roundAnyRawFNToRecFN_io_in_isNaN),

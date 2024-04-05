@@ -110,6 +110,8 @@ class RobIo(
 
 
   val debug_tsc = Input(UInt(xLen.W))
+
+  val full = Output(Bool())
 }
 
 /**
@@ -793,7 +795,8 @@ class Rob(
   io.rob_pnr_idx  := rob_pnr_idx
   io.empty        := empty
   io.ready        := (rob_state === s_normal) && !full && !r_xcpt_val
-
+  io.full         := full
+  
   if (enableCommitMapTable) {
     when(exception_thrown){
       maybe_full := false.B

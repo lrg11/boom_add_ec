@@ -1,5 +1,5 @@
-[debug] Copy resource mappings: 
-[debug] 	(/root/bossa/generators/boom/src/main/resources/vsrc/btb_harness.v,/root/bossa/generators/boom/target/scala-2.12/classes/vsrc/btb_harness.v)
-[debug] 	(/root/bossa/generators/boom/src/main/resources/vsrc/predictor_harness.v,/root/bossa/generators/boom/target/scala-2.12/classes/vsrc/predictor_harness.v)
-[debug] 	(/root/bossa/generators/boom/src/main/resources/csrc/btb_sw.cc,/root/bossa/generators/boom/target/scala-2.12/classes/csrc/btb_sw.cc)
-[debug] 	(/root/bossa/generators/boom/src/main/resources/csrc/predictor_sw.cc,/root/bossa/generators/boom/target/scala-2.12/classes/csrc/predictor_sw.cc)
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/bossa/generators/boom/src/main/resources/vsrc/btb_harness.v,/root/bossa/generators/boom/target/scala-2.12/classes/vsrc/btb_harness.v)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/bossa/generators/boom/src/main/resources/vsrc/predictor_harness.v,/root/bossa/generators/boom/target/scala-2.12/classes/vsrc/predictor_harness.v)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/bossa/generators/boom/src/main/resources/csrc/btb_sw.cc,/root/bossa/generators/boom/target/scala-2.12/classes/csrc/btb_sw.cc)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/bossa/generators/boom/src/main/resources/csrc/predictor_sw.cc,/root/bossa/generators/boom/target/scala-2.12/classes/csrc/predictor_sw.cc)[0m

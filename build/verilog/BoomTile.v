@@ -373,23 +373,6 @@ module BoomTile(
   wire  dcache_io_lsu_req_ready; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_valid; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_valid; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_req_bits_0_bits_uop_switch; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_req_bits_0_bits_uop_switch_off; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_req_bits_0_bits_uop_is_unicore; // @[tile.scala 134:54]
-  wire [2:0] dcache_io_lsu_req_bits_0_bits_uop_shift; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_req_bits_0_bits_uop_lrs3_rtype; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_req_bits_0_bits_uop_rflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_req_bits_0_bits_uop_wflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_req_bits_0_bits_uop_prflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_req_bits_0_bits_uop_pwflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_req_bits_0_bits_uop_pflag_busy; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_req_bits_0_bits_uop_stale_pflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_req_bits_0_bits_uop_op1_sel; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_req_bits_0_bits_uop_op2_sel; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_split_num; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_self_index; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_rob_inst_idx; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_address_num; // @[tile.scala 134:54]
   wire [6:0] dcache_io_lsu_req_bits_0_bits_uop_uopc; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_req_bits_0_bits_uop_inst; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_req_bits_0_bits_uop_debug_inst; // @[tile.scala 134:54]
@@ -407,7 +390,6 @@ module BoomTile(
   wire  dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_load; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_sta; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_std; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_req_bits_0_bits_uop_ctrl_op3_sel; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_req_bits_0_bits_uop_iw_state; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_iw_p1_poisoned; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_iw_p2_poisoned; // @[tile.scala 134:54]
@@ -424,19 +406,19 @@ module BoomTile(
   wire [19:0] dcache_io_lsu_req_bits_0_bits_uop_imm_packed; // @[tile.scala 134:54]
   wire [11:0] dcache_io_lsu_req_bits_0_bits_uop_csr_addr; // @[tile.scala 134:54]
   wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_rob_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_req_bits_0_bits_uop_ldq_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_req_bits_0_bits_uop_stq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_req_bits_0_bits_uop_ldq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_req_bits_0_bits_uop_stq_idx; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_req_bits_0_bits_uop_rxq_idx; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_req_bits_0_bits_uop_pdst; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_req_bits_0_bits_uop_prs1; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_req_bits_0_bits_uop_prs2; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_req_bits_0_bits_uop_prs3; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_prs1; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_prs2; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_prs3; // @[tile.scala 134:54]
   wire [4:0] dcache_io_lsu_req_bits_0_bits_uop_ppred; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_prs1_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_prs2_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_prs3_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_ppred_busy; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_req_bits_0_bits_uop_stale_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_req_bits_0_bits_uop_stale_pdst; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_exception; // @[tile.scala 134:54]
   wire [63:0] dcache_io_lsu_req_bits_0_bits_uop_exc_cause; // @[tile.scala 134:54]
   wire  dcache_io_lsu_req_bits_0_bits_uop_bypassable; // @[tile.scala 134:54]
@@ -475,23 +457,6 @@ module BoomTile(
   wire  dcache_io_lsu_req_bits_0_bits_is_hella; // @[tile.scala 134:54]
   wire  dcache_io_lsu_s1_kill_0; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_valid; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_resp_0_bits_uop_switch; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_resp_0_bits_uop_switch_off; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_resp_0_bits_uop_is_unicore; // @[tile.scala 134:54]
-  wire [2:0] dcache_io_lsu_resp_0_bits_uop_shift; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_resp_0_bits_uop_lrs3_rtype; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_resp_0_bits_uop_rflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_resp_0_bits_uop_wflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_resp_0_bits_uop_prflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_resp_0_bits_uop_pwflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_resp_0_bits_uop_pflag_busy; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_resp_0_bits_uop_stale_pflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_resp_0_bits_uop_op1_sel; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_resp_0_bits_uop_op2_sel; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_resp_0_bits_uop_split_num; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_resp_0_bits_uop_self_index; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_resp_0_bits_uop_rob_inst_idx; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_resp_0_bits_uop_address_num; // @[tile.scala 134:54]
   wire [6:0] dcache_io_lsu_resp_0_bits_uop_uopc; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_resp_0_bits_uop_inst; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_resp_0_bits_uop_debug_inst; // @[tile.scala 134:54]
@@ -509,7 +474,6 @@ module BoomTile(
   wire  dcache_io_lsu_resp_0_bits_uop_ctrl_is_load; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_ctrl_is_sta; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_ctrl_is_std; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_resp_0_bits_uop_ctrl_op3_sel; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_resp_0_bits_uop_iw_state; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_iw_p1_poisoned; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_iw_p2_poisoned; // @[tile.scala 134:54]
@@ -526,19 +490,19 @@ module BoomTile(
   wire [19:0] dcache_io_lsu_resp_0_bits_uop_imm_packed; // @[tile.scala 134:54]
   wire [11:0] dcache_io_lsu_resp_0_bits_uop_csr_addr; // @[tile.scala 134:54]
   wire [5:0] dcache_io_lsu_resp_0_bits_uop_rob_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_resp_0_bits_uop_ldq_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_resp_0_bits_uop_stq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_resp_0_bits_uop_ldq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_resp_0_bits_uop_stq_idx; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_resp_0_bits_uop_rxq_idx; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_resp_0_bits_uop_pdst; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_resp_0_bits_uop_prs1; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_resp_0_bits_uop_prs2; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_resp_0_bits_uop_prs3; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_resp_0_bits_uop_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_resp_0_bits_uop_prs1; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_resp_0_bits_uop_prs2; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_resp_0_bits_uop_prs3; // @[tile.scala 134:54]
   wire [4:0] dcache_io_lsu_resp_0_bits_uop_ppred; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_prs1_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_prs2_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_prs3_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_ppred_busy; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_resp_0_bits_uop_stale_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_resp_0_bits_uop_stale_pdst; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_exception; // @[tile.scala 134:54]
   wire [63:0] dcache_io_lsu_resp_0_bits_uop_exc_cause; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_uop_bypassable; // @[tile.scala 134:54]
@@ -575,23 +539,6 @@ module BoomTile(
   wire [63:0] dcache_io_lsu_resp_0_bits_data; // @[tile.scala 134:54]
   wire  dcache_io_lsu_resp_0_bits_is_hella; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_valid; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_nack_0_bits_uop_switch; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_nack_0_bits_uop_switch_off; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_nack_0_bits_uop_is_unicore; // @[tile.scala 134:54]
-  wire [2:0] dcache_io_lsu_nack_0_bits_uop_shift; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_nack_0_bits_uop_lrs3_rtype; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_nack_0_bits_uop_rflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_nack_0_bits_uop_wflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_nack_0_bits_uop_prflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_nack_0_bits_uop_pwflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_nack_0_bits_uop_pflag_busy; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_nack_0_bits_uop_stale_pflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_nack_0_bits_uop_op1_sel; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_nack_0_bits_uop_op2_sel; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_nack_0_bits_uop_split_num; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_nack_0_bits_uop_self_index; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_nack_0_bits_uop_rob_inst_idx; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_nack_0_bits_uop_address_num; // @[tile.scala 134:54]
   wire [6:0] dcache_io_lsu_nack_0_bits_uop_uopc; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_nack_0_bits_uop_inst; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_nack_0_bits_uop_debug_inst; // @[tile.scala 134:54]
@@ -609,7 +556,6 @@ module BoomTile(
   wire  dcache_io_lsu_nack_0_bits_uop_ctrl_is_load; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_ctrl_is_sta; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_ctrl_is_std; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_nack_0_bits_uop_ctrl_op3_sel; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_nack_0_bits_uop_iw_state; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_iw_p1_poisoned; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_iw_p2_poisoned; // @[tile.scala 134:54]
@@ -626,19 +572,19 @@ module BoomTile(
   wire [19:0] dcache_io_lsu_nack_0_bits_uop_imm_packed; // @[tile.scala 134:54]
   wire [11:0] dcache_io_lsu_nack_0_bits_uop_csr_addr; // @[tile.scala 134:54]
   wire [5:0] dcache_io_lsu_nack_0_bits_uop_rob_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_nack_0_bits_uop_ldq_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_nack_0_bits_uop_stq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_nack_0_bits_uop_ldq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_nack_0_bits_uop_stq_idx; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_nack_0_bits_uop_rxq_idx; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_nack_0_bits_uop_pdst; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_nack_0_bits_uop_prs1; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_nack_0_bits_uop_prs2; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_nack_0_bits_uop_prs3; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_nack_0_bits_uop_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_nack_0_bits_uop_prs1; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_nack_0_bits_uop_prs2; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_nack_0_bits_uop_prs3; // @[tile.scala 134:54]
   wire [4:0] dcache_io_lsu_nack_0_bits_uop_ppred; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_prs1_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_prs2_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_prs3_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_ppred_busy; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_nack_0_bits_uop_stale_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_nack_0_bits_uop_stale_pdst; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_exception; // @[tile.scala 134:54]
   wire [63:0] dcache_io_lsu_nack_0_bits_uop_exc_cause; // @[tile.scala 134:54]
   wire  dcache_io_lsu_nack_0_bits_uop_bypassable; // @[tile.scala 134:54]
@@ -677,23 +623,6 @@ module BoomTile(
   wire  dcache_io_lsu_nack_0_bits_is_hella; // @[tile.scala 134:54]
   wire [11:0] dcache_io_lsu_brupdate_b1_resolve_mask; // @[tile.scala 134:54]
   wire [11:0] dcache_io_lsu_brupdate_b1_mispredict_mask; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_brupdate_b2_uop_switch; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_brupdate_b2_uop_switch_off; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_brupdate_b2_uop_is_unicore; // @[tile.scala 134:54]
-  wire [2:0] dcache_io_lsu_brupdate_b2_uop_shift; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_brupdate_b2_uop_rflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_brupdate_b2_uop_wflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_brupdate_b2_uop_prflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_brupdate_b2_uop_pwflag; // @[tile.scala 134:54]
-  wire  dcache_io_lsu_brupdate_b2_uop_pflag_busy; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_brupdate_b2_uop_stale_pflag; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_brupdate_b2_uop_op1_sel; // @[tile.scala 134:54]
-  wire [3:0] dcache_io_lsu_brupdate_b2_uop_op2_sel; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_brupdate_b2_uop_split_num; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_brupdate_b2_uop_self_index; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 134:54]
-  wire [5:0] dcache_io_lsu_brupdate_b2_uop_address_num; // @[tile.scala 134:54]
   wire [6:0] dcache_io_lsu_brupdate_b2_uop_uopc; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_brupdate_b2_uop_inst; // @[tile.scala 134:54]
   wire [31:0] dcache_io_lsu_brupdate_b2_uop_debug_inst; // @[tile.scala 134:54]
@@ -711,7 +640,6 @@ module BoomTile(
   wire  dcache_io_lsu_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 134:54]
-  wire [1:0] dcache_io_lsu_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_brupdate_b2_uop_iw_state; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 134:54]
@@ -728,19 +656,19 @@ module BoomTile(
   wire [19:0] dcache_io_lsu_brupdate_b2_uop_imm_packed; // @[tile.scala 134:54]
   wire [11:0] dcache_io_lsu_brupdate_b2_uop_csr_addr; // @[tile.scala 134:54]
   wire [5:0] dcache_io_lsu_brupdate_b2_uop_rob_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_brupdate_b2_uop_ldq_idx; // @[tile.scala 134:54]
-  wire [4:0] dcache_io_lsu_brupdate_b2_uop_stq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_brupdate_b2_uop_ldq_idx; // @[tile.scala 134:54]
+  wire [3:0] dcache_io_lsu_brupdate_b2_uop_stq_idx; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_brupdate_b2_uop_rxq_idx; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_brupdate_b2_uop_pdst; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_brupdate_b2_uop_prs1; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_brupdate_b2_uop_prs2; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_brupdate_b2_uop_prs3; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_brupdate_b2_uop_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_brupdate_b2_uop_prs1; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_brupdate_b2_uop_prs2; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_brupdate_b2_uop_prs3; // @[tile.scala 134:54]
   wire [4:0] dcache_io_lsu_brupdate_b2_uop_ppred; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_prs1_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_prs2_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_prs3_busy; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_ppred_busy; // @[tile.scala 134:54]
-  wire [6:0] dcache_io_lsu_brupdate_b2_uop_stale_pdst; // @[tile.scala 134:54]
+  wire [5:0] dcache_io_lsu_brupdate_b2_uop_stale_pdst; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_exception; // @[tile.scala 134:54]
   wire [63:0] dcache_io_lsu_brupdate_b2_uop_exc_cause; // @[tile.scala 134:54]
   wire  dcache_io_lsu_brupdate_b2_uop_bypassable; // @[tile.scala 134:54]
@@ -780,7 +708,7 @@ module BoomTile(
   wire [2:0] dcache_io_lsu_brupdate_b2_cfi_type; // @[tile.scala 134:54]
   wire [1:0] dcache_io_lsu_brupdate_b2_pc_sel; // @[tile.scala 134:54]
   wire [39:0] dcache_io_lsu_brupdate_b2_jalr_target; // @[tile.scala 134:54]
-  wire [31:0] dcache_io_lsu_brupdate_b2_target_offset; // @[tile.scala 134:54]
+  wire [20:0] dcache_io_lsu_brupdate_b2_target_offset; // @[tile.scala 134:54]
   wire  dcache_io_lsu_exception; // @[tile.scala 134:54]
   wire [5:0] dcache_io_lsu_rob_pnr_idx; // @[tile.scala 134:54]
   wire [5:0] dcache_io_lsu_rob_head_idx; // @[tile.scala 134:54]
@@ -823,23 +751,6 @@ module BoomTile(
   wire  frontend_io_cpu_fetchpacket_ready; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_valid; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_valid; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_switch; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_switch_off; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_is_unicore; // @[tile.scala 140:28]
-  wire [2:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_shift; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_lrs3_rtype; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_rflag; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_wflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_prflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_pwflag; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_pflag_busy; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_stale_pflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_op1_sel; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_op2_sel; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_split_num; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_self_index; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_rob_inst_idx; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_address_num; // @[tile.scala 140:28]
   wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_uopc; // @[tile.scala 140:28]
   wire [31:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_inst; // @[tile.scala 140:28]
   wire [31:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_inst; // @[tile.scala 140:28]
@@ -857,7 +768,6 @@ module BoomTile(
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_load; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_sta; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_std; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_state; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_p2_poisoned; // @[tile.scala 140:28]
@@ -874,19 +784,19 @@ module BoomTile(
   wire [19:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_imm_packed; // @[tile.scala 140:28]
   wire [11:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_csr_addr; // @[tile.scala 140:28]
   wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_rob_idx; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_ldq_idx; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_stq_idx; // @[tile.scala 140:28]
+  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_ldq_idx; // @[tile.scala 140:28]
+  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_stq_idx; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_rxq_idx; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_pdst; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs1; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs2; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs3; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_pdst; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs1; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs2; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs3; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_ppred; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs1_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs2_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_prs3_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_ppred_busy; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_stale_pdst; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_stale_pdst; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_exception; // @[tile.scala 140:28]
   wire [63:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_exc_cause; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_0_bits_bypassable; // @[tile.scala 140:28]
@@ -921,23 +831,6 @@ module BoomTile(
   wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_fsrc; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_tsrc; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_valid; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_switch; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_switch_off; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_is_unicore; // @[tile.scala 140:28]
-  wire [2:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_shift; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_lrs3_rtype; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_rflag; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_wflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_prflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_pwflag; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_pflag_busy; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_stale_pflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_op1_sel; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_op2_sel; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_split_num; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_self_index; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_rob_inst_idx; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_address_num; // @[tile.scala 140:28]
   wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_uopc; // @[tile.scala 140:28]
   wire [31:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_inst; // @[tile.scala 140:28]
   wire [31:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_debug_inst; // @[tile.scala 140:28]
@@ -955,7 +848,6 @@ module BoomTile(
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_load; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_sta; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_std; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_state; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_p2_poisoned; // @[tile.scala 140:28]
@@ -972,19 +864,19 @@ module BoomTile(
   wire [19:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_imm_packed; // @[tile.scala 140:28]
   wire [11:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_csr_addr; // @[tile.scala 140:28]
   wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_rob_idx; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_ldq_idx; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_stq_idx; // @[tile.scala 140:28]
+  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_ldq_idx; // @[tile.scala 140:28]
+  wire [3:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_stq_idx; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_rxq_idx; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_pdst; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs1; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs2; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs3; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_pdst; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs1; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs2; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs3; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_ppred; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs1_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs2_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_prs3_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_ppred_busy; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_stale_pdst; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_stale_pdst; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_exception; // @[tile.scala 140:28]
   wire [63:0] frontend_io_cpu_fetchpacket_bits_uops_1_bits_exc_cause; // @[tile.scala 140:28]
   wire  frontend_io_cpu_fetchpacket_bits_uops_1_bits_bypassable; // @[tile.scala 140:28]
@@ -1031,7 +923,7 @@ module BoomTile(
   wire [39:0] frontend_io_cpu_get_pc_0_entry_ras_top; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_get_pc_0_entry_ras_idx; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_0_entry_start_bank; // @[tile.scala 140:28]
-  wire [15:0] frontend_io_cpu_get_pc_0_ghist_old_history; // @[tile.scala 140:28]
+  wire [63:0] frontend_io_cpu_get_pc_0_ghist_old_history; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_0_ghist_current_saw_branch_not_taken; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_0_ghist_new_saw_branch_not_taken; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_0_ghist_new_saw_branch_taken; // @[tile.scala 140:28]
@@ -1053,7 +945,7 @@ module BoomTile(
   wire [39:0] frontend_io_cpu_get_pc_1_entry_ras_top; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_get_pc_1_entry_ras_idx; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_1_entry_start_bank; // @[tile.scala 140:28]
-  wire [15:0] frontend_io_cpu_get_pc_1_ghist_old_history; // @[tile.scala 140:28]
+  wire [63:0] frontend_io_cpu_get_pc_1_ghist_old_history; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_1_ghist_current_saw_branch_not_taken; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_1_ghist_new_saw_branch_not_taken; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_1_ghist_new_saw_branch_taken; // @[tile.scala 140:28]
@@ -1062,50 +954,6 @@ module BoomTile(
   wire [39:0] frontend_io_cpu_get_pc_1_com_pc; // @[tile.scala 140:28]
   wire  frontend_io_cpu_get_pc_1_next_val; // @[tile.scala 140:28]
   wire [39:0] frontend_io_cpu_get_pc_1_next_pc; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_get_pc_2_ftq_idx; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_entry_cfi_idx_valid; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_get_pc_2_entry_cfi_idx_bits; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_entry_cfi_taken; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_entry_cfi_mispredicted; // @[tile.scala 140:28]
-  wire [2:0] frontend_io_cpu_get_pc_2_entry_cfi_type; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_get_pc_2_entry_br_mask; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_entry_cfi_is_call; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_entry_cfi_is_ret; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_entry_cfi_npc_plus4; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_2_entry_ras_top; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_get_pc_2_entry_ras_idx; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_entry_start_bank; // @[tile.scala 140:28]
-  wire [15:0] frontend_io_cpu_get_pc_2_ghist_old_history; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_ghist_current_saw_branch_not_taken; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_ghist_new_saw_branch_not_taken; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_ghist_new_saw_branch_taken; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_get_pc_2_ghist_ras_idx; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_2_pc; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_2_com_pc; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_2_next_val; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_2_next_pc; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_get_pc_3_ftq_idx; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_entry_cfi_idx_valid; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_get_pc_3_entry_cfi_idx_bits; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_entry_cfi_taken; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_entry_cfi_mispredicted; // @[tile.scala 140:28]
-  wire [2:0] frontend_io_cpu_get_pc_3_entry_cfi_type; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_get_pc_3_entry_br_mask; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_entry_cfi_is_call; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_entry_cfi_is_ret; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_entry_cfi_npc_plus4; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_3_entry_ras_top; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_get_pc_3_entry_ras_idx; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_entry_start_bank; // @[tile.scala 140:28]
-  wire [15:0] frontend_io_cpu_get_pc_3_ghist_old_history; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_ghist_current_saw_branch_not_taken; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_ghist_new_saw_branch_not_taken; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_ghist_new_saw_branch_taken; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_get_pc_3_ghist_ras_idx; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_3_pc; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_3_com_pc; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_get_pc_3_next_val; // @[tile.scala 140:28]
-  wire [39:0] frontend_io_cpu_get_pc_3_next_pc; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_debug_ftq_idx_0; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_debug_ftq_idx_1; // @[tile.scala 140:28]
   wire [39:0] frontend_io_cpu_debug_fetch_pc_0; // @[tile.scala 140:28]
@@ -1148,23 +996,6 @@ module BoomTile(
   wire  frontend_io_cpu_sfence_bits_asid; // @[tile.scala 140:28]
   wire [11:0] frontend_io_cpu_brupdate_b1_resolve_mask; // @[tile.scala 140:28]
   wire [11:0] frontend_io_cpu_brupdate_b1_mispredict_mask; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_brupdate_b2_uop_switch; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_brupdate_b2_uop_switch_off; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_brupdate_b2_uop_is_unicore; // @[tile.scala 140:28]
-  wire [2:0] frontend_io_cpu_brupdate_b2_uop_shift; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_brupdate_b2_uop_rflag; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_brupdate_b2_uop_wflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_brupdate_b2_uop_prflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_brupdate_b2_uop_pwflag; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_brupdate_b2_uop_pflag_busy; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_brupdate_b2_uop_stale_pflag; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_brupdate_b2_uop_op1_sel; // @[tile.scala 140:28]
-  wire [3:0] frontend_io_cpu_brupdate_b2_uop_op2_sel; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_brupdate_b2_uop_split_num; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_brupdate_b2_uop_self_index; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 140:28]
-  wire [5:0] frontend_io_cpu_brupdate_b2_uop_address_num; // @[tile.scala 140:28]
   wire [6:0] frontend_io_cpu_brupdate_b2_uop_uopc; // @[tile.scala 140:28]
   wire [31:0] frontend_io_cpu_brupdate_b2_uop_inst; // @[tile.scala 140:28]
   wire [31:0] frontend_io_cpu_brupdate_b2_uop_debug_inst; // @[tile.scala 140:28]
@@ -1182,7 +1013,6 @@ module BoomTile(
   wire  frontend_io_cpu_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 140:28]
-  wire [1:0] frontend_io_cpu_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_brupdate_b2_uop_iw_state; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 140:28]
@@ -1199,19 +1029,19 @@ module BoomTile(
   wire [19:0] frontend_io_cpu_brupdate_b2_uop_imm_packed; // @[tile.scala 140:28]
   wire [11:0] frontend_io_cpu_brupdate_b2_uop_csr_addr; // @[tile.scala 140:28]
   wire [5:0] frontend_io_cpu_brupdate_b2_uop_rob_idx; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_brupdate_b2_uop_ldq_idx; // @[tile.scala 140:28]
-  wire [4:0] frontend_io_cpu_brupdate_b2_uop_stq_idx; // @[tile.scala 140:28]
+  wire [3:0] frontend_io_cpu_brupdate_b2_uop_ldq_idx; // @[tile.scala 140:28]
+  wire [3:0] frontend_io_cpu_brupdate_b2_uop_stq_idx; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_brupdate_b2_uop_rxq_idx; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_brupdate_b2_uop_pdst; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_brupdate_b2_uop_prs1; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_brupdate_b2_uop_prs2; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_brupdate_b2_uop_prs3; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_brupdate_b2_uop_pdst; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_brupdate_b2_uop_prs1; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_brupdate_b2_uop_prs2; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_brupdate_b2_uop_prs3; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_brupdate_b2_uop_ppred; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_prs1_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_prs2_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_prs3_busy; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_ppred_busy; // @[tile.scala 140:28]
-  wire [6:0] frontend_io_cpu_brupdate_b2_uop_stale_pdst; // @[tile.scala 140:28]
+  wire [5:0] frontend_io_cpu_brupdate_b2_uop_stale_pdst; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_exception; // @[tile.scala 140:28]
   wire [63:0] frontend_io_cpu_brupdate_b2_uop_exc_cause; // @[tile.scala 140:28]
   wire  frontend_io_cpu_brupdate_b2_uop_bypassable; // @[tile.scala 140:28]
@@ -1251,12 +1081,12 @@ module BoomTile(
   wire [2:0] frontend_io_cpu_brupdate_b2_cfi_type; // @[tile.scala 140:28]
   wire [1:0] frontend_io_cpu_brupdate_b2_pc_sel; // @[tile.scala 140:28]
   wire [39:0] frontend_io_cpu_brupdate_b2_jalr_target; // @[tile.scala 140:28]
-  wire [31:0] frontend_io_cpu_brupdate_b2_target_offset; // @[tile.scala 140:28]
+  wire [20:0] frontend_io_cpu_brupdate_b2_target_offset; // @[tile.scala 140:28]
   wire  frontend_io_cpu_redirect_flush; // @[tile.scala 140:28]
   wire  frontend_io_cpu_redirect_val; // @[tile.scala 140:28]
-  wire [63:0] frontend_io_cpu_redirect_pc; // @[tile.scala 140:28]
+  wire [39:0] frontend_io_cpu_redirect_pc; // @[tile.scala 140:28]
   wire [4:0] frontend_io_cpu_redirect_ftq_idx; // @[tile.scala 140:28]
-  wire [15:0] frontend_io_cpu_redirect_ghist_old_history; // @[tile.scala 140:28]
+  wire [63:0] frontend_io_cpu_redirect_ghist_old_history; // @[tile.scala 140:28]
   wire  frontend_io_cpu_redirect_ghist_current_saw_branch_not_taken; // @[tile.scala 140:28]
   wire  frontend_io_cpu_redirect_ghist_new_saw_branch_not_taken; // @[tile.scala 140:28]
   wire  frontend_io_cpu_redirect_ghist_new_saw_branch_taken; // @[tile.scala 140:28]
@@ -1266,7 +1096,6 @@ module BoomTile(
   wire  frontend_io_cpu_flush_icache; // @[tile.scala 140:28]
   wire  frontend_io_cpu_perf_acquire; // @[tile.scala 140:28]
   wire  frontend_io_cpu_perf_tlbMiss; // @[tile.scala 140:28]
-  wire  frontend_io_cpu_is_unicore; // @[tile.scala 140:28]
   wire  frontend_io_ptw_req_ready; // @[tile.scala 140:28]
   wire  frontend_io_ptw_req_valid; // @[tile.scala 140:28]
   wire  frontend_io_ptw_req_bits_valid; // @[tile.scala 140:28]
@@ -1400,23 +1229,6 @@ module BoomTile(
   wire  core_io_ifu_fetchpacket_ready; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_valid; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_valid; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_0_bits_switch; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_0_bits_switch_off; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_0_bits_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_ifu_fetchpacket_bits_uops_0_bits_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_fetchpacket_bits_uops_0_bits_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_0_bits_rflag; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_0_bits_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_0_bits_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_0_bits_pwflag; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_0_bits_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_0_bits_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_0_bits_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_0_bits_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_ifu_fetchpacket_bits_uops_0_bits_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_ifu_fetchpacket_bits_uops_0_bits_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_ifu_fetchpacket_bits_uops_0_bits_debug_inst; // @[tile.scala 159:20]
@@ -1434,7 +1246,6 @@ module BoomTile(
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_fetchpacket_bits_uops_0_bits_iw_state; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -1451,19 +1262,19 @@ module BoomTile(
   wire [19:0] core_io_ifu_fetchpacket_bits_uops_0_bits_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_ifu_fetchpacket_bits_uops_0_bits_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_fetchpacket_bits_uops_0_bits_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_fetchpacket_bits_uops_0_bits_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_ifu_fetchpacket_bits_uops_0_bits_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_ifu_fetchpacket_bits_uops_0_bits_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_fetchpacket_bits_uops_0_bits_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_0_bits_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_0_bits_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_0_bits_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_0_bits_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_fetchpacket_bits_uops_0_bits_ppred; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_0_bits_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_0_bits_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_ifu_fetchpacket_bits_uops_0_bits_exc_cause; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_0_bits_bypassable; // @[tile.scala 159:20]
@@ -1498,23 +1309,6 @@ module BoomTile(
   wire [1:0] core_io_ifu_fetchpacket_bits_uops_0_bits_debug_fsrc; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_fetchpacket_bits_uops_0_bits_debug_tsrc; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_valid; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_1_bits_switch; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_1_bits_switch_off; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_1_bits_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_ifu_fetchpacket_bits_uops_1_bits_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_fetchpacket_bits_uops_1_bits_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_1_bits_rflag; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_1_bits_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_1_bits_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_1_bits_pwflag; // @[tile.scala 159:20]
-  wire  core_io_ifu_fetchpacket_bits_uops_1_bits_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_1_bits_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_1_bits_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_fetchpacket_bits_uops_1_bits_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_ifu_fetchpacket_bits_uops_1_bits_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_ifu_fetchpacket_bits_uops_1_bits_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_ifu_fetchpacket_bits_uops_1_bits_debug_inst; // @[tile.scala 159:20]
@@ -1532,7 +1326,6 @@ module BoomTile(
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_fetchpacket_bits_uops_1_bits_iw_state; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -1549,19 +1342,19 @@ module BoomTile(
   wire [19:0] core_io_ifu_fetchpacket_bits_uops_1_bits_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_ifu_fetchpacket_bits_uops_1_bits_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_fetchpacket_bits_uops_1_bits_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_fetchpacket_bits_uops_1_bits_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_ifu_fetchpacket_bits_uops_1_bits_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_ifu_fetchpacket_bits_uops_1_bits_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_fetchpacket_bits_uops_1_bits_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_1_bits_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_1_bits_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_1_bits_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_1_bits_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_fetchpacket_bits_uops_1_bits_ppred; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_fetchpacket_bits_uops_1_bits_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_fetchpacket_bits_uops_1_bits_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_ifu_fetchpacket_bits_uops_1_bits_exc_cause; // @[tile.scala 159:20]
   wire  core_io_ifu_fetchpacket_bits_uops_1_bits_bypassable; // @[tile.scala 159:20]
@@ -1608,7 +1401,7 @@ module BoomTile(
   wire [39:0] core_io_ifu_get_pc_0_entry_ras_top; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_get_pc_0_entry_ras_idx; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_0_entry_start_bank; // @[tile.scala 159:20]
-  wire [15:0] core_io_ifu_get_pc_0_ghist_old_history; // @[tile.scala 159:20]
+  wire [63:0] core_io_ifu_get_pc_0_ghist_old_history; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_0_ghist_current_saw_branch_not_taken; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_0_ghist_new_saw_branch_not_taken; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_0_ghist_new_saw_branch_taken; // @[tile.scala 159:20]
@@ -1630,7 +1423,7 @@ module BoomTile(
   wire [39:0] core_io_ifu_get_pc_1_entry_ras_top; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_get_pc_1_entry_ras_idx; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_1_entry_start_bank; // @[tile.scala 159:20]
-  wire [15:0] core_io_ifu_get_pc_1_ghist_old_history; // @[tile.scala 159:20]
+  wire [63:0] core_io_ifu_get_pc_1_ghist_old_history; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_1_ghist_current_saw_branch_not_taken; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_1_ghist_new_saw_branch_not_taken; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_1_ghist_new_saw_branch_taken; // @[tile.scala 159:20]
@@ -1639,50 +1432,6 @@ module BoomTile(
   wire [39:0] core_io_ifu_get_pc_1_com_pc; // @[tile.scala 159:20]
   wire  core_io_ifu_get_pc_1_next_val; // @[tile.scala 159:20]
   wire [39:0] core_io_ifu_get_pc_1_next_pc; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_get_pc_2_ftq_idx; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_entry_cfi_idx_valid; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_get_pc_2_entry_cfi_idx_bits; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_entry_cfi_taken; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_entry_cfi_mispredicted; // @[tile.scala 159:20]
-  wire [2:0] core_io_ifu_get_pc_2_entry_cfi_type; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_get_pc_2_entry_br_mask; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_entry_cfi_is_call; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_entry_cfi_is_ret; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_entry_cfi_npc_plus4; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_2_entry_ras_top; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_get_pc_2_entry_ras_idx; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_entry_start_bank; // @[tile.scala 159:20]
-  wire [15:0] core_io_ifu_get_pc_2_ghist_old_history; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_ghist_current_saw_branch_not_taken; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_ghist_new_saw_branch_not_taken; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_ghist_new_saw_branch_taken; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_get_pc_2_ghist_ras_idx; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_2_pc; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_2_com_pc; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_2_next_val; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_2_next_pc; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_get_pc_3_ftq_idx; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_entry_cfi_idx_valid; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_get_pc_3_entry_cfi_idx_bits; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_entry_cfi_taken; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_entry_cfi_mispredicted; // @[tile.scala 159:20]
-  wire [2:0] core_io_ifu_get_pc_3_entry_cfi_type; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_get_pc_3_entry_br_mask; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_entry_cfi_is_call; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_entry_cfi_is_ret; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_entry_cfi_npc_plus4; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_3_entry_ras_top; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_get_pc_3_entry_ras_idx; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_entry_start_bank; // @[tile.scala 159:20]
-  wire [15:0] core_io_ifu_get_pc_3_ghist_old_history; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_ghist_current_saw_branch_not_taken; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_ghist_new_saw_branch_not_taken; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_ghist_new_saw_branch_taken; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_get_pc_3_ghist_ras_idx; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_3_pc; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_3_com_pc; // @[tile.scala 159:20]
-  wire  core_io_ifu_get_pc_3_next_val; // @[tile.scala 159:20]
-  wire [39:0] core_io_ifu_get_pc_3_next_pc; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_debug_ftq_idx_0; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_debug_ftq_idx_1; // @[tile.scala 159:20]
   wire [39:0] core_io_ifu_debug_fetch_pc_0; // @[tile.scala 159:20]
@@ -1725,23 +1474,6 @@ module BoomTile(
   wire  core_io_ifu_sfence_bits_asid; // @[tile.scala 159:20]
   wire [11:0] core_io_ifu_brupdate_b1_resolve_mask; // @[tile.scala 159:20]
   wire [11:0] core_io_ifu_brupdate_b1_mispredict_mask; // @[tile.scala 159:20]
-  wire  core_io_ifu_brupdate_b2_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_ifu_brupdate_b2_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_ifu_brupdate_b2_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_ifu_brupdate_b2_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_ifu_brupdate_b2_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_ifu_brupdate_b2_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_brupdate_b2_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_brupdate_b2_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_ifu_brupdate_b2_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_brupdate_b2_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_brupdate_b2_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_ifu_brupdate_b2_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_brupdate_b2_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_brupdate_b2_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_ifu_brupdate_b2_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_ifu_brupdate_b2_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_ifu_brupdate_b2_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_ifu_brupdate_b2_uop_debug_inst; // @[tile.scala 159:20]
@@ -1759,7 +1491,6 @@ module BoomTile(
   wire  core_io_ifu_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_ifu_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_brupdate_b2_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -1776,19 +1507,19 @@ module BoomTile(
   wire [19:0] core_io_ifu_brupdate_b2_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_ifu_brupdate_b2_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_ifu_brupdate_b2_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_brupdate_b2_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_ifu_brupdate_b2_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_ifu_brupdate_b2_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_ifu_brupdate_b2_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_brupdate_b2_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_brupdate_b2_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_brupdate_b2_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_brupdate_b2_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_brupdate_b2_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_brupdate_b2_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_brupdate_b2_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_brupdate_b2_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_brupdate_b2_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_brupdate_b2_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_ifu_brupdate_b2_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_ifu_brupdate_b2_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_ifu_brupdate_b2_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_ifu_brupdate_b2_uop_bypassable; // @[tile.scala 159:20]
@@ -1828,12 +1559,12 @@ module BoomTile(
   wire [2:0] core_io_ifu_brupdate_b2_cfi_type; // @[tile.scala 159:20]
   wire [1:0] core_io_ifu_brupdate_b2_pc_sel; // @[tile.scala 159:20]
   wire [39:0] core_io_ifu_brupdate_b2_jalr_target; // @[tile.scala 159:20]
-  wire [31:0] core_io_ifu_brupdate_b2_target_offset; // @[tile.scala 159:20]
+  wire [20:0] core_io_ifu_brupdate_b2_target_offset; // @[tile.scala 159:20]
   wire  core_io_ifu_redirect_flush; // @[tile.scala 159:20]
   wire  core_io_ifu_redirect_val; // @[tile.scala 159:20]
-  wire [63:0] core_io_ifu_redirect_pc; // @[tile.scala 159:20]
+  wire [39:0] core_io_ifu_redirect_pc; // @[tile.scala 159:20]
   wire [4:0] core_io_ifu_redirect_ftq_idx; // @[tile.scala 159:20]
-  wire [15:0] core_io_ifu_redirect_ghist_old_history; // @[tile.scala 159:20]
+  wire [63:0] core_io_ifu_redirect_ghist_old_history; // @[tile.scala 159:20]
   wire  core_io_ifu_redirect_ghist_current_saw_branch_not_taken; // @[tile.scala 159:20]
   wire  core_io_ifu_redirect_ghist_new_saw_branch_not_taken; // @[tile.scala 159:20]
   wire  core_io_ifu_redirect_ghist_new_saw_branch_taken; // @[tile.scala 159:20]
@@ -1843,7 +1574,6 @@ module BoomTile(
   wire  core_io_ifu_flush_icache; // @[tile.scala 159:20]
   wire  core_io_ifu_perf_acquire; // @[tile.scala 159:20]
   wire  core_io_ifu_perf_tlbMiss; // @[tile.scala 159:20]
-  wire  core_io_ifu_is_unicore; // @[tile.scala 159:20]
   wire [3:0] core_io_ptw_ptbr_mode; // @[tile.scala 159:20]
   wire [15:0] core_io_ptw_ptbr_asid; // @[tile.scala 159:20]
   wire [43:0] core_io_ptw_ptbr_ppn; // @[tile.scala 159:20]
@@ -2061,23 +1791,6 @@ module BoomTile(
   wire  core_io_rocc_interrupt; // @[tile.scala 159:20]
   wire  core_io_rocc_exception; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_req_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_exe_0_req_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_req_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_req_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -2095,7 +1808,6 @@ module BoomTile(
   wire  core_io_lsu_exe_0_req_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_req_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -2112,19 +1824,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_exe_0_req_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_exe_0_req_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_exe_0_req_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_req_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_req_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_req_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_req_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_exe_0_req_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -2161,23 +1873,6 @@ module BoomTile(
   wire  core_io_lsu_exe_0_req_bits_predicated; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_exe_0_req_bits_data; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -2195,7 +1890,6 @@ module BoomTile(
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -2212,19 +1906,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_exe_0_req_bits_fflags_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_fflags_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -2267,125 +1961,8 @@ module BoomTile(
   wire  core_io_lsu_exe_0_req_bits_sfence_bits_rs2; // @[tile.scala 159:20]
   wire [38:0] core_io_lsu_exe_0_req_bits_sfence_bits_addr; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_req_bits_sfence_bits_asid; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_flagdata; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_address_num; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uopc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_inst; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 159:20]
-  wire [39:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 159:20]
-  wire [9:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_br; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_taken; // @[tile.scala 159:20]
-  wire [19:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_exception; // @[tile.scala 159:20]
-  wire [63:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_req_bits_fflagdata_bits_fflag; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_ready; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_iresp_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_exe_0_iresp_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_iresp_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_iresp_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -2403,7 +1980,6 @@ module BoomTile(
   wire  core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_iresp_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -2420,19 +1996,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_exe_0_iresp_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_exe_0_iresp_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_iresp_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_iresp_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_iresp_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_iresp_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_exe_0_iresp_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -2469,23 +2045,6 @@ module BoomTile(
   wire [63:0] core_io_lsu_exe_0_iresp_bits_data; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_predicated; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -2503,7 +2062,6 @@ module BoomTile(
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -2520,19 +2078,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -2567,125 +2125,8 @@ module BoomTile(
   wire [1:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_fsrc; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_iresp_bits_fflags_bits_flags; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_flagdata; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_address_num; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uopc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_inst; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 159:20]
-  wire [39:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 159:20]
-  wire [9:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_br; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_taken; // @[tile.scala 159:20]
-  wire [19:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exception; // @[tile.scala 159:20]
-  wire [63:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_iresp_bits_fflagdata_bits_fflag; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_ready; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_fresp_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_exe_0_fresp_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_fresp_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_fresp_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -2703,7 +2144,6 @@ module BoomTile(
   wire  core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_fresp_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -2720,19 +2160,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_exe_0_fresp_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_exe_0_fresp_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_fresp_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_fresp_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_fresp_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_fresp_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_exe_0_fresp_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -2769,23 +2209,6 @@ module BoomTile(
   wire [64:0] core_io_lsu_exe_0_fresp_bits_data; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_predicated; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -2803,7 +2226,6 @@ module BoomTile(
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -2820,19 +2242,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -2867,124 +2289,7 @@ module BoomTile(
   wire [1:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_fsrc; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_exe_0_fresp_bits_fflags_bits_flags; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_flagdata; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_address_num; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uopc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_inst; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 159:20]
-  wire [39:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 159:20]
-  wire [9:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_br; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_taken; // @[tile.scala 159:20]
-  wire [19:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exception; // @[tile.scala 159:20]
-  wire [63:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_exe_0_fresp_bits_fflagdata_bits_fflag; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_0_bits_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_0_bits_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_0_bits_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_dis_uops_0_bits_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_dis_uops_0_bits_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_0_bits_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_0_bits_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_0_bits_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_0_bits_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_0_bits_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_0_bits_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_0_bits_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_0_bits_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_0_bits_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_0_bits_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_0_bits_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_0_bits_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_dis_uops_0_bits_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_dis_uops_0_bits_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_dis_uops_0_bits_debug_inst; // @[tile.scala 159:20]
@@ -3002,7 +2307,6 @@ module BoomTile(
   wire  core_io_lsu_dis_uops_0_bits_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_dis_uops_0_bits_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_dis_uops_0_bits_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3019,19 +2323,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_dis_uops_0_bits_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_dis_uops_0_bits_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_dis_uops_0_bits_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_uops_0_bits_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_uops_0_bits_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_uops_0_bits_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_uops_0_bits_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_dis_uops_0_bits_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_0_bits_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_0_bits_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_0_bits_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_0_bits_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_0_bits_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_0_bits_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_0_bits_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_0_bits_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_dis_uops_0_bits_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_0_bits_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_0_bits_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_dis_uops_0_bits_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_0_bits_bypassable; // @[tile.scala 159:20]
@@ -3066,23 +2370,6 @@ module BoomTile(
   wire [1:0] core_io_lsu_dis_uops_0_bits_debug_fsrc; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_dis_uops_0_bits_debug_tsrc; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_1_bits_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_1_bits_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_1_bits_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_dis_uops_1_bits_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_dis_uops_1_bits_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_1_bits_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_1_bits_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_1_bits_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_1_bits_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_dis_uops_1_bits_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_1_bits_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_1_bits_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_dis_uops_1_bits_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_1_bits_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_1_bits_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_1_bits_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_dis_uops_1_bits_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_dis_uops_1_bits_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_dis_uops_1_bits_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_dis_uops_1_bits_debug_inst; // @[tile.scala 159:20]
@@ -3100,7 +2387,6 @@ module BoomTile(
   wire  core_io_lsu_dis_uops_1_bits_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_dis_uops_1_bits_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_dis_uops_1_bits_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3117,19 +2403,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_dis_uops_1_bits_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_dis_uops_1_bits_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_dis_uops_1_bits_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_uops_1_bits_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_uops_1_bits_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_uops_1_bits_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_uops_1_bits_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_dis_uops_1_bits_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_1_bits_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_1_bits_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_1_bits_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_1_bits_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_1_bits_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_1_bits_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_1_bits_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_1_bits_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_dis_uops_1_bits_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_dis_uops_1_bits_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_dis_uops_1_bits_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_dis_uops_1_bits_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_dis_uops_1_bits_bypassable; // @[tile.scala 159:20]
@@ -3163,33 +2449,16 @@ module BoomTile(
   wire  core_io_lsu_dis_uops_1_bits_bp_xcpt_if; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_dis_uops_1_bits_debug_fsrc; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_dis_uops_1_bits_debug_tsrc; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_ldq_idx_0; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_ldq_idx_1; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_stq_idx_0; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_dis_stq_idx_1; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_ldq_idx_0; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_ldq_idx_1; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_stq_idx_0; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_dis_stq_idx_1; // @[tile.scala 159:20]
   wire  core_io_lsu_ldq_full_0; // @[tile.scala 159:20]
   wire  core_io_lsu_ldq_full_1; // @[tile.scala 159:20]
   wire  core_io_lsu_stq_full_0; // @[tile.scala 159:20]
   wire  core_io_lsu_stq_full_1; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_ready; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_fp_stdata_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_fp_stdata_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_fp_stdata_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_fp_stdata_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -3207,7 +2476,6 @@ module BoomTile(
   wire  core_io_lsu_fp_stdata_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_fp_stdata_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3224,19 +2492,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_fp_stdata_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_fp_stdata_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_fp_stdata_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_fp_stdata_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_fp_stdata_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_fp_stdata_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_fp_stdata_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_fp_stdata_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -3273,23 +2541,6 @@ module BoomTile(
   wire [63:0] core_io_lsu_fp_stdata_bits_data; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_predicated; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -3307,7 +2558,6 @@ module BoomTile(
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3324,19 +2574,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_fp_stdata_bits_fflags_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -3371,127 +2621,10 @@ module BoomTile(
   wire [1:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_fsrc; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_fp_stdata_bits_fflags_bits_flags; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_flagdata; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_address_num; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uopc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_inst; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 159:20]
-  wire [39:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 159:20]
-  wire [9:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_br; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_taken; // @[tile.scala 159:20]
-  wire [19:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 159:20]
-  wire [11:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_exception; // @[tile.scala 159:20]
-  wire [63:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 159:20]
-  wire  core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_fp_stdata_bits_fflagdata_bits_fflag; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_valids_0; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_valids_1; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_arch_valids_0; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_arch_valids_1; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_0_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_0_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_0_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_commit_uops_0_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_commit_uops_0_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_0_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_0_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_0_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_0_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_0_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_0_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_0_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_0_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_0_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_0_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_0_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_0_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_commit_uops_0_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_commit_uops_0_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_commit_uops_0_debug_inst; // @[tile.scala 159:20]
@@ -3509,7 +2642,6 @@ module BoomTile(
   wire  core_io_lsu_commit_uops_0_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_commit_uops_0_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_commit_uops_0_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3526,19 +2658,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_commit_uops_0_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_commit_uops_0_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_commit_uops_0_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_commit_uops_0_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_commit_uops_0_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_commit_uops_0_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_commit_uops_0_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_commit_uops_0_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_0_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_0_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_0_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_0_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_0_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_0_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_0_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_0_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_commit_uops_0_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_0_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_0_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_commit_uops_0_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_0_bypassable; // @[tile.scala 159:20]
@@ -3572,23 +2704,6 @@ module BoomTile(
   wire  core_io_lsu_commit_uops_0_bp_xcpt_if; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_commit_uops_0_debug_fsrc; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_commit_uops_0_debug_tsrc; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_1_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_1_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_1_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_commit_uops_1_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_commit_uops_1_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_1_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_1_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_1_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_1_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_uops_1_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_1_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_1_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_uops_1_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_1_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_1_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_1_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_commit_uops_1_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_commit_uops_1_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_commit_uops_1_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_commit_uops_1_debug_inst; // @[tile.scala 159:20]
@@ -3606,7 +2721,6 @@ module BoomTile(
   wire  core_io_lsu_commit_uops_1_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_commit_uops_1_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_commit_uops_1_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3623,19 +2737,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_commit_uops_1_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_commit_uops_1_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_commit_uops_1_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_commit_uops_1_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_commit_uops_1_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_commit_uops_1_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_commit_uops_1_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_commit_uops_1_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_1_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_1_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_1_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_1_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_1_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_1_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_1_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_1_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_commit_uops_1_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_uops_1_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_commit_uops_1_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_commit_uops_1_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_uops_1_bypassable; // @[tile.scala 159:20]
@@ -3671,8 +2785,6 @@ module BoomTile(
   wire [1:0] core_io_lsu_commit_uops_1_debug_tsrc; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_fflags_valid; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_commit_fflags_bits; // @[tile.scala 159:20]
-  wire  core_io_lsu_commit_fflag_exception_valid; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_commit_fflag_exception_bits; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_commit_debug_insts_0; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_commit_debug_insts_1; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_rbk_valids_0; // @[tile.scala 159:20]
@@ -3680,8 +2792,6 @@ module BoomTile(
   wire  core_io_lsu_commit_rollback; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_commit_debug_wdata_0; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_commit_debug_wdata_1; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_debug_wflagdata_0; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_commit_debug_wflagdata_1; // @[tile.scala 159:20]
   wire  core_io_lsu_commit_load_at_rob_head; // @[tile.scala 159:20]
   wire  core_io_lsu_clr_bsy_0_valid; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_clr_bsy_0_bits; // @[tile.scala 159:20]
@@ -3689,33 +2799,12 @@ module BoomTile(
   wire [5:0] core_io_lsu_clr_bsy_1_bits; // @[tile.scala 159:20]
   wire  core_io_lsu_clr_unsafe_0_valid; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_clr_unsafe_0_bits; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_clr_bsy_first_idx_0; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_clr_bsy_first_idx_1; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_clr_bsy_self_idx_0; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_clr_bsy_self_idx_1; // @[tile.scala 159:20]
   wire  core_io_lsu_fence_dmem; // @[tile.scala 159:20]
   wire  core_io_lsu_spec_ld_wakeup_0_valid; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_spec_ld_wakeup_0_bits; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_spec_ld_wakeup_0_bits; // @[tile.scala 159:20]
   wire  core_io_lsu_ld_miss; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_brupdate_b1_resolve_mask; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_brupdate_b1_mispredict_mask; // @[tile.scala 159:20]
-  wire  core_io_lsu_brupdate_b2_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_brupdate_b2_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_brupdate_b2_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_brupdate_b2_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_brupdate_b2_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_brupdate_b2_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_brupdate_b2_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_brupdate_b2_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_brupdate_b2_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_brupdate_b2_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_brupdate_b2_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_brupdate_b2_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_brupdate_b2_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_brupdate_b2_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_brupdate_b2_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_brupdate_b2_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_brupdate_b2_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_brupdate_b2_uop_debug_inst; // @[tile.scala 159:20]
@@ -3733,7 +2822,6 @@ module BoomTile(
   wire  core_io_lsu_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_brupdate_b2_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3750,19 +2838,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_brupdate_b2_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_brupdate_b2_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_brupdate_b2_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_brupdate_b2_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_brupdate_b2_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_brupdate_b2_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_brupdate_b2_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_brupdate_b2_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_brupdate_b2_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_brupdate_b2_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_brupdate_b2_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_brupdate_b2_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_brupdate_b2_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_brupdate_b2_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_brupdate_b2_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_brupdate_b2_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_brupdate_b2_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_brupdate_b2_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_brupdate_b2_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_brupdate_b2_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_brupdate_b2_uop_bypassable; // @[tile.scala 159:20]
@@ -3802,29 +2890,12 @@ module BoomTile(
   wire [2:0] core_io_lsu_brupdate_b2_cfi_type; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_brupdate_b2_pc_sel; // @[tile.scala 159:20]
   wire [39:0] core_io_lsu_brupdate_b2_jalr_target; // @[tile.scala 159:20]
-  wire [31:0] core_io_lsu_brupdate_b2_target_offset; // @[tile.scala 159:20]
+  wire [20:0] core_io_lsu_brupdate_b2_target_offset; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_rob_pnr_idx; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_rob_head_idx; // @[tile.scala 159:20]
   wire  core_io_lsu_exception; // @[tile.scala 159:20]
   wire  core_io_lsu_fencei_rdy; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_valid; // @[tile.scala 159:20]
-  wire  core_io_lsu_lxcpt_bits_uop_switch; // @[tile.scala 159:20]
-  wire  core_io_lsu_lxcpt_bits_uop_switch_off; // @[tile.scala 159:20]
-  wire  core_io_lsu_lxcpt_bits_uop_is_unicore; // @[tile.scala 159:20]
-  wire [2:0] core_io_lsu_lxcpt_bits_uop_shift; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_lxcpt_bits_uop_lrs3_rtype; // @[tile.scala 159:20]
-  wire  core_io_lsu_lxcpt_bits_uop_rflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_lxcpt_bits_uop_wflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_lxcpt_bits_uop_prflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_lxcpt_bits_uop_pwflag; // @[tile.scala 159:20]
-  wire  core_io_lsu_lxcpt_bits_uop_pflag_busy; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_lxcpt_bits_uop_stale_pflag; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_lxcpt_bits_uop_op1_sel; // @[tile.scala 159:20]
-  wire [3:0] core_io_lsu_lxcpt_bits_uop_op2_sel; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_lxcpt_bits_uop_split_num; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_lxcpt_bits_uop_self_index; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_lxcpt_bits_uop_rob_inst_idx; // @[tile.scala 159:20]
-  wire [5:0] core_io_lsu_lxcpt_bits_uop_address_num; // @[tile.scala 159:20]
   wire [6:0] core_io_lsu_lxcpt_bits_uop_uopc; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_lxcpt_bits_uop_inst; // @[tile.scala 159:20]
   wire [31:0] core_io_lsu_lxcpt_bits_uop_debug_inst; // @[tile.scala 159:20]
@@ -3842,7 +2913,6 @@ module BoomTile(
   wire  core_io_lsu_lxcpt_bits_uop_ctrl_is_load; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_ctrl_is_sta; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_ctrl_is_std; // @[tile.scala 159:20]
-  wire [1:0] core_io_lsu_lxcpt_bits_uop_ctrl_op3_sel; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_lxcpt_bits_uop_iw_state; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_iw_p1_poisoned; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_iw_p2_poisoned; // @[tile.scala 159:20]
@@ -3859,19 +2929,19 @@ module BoomTile(
   wire [19:0] core_io_lsu_lxcpt_bits_uop_imm_packed; // @[tile.scala 159:20]
   wire [11:0] core_io_lsu_lxcpt_bits_uop_csr_addr; // @[tile.scala 159:20]
   wire [5:0] core_io_lsu_lxcpt_bits_uop_rob_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_lxcpt_bits_uop_ldq_idx; // @[tile.scala 159:20]
-  wire [4:0] core_io_lsu_lxcpt_bits_uop_stq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_lxcpt_bits_uop_ldq_idx; // @[tile.scala 159:20]
+  wire [3:0] core_io_lsu_lxcpt_bits_uop_stq_idx; // @[tile.scala 159:20]
   wire [1:0] core_io_lsu_lxcpt_bits_uop_rxq_idx; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_lxcpt_bits_uop_pdst; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_lxcpt_bits_uop_prs1; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_lxcpt_bits_uop_prs2; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_lxcpt_bits_uop_prs3; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_lxcpt_bits_uop_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_lxcpt_bits_uop_prs1; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_lxcpt_bits_uop_prs2; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_lxcpt_bits_uop_prs3; // @[tile.scala 159:20]
   wire [4:0] core_io_lsu_lxcpt_bits_uop_ppred; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_prs1_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_prs2_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_prs3_busy; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_ppred_busy; // @[tile.scala 159:20]
-  wire [6:0] core_io_lsu_lxcpt_bits_uop_stale_pdst; // @[tile.scala 159:20]
+  wire [5:0] core_io_lsu_lxcpt_bits_uop_stale_pdst; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_exception; // @[tile.scala 159:20]
   wire [63:0] core_io_lsu_lxcpt_bits_uop_exc_cause; // @[tile.scala 159:20]
   wire  core_io_lsu_lxcpt_bits_uop_bypassable; // @[tile.scala 159:20]
@@ -4173,23 +3243,6 @@ module BoomTile(
   wire [63:0] lsu_io_ptw_customCSRs_csrs_0_wdata; // @[tile.scala 160:20]
   wire [63:0] lsu_io_ptw_customCSRs_csrs_0_value; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_req_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_exe_0_req_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_req_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_req_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -4207,7 +3260,6 @@ module BoomTile(
   wire  lsu_io_core_exe_0_req_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_req_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -4224,19 +3276,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_exe_0_req_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_exe_0_req_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_exe_0_req_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_req_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_req_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_req_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_req_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_exe_0_req_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -4273,23 +3325,6 @@ module BoomTile(
   wire  lsu_io_core_exe_0_req_bits_predicated; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_exe_0_req_bits_data; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -4307,7 +3342,6 @@ module BoomTile(
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -4324,19 +3358,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_exe_0_req_bits_fflags_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_fflags_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -4379,125 +3413,8 @@ module BoomTile(
   wire  lsu_io_core_exe_0_req_bits_sfence_bits_rs2; // @[tile.scala 160:20]
   wire [38:0] lsu_io_core_exe_0_req_bits_sfence_bits_addr; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_req_bits_sfence_bits_asid; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_flagdata; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_address_num; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uopc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_inst; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 160:20]
-  wire [39:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 160:20]
-  wire [9:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_br; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_taken; // @[tile.scala 160:20]
-  wire [19:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs3; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ppred; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_exception; // @[tile.scala 160:20]
-  wire [63:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_req_bits_fflagdata_bits_fflag; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_ready; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_iresp_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_exe_0_iresp_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_iresp_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_iresp_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -4515,7 +3432,6 @@ module BoomTile(
   wire  lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_iresp_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -4532,19 +3448,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_exe_0_iresp_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_exe_0_iresp_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_iresp_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_iresp_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_iresp_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_iresp_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_exe_0_iresp_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -4581,23 +3497,6 @@ module BoomTile(
   wire [63:0] lsu_io_core_exe_0_iresp_bits_data; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_predicated; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -4615,7 +3514,6 @@ module BoomTile(
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -4632,19 +3530,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -4679,125 +3577,8 @@ module BoomTile(
   wire [1:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_debug_fsrc; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_iresp_bits_fflags_bits_flags; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_flagdata; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_address_num; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uopc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_inst; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 160:20]
-  wire [39:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 160:20]
-  wire [9:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_br; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_taken; // @[tile.scala 160:20]
-  wire [19:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_exception; // @[tile.scala 160:20]
-  wire [63:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_iresp_bits_fflagdata_bits_fflag; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_ready; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_fresp_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_exe_0_fresp_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_fresp_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_fresp_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -4815,7 +3596,6 @@ module BoomTile(
   wire  lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_fresp_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -4832,19 +3612,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_exe_0_fresp_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_exe_0_fresp_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_fresp_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_fresp_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_fresp_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_fresp_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_exe_0_fresp_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -4881,23 +3661,6 @@ module BoomTile(
   wire [64:0] lsu_io_core_exe_0_fresp_bits_data; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_predicated; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -4915,7 +3678,6 @@ module BoomTile(
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -4932,19 +3694,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -4979,124 +3741,7 @@ module BoomTile(
   wire [1:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_debug_fsrc; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_exe_0_fresp_bits_fflags_bits_flags; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_flagdata; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_address_num; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uopc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_inst; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 160:20]
-  wire [39:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 160:20]
-  wire [9:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_br; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_taken; // @[tile.scala 160:20]
-  wire [19:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_exception; // @[tile.scala 160:20]
-  wire [63:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_exe_0_fresp_bits_fflagdata_bits_fflag; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_0_bits_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_0_bits_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_0_bits_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_dis_uops_0_bits_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_dis_uops_0_bits_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_0_bits_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_0_bits_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_0_bits_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_0_bits_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_0_bits_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_0_bits_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_0_bits_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_0_bits_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_0_bits_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_0_bits_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_0_bits_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_0_bits_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_dis_uops_0_bits_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_dis_uops_0_bits_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_dis_uops_0_bits_debug_inst; // @[tile.scala 160:20]
@@ -5114,7 +3759,6 @@ module BoomTile(
   wire  lsu_io_core_dis_uops_0_bits_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_dis_uops_0_bits_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_dis_uops_0_bits_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5131,19 +3775,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_dis_uops_0_bits_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_dis_uops_0_bits_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_dis_uops_0_bits_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_uops_0_bits_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_uops_0_bits_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_uops_0_bits_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_uops_0_bits_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_dis_uops_0_bits_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_0_bits_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_0_bits_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_0_bits_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_0_bits_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_0_bits_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_0_bits_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_0_bits_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_0_bits_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_dis_uops_0_bits_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_0_bits_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_0_bits_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_dis_uops_0_bits_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_0_bits_bypassable; // @[tile.scala 160:20]
@@ -5178,23 +3822,6 @@ module BoomTile(
   wire [1:0] lsu_io_core_dis_uops_0_bits_debug_fsrc; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_dis_uops_0_bits_debug_tsrc; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_1_bits_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_1_bits_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_1_bits_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_dis_uops_1_bits_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_dis_uops_1_bits_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_1_bits_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_1_bits_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_1_bits_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_1_bits_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_dis_uops_1_bits_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_1_bits_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_1_bits_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_dis_uops_1_bits_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_1_bits_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_1_bits_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_1_bits_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_dis_uops_1_bits_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_dis_uops_1_bits_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_dis_uops_1_bits_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_dis_uops_1_bits_debug_inst; // @[tile.scala 160:20]
@@ -5212,7 +3839,6 @@ module BoomTile(
   wire  lsu_io_core_dis_uops_1_bits_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_dis_uops_1_bits_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_dis_uops_1_bits_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5229,19 +3855,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_dis_uops_1_bits_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_dis_uops_1_bits_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_dis_uops_1_bits_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_uops_1_bits_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_uops_1_bits_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_uops_1_bits_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_uops_1_bits_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_dis_uops_1_bits_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_1_bits_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_1_bits_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_1_bits_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_1_bits_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_1_bits_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_1_bits_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_1_bits_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_1_bits_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_dis_uops_1_bits_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_dis_uops_1_bits_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_dis_uops_1_bits_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_dis_uops_1_bits_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_dis_uops_1_bits_bypassable; // @[tile.scala 160:20]
@@ -5275,33 +3901,16 @@ module BoomTile(
   wire  lsu_io_core_dis_uops_1_bits_bp_xcpt_if; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_dis_uops_1_bits_debug_fsrc; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_dis_uops_1_bits_debug_tsrc; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_ldq_idx_0; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_ldq_idx_1; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_stq_idx_0; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_dis_stq_idx_1; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_ldq_idx_0; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_ldq_idx_1; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_stq_idx_0; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_dis_stq_idx_1; // @[tile.scala 160:20]
   wire  lsu_io_core_ldq_full_0; // @[tile.scala 160:20]
   wire  lsu_io_core_ldq_full_1; // @[tile.scala 160:20]
   wire  lsu_io_core_stq_full_0; // @[tile.scala 160:20]
   wire  lsu_io_core_stq_full_1; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_ready; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_fp_stdata_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_fp_stdata_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_fp_stdata_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_fp_stdata_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -5319,7 +3928,6 @@ module BoomTile(
   wire  lsu_io_core_fp_stdata_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_fp_stdata_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5336,19 +3944,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_fp_stdata_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_fp_stdata_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_fp_stdata_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_fp_stdata_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_fp_stdata_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_fp_stdata_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_fp_stdata_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_fp_stdata_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -5385,23 +3993,6 @@ module BoomTile(
   wire [63:0] lsu_io_core_fp_stdata_bits_data; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_predicated; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -5419,7 +4010,6 @@ module BoomTile(
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5436,19 +4026,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_fp_stdata_bits_fflags_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -5483,127 +4073,10 @@ module BoomTile(
   wire [1:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_fsrc; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_fp_stdata_bits_fflags_bits_flags; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_flagdata; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_address_num; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uopc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_inst; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 160:20]
-  wire [39:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 160:20]
-  wire [9:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_br; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_taken; // @[tile.scala 160:20]
-  wire [19:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 160:20]
-  wire [11:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs3; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ppred; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_exception; // @[tile.scala 160:20]
-  wire [63:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 160:20]
-  wire  lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_fp_stdata_bits_fflagdata_bits_fflag; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_valids_0; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_valids_1; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_arch_valids_0; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_arch_valids_1; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_0_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_0_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_0_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_commit_uops_0_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_commit_uops_0_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_0_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_0_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_0_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_0_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_0_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_0_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_0_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_0_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_0_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_0_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_0_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_0_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_commit_uops_0_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_commit_uops_0_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_commit_uops_0_debug_inst; // @[tile.scala 160:20]
@@ -5621,7 +4094,6 @@ module BoomTile(
   wire  lsu_io_core_commit_uops_0_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_commit_uops_0_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_commit_uops_0_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5638,19 +4110,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_commit_uops_0_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_commit_uops_0_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_commit_uops_0_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_commit_uops_0_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_commit_uops_0_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_commit_uops_0_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_commit_uops_0_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_commit_uops_0_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_0_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_0_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_0_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_0_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_0_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_0_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_0_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_0_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_commit_uops_0_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_0_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_0_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_commit_uops_0_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_0_bypassable; // @[tile.scala 160:20]
@@ -5684,23 +4156,6 @@ module BoomTile(
   wire  lsu_io_core_commit_uops_0_bp_xcpt_if; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_commit_uops_0_debug_fsrc; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_commit_uops_0_debug_tsrc; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_1_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_1_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_1_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_commit_uops_1_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_commit_uops_1_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_1_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_1_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_1_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_1_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_uops_1_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_1_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_1_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_uops_1_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_1_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_1_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_1_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_commit_uops_1_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_commit_uops_1_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_commit_uops_1_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_commit_uops_1_debug_inst; // @[tile.scala 160:20]
@@ -5718,7 +4173,6 @@ module BoomTile(
   wire  lsu_io_core_commit_uops_1_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_commit_uops_1_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_commit_uops_1_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5735,19 +4189,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_commit_uops_1_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_commit_uops_1_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_commit_uops_1_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_commit_uops_1_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_commit_uops_1_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_commit_uops_1_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_commit_uops_1_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_commit_uops_1_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_1_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_1_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_1_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_1_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_1_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_1_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_1_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_1_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_commit_uops_1_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_uops_1_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_commit_uops_1_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_commit_uops_1_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_uops_1_bypassable; // @[tile.scala 160:20]
@@ -5783,8 +4237,6 @@ module BoomTile(
   wire [1:0] lsu_io_core_commit_uops_1_debug_tsrc; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_fflags_valid; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_commit_fflags_bits; // @[tile.scala 160:20]
-  wire  lsu_io_core_commit_fflag_exception_valid; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_commit_fflag_exception_bits; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_commit_debug_insts_0; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_commit_debug_insts_1; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_rbk_valids_0; // @[tile.scala 160:20]
@@ -5792,8 +4244,6 @@ module BoomTile(
   wire  lsu_io_core_commit_rollback; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_commit_debug_wdata_0; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_commit_debug_wdata_1; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_debug_wflagdata_0; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_commit_debug_wflagdata_1; // @[tile.scala 160:20]
   wire  lsu_io_core_commit_load_at_rob_head; // @[tile.scala 160:20]
   wire  lsu_io_core_clr_bsy_0_valid; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_clr_bsy_0_bits; // @[tile.scala 160:20]
@@ -5801,33 +4251,12 @@ module BoomTile(
   wire [5:0] lsu_io_core_clr_bsy_1_bits; // @[tile.scala 160:20]
   wire  lsu_io_core_clr_unsafe_0_valid; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_clr_unsafe_0_bits; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_clr_bsy_first_idx_0; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_clr_bsy_first_idx_1; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_clr_bsy_self_idx_0; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_clr_bsy_self_idx_1; // @[tile.scala 160:20]
   wire  lsu_io_core_fence_dmem; // @[tile.scala 160:20]
   wire  lsu_io_core_spec_ld_wakeup_0_valid; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_spec_ld_wakeup_0_bits; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_spec_ld_wakeup_0_bits; // @[tile.scala 160:20]
   wire  lsu_io_core_ld_miss; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_brupdate_b1_resolve_mask; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_brupdate_b1_mispredict_mask; // @[tile.scala 160:20]
-  wire  lsu_io_core_brupdate_b2_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_brupdate_b2_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_brupdate_b2_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_brupdate_b2_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_brupdate_b2_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_brupdate_b2_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_brupdate_b2_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_brupdate_b2_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_brupdate_b2_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_brupdate_b2_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_brupdate_b2_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_brupdate_b2_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_brupdate_b2_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_brupdate_b2_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_brupdate_b2_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_brupdate_b2_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_brupdate_b2_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_brupdate_b2_uop_debug_inst; // @[tile.scala 160:20]
@@ -5845,7 +4274,6 @@ module BoomTile(
   wire  lsu_io_core_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_brupdate_b2_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5862,19 +4290,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_brupdate_b2_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_brupdate_b2_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_brupdate_b2_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_brupdate_b2_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_brupdate_b2_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_brupdate_b2_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_brupdate_b2_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_brupdate_b2_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_brupdate_b2_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_brupdate_b2_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_brupdate_b2_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_brupdate_b2_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_brupdate_b2_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_brupdate_b2_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_brupdate_b2_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_brupdate_b2_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_brupdate_b2_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_brupdate_b2_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_brupdate_b2_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_brupdate_b2_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_brupdate_b2_uop_bypassable; // @[tile.scala 160:20]
@@ -5914,29 +4342,12 @@ module BoomTile(
   wire [2:0] lsu_io_core_brupdate_b2_cfi_type; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_brupdate_b2_pc_sel; // @[tile.scala 160:20]
   wire [39:0] lsu_io_core_brupdate_b2_jalr_target; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_core_brupdate_b2_target_offset; // @[tile.scala 160:20]
+  wire [20:0] lsu_io_core_brupdate_b2_target_offset; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_rob_pnr_idx; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_rob_head_idx; // @[tile.scala 160:20]
   wire  lsu_io_core_exception; // @[tile.scala 160:20]
   wire  lsu_io_core_fencei_rdy; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_valid; // @[tile.scala 160:20]
-  wire  lsu_io_core_lxcpt_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_core_lxcpt_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_core_lxcpt_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_core_lxcpt_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_lxcpt_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_core_lxcpt_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_lxcpt_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_lxcpt_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_lxcpt_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_core_lxcpt_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_lxcpt_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_lxcpt_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_core_lxcpt_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_lxcpt_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_lxcpt_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_lxcpt_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_core_lxcpt_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_core_lxcpt_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_lxcpt_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_core_lxcpt_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -5954,7 +4365,6 @@ module BoomTile(
   wire  lsu_io_core_lxcpt_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_core_lxcpt_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_lxcpt_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -5971,19 +4381,19 @@ module BoomTile(
   wire [19:0] lsu_io_core_lxcpt_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_core_lxcpt_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_core_lxcpt_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_lxcpt_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_core_lxcpt_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_lxcpt_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_core_lxcpt_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_core_lxcpt_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_lxcpt_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_lxcpt_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_lxcpt_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_lxcpt_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_lxcpt_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_lxcpt_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_lxcpt_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_lxcpt_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_core_lxcpt_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_core_lxcpt_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_core_lxcpt_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_core_lxcpt_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_core_lxcpt_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -6026,23 +4436,6 @@ module BoomTile(
   wire  lsu_io_dmem_req_ready; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_valid; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_valid; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_req_bits_0_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_req_bits_0_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_req_bits_0_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_dmem_req_bits_0_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_req_bits_0_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_req_bits_0_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_req_bits_0_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_req_bits_0_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_req_bits_0_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_req_bits_0_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_req_bits_0_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_req_bits_0_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_req_bits_0_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_dmem_req_bits_0_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_req_bits_0_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_req_bits_0_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -6060,7 +4453,6 @@ module BoomTile(
   wire  lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_req_bits_0_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_req_bits_0_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -6077,19 +4469,19 @@ module BoomTile(
   wire [19:0] lsu_io_dmem_req_bits_0_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_dmem_req_bits_0_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_req_bits_0_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_req_bits_0_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_req_bits_0_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_req_bits_0_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_req_bits_0_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_req_bits_0_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_req_bits_0_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_req_bits_0_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_req_bits_0_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_dmem_req_bits_0_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_req_bits_0_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_req_bits_0_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_dmem_req_bits_0_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_dmem_req_bits_0_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -6128,23 +4520,6 @@ module BoomTile(
   wire  lsu_io_dmem_req_bits_0_bits_is_hella; // @[tile.scala 160:20]
   wire  lsu_io_dmem_s1_kill_0; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_valid; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_resp_0_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_resp_0_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_resp_0_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_dmem_resp_0_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_resp_0_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_resp_0_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_resp_0_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_resp_0_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_resp_0_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_resp_0_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_resp_0_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_resp_0_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_resp_0_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_resp_0_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_resp_0_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_resp_0_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_resp_0_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_dmem_resp_0_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_resp_0_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_resp_0_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -6162,7 +4537,6 @@ module BoomTile(
   wire  lsu_io_dmem_resp_0_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_resp_0_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_resp_0_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -6179,19 +4553,19 @@ module BoomTile(
   wire [19:0] lsu_io_dmem_resp_0_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_dmem_resp_0_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_dmem_resp_0_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_resp_0_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_resp_0_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_resp_0_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_resp_0_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_resp_0_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_resp_0_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_resp_0_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_resp_0_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_resp_0_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_resp_0_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_resp_0_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_resp_0_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_resp_0_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_dmem_resp_0_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_resp_0_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_resp_0_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_dmem_resp_0_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -6228,23 +4602,6 @@ module BoomTile(
   wire [63:0] lsu_io_dmem_resp_0_bits_data; // @[tile.scala 160:20]
   wire  lsu_io_dmem_resp_0_bits_is_hella; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_valid; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_nack_0_bits_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_nack_0_bits_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_nack_0_bits_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_dmem_nack_0_bits_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_nack_0_bits_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_nack_0_bits_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_nack_0_bits_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_nack_0_bits_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_nack_0_bits_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_nack_0_bits_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_nack_0_bits_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_nack_0_bits_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_nack_0_bits_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_nack_0_bits_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_nack_0_bits_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_nack_0_bits_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_nack_0_bits_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_dmem_nack_0_bits_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_nack_0_bits_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_nack_0_bits_uop_debug_inst; // @[tile.scala 160:20]
@@ -6262,7 +4619,6 @@ module BoomTile(
   wire  lsu_io_dmem_nack_0_bits_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_nack_0_bits_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_nack_0_bits_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -6279,19 +4635,19 @@ module BoomTile(
   wire [19:0] lsu_io_dmem_nack_0_bits_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_dmem_nack_0_bits_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_dmem_nack_0_bits_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_nack_0_bits_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_nack_0_bits_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_nack_0_bits_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_nack_0_bits_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_nack_0_bits_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_nack_0_bits_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_nack_0_bits_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_nack_0_bits_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_nack_0_bits_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_nack_0_bits_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_nack_0_bits_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_nack_0_bits_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_nack_0_bits_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_dmem_nack_0_bits_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_nack_0_bits_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_nack_0_bits_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_dmem_nack_0_bits_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_dmem_nack_0_bits_uop_bypassable; // @[tile.scala 160:20]
@@ -6330,23 +4686,6 @@ module BoomTile(
   wire  lsu_io_dmem_nack_0_bits_is_hella; // @[tile.scala 160:20]
   wire [11:0] lsu_io_dmem_brupdate_b1_resolve_mask; // @[tile.scala 160:20]
   wire [11:0] lsu_io_dmem_brupdate_b1_mispredict_mask; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_brupdate_b2_uop_switch; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_brupdate_b2_uop_switch_off; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_brupdate_b2_uop_is_unicore; // @[tile.scala 160:20]
-  wire [2:0] lsu_io_dmem_brupdate_b2_uop_shift; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_brupdate_b2_uop_rflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_brupdate_b2_uop_wflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_brupdate_b2_uop_prflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_brupdate_b2_uop_pwflag; // @[tile.scala 160:20]
-  wire  lsu_io_dmem_brupdate_b2_uop_pflag_busy; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_brupdate_b2_uop_stale_pflag; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_brupdate_b2_uop_op1_sel; // @[tile.scala 160:20]
-  wire [3:0] lsu_io_dmem_brupdate_b2_uop_op2_sel; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_brupdate_b2_uop_split_num; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_brupdate_b2_uop_self_index; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 160:20]
-  wire [5:0] lsu_io_dmem_brupdate_b2_uop_address_num; // @[tile.scala 160:20]
   wire [6:0] lsu_io_dmem_brupdate_b2_uop_uopc; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_brupdate_b2_uop_inst; // @[tile.scala 160:20]
   wire [31:0] lsu_io_dmem_brupdate_b2_uop_debug_inst; // @[tile.scala 160:20]
@@ -6364,7 +4703,6 @@ module BoomTile(
   wire  lsu_io_dmem_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 160:20]
-  wire [1:0] lsu_io_dmem_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_brupdate_b2_uop_iw_state; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 160:20]
@@ -6381,19 +4719,19 @@ module BoomTile(
   wire [19:0] lsu_io_dmem_brupdate_b2_uop_imm_packed; // @[tile.scala 160:20]
   wire [11:0] lsu_io_dmem_brupdate_b2_uop_csr_addr; // @[tile.scala 160:20]
   wire [5:0] lsu_io_dmem_brupdate_b2_uop_rob_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_brupdate_b2_uop_ldq_idx; // @[tile.scala 160:20]
-  wire [4:0] lsu_io_dmem_brupdate_b2_uop_stq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_brupdate_b2_uop_ldq_idx; // @[tile.scala 160:20]
+  wire [3:0] lsu_io_dmem_brupdate_b2_uop_stq_idx; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_brupdate_b2_uop_rxq_idx; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_brupdate_b2_uop_pdst; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_brupdate_b2_uop_prs1; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_brupdate_b2_uop_prs2; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_brupdate_b2_uop_prs3; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_brupdate_b2_uop_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_brupdate_b2_uop_prs1; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_brupdate_b2_uop_prs2; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_brupdate_b2_uop_prs3; // @[tile.scala 160:20]
   wire [4:0] lsu_io_dmem_brupdate_b2_uop_ppred; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_prs1_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_prs2_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_prs3_busy; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_ppred_busy; // @[tile.scala 160:20]
-  wire [6:0] lsu_io_dmem_brupdate_b2_uop_stale_pdst; // @[tile.scala 160:20]
+  wire [5:0] lsu_io_dmem_brupdate_b2_uop_stale_pdst; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_exception; // @[tile.scala 160:20]
   wire [63:0] lsu_io_dmem_brupdate_b2_uop_exc_cause; // @[tile.scala 160:20]
   wire  lsu_io_dmem_brupdate_b2_uop_bypassable; // @[tile.scala 160:20]
@@ -6433,7 +4771,7 @@ module BoomTile(
   wire [2:0] lsu_io_dmem_brupdate_b2_cfi_type; // @[tile.scala 160:20]
   wire [1:0] lsu_io_dmem_brupdate_b2_pc_sel; // @[tile.scala 160:20]
   wire [39:0] lsu_io_dmem_brupdate_b2_jalr_target; // @[tile.scala 160:20]
-  wire [31:0] lsu_io_dmem_brupdate_b2_target_offset; // @[tile.scala 160:20]
+  wire [20:0] lsu_io_dmem_brupdate_b2_target_offset; // @[tile.scala 160:20]
   wire  lsu_io_dmem_exception; // @[tile.scala 160:20]
   wire [5:0] lsu_io_dmem_rob_pnr_idx; // @[tile.scala 160:20]
   wire [5:0] lsu_io_dmem_rob_head_idx; // @[tile.scala 160:20]
@@ -7440,23 +5778,6 @@ module BoomTile(
     .io_lsu_req_ready(dcache_io_lsu_req_ready),
     .io_lsu_req_valid(dcache_io_lsu_req_valid),
     .io_lsu_req_bits_0_valid(dcache_io_lsu_req_bits_0_valid),
-    .io_lsu_req_bits_0_bits_uop_switch(dcache_io_lsu_req_bits_0_bits_uop_switch),
-    .io_lsu_req_bits_0_bits_uop_switch_off(dcache_io_lsu_req_bits_0_bits_uop_switch_off),
-    .io_lsu_req_bits_0_bits_uop_is_unicore(dcache_io_lsu_req_bits_0_bits_uop_is_unicore),
-    .io_lsu_req_bits_0_bits_uop_shift(dcache_io_lsu_req_bits_0_bits_uop_shift),
-    .io_lsu_req_bits_0_bits_uop_lrs3_rtype(dcache_io_lsu_req_bits_0_bits_uop_lrs3_rtype),
-    .io_lsu_req_bits_0_bits_uop_rflag(dcache_io_lsu_req_bits_0_bits_uop_rflag),
-    .io_lsu_req_bits_0_bits_uop_wflag(dcache_io_lsu_req_bits_0_bits_uop_wflag),
-    .io_lsu_req_bits_0_bits_uop_prflag(dcache_io_lsu_req_bits_0_bits_uop_prflag),
-    .io_lsu_req_bits_0_bits_uop_pwflag(dcache_io_lsu_req_bits_0_bits_uop_pwflag),
-    .io_lsu_req_bits_0_bits_uop_pflag_busy(dcache_io_lsu_req_bits_0_bits_uop_pflag_busy),
-    .io_lsu_req_bits_0_bits_uop_stale_pflag(dcache_io_lsu_req_bits_0_bits_uop_stale_pflag),
-    .io_lsu_req_bits_0_bits_uop_op1_sel(dcache_io_lsu_req_bits_0_bits_uop_op1_sel),
-    .io_lsu_req_bits_0_bits_uop_op2_sel(dcache_io_lsu_req_bits_0_bits_uop_op2_sel),
-    .io_lsu_req_bits_0_bits_uop_split_num(dcache_io_lsu_req_bits_0_bits_uop_split_num),
-    .io_lsu_req_bits_0_bits_uop_self_index(dcache_io_lsu_req_bits_0_bits_uop_self_index),
-    .io_lsu_req_bits_0_bits_uop_rob_inst_idx(dcache_io_lsu_req_bits_0_bits_uop_rob_inst_idx),
-    .io_lsu_req_bits_0_bits_uop_address_num(dcache_io_lsu_req_bits_0_bits_uop_address_num),
     .io_lsu_req_bits_0_bits_uop_uopc(dcache_io_lsu_req_bits_0_bits_uop_uopc),
     .io_lsu_req_bits_0_bits_uop_inst(dcache_io_lsu_req_bits_0_bits_uop_inst),
     .io_lsu_req_bits_0_bits_uop_debug_inst(dcache_io_lsu_req_bits_0_bits_uop_debug_inst),
@@ -7474,7 +5795,6 @@ module BoomTile(
     .io_lsu_req_bits_0_bits_uop_ctrl_is_load(dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_load),
     .io_lsu_req_bits_0_bits_uop_ctrl_is_sta(dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_sta),
     .io_lsu_req_bits_0_bits_uop_ctrl_is_std(dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_std),
-    .io_lsu_req_bits_0_bits_uop_ctrl_op3_sel(dcache_io_lsu_req_bits_0_bits_uop_ctrl_op3_sel),
     .io_lsu_req_bits_0_bits_uop_iw_state(dcache_io_lsu_req_bits_0_bits_uop_iw_state),
     .io_lsu_req_bits_0_bits_uop_iw_p1_poisoned(dcache_io_lsu_req_bits_0_bits_uop_iw_p1_poisoned),
     .io_lsu_req_bits_0_bits_uop_iw_p2_poisoned(dcache_io_lsu_req_bits_0_bits_uop_iw_p2_poisoned),
@@ -7542,23 +5862,6 @@ module BoomTile(
     .io_lsu_req_bits_0_bits_is_hella(dcache_io_lsu_req_bits_0_bits_is_hella),
     .io_lsu_s1_kill_0(dcache_io_lsu_s1_kill_0),
     .io_lsu_resp_0_valid(dcache_io_lsu_resp_0_valid),
-    .io_lsu_resp_0_bits_uop_switch(dcache_io_lsu_resp_0_bits_uop_switch),
-    .io_lsu_resp_0_bits_uop_switch_off(dcache_io_lsu_resp_0_bits_uop_switch_off),
-    .io_lsu_resp_0_bits_uop_is_unicore(dcache_io_lsu_resp_0_bits_uop_is_unicore),
-    .io_lsu_resp_0_bits_uop_shift(dcache_io_lsu_resp_0_bits_uop_shift),
-    .io_lsu_resp_0_bits_uop_lrs3_rtype(dcache_io_lsu_resp_0_bits_uop_lrs3_rtype),
-    .io_lsu_resp_0_bits_uop_rflag(dcache_io_lsu_resp_0_bits_uop_rflag),
-    .io_lsu_resp_0_bits_uop_wflag(dcache_io_lsu_resp_0_bits_uop_wflag),
-    .io_lsu_resp_0_bits_uop_prflag(dcache_io_lsu_resp_0_bits_uop_prflag),
-    .io_lsu_resp_0_bits_uop_pwflag(dcache_io_lsu_resp_0_bits_uop_pwflag),
-    .io_lsu_resp_0_bits_uop_pflag_busy(dcache_io_lsu_resp_0_bits_uop_pflag_busy),
-    .io_lsu_resp_0_bits_uop_stale_pflag(dcache_io_lsu_resp_0_bits_uop_stale_pflag),
-    .io_lsu_resp_0_bits_uop_op1_sel(dcache_io_lsu_resp_0_bits_uop_op1_sel),
-    .io_lsu_resp_0_bits_uop_op2_sel(dcache_io_lsu_resp_0_bits_uop_op2_sel),
-    .io_lsu_resp_0_bits_uop_split_num(dcache_io_lsu_resp_0_bits_uop_split_num),
-    .io_lsu_resp_0_bits_uop_self_index(dcache_io_lsu_resp_0_bits_uop_self_index),
-    .io_lsu_resp_0_bits_uop_rob_inst_idx(dcache_io_lsu_resp_0_bits_uop_rob_inst_idx),
-    .io_lsu_resp_0_bits_uop_address_num(dcache_io_lsu_resp_0_bits_uop_address_num),
     .io_lsu_resp_0_bits_uop_uopc(dcache_io_lsu_resp_0_bits_uop_uopc),
     .io_lsu_resp_0_bits_uop_inst(dcache_io_lsu_resp_0_bits_uop_inst),
     .io_lsu_resp_0_bits_uop_debug_inst(dcache_io_lsu_resp_0_bits_uop_debug_inst),
@@ -7576,7 +5879,6 @@ module BoomTile(
     .io_lsu_resp_0_bits_uop_ctrl_is_load(dcache_io_lsu_resp_0_bits_uop_ctrl_is_load),
     .io_lsu_resp_0_bits_uop_ctrl_is_sta(dcache_io_lsu_resp_0_bits_uop_ctrl_is_sta),
     .io_lsu_resp_0_bits_uop_ctrl_is_std(dcache_io_lsu_resp_0_bits_uop_ctrl_is_std),
-    .io_lsu_resp_0_bits_uop_ctrl_op3_sel(dcache_io_lsu_resp_0_bits_uop_ctrl_op3_sel),
     .io_lsu_resp_0_bits_uop_iw_state(dcache_io_lsu_resp_0_bits_uop_iw_state),
     .io_lsu_resp_0_bits_uop_iw_p1_poisoned(dcache_io_lsu_resp_0_bits_uop_iw_p1_poisoned),
     .io_lsu_resp_0_bits_uop_iw_p2_poisoned(dcache_io_lsu_resp_0_bits_uop_iw_p2_poisoned),
@@ -7642,23 +5944,6 @@ module BoomTile(
     .io_lsu_resp_0_bits_data(dcache_io_lsu_resp_0_bits_data),
     .io_lsu_resp_0_bits_is_hella(dcache_io_lsu_resp_0_bits_is_hella),
     .io_lsu_nack_0_valid(dcache_io_lsu_nack_0_valid),
-    .io_lsu_nack_0_bits_uop_switch(dcache_io_lsu_nack_0_bits_uop_switch),
-    .io_lsu_nack_0_bits_uop_switch_off(dcache_io_lsu_nack_0_bits_uop_switch_off),
-    .io_lsu_nack_0_bits_uop_is_unicore(dcache_io_lsu_nack_0_bits_uop_is_unicore),
-    .io_lsu_nack_0_bits_uop_shift(dcache_io_lsu_nack_0_bits_uop_shift),
-    .io_lsu_nack_0_bits_uop_lrs3_rtype(dcache_io_lsu_nack_0_bits_uop_lrs3_rtype),
-    .io_lsu_nack_0_bits_uop_rflag(dcache_io_lsu_nack_0_bits_uop_rflag),
-    .io_lsu_nack_0_bits_uop_wflag(dcache_io_lsu_nack_0_bits_uop_wflag),
-    .io_lsu_nack_0_bits_uop_prflag(dcache_io_lsu_nack_0_bits_uop_prflag),
-    .io_lsu_nack_0_bits_uop_pwflag(dcache_io_lsu_nack_0_bits_uop_pwflag),
-    .io_lsu_nack_0_bits_uop_pflag_busy(dcache_io_lsu_nack_0_bits_uop_pflag_busy),
-    .io_lsu_nack_0_bits_uop_stale_pflag(dcache_io_lsu_nack_0_bits_uop_stale_pflag),
-    .io_lsu_nack_0_bits_uop_op1_sel(dcache_io_lsu_nack_0_bits_uop_op1_sel),
-    .io_lsu_nack_0_bits_uop_op2_sel(dcache_io_lsu_nack_0_bits_uop_op2_sel),
-    .io_lsu_nack_0_bits_uop_split_num(dcache_io_lsu_nack_0_bits_uop_split_num),
-    .io_lsu_nack_0_bits_uop_self_index(dcache_io_lsu_nack_0_bits_uop_self_index),
-    .io_lsu_nack_0_bits_uop_rob_inst_idx(dcache_io_lsu_nack_0_bits_uop_rob_inst_idx),
-    .io_lsu_nack_0_bits_uop_address_num(dcache_io_lsu_nack_0_bits_uop_address_num),
     .io_lsu_nack_0_bits_uop_uopc(dcache_io_lsu_nack_0_bits_uop_uopc),
     .io_lsu_nack_0_bits_uop_inst(dcache_io_lsu_nack_0_bits_uop_inst),
     .io_lsu_nack_0_bits_uop_debug_inst(dcache_io_lsu_nack_0_bits_uop_debug_inst),
@@ -7676,7 +5961,6 @@ module BoomTile(
     .io_lsu_nack_0_bits_uop_ctrl_is_load(dcache_io_lsu_nack_0_bits_uop_ctrl_is_load),
     .io_lsu_nack_0_bits_uop_ctrl_is_sta(dcache_io_lsu_nack_0_bits_uop_ctrl_is_sta),
     .io_lsu_nack_0_bits_uop_ctrl_is_std(dcache_io_lsu_nack_0_bits_uop_ctrl_is_std),
-    .io_lsu_nack_0_bits_uop_ctrl_op3_sel(dcache_io_lsu_nack_0_bits_uop_ctrl_op3_sel),
     .io_lsu_nack_0_bits_uop_iw_state(dcache_io_lsu_nack_0_bits_uop_iw_state),
     .io_lsu_nack_0_bits_uop_iw_p1_poisoned(dcache_io_lsu_nack_0_bits_uop_iw_p1_poisoned),
     .io_lsu_nack_0_bits_uop_iw_p2_poisoned(dcache_io_lsu_nack_0_bits_uop_iw_p2_poisoned),
@@ -7744,23 +6028,6 @@ module BoomTile(
     .io_lsu_nack_0_bits_is_hella(dcache_io_lsu_nack_0_bits_is_hella),
     .io_lsu_brupdate_b1_resolve_mask(dcache_io_lsu_brupdate_b1_resolve_mask),
     .io_lsu_brupdate_b1_mispredict_mask(dcache_io_lsu_brupdate_b1_mispredict_mask),
-    .io_lsu_brupdate_b2_uop_switch(dcache_io_lsu_brupdate_b2_uop_switch),
-    .io_lsu_brupdate_b2_uop_switch_off(dcache_io_lsu_brupdate_b2_uop_switch_off),
-    .io_lsu_brupdate_b2_uop_is_unicore(dcache_io_lsu_brupdate_b2_uop_is_unicore),
-    .io_lsu_brupdate_b2_uop_shift(dcache_io_lsu_brupdate_b2_uop_shift),
-    .io_lsu_brupdate_b2_uop_lrs3_rtype(dcache_io_lsu_brupdate_b2_uop_lrs3_rtype),
-    .io_lsu_brupdate_b2_uop_rflag(dcache_io_lsu_brupdate_b2_uop_rflag),
-    .io_lsu_brupdate_b2_uop_wflag(dcache_io_lsu_brupdate_b2_uop_wflag),
-    .io_lsu_brupdate_b2_uop_prflag(dcache_io_lsu_brupdate_b2_uop_prflag),
-    .io_lsu_brupdate_b2_uop_pwflag(dcache_io_lsu_brupdate_b2_uop_pwflag),
-    .io_lsu_brupdate_b2_uop_pflag_busy(dcache_io_lsu_brupdate_b2_uop_pflag_busy),
-    .io_lsu_brupdate_b2_uop_stale_pflag(dcache_io_lsu_brupdate_b2_uop_stale_pflag),
-    .io_lsu_brupdate_b2_uop_op1_sel(dcache_io_lsu_brupdate_b2_uop_op1_sel),
-    .io_lsu_brupdate_b2_uop_op2_sel(dcache_io_lsu_brupdate_b2_uop_op2_sel),
-    .io_lsu_brupdate_b2_uop_split_num(dcache_io_lsu_brupdate_b2_uop_split_num),
-    .io_lsu_brupdate_b2_uop_self_index(dcache_io_lsu_brupdate_b2_uop_self_index),
-    .io_lsu_brupdate_b2_uop_rob_inst_idx(dcache_io_lsu_brupdate_b2_uop_rob_inst_idx),
-    .io_lsu_brupdate_b2_uop_address_num(dcache_io_lsu_brupdate_b2_uop_address_num),
     .io_lsu_brupdate_b2_uop_uopc(dcache_io_lsu_brupdate_b2_uop_uopc),
     .io_lsu_brupdate_b2_uop_inst(dcache_io_lsu_brupdate_b2_uop_inst),
     .io_lsu_brupdate_b2_uop_debug_inst(dcache_io_lsu_brupdate_b2_uop_debug_inst),
@@ -7778,7 +6045,6 @@ module BoomTile(
     .io_lsu_brupdate_b2_uop_ctrl_is_load(dcache_io_lsu_brupdate_b2_uop_ctrl_is_load),
     .io_lsu_brupdate_b2_uop_ctrl_is_sta(dcache_io_lsu_brupdate_b2_uop_ctrl_is_sta),
     .io_lsu_brupdate_b2_uop_ctrl_is_std(dcache_io_lsu_brupdate_b2_uop_ctrl_is_std),
-    .io_lsu_brupdate_b2_uop_ctrl_op3_sel(dcache_io_lsu_brupdate_b2_uop_ctrl_op3_sel),
     .io_lsu_brupdate_b2_uop_iw_state(dcache_io_lsu_brupdate_b2_uop_iw_state),
     .io_lsu_brupdate_b2_uop_iw_p1_poisoned(dcache_io_lsu_brupdate_b2_uop_iw_p1_poisoned),
     .io_lsu_brupdate_b2_uop_iw_p2_poisoned(dcache_io_lsu_brupdate_b2_uop_iw_p2_poisoned),
@@ -7892,23 +6158,6 @@ module BoomTile(
     .io_cpu_fetchpacket_ready(frontend_io_cpu_fetchpacket_ready),
     .io_cpu_fetchpacket_valid(frontend_io_cpu_fetchpacket_valid),
     .io_cpu_fetchpacket_bits_uops_0_valid(frontend_io_cpu_fetchpacket_bits_uops_0_valid),
-    .io_cpu_fetchpacket_bits_uops_0_bits_switch(frontend_io_cpu_fetchpacket_bits_uops_0_bits_switch),
-    .io_cpu_fetchpacket_bits_uops_0_bits_switch_off(frontend_io_cpu_fetchpacket_bits_uops_0_bits_switch_off),
-    .io_cpu_fetchpacket_bits_uops_0_bits_is_unicore(frontend_io_cpu_fetchpacket_bits_uops_0_bits_is_unicore),
-    .io_cpu_fetchpacket_bits_uops_0_bits_shift(frontend_io_cpu_fetchpacket_bits_uops_0_bits_shift),
-    .io_cpu_fetchpacket_bits_uops_0_bits_lrs3_rtype(frontend_io_cpu_fetchpacket_bits_uops_0_bits_lrs3_rtype),
-    .io_cpu_fetchpacket_bits_uops_0_bits_rflag(frontend_io_cpu_fetchpacket_bits_uops_0_bits_rflag),
-    .io_cpu_fetchpacket_bits_uops_0_bits_wflag(frontend_io_cpu_fetchpacket_bits_uops_0_bits_wflag),
-    .io_cpu_fetchpacket_bits_uops_0_bits_prflag(frontend_io_cpu_fetchpacket_bits_uops_0_bits_prflag),
-    .io_cpu_fetchpacket_bits_uops_0_bits_pwflag(frontend_io_cpu_fetchpacket_bits_uops_0_bits_pwflag),
-    .io_cpu_fetchpacket_bits_uops_0_bits_pflag_busy(frontend_io_cpu_fetchpacket_bits_uops_0_bits_pflag_busy),
-    .io_cpu_fetchpacket_bits_uops_0_bits_stale_pflag(frontend_io_cpu_fetchpacket_bits_uops_0_bits_stale_pflag),
-    .io_cpu_fetchpacket_bits_uops_0_bits_op1_sel(frontend_io_cpu_fetchpacket_bits_uops_0_bits_op1_sel),
-    .io_cpu_fetchpacket_bits_uops_0_bits_op2_sel(frontend_io_cpu_fetchpacket_bits_uops_0_bits_op2_sel),
-    .io_cpu_fetchpacket_bits_uops_0_bits_split_num(frontend_io_cpu_fetchpacket_bits_uops_0_bits_split_num),
-    .io_cpu_fetchpacket_bits_uops_0_bits_self_index(frontend_io_cpu_fetchpacket_bits_uops_0_bits_self_index),
-    .io_cpu_fetchpacket_bits_uops_0_bits_rob_inst_idx(frontend_io_cpu_fetchpacket_bits_uops_0_bits_rob_inst_idx),
-    .io_cpu_fetchpacket_bits_uops_0_bits_address_num(frontend_io_cpu_fetchpacket_bits_uops_0_bits_address_num),
     .io_cpu_fetchpacket_bits_uops_0_bits_uopc(frontend_io_cpu_fetchpacket_bits_uops_0_bits_uopc),
     .io_cpu_fetchpacket_bits_uops_0_bits_inst(frontend_io_cpu_fetchpacket_bits_uops_0_bits_inst),
     .io_cpu_fetchpacket_bits_uops_0_bits_debug_inst(frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_inst),
@@ -7926,7 +6175,6 @@ module BoomTile(
     .io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_load(frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_load),
     .io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_sta(frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_sta),
     .io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_std(frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_std),
-    .io_cpu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel(frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel),
     .io_cpu_fetchpacket_bits_uops_0_bits_iw_state(frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_state),
     .io_cpu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned(frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned),
     .io_cpu_fetchpacket_bits_uops_0_bits_iw_p2_poisoned(frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_p2_poisoned),
@@ -7990,23 +6238,6 @@ module BoomTile(
     .io_cpu_fetchpacket_bits_uops_0_bits_debug_fsrc(frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_fsrc),
     .io_cpu_fetchpacket_bits_uops_0_bits_debug_tsrc(frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_tsrc),
     .io_cpu_fetchpacket_bits_uops_1_valid(frontend_io_cpu_fetchpacket_bits_uops_1_valid),
-    .io_cpu_fetchpacket_bits_uops_1_bits_switch(frontend_io_cpu_fetchpacket_bits_uops_1_bits_switch),
-    .io_cpu_fetchpacket_bits_uops_1_bits_switch_off(frontend_io_cpu_fetchpacket_bits_uops_1_bits_switch_off),
-    .io_cpu_fetchpacket_bits_uops_1_bits_is_unicore(frontend_io_cpu_fetchpacket_bits_uops_1_bits_is_unicore),
-    .io_cpu_fetchpacket_bits_uops_1_bits_shift(frontend_io_cpu_fetchpacket_bits_uops_1_bits_shift),
-    .io_cpu_fetchpacket_bits_uops_1_bits_lrs3_rtype(frontend_io_cpu_fetchpacket_bits_uops_1_bits_lrs3_rtype),
-    .io_cpu_fetchpacket_bits_uops_1_bits_rflag(frontend_io_cpu_fetchpacket_bits_uops_1_bits_rflag),
-    .io_cpu_fetchpacket_bits_uops_1_bits_wflag(frontend_io_cpu_fetchpacket_bits_uops_1_bits_wflag),
-    .io_cpu_fetchpacket_bits_uops_1_bits_prflag(frontend_io_cpu_fetchpacket_bits_uops_1_bits_prflag),
-    .io_cpu_fetchpacket_bits_uops_1_bits_pwflag(frontend_io_cpu_fetchpacket_bits_uops_1_bits_pwflag),
-    .io_cpu_fetchpacket_bits_uops_1_bits_pflag_busy(frontend_io_cpu_fetchpacket_bits_uops_1_bits_pflag_busy),
-    .io_cpu_fetchpacket_bits_uops_1_bits_stale_pflag(frontend_io_cpu_fetchpacket_bits_uops_1_bits_stale_pflag),
-    .io_cpu_fetchpacket_bits_uops_1_bits_op1_sel(frontend_io_cpu_fetchpacket_bits_uops_1_bits_op1_sel),
-    .io_cpu_fetchpacket_bits_uops_1_bits_op2_sel(frontend_io_cpu_fetchpacket_bits_uops_1_bits_op2_sel),
-    .io_cpu_fetchpacket_bits_uops_1_bits_split_num(frontend_io_cpu_fetchpacket_bits_uops_1_bits_split_num),
-    .io_cpu_fetchpacket_bits_uops_1_bits_self_index(frontend_io_cpu_fetchpacket_bits_uops_1_bits_self_index),
-    .io_cpu_fetchpacket_bits_uops_1_bits_rob_inst_idx(frontend_io_cpu_fetchpacket_bits_uops_1_bits_rob_inst_idx),
-    .io_cpu_fetchpacket_bits_uops_1_bits_address_num(frontend_io_cpu_fetchpacket_bits_uops_1_bits_address_num),
     .io_cpu_fetchpacket_bits_uops_1_bits_uopc(frontend_io_cpu_fetchpacket_bits_uops_1_bits_uopc),
     .io_cpu_fetchpacket_bits_uops_1_bits_inst(frontend_io_cpu_fetchpacket_bits_uops_1_bits_inst),
     .io_cpu_fetchpacket_bits_uops_1_bits_debug_inst(frontend_io_cpu_fetchpacket_bits_uops_1_bits_debug_inst),
@@ -8024,7 +6255,6 @@ module BoomTile(
     .io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_load(frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_load),
     .io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_sta(frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_sta),
     .io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_std(frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_std),
-    .io_cpu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel(frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel),
     .io_cpu_fetchpacket_bits_uops_1_bits_iw_state(frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_state),
     .io_cpu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned(frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned),
     .io_cpu_fetchpacket_bits_uops_1_bits_iw_p2_poisoned(frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_p2_poisoned),
@@ -8131,50 +6361,6 @@ module BoomTile(
     .io_cpu_get_pc_1_com_pc(frontend_io_cpu_get_pc_1_com_pc),
     .io_cpu_get_pc_1_next_val(frontend_io_cpu_get_pc_1_next_val),
     .io_cpu_get_pc_1_next_pc(frontend_io_cpu_get_pc_1_next_pc),
-    .io_cpu_get_pc_2_ftq_idx(frontend_io_cpu_get_pc_2_ftq_idx),
-    .io_cpu_get_pc_2_entry_cfi_idx_valid(frontend_io_cpu_get_pc_2_entry_cfi_idx_valid),
-    .io_cpu_get_pc_2_entry_cfi_idx_bits(frontend_io_cpu_get_pc_2_entry_cfi_idx_bits),
-    .io_cpu_get_pc_2_entry_cfi_taken(frontend_io_cpu_get_pc_2_entry_cfi_taken),
-    .io_cpu_get_pc_2_entry_cfi_mispredicted(frontend_io_cpu_get_pc_2_entry_cfi_mispredicted),
-    .io_cpu_get_pc_2_entry_cfi_type(frontend_io_cpu_get_pc_2_entry_cfi_type),
-    .io_cpu_get_pc_2_entry_br_mask(frontend_io_cpu_get_pc_2_entry_br_mask),
-    .io_cpu_get_pc_2_entry_cfi_is_call(frontend_io_cpu_get_pc_2_entry_cfi_is_call),
-    .io_cpu_get_pc_2_entry_cfi_is_ret(frontend_io_cpu_get_pc_2_entry_cfi_is_ret),
-    .io_cpu_get_pc_2_entry_cfi_npc_plus4(frontend_io_cpu_get_pc_2_entry_cfi_npc_plus4),
-    .io_cpu_get_pc_2_entry_ras_top(frontend_io_cpu_get_pc_2_entry_ras_top),
-    .io_cpu_get_pc_2_entry_ras_idx(frontend_io_cpu_get_pc_2_entry_ras_idx),
-    .io_cpu_get_pc_2_entry_start_bank(frontend_io_cpu_get_pc_2_entry_start_bank),
-    .io_cpu_get_pc_2_ghist_old_history(frontend_io_cpu_get_pc_2_ghist_old_history),
-    .io_cpu_get_pc_2_ghist_current_saw_branch_not_taken(frontend_io_cpu_get_pc_2_ghist_current_saw_branch_not_taken),
-    .io_cpu_get_pc_2_ghist_new_saw_branch_not_taken(frontend_io_cpu_get_pc_2_ghist_new_saw_branch_not_taken),
-    .io_cpu_get_pc_2_ghist_new_saw_branch_taken(frontend_io_cpu_get_pc_2_ghist_new_saw_branch_taken),
-    .io_cpu_get_pc_2_ghist_ras_idx(frontend_io_cpu_get_pc_2_ghist_ras_idx),
-    .io_cpu_get_pc_2_pc(frontend_io_cpu_get_pc_2_pc),
-    .io_cpu_get_pc_2_com_pc(frontend_io_cpu_get_pc_2_com_pc),
-    .io_cpu_get_pc_2_next_val(frontend_io_cpu_get_pc_2_next_val),
-    .io_cpu_get_pc_2_next_pc(frontend_io_cpu_get_pc_2_next_pc),
-    .io_cpu_get_pc_3_ftq_idx(frontend_io_cpu_get_pc_3_ftq_idx),
-    .io_cpu_get_pc_3_entry_cfi_idx_valid(frontend_io_cpu_get_pc_3_entry_cfi_idx_valid),
-    .io_cpu_get_pc_3_entry_cfi_idx_bits(frontend_io_cpu_get_pc_3_entry_cfi_idx_bits),
-    .io_cpu_get_pc_3_entry_cfi_taken(frontend_io_cpu_get_pc_3_entry_cfi_taken),
-    .io_cpu_get_pc_3_entry_cfi_mispredicted(frontend_io_cpu_get_pc_3_entry_cfi_mispredicted),
-    .io_cpu_get_pc_3_entry_cfi_type(frontend_io_cpu_get_pc_3_entry_cfi_type),
-    .io_cpu_get_pc_3_entry_br_mask(frontend_io_cpu_get_pc_3_entry_br_mask),
-    .io_cpu_get_pc_3_entry_cfi_is_call(frontend_io_cpu_get_pc_3_entry_cfi_is_call),
-    .io_cpu_get_pc_3_entry_cfi_is_ret(frontend_io_cpu_get_pc_3_entry_cfi_is_ret),
-    .io_cpu_get_pc_3_entry_cfi_npc_plus4(frontend_io_cpu_get_pc_3_entry_cfi_npc_plus4),
-    .io_cpu_get_pc_3_entry_ras_top(frontend_io_cpu_get_pc_3_entry_ras_top),
-    .io_cpu_get_pc_3_entry_ras_idx(frontend_io_cpu_get_pc_3_entry_ras_idx),
-    .io_cpu_get_pc_3_entry_start_bank(frontend_io_cpu_get_pc_3_entry_start_bank),
-    .io_cpu_get_pc_3_ghist_old_history(frontend_io_cpu_get_pc_3_ghist_old_history),
-    .io_cpu_get_pc_3_ghist_current_saw_branch_not_taken(frontend_io_cpu_get_pc_3_ghist_current_saw_branch_not_taken),
-    .io_cpu_get_pc_3_ghist_new_saw_branch_not_taken(frontend_io_cpu_get_pc_3_ghist_new_saw_branch_not_taken),
-    .io_cpu_get_pc_3_ghist_new_saw_branch_taken(frontend_io_cpu_get_pc_3_ghist_new_saw_branch_taken),
-    .io_cpu_get_pc_3_ghist_ras_idx(frontend_io_cpu_get_pc_3_ghist_ras_idx),
-    .io_cpu_get_pc_3_pc(frontend_io_cpu_get_pc_3_pc),
-    .io_cpu_get_pc_3_com_pc(frontend_io_cpu_get_pc_3_com_pc),
-    .io_cpu_get_pc_3_next_val(frontend_io_cpu_get_pc_3_next_val),
-    .io_cpu_get_pc_3_next_pc(frontend_io_cpu_get_pc_3_next_pc),
     .io_cpu_debug_ftq_idx_0(frontend_io_cpu_debug_ftq_idx_0),
     .io_cpu_debug_ftq_idx_1(frontend_io_cpu_debug_ftq_idx_1),
     .io_cpu_debug_fetch_pc_0(frontend_io_cpu_debug_fetch_pc_0),
@@ -8217,23 +6403,6 @@ module BoomTile(
     .io_cpu_sfence_bits_asid(frontend_io_cpu_sfence_bits_asid),
     .io_cpu_brupdate_b1_resolve_mask(frontend_io_cpu_brupdate_b1_resolve_mask),
     .io_cpu_brupdate_b1_mispredict_mask(frontend_io_cpu_brupdate_b1_mispredict_mask),
-    .io_cpu_brupdate_b2_uop_switch(frontend_io_cpu_brupdate_b2_uop_switch),
-    .io_cpu_brupdate_b2_uop_switch_off(frontend_io_cpu_brupdate_b2_uop_switch_off),
-    .io_cpu_brupdate_b2_uop_is_unicore(frontend_io_cpu_brupdate_b2_uop_is_unicore),
-    .io_cpu_brupdate_b2_uop_shift(frontend_io_cpu_brupdate_b2_uop_shift),
-    .io_cpu_brupdate_b2_uop_lrs3_rtype(frontend_io_cpu_brupdate_b2_uop_lrs3_rtype),
-    .io_cpu_brupdate_b2_uop_rflag(frontend_io_cpu_brupdate_b2_uop_rflag),
-    .io_cpu_brupdate_b2_uop_wflag(frontend_io_cpu_brupdate_b2_uop_wflag),
-    .io_cpu_brupdate_b2_uop_prflag(frontend_io_cpu_brupdate_b2_uop_prflag),
-    .io_cpu_brupdate_b2_uop_pwflag(frontend_io_cpu_brupdate_b2_uop_pwflag),
-    .io_cpu_brupdate_b2_uop_pflag_busy(frontend_io_cpu_brupdate_b2_uop_pflag_busy),
-    .io_cpu_brupdate_b2_uop_stale_pflag(frontend_io_cpu_brupdate_b2_uop_stale_pflag),
-    .io_cpu_brupdate_b2_uop_op1_sel(frontend_io_cpu_brupdate_b2_uop_op1_sel),
-    .io_cpu_brupdate_b2_uop_op2_sel(frontend_io_cpu_brupdate_b2_uop_op2_sel),
-    .io_cpu_brupdate_b2_uop_split_num(frontend_io_cpu_brupdate_b2_uop_split_num),
-    .io_cpu_brupdate_b2_uop_self_index(frontend_io_cpu_brupdate_b2_uop_self_index),
-    .io_cpu_brupdate_b2_uop_rob_inst_idx(frontend_io_cpu_brupdate_b2_uop_rob_inst_idx),
-    .io_cpu_brupdate_b2_uop_address_num(frontend_io_cpu_brupdate_b2_uop_address_num),
     .io_cpu_brupdate_b2_uop_uopc(frontend_io_cpu_brupdate_b2_uop_uopc),
     .io_cpu_brupdate_b2_uop_inst(frontend_io_cpu_brupdate_b2_uop_inst),
     .io_cpu_brupdate_b2_uop_debug_inst(frontend_io_cpu_brupdate_b2_uop_debug_inst),
@@ -8251,7 +6420,6 @@ module BoomTile(
     .io_cpu_brupdate_b2_uop_ctrl_is_load(frontend_io_cpu_brupdate_b2_uop_ctrl_is_load),
     .io_cpu_brupdate_b2_uop_ctrl_is_sta(frontend_io_cpu_brupdate_b2_uop_ctrl_is_sta),
     .io_cpu_brupdate_b2_uop_ctrl_is_std(frontend_io_cpu_brupdate_b2_uop_ctrl_is_std),
-    .io_cpu_brupdate_b2_uop_ctrl_op3_sel(frontend_io_cpu_brupdate_b2_uop_ctrl_op3_sel),
     .io_cpu_brupdate_b2_uop_iw_state(frontend_io_cpu_brupdate_b2_uop_iw_state),
     .io_cpu_brupdate_b2_uop_iw_p1_poisoned(frontend_io_cpu_brupdate_b2_uop_iw_p1_poisoned),
     .io_cpu_brupdate_b2_uop_iw_p2_poisoned(frontend_io_cpu_brupdate_b2_uop_iw_p2_poisoned),
@@ -8335,7 +6503,6 @@ module BoomTile(
     .io_cpu_flush_icache(frontend_io_cpu_flush_icache),
     .io_cpu_perf_acquire(frontend_io_cpu_perf_acquire),
     .io_cpu_perf_tlbMiss(frontend_io_cpu_perf_tlbMiss),
-    .io_cpu_is_unicore(frontend_io_cpu_is_unicore),
     .io_ptw_req_ready(frontend_io_ptw_req_ready),
     .io_ptw_req_valid(frontend_io_ptw_req_valid),
     .io_ptw_req_bits_valid(frontend_io_ptw_req_bits_valid),
@@ -8471,23 +6638,6 @@ module BoomTile(
     .io_ifu_fetchpacket_ready(core_io_ifu_fetchpacket_ready),
     .io_ifu_fetchpacket_valid(core_io_ifu_fetchpacket_valid),
     .io_ifu_fetchpacket_bits_uops_0_valid(core_io_ifu_fetchpacket_bits_uops_0_valid),
-    .io_ifu_fetchpacket_bits_uops_0_bits_switch(core_io_ifu_fetchpacket_bits_uops_0_bits_switch),
-    .io_ifu_fetchpacket_bits_uops_0_bits_switch_off(core_io_ifu_fetchpacket_bits_uops_0_bits_switch_off),
-    .io_ifu_fetchpacket_bits_uops_0_bits_is_unicore(core_io_ifu_fetchpacket_bits_uops_0_bits_is_unicore),
-    .io_ifu_fetchpacket_bits_uops_0_bits_shift(core_io_ifu_fetchpacket_bits_uops_0_bits_shift),
-    .io_ifu_fetchpacket_bits_uops_0_bits_lrs3_rtype(core_io_ifu_fetchpacket_bits_uops_0_bits_lrs3_rtype),
-    .io_ifu_fetchpacket_bits_uops_0_bits_rflag(core_io_ifu_fetchpacket_bits_uops_0_bits_rflag),
-    .io_ifu_fetchpacket_bits_uops_0_bits_wflag(core_io_ifu_fetchpacket_bits_uops_0_bits_wflag),
-    .io_ifu_fetchpacket_bits_uops_0_bits_prflag(core_io_ifu_fetchpacket_bits_uops_0_bits_prflag),
-    .io_ifu_fetchpacket_bits_uops_0_bits_pwflag(core_io_ifu_fetchpacket_bits_uops_0_bits_pwflag),
-    .io_ifu_fetchpacket_bits_uops_0_bits_pflag_busy(core_io_ifu_fetchpacket_bits_uops_0_bits_pflag_busy),
-    .io_ifu_fetchpacket_bits_uops_0_bits_stale_pflag(core_io_ifu_fetchpacket_bits_uops_0_bits_stale_pflag),
-    .io_ifu_fetchpacket_bits_uops_0_bits_op1_sel(core_io_ifu_fetchpacket_bits_uops_0_bits_op1_sel),
-    .io_ifu_fetchpacket_bits_uops_0_bits_op2_sel(core_io_ifu_fetchpacket_bits_uops_0_bits_op2_sel),
-    .io_ifu_fetchpacket_bits_uops_0_bits_split_num(core_io_ifu_fetchpacket_bits_uops_0_bits_split_num),
-    .io_ifu_fetchpacket_bits_uops_0_bits_self_index(core_io_ifu_fetchpacket_bits_uops_0_bits_self_index),
-    .io_ifu_fetchpacket_bits_uops_0_bits_rob_inst_idx(core_io_ifu_fetchpacket_bits_uops_0_bits_rob_inst_idx),
-    .io_ifu_fetchpacket_bits_uops_0_bits_address_num(core_io_ifu_fetchpacket_bits_uops_0_bits_address_num),
     .io_ifu_fetchpacket_bits_uops_0_bits_uopc(core_io_ifu_fetchpacket_bits_uops_0_bits_uopc),
     .io_ifu_fetchpacket_bits_uops_0_bits_inst(core_io_ifu_fetchpacket_bits_uops_0_bits_inst),
     .io_ifu_fetchpacket_bits_uops_0_bits_debug_inst(core_io_ifu_fetchpacket_bits_uops_0_bits_debug_inst),
@@ -8505,7 +6655,6 @@ module BoomTile(
     .io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_load(core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_load),
     .io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_sta(core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_sta),
     .io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_std(core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_std),
-    .io_ifu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel(core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel),
     .io_ifu_fetchpacket_bits_uops_0_bits_iw_state(core_io_ifu_fetchpacket_bits_uops_0_bits_iw_state),
     .io_ifu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned(core_io_ifu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned),
     .io_ifu_fetchpacket_bits_uops_0_bits_iw_p2_poisoned(core_io_ifu_fetchpacket_bits_uops_0_bits_iw_p2_poisoned),
@@ -8569,23 +6718,6 @@ module BoomTile(
     .io_ifu_fetchpacket_bits_uops_0_bits_debug_fsrc(core_io_ifu_fetchpacket_bits_uops_0_bits_debug_fsrc),
     .io_ifu_fetchpacket_bits_uops_0_bits_debug_tsrc(core_io_ifu_fetchpacket_bits_uops_0_bits_debug_tsrc),
     .io_ifu_fetchpacket_bits_uops_1_valid(core_io_ifu_fetchpacket_bits_uops_1_valid),
-    .io_ifu_fetchpacket_bits_uops_1_bits_switch(core_io_ifu_fetchpacket_bits_uops_1_bits_switch),
-    .io_ifu_fetchpacket_bits_uops_1_bits_switch_off(core_io_ifu_fetchpacket_bits_uops_1_bits_switch_off),
-    .io_ifu_fetchpacket_bits_uops_1_bits_is_unicore(core_io_ifu_fetchpacket_bits_uops_1_bits_is_unicore),
-    .io_ifu_fetchpacket_bits_uops_1_bits_shift(core_io_ifu_fetchpacket_bits_uops_1_bits_shift),
-    .io_ifu_fetchpacket_bits_uops_1_bits_lrs3_rtype(core_io_ifu_fetchpacket_bits_uops_1_bits_lrs3_rtype),
-    .io_ifu_fetchpacket_bits_uops_1_bits_rflag(core_io_ifu_fetchpacket_bits_uops_1_bits_rflag),
-    .io_ifu_fetchpacket_bits_uops_1_bits_wflag(core_io_ifu_fetchpacket_bits_uops_1_bits_wflag),
-    .io_ifu_fetchpacket_bits_uops_1_bits_prflag(core_io_ifu_fetchpacket_bits_uops_1_bits_prflag),
-    .io_ifu_fetchpacket_bits_uops_1_bits_pwflag(core_io_ifu_fetchpacket_bits_uops_1_bits_pwflag),
-    .io_ifu_fetchpacket_bits_uops_1_bits_pflag_busy(core_io_ifu_fetchpacket_bits_uops_1_bits_pflag_busy),
-    .io_ifu_fetchpacket_bits_uops_1_bits_stale_pflag(core_io_ifu_fetchpacket_bits_uops_1_bits_stale_pflag),
-    .io_ifu_fetchpacket_bits_uops_1_bits_op1_sel(core_io_ifu_fetchpacket_bits_uops_1_bits_op1_sel),
-    .io_ifu_fetchpacket_bits_uops_1_bits_op2_sel(core_io_ifu_fetchpacket_bits_uops_1_bits_op2_sel),
-    .io_ifu_fetchpacket_bits_uops_1_bits_split_num(core_io_ifu_fetchpacket_bits_uops_1_bits_split_num),
-    .io_ifu_fetchpacket_bits_uops_1_bits_self_index(core_io_ifu_fetchpacket_bits_uops_1_bits_self_index),
-    .io_ifu_fetchpacket_bits_uops_1_bits_rob_inst_idx(core_io_ifu_fetchpacket_bits_uops_1_bits_rob_inst_idx),
-    .io_ifu_fetchpacket_bits_uops_1_bits_address_num(core_io_ifu_fetchpacket_bits_uops_1_bits_address_num),
     .io_ifu_fetchpacket_bits_uops_1_bits_uopc(core_io_ifu_fetchpacket_bits_uops_1_bits_uopc),
     .io_ifu_fetchpacket_bits_uops_1_bits_inst(core_io_ifu_fetchpacket_bits_uops_1_bits_inst),
     .io_ifu_fetchpacket_bits_uops_1_bits_debug_inst(core_io_ifu_fetchpacket_bits_uops_1_bits_debug_inst),
@@ -8603,7 +6735,6 @@ module BoomTile(
     .io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_load(core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_load),
     .io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_sta(core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_sta),
     .io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_std(core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_std),
-    .io_ifu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel(core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel),
     .io_ifu_fetchpacket_bits_uops_1_bits_iw_state(core_io_ifu_fetchpacket_bits_uops_1_bits_iw_state),
     .io_ifu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned(core_io_ifu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned),
     .io_ifu_fetchpacket_bits_uops_1_bits_iw_p2_poisoned(core_io_ifu_fetchpacket_bits_uops_1_bits_iw_p2_poisoned),
@@ -8710,50 +6841,6 @@ module BoomTile(
     .io_ifu_get_pc_1_com_pc(core_io_ifu_get_pc_1_com_pc),
     .io_ifu_get_pc_1_next_val(core_io_ifu_get_pc_1_next_val),
     .io_ifu_get_pc_1_next_pc(core_io_ifu_get_pc_1_next_pc),
-    .io_ifu_get_pc_2_ftq_idx(core_io_ifu_get_pc_2_ftq_idx),
-    .io_ifu_get_pc_2_entry_cfi_idx_valid(core_io_ifu_get_pc_2_entry_cfi_idx_valid),
-    .io_ifu_get_pc_2_entry_cfi_idx_bits(core_io_ifu_get_pc_2_entry_cfi_idx_bits),
-    .io_ifu_get_pc_2_entry_cfi_taken(core_io_ifu_get_pc_2_entry_cfi_taken),
-    .io_ifu_get_pc_2_entry_cfi_mispredicted(core_io_ifu_get_pc_2_entry_cfi_mispredicted),
-    .io_ifu_get_pc_2_entry_cfi_type(core_io_ifu_get_pc_2_entry_cfi_type),
-    .io_ifu_get_pc_2_entry_br_mask(core_io_ifu_get_pc_2_entry_br_mask),
-    .io_ifu_get_pc_2_entry_cfi_is_call(core_io_ifu_get_pc_2_entry_cfi_is_call),
-    .io_ifu_get_pc_2_entry_cfi_is_ret(core_io_ifu_get_pc_2_entry_cfi_is_ret),
-    .io_ifu_get_pc_2_entry_cfi_npc_plus4(core_io_ifu_get_pc_2_entry_cfi_npc_plus4),
-    .io_ifu_get_pc_2_entry_ras_top(core_io_ifu_get_pc_2_entry_ras_top),
-    .io_ifu_get_pc_2_entry_ras_idx(core_io_ifu_get_pc_2_entry_ras_idx),
-    .io_ifu_get_pc_2_entry_start_bank(core_io_ifu_get_pc_2_entry_start_bank),
-    .io_ifu_get_pc_2_ghist_old_history(core_io_ifu_get_pc_2_ghist_old_history),
-    .io_ifu_get_pc_2_ghist_current_saw_branch_not_taken(core_io_ifu_get_pc_2_ghist_current_saw_branch_not_taken),
-    .io_ifu_get_pc_2_ghist_new_saw_branch_not_taken(core_io_ifu_get_pc_2_ghist_new_saw_branch_not_taken),
-    .io_ifu_get_pc_2_ghist_new_saw_branch_taken(core_io_ifu_get_pc_2_ghist_new_saw_branch_taken),
-    .io_ifu_get_pc_2_ghist_ras_idx(core_io_ifu_get_pc_2_ghist_ras_idx),
-    .io_ifu_get_pc_2_pc(core_io_ifu_get_pc_2_pc),
-    .io_ifu_get_pc_2_com_pc(core_io_ifu_get_pc_2_com_pc),
-    .io_ifu_get_pc_2_next_val(core_io_ifu_get_pc_2_next_val),
-    .io_ifu_get_pc_2_next_pc(core_io_ifu_get_pc_2_next_pc),
-    .io_ifu_get_pc_3_ftq_idx(core_io_ifu_get_pc_3_ftq_idx),
-    .io_ifu_get_pc_3_entry_cfi_idx_valid(core_io_ifu_get_pc_3_entry_cfi_idx_valid),
-    .io_ifu_get_pc_3_entry_cfi_idx_bits(core_io_ifu_get_pc_3_entry_cfi_idx_bits),
-    .io_ifu_get_pc_3_entry_cfi_taken(core_io_ifu_get_pc_3_entry_cfi_taken),
-    .io_ifu_get_pc_3_entry_cfi_mispredicted(core_io_ifu_get_pc_3_entry_cfi_mispredicted),
-    .io_ifu_get_pc_3_entry_cfi_type(core_io_ifu_get_pc_3_entry_cfi_type),
-    .io_ifu_get_pc_3_entry_br_mask(core_io_ifu_get_pc_3_entry_br_mask),
-    .io_ifu_get_pc_3_entry_cfi_is_call(core_io_ifu_get_pc_3_entry_cfi_is_call),
-    .io_ifu_get_pc_3_entry_cfi_is_ret(core_io_ifu_get_pc_3_entry_cfi_is_ret),
-    .io_ifu_get_pc_3_entry_cfi_npc_plus4(core_io_ifu_get_pc_3_entry_cfi_npc_plus4),
-    .io_ifu_get_pc_3_entry_ras_top(core_io_ifu_get_pc_3_entry_ras_top),
-    .io_ifu_get_pc_3_entry_ras_idx(core_io_ifu_get_pc_3_entry_ras_idx),
-    .io_ifu_get_pc_3_entry_start_bank(core_io_ifu_get_pc_3_entry_start_bank),
-    .io_ifu_get_pc_3_ghist_old_history(core_io_ifu_get_pc_3_ghist_old_history),
-    .io_ifu_get_pc_3_ghist_current_saw_branch_not_taken(core_io_ifu_get_pc_3_ghist_current_saw_branch_not_taken),
-    .io_ifu_get_pc_3_ghist_new_saw_branch_not_taken(core_io_ifu_get_pc_3_ghist_new_saw_branch_not_taken),
-    .io_ifu_get_pc_3_ghist_new_saw_branch_taken(core_io_ifu_get_pc_3_ghist_new_saw_branch_taken),
-    .io_ifu_get_pc_3_ghist_ras_idx(core_io_ifu_get_pc_3_ghist_ras_idx),
-    .io_ifu_get_pc_3_pc(core_io_ifu_get_pc_3_pc),
-    .io_ifu_get_pc_3_com_pc(core_io_ifu_get_pc_3_com_pc),
-    .io_ifu_get_pc_3_next_val(core_io_ifu_get_pc_3_next_val),
-    .io_ifu_get_pc_3_next_pc(core_io_ifu_get_pc_3_next_pc),
     .io_ifu_debug_ftq_idx_0(core_io_ifu_debug_ftq_idx_0),
     .io_ifu_debug_ftq_idx_1(core_io_ifu_debug_ftq_idx_1),
     .io_ifu_debug_fetch_pc_0(core_io_ifu_debug_fetch_pc_0),
@@ -8796,23 +6883,6 @@ module BoomTile(
     .io_ifu_sfence_bits_asid(core_io_ifu_sfence_bits_asid),
     .io_ifu_brupdate_b1_resolve_mask(core_io_ifu_brupdate_b1_resolve_mask),
     .io_ifu_brupdate_b1_mispredict_mask(core_io_ifu_brupdate_b1_mispredict_mask),
-    .io_ifu_brupdate_b2_uop_switch(core_io_ifu_brupdate_b2_uop_switch),
-    .io_ifu_brupdate_b2_uop_switch_off(core_io_ifu_brupdate_b2_uop_switch_off),
-    .io_ifu_brupdate_b2_uop_is_unicore(core_io_ifu_brupdate_b2_uop_is_unicore),
-    .io_ifu_brupdate_b2_uop_shift(core_io_ifu_brupdate_b2_uop_shift),
-    .io_ifu_brupdate_b2_uop_lrs3_rtype(core_io_ifu_brupdate_b2_uop_lrs3_rtype),
-    .io_ifu_brupdate_b2_uop_rflag(core_io_ifu_brupdate_b2_uop_rflag),
-    .io_ifu_brupdate_b2_uop_wflag(core_io_ifu_brupdate_b2_uop_wflag),
-    .io_ifu_brupdate_b2_uop_prflag(core_io_ifu_brupdate_b2_uop_prflag),
-    .io_ifu_brupdate_b2_uop_pwflag(core_io_ifu_brupdate_b2_uop_pwflag),
-    .io_ifu_brupdate_b2_uop_pflag_busy(core_io_ifu_brupdate_b2_uop_pflag_busy),
-    .io_ifu_brupdate_b2_uop_stale_pflag(core_io_ifu_brupdate_b2_uop_stale_pflag),
-    .io_ifu_brupdate_b2_uop_op1_sel(core_io_ifu_brupdate_b2_uop_op1_sel),
-    .io_ifu_brupdate_b2_uop_op2_sel(core_io_ifu_brupdate_b2_uop_op2_sel),
-    .io_ifu_brupdate_b2_uop_split_num(core_io_ifu_brupdate_b2_uop_split_num),
-    .io_ifu_brupdate_b2_uop_self_index(core_io_ifu_brupdate_b2_uop_self_index),
-    .io_ifu_brupdate_b2_uop_rob_inst_idx(core_io_ifu_brupdate_b2_uop_rob_inst_idx),
-    .io_ifu_brupdate_b2_uop_address_num(core_io_ifu_brupdate_b2_uop_address_num),
     .io_ifu_brupdate_b2_uop_uopc(core_io_ifu_brupdate_b2_uop_uopc),
     .io_ifu_brupdate_b2_uop_inst(core_io_ifu_brupdate_b2_uop_inst),
     .io_ifu_brupdate_b2_uop_debug_inst(core_io_ifu_brupdate_b2_uop_debug_inst),
@@ -8830,7 +6900,6 @@ module BoomTile(
     .io_ifu_brupdate_b2_uop_ctrl_is_load(core_io_ifu_brupdate_b2_uop_ctrl_is_load),
     .io_ifu_brupdate_b2_uop_ctrl_is_sta(core_io_ifu_brupdate_b2_uop_ctrl_is_sta),
     .io_ifu_brupdate_b2_uop_ctrl_is_std(core_io_ifu_brupdate_b2_uop_ctrl_is_std),
-    .io_ifu_brupdate_b2_uop_ctrl_op3_sel(core_io_ifu_brupdate_b2_uop_ctrl_op3_sel),
     .io_ifu_brupdate_b2_uop_iw_state(core_io_ifu_brupdate_b2_uop_iw_state),
     .io_ifu_brupdate_b2_uop_iw_p1_poisoned(core_io_ifu_brupdate_b2_uop_iw_p1_poisoned),
     .io_ifu_brupdate_b2_uop_iw_p2_poisoned(core_io_ifu_brupdate_b2_uop_iw_p2_poisoned),
@@ -8914,7 +6983,6 @@ module BoomTile(
     .io_ifu_flush_icache(core_io_ifu_flush_icache),
     .io_ifu_perf_acquire(core_io_ifu_perf_acquire),
     .io_ifu_perf_tlbMiss(core_io_ifu_perf_tlbMiss),
-    .io_ifu_is_unicore(core_io_ifu_is_unicore),
     .io_ptw_ptbr_mode(core_io_ptw_ptbr_mode),
     .io_ptw_ptbr_asid(core_io_ptw_ptbr_asid),
     .io_ptw_ptbr_ppn(core_io_ptw_ptbr_ppn),
@@ -9132,23 +7200,6 @@ module BoomTile(
     .io_rocc_interrupt(core_io_rocc_interrupt),
     .io_rocc_exception(core_io_rocc_exception),
     .io_lsu_exe_0_req_valid(core_io_lsu_exe_0_req_valid),
-    .io_lsu_exe_0_req_bits_uop_switch(core_io_lsu_exe_0_req_bits_uop_switch),
-    .io_lsu_exe_0_req_bits_uop_switch_off(core_io_lsu_exe_0_req_bits_uop_switch_off),
-    .io_lsu_exe_0_req_bits_uop_is_unicore(core_io_lsu_exe_0_req_bits_uop_is_unicore),
-    .io_lsu_exe_0_req_bits_uop_shift(core_io_lsu_exe_0_req_bits_uop_shift),
-    .io_lsu_exe_0_req_bits_uop_lrs3_rtype(core_io_lsu_exe_0_req_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_req_bits_uop_rflag(core_io_lsu_exe_0_req_bits_uop_rflag),
-    .io_lsu_exe_0_req_bits_uop_wflag(core_io_lsu_exe_0_req_bits_uop_wflag),
-    .io_lsu_exe_0_req_bits_uop_prflag(core_io_lsu_exe_0_req_bits_uop_prflag),
-    .io_lsu_exe_0_req_bits_uop_pwflag(core_io_lsu_exe_0_req_bits_uop_pwflag),
-    .io_lsu_exe_0_req_bits_uop_pflag_busy(core_io_lsu_exe_0_req_bits_uop_pflag_busy),
-    .io_lsu_exe_0_req_bits_uop_stale_pflag(core_io_lsu_exe_0_req_bits_uop_stale_pflag),
-    .io_lsu_exe_0_req_bits_uop_op1_sel(core_io_lsu_exe_0_req_bits_uop_op1_sel),
-    .io_lsu_exe_0_req_bits_uop_op2_sel(core_io_lsu_exe_0_req_bits_uop_op2_sel),
-    .io_lsu_exe_0_req_bits_uop_split_num(core_io_lsu_exe_0_req_bits_uop_split_num),
-    .io_lsu_exe_0_req_bits_uop_self_index(core_io_lsu_exe_0_req_bits_uop_self_index),
-    .io_lsu_exe_0_req_bits_uop_rob_inst_idx(core_io_lsu_exe_0_req_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_req_bits_uop_address_num(core_io_lsu_exe_0_req_bits_uop_address_num),
     .io_lsu_exe_0_req_bits_uop_uopc(core_io_lsu_exe_0_req_bits_uop_uopc),
     .io_lsu_exe_0_req_bits_uop_inst(core_io_lsu_exe_0_req_bits_uop_inst),
     .io_lsu_exe_0_req_bits_uop_debug_inst(core_io_lsu_exe_0_req_bits_uop_debug_inst),
@@ -9166,7 +7217,6 @@ module BoomTile(
     .io_lsu_exe_0_req_bits_uop_ctrl_is_load(core_io_lsu_exe_0_req_bits_uop_ctrl_is_load),
     .io_lsu_exe_0_req_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_req_bits_uop_ctrl_is_sta),
     .io_lsu_exe_0_req_bits_uop_ctrl_is_std(core_io_lsu_exe_0_req_bits_uop_ctrl_is_std),
-    .io_lsu_exe_0_req_bits_uop_ctrl_op3_sel(core_io_lsu_exe_0_req_bits_uop_ctrl_op3_sel),
     .io_lsu_exe_0_req_bits_uop_iw_state(core_io_lsu_exe_0_req_bits_uop_iw_state),
     .io_lsu_exe_0_req_bits_uop_iw_p1_poisoned(core_io_lsu_exe_0_req_bits_uop_iw_p1_poisoned),
     .io_lsu_exe_0_req_bits_uop_iw_p2_poisoned(core_io_lsu_exe_0_req_bits_uop_iw_p2_poisoned),
@@ -9232,23 +7282,6 @@ module BoomTile(
     .io_lsu_exe_0_req_bits_predicated(core_io_lsu_exe_0_req_bits_predicated),
     .io_lsu_exe_0_req_bits_data(core_io_lsu_exe_0_req_bits_data),
     .io_lsu_exe_0_req_bits_fflags_valid(core_io_lsu_exe_0_req_bits_fflags_valid),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_switch(core_io_lsu_exe_0_req_bits_fflags_bits_uop_switch),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_switch_off(core_io_lsu_exe_0_req_bits_fflags_bits_uop_switch_off),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_is_unicore(core_io_lsu_exe_0_req_bits_fflags_bits_uop_is_unicore),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_shift(core_io_lsu_exe_0_req_bits_fflags_bits_uop_shift),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_lrs3_rtype(core_io_lsu_exe_0_req_bits_fflags_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_rflag(core_io_lsu_exe_0_req_bits_fflags_bits_uop_rflag),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_wflag(core_io_lsu_exe_0_req_bits_fflags_bits_uop_wflag),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_prflag(core_io_lsu_exe_0_req_bits_fflags_bits_uop_prflag),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_pwflag(core_io_lsu_exe_0_req_bits_fflags_bits_uop_pwflag),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_pflag_busy(core_io_lsu_exe_0_req_bits_fflags_bits_uop_pflag_busy),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_stale_pflag(core_io_lsu_exe_0_req_bits_fflags_bits_uop_stale_pflag),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_op1_sel(core_io_lsu_exe_0_req_bits_fflags_bits_uop_op1_sel),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_op2_sel(core_io_lsu_exe_0_req_bits_fflags_bits_uop_op2_sel),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_split_num(core_io_lsu_exe_0_req_bits_fflags_bits_uop_split_num),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_self_index(core_io_lsu_exe_0_req_bits_fflags_bits_uop_self_index),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_rob_inst_idx(core_io_lsu_exe_0_req_bits_fflags_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_address_num(core_io_lsu_exe_0_req_bits_fflags_bits_uop_address_num),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_uopc(core_io_lsu_exe_0_req_bits_fflags_bits_uop_uopc),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_inst(core_io_lsu_exe_0_req_bits_fflags_bits_uop_inst),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_debug_inst(core_io_lsu_exe_0_req_bits_fflags_bits_uop_debug_inst),
@@ -9266,7 +7299,6 @@ module BoomTile(
     .io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_load(core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_load),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_sta),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_std(core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_std),
-    .io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel(core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_iw_state(core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_state),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned(core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned),
     .io_lsu_exe_0_req_bits_fflags_bits_uop_iw_p2_poisoned(core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_p2_poisoned),
@@ -9338,129 +7370,8 @@ module BoomTile(
     .io_lsu_exe_0_req_bits_sfence_bits_rs2(core_io_lsu_exe_0_req_bits_sfence_bits_rs2),
     .io_lsu_exe_0_req_bits_sfence_bits_addr(core_io_lsu_exe_0_req_bits_sfence_bits_addr),
     .io_lsu_exe_0_req_bits_sfence_bits_asid(core_io_lsu_exe_0_req_bits_sfence_bits_asid),
-    .io_lsu_exe_0_req_bits_flagdata(core_io_lsu_exe_0_req_bits_flagdata),
-    .io_lsu_exe_0_req_bits_fflagdata_valid(core_io_lsu_exe_0_req_bits_fflagdata_valid),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch_off(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch_off),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unicore(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unicore),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_shift(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_shift),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_rflag(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rflag),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_wflag(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_wflag),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_prflag(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prflag),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_pwflag(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pwflag),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_pflag_busy(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pflag_busy),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pflag(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pflag),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_op1_sel(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_op1_sel),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_op2_sel(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_op2_sel),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_split_num(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_split_num),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_self_index(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_self_index),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_address_num(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_address_num),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_uopc(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uopc),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_inst(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_inst),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_inst(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_inst),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_rvc(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_rvc),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_pc(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_pc),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_iq_type(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iq_type),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_fu_code(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fu_code),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_state(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_state),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_br(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_br),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jalr(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jalr),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jal(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jal),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sfb(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sfb),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_mask(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_mask),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_tag(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_tag),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ftq_idx(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ftq_idx),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_edge_inst(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_edge_inst),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_pc_lob(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pc_lob),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_taken(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_taken),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_imm_packed(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_imm_packed),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_csr_addr(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_csr_addr),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_idx(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_idx),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldq_idx(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldq_idx),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_stq_idx(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stq_idx),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_rxq_idx(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rxq_idx),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_pdst(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pdst),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1_busy(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1_busy),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2_busy(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2_busy),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3_busy(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3_busy),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred_busy(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred_busy),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pdst(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pdst),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_exception(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_exception),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_exc_cause(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_exc_cause),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_bypassable(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bypassable),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_cmd(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_cmd),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_size(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_size),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_signed(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_signed),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fence(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fence),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fencei(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fencei),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_amo(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_amo),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_ldq(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_ldq),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_stq(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_stq),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc)
-      ,
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unique(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unique),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit(
-      core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_val(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_val),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_dst_rtype(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_dst_rtype),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_frs3_en(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_frs3_en),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_val(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_val),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_single(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_single),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc(core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_lsu_exe_0_req_bits_fflagdata_bits_fflag(core_io_lsu_exe_0_req_bits_fflagdata_bits_fflag),
     .io_lsu_exe_0_iresp_ready(core_io_lsu_exe_0_iresp_ready),
     .io_lsu_exe_0_iresp_valid(core_io_lsu_exe_0_iresp_valid),
-    .io_lsu_exe_0_iresp_bits_uop_switch(core_io_lsu_exe_0_iresp_bits_uop_switch),
-    .io_lsu_exe_0_iresp_bits_uop_switch_off(core_io_lsu_exe_0_iresp_bits_uop_switch_off),
-    .io_lsu_exe_0_iresp_bits_uop_is_unicore(core_io_lsu_exe_0_iresp_bits_uop_is_unicore),
-    .io_lsu_exe_0_iresp_bits_uop_shift(core_io_lsu_exe_0_iresp_bits_uop_shift),
-    .io_lsu_exe_0_iresp_bits_uop_lrs3_rtype(core_io_lsu_exe_0_iresp_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_iresp_bits_uop_rflag(core_io_lsu_exe_0_iresp_bits_uop_rflag),
-    .io_lsu_exe_0_iresp_bits_uop_wflag(core_io_lsu_exe_0_iresp_bits_uop_wflag),
-    .io_lsu_exe_0_iresp_bits_uop_prflag(core_io_lsu_exe_0_iresp_bits_uop_prflag),
-    .io_lsu_exe_0_iresp_bits_uop_pwflag(core_io_lsu_exe_0_iresp_bits_uop_pwflag),
-    .io_lsu_exe_0_iresp_bits_uop_pflag_busy(core_io_lsu_exe_0_iresp_bits_uop_pflag_busy),
-    .io_lsu_exe_0_iresp_bits_uop_stale_pflag(core_io_lsu_exe_0_iresp_bits_uop_stale_pflag),
-    .io_lsu_exe_0_iresp_bits_uop_op1_sel(core_io_lsu_exe_0_iresp_bits_uop_op1_sel),
-    .io_lsu_exe_0_iresp_bits_uop_op2_sel(core_io_lsu_exe_0_iresp_bits_uop_op2_sel),
-    .io_lsu_exe_0_iresp_bits_uop_split_num(core_io_lsu_exe_0_iresp_bits_uop_split_num),
-    .io_lsu_exe_0_iresp_bits_uop_self_index(core_io_lsu_exe_0_iresp_bits_uop_self_index),
-    .io_lsu_exe_0_iresp_bits_uop_rob_inst_idx(core_io_lsu_exe_0_iresp_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_iresp_bits_uop_address_num(core_io_lsu_exe_0_iresp_bits_uop_address_num),
     .io_lsu_exe_0_iresp_bits_uop_uopc(core_io_lsu_exe_0_iresp_bits_uop_uopc),
     .io_lsu_exe_0_iresp_bits_uop_inst(core_io_lsu_exe_0_iresp_bits_uop_inst),
     .io_lsu_exe_0_iresp_bits_uop_debug_inst(core_io_lsu_exe_0_iresp_bits_uop_debug_inst),
@@ -9478,7 +7389,6 @@ module BoomTile(
     .io_lsu_exe_0_iresp_bits_uop_ctrl_is_load(core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_load),
     .io_lsu_exe_0_iresp_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_sta),
     .io_lsu_exe_0_iresp_bits_uop_ctrl_is_std(core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_std),
-    .io_lsu_exe_0_iresp_bits_uop_ctrl_op3_sel(core_io_lsu_exe_0_iresp_bits_uop_ctrl_op3_sel),
     .io_lsu_exe_0_iresp_bits_uop_iw_state(core_io_lsu_exe_0_iresp_bits_uop_iw_state),
     .io_lsu_exe_0_iresp_bits_uop_iw_p1_poisoned(core_io_lsu_exe_0_iresp_bits_uop_iw_p1_poisoned),
     .io_lsu_exe_0_iresp_bits_uop_iw_p2_poisoned(core_io_lsu_exe_0_iresp_bits_uop_iw_p2_poisoned),
@@ -9544,23 +7454,6 @@ module BoomTile(
     .io_lsu_exe_0_iresp_bits_data(core_io_lsu_exe_0_iresp_bits_data),
     .io_lsu_exe_0_iresp_bits_predicated(core_io_lsu_exe_0_iresp_bits_predicated),
     .io_lsu_exe_0_iresp_bits_fflags_valid(core_io_lsu_exe_0_iresp_bits_fflags_valid),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch_off(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch_off),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_is_unicore(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_is_unicore),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_shift(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_shift),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_rflag(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rflag),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_wflag(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_wflag),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_prflag(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prflag),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_pwflag(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pwflag),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_pflag_busy(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pflag_busy),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_stale_pflag(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_stale_pflag),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_op1_sel(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_op1_sel),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_op2_sel(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_op2_sel),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_split_num(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_split_num),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_self_index(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_self_index),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_address_num(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_address_num),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_uopc(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_uopc),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_inst(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_inst),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_inst(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_inst),
@@ -9578,7 +7471,6 @@ module BoomTile(
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_load(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_load),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_sta),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std),
-    .io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_state(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_state),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned)
       ,
@@ -9645,145 +7537,8 @@ module BoomTile(
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_fsrc(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_fsrc),
     .io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc(core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc),
     .io_lsu_exe_0_iresp_bits_fflags_bits_flags(core_io_lsu_exe_0_iresp_bits_fflags_bits_flags),
-    .io_lsu_exe_0_iresp_bits_flagdata(core_io_lsu_exe_0_iresp_bits_flagdata),
-    .io_lsu_exe_0_iresp_bits_fflagdata_valid(core_io_lsu_exe_0_iresp_bits_fflagdata_valid),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch_off(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch_off),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_shift(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_shift),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rflag(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rflag),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_wflag(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_wflag),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prflag(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prflag),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pwflag(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pwflag),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_split_num(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_split_num),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_self_index(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_self_index),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_address_num(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_address_num)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uopc(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uopc),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_inst(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_inst),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iq_type(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iq_type),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fu_code(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fu_code),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_state(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_state),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_br(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_br),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jal(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jal),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_mask(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_mask),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_tag(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_tag),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_taken(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_taken),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pdst(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pdst),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exception(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exception),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bypassable(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bypassable),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_size(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_size),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fence(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fence),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_amo(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_amo),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unique(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unique),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit(
-      core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_val(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_val),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_single(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_single),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if)
-      ,
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_lsu_exe_0_iresp_bits_fflagdata_bits_fflag(core_io_lsu_exe_0_iresp_bits_fflagdata_bits_fflag),
     .io_lsu_exe_0_fresp_ready(core_io_lsu_exe_0_fresp_ready),
     .io_lsu_exe_0_fresp_valid(core_io_lsu_exe_0_fresp_valid),
-    .io_lsu_exe_0_fresp_bits_uop_switch(core_io_lsu_exe_0_fresp_bits_uop_switch),
-    .io_lsu_exe_0_fresp_bits_uop_switch_off(core_io_lsu_exe_0_fresp_bits_uop_switch_off),
-    .io_lsu_exe_0_fresp_bits_uop_is_unicore(core_io_lsu_exe_0_fresp_bits_uop_is_unicore),
-    .io_lsu_exe_0_fresp_bits_uop_shift(core_io_lsu_exe_0_fresp_bits_uop_shift),
-    .io_lsu_exe_0_fresp_bits_uop_lrs3_rtype(core_io_lsu_exe_0_fresp_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_fresp_bits_uop_rflag(core_io_lsu_exe_0_fresp_bits_uop_rflag),
-    .io_lsu_exe_0_fresp_bits_uop_wflag(core_io_lsu_exe_0_fresp_bits_uop_wflag),
-    .io_lsu_exe_0_fresp_bits_uop_prflag(core_io_lsu_exe_0_fresp_bits_uop_prflag),
-    .io_lsu_exe_0_fresp_bits_uop_pwflag(core_io_lsu_exe_0_fresp_bits_uop_pwflag),
-    .io_lsu_exe_0_fresp_bits_uop_pflag_busy(core_io_lsu_exe_0_fresp_bits_uop_pflag_busy),
-    .io_lsu_exe_0_fresp_bits_uop_stale_pflag(core_io_lsu_exe_0_fresp_bits_uop_stale_pflag),
-    .io_lsu_exe_0_fresp_bits_uop_op1_sel(core_io_lsu_exe_0_fresp_bits_uop_op1_sel),
-    .io_lsu_exe_0_fresp_bits_uop_op2_sel(core_io_lsu_exe_0_fresp_bits_uop_op2_sel),
-    .io_lsu_exe_0_fresp_bits_uop_split_num(core_io_lsu_exe_0_fresp_bits_uop_split_num),
-    .io_lsu_exe_0_fresp_bits_uop_self_index(core_io_lsu_exe_0_fresp_bits_uop_self_index),
-    .io_lsu_exe_0_fresp_bits_uop_rob_inst_idx(core_io_lsu_exe_0_fresp_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_fresp_bits_uop_address_num(core_io_lsu_exe_0_fresp_bits_uop_address_num),
     .io_lsu_exe_0_fresp_bits_uop_uopc(core_io_lsu_exe_0_fresp_bits_uop_uopc),
     .io_lsu_exe_0_fresp_bits_uop_inst(core_io_lsu_exe_0_fresp_bits_uop_inst),
     .io_lsu_exe_0_fresp_bits_uop_debug_inst(core_io_lsu_exe_0_fresp_bits_uop_debug_inst),
@@ -9801,7 +7556,6 @@ module BoomTile(
     .io_lsu_exe_0_fresp_bits_uop_ctrl_is_load(core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_load),
     .io_lsu_exe_0_fresp_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_sta),
     .io_lsu_exe_0_fresp_bits_uop_ctrl_is_std(core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_std),
-    .io_lsu_exe_0_fresp_bits_uop_ctrl_op3_sel(core_io_lsu_exe_0_fresp_bits_uop_ctrl_op3_sel),
     .io_lsu_exe_0_fresp_bits_uop_iw_state(core_io_lsu_exe_0_fresp_bits_uop_iw_state),
     .io_lsu_exe_0_fresp_bits_uop_iw_p1_poisoned(core_io_lsu_exe_0_fresp_bits_uop_iw_p1_poisoned),
     .io_lsu_exe_0_fresp_bits_uop_iw_p2_poisoned(core_io_lsu_exe_0_fresp_bits_uop_iw_p2_poisoned),
@@ -9867,23 +7621,6 @@ module BoomTile(
     .io_lsu_exe_0_fresp_bits_data(core_io_lsu_exe_0_fresp_bits_data),
     .io_lsu_exe_0_fresp_bits_predicated(core_io_lsu_exe_0_fresp_bits_predicated),
     .io_lsu_exe_0_fresp_bits_fflags_valid(core_io_lsu_exe_0_fresp_bits_fflags_valid),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch_off(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch_off),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_is_unicore(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_is_unicore),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_shift(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_shift),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_rflag(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rflag),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_wflag(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_wflag),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_prflag(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prflag),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_pwflag(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pwflag),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_pflag_busy(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pflag_busy),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_stale_pflag(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_stale_pflag),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_op1_sel(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_op1_sel),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_op2_sel(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_op2_sel),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_split_num(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_split_num),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_self_index(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_self_index),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_address_num(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_address_num),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_uopc(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_uopc),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_inst(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_inst),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_inst(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_inst),
@@ -9901,7 +7638,6 @@ module BoomTile(
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_load(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_load),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_sta),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std),
-    .io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_state(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_state),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned)
       ,
@@ -9968,144 +7704,7 @@ module BoomTile(
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_fsrc(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_fsrc),
     .io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc(core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc),
     .io_lsu_exe_0_fresp_bits_fflags_bits_flags(core_io_lsu_exe_0_fresp_bits_fflags_bits_flags),
-    .io_lsu_exe_0_fresp_bits_flagdata(core_io_lsu_exe_0_fresp_bits_flagdata),
-    .io_lsu_exe_0_fresp_bits_fflagdata_valid(core_io_lsu_exe_0_fresp_bits_fflagdata_valid),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch_off(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch_off),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_shift(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_shift),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rflag(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rflag),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_wflag(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_wflag),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prflag(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prflag),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pwflag(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pwflag),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_split_num(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_split_num),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_self_index(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_self_index),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_address_num(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_address_num)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uopc(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uopc),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_inst(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_inst),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iq_type(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iq_type),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fu_code(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fu_code),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_state(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_state),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_br(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_br),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jal(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jal),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_mask(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_mask),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_tag(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_tag),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_taken(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_taken),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pdst(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pdst),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exception(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exception),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bypassable(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bypassable),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_size(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_size),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fence(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fence),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_amo(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_amo),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unique(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unique),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit(
-      core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_val(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_val),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_single(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_single),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if)
-      ,
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_lsu_exe_0_fresp_bits_fflagdata_bits_fflag(core_io_lsu_exe_0_fresp_bits_fflagdata_bits_fflag),
     .io_lsu_dis_uops_0_valid(core_io_lsu_dis_uops_0_valid),
-    .io_lsu_dis_uops_0_bits_switch(core_io_lsu_dis_uops_0_bits_switch),
-    .io_lsu_dis_uops_0_bits_switch_off(core_io_lsu_dis_uops_0_bits_switch_off),
-    .io_lsu_dis_uops_0_bits_is_unicore(core_io_lsu_dis_uops_0_bits_is_unicore),
-    .io_lsu_dis_uops_0_bits_shift(core_io_lsu_dis_uops_0_bits_shift),
-    .io_lsu_dis_uops_0_bits_lrs3_rtype(core_io_lsu_dis_uops_0_bits_lrs3_rtype),
-    .io_lsu_dis_uops_0_bits_rflag(core_io_lsu_dis_uops_0_bits_rflag),
-    .io_lsu_dis_uops_0_bits_wflag(core_io_lsu_dis_uops_0_bits_wflag),
-    .io_lsu_dis_uops_0_bits_prflag(core_io_lsu_dis_uops_0_bits_prflag),
-    .io_lsu_dis_uops_0_bits_pwflag(core_io_lsu_dis_uops_0_bits_pwflag),
-    .io_lsu_dis_uops_0_bits_pflag_busy(core_io_lsu_dis_uops_0_bits_pflag_busy),
-    .io_lsu_dis_uops_0_bits_stale_pflag(core_io_lsu_dis_uops_0_bits_stale_pflag),
-    .io_lsu_dis_uops_0_bits_op1_sel(core_io_lsu_dis_uops_0_bits_op1_sel),
-    .io_lsu_dis_uops_0_bits_op2_sel(core_io_lsu_dis_uops_0_bits_op2_sel),
-    .io_lsu_dis_uops_0_bits_split_num(core_io_lsu_dis_uops_0_bits_split_num),
-    .io_lsu_dis_uops_0_bits_self_index(core_io_lsu_dis_uops_0_bits_self_index),
-    .io_lsu_dis_uops_0_bits_rob_inst_idx(core_io_lsu_dis_uops_0_bits_rob_inst_idx),
-    .io_lsu_dis_uops_0_bits_address_num(core_io_lsu_dis_uops_0_bits_address_num),
     .io_lsu_dis_uops_0_bits_uopc(core_io_lsu_dis_uops_0_bits_uopc),
     .io_lsu_dis_uops_0_bits_inst(core_io_lsu_dis_uops_0_bits_inst),
     .io_lsu_dis_uops_0_bits_debug_inst(core_io_lsu_dis_uops_0_bits_debug_inst),
@@ -10123,7 +7722,6 @@ module BoomTile(
     .io_lsu_dis_uops_0_bits_ctrl_is_load(core_io_lsu_dis_uops_0_bits_ctrl_is_load),
     .io_lsu_dis_uops_0_bits_ctrl_is_sta(core_io_lsu_dis_uops_0_bits_ctrl_is_sta),
     .io_lsu_dis_uops_0_bits_ctrl_is_std(core_io_lsu_dis_uops_0_bits_ctrl_is_std),
-    .io_lsu_dis_uops_0_bits_ctrl_op3_sel(core_io_lsu_dis_uops_0_bits_ctrl_op3_sel),
     .io_lsu_dis_uops_0_bits_iw_state(core_io_lsu_dis_uops_0_bits_iw_state),
     .io_lsu_dis_uops_0_bits_iw_p1_poisoned(core_io_lsu_dis_uops_0_bits_iw_p1_poisoned),
     .io_lsu_dis_uops_0_bits_iw_p2_poisoned(core_io_lsu_dis_uops_0_bits_iw_p2_poisoned),
@@ -10187,23 +7785,6 @@ module BoomTile(
     .io_lsu_dis_uops_0_bits_debug_fsrc(core_io_lsu_dis_uops_0_bits_debug_fsrc),
     .io_lsu_dis_uops_0_bits_debug_tsrc(core_io_lsu_dis_uops_0_bits_debug_tsrc),
     .io_lsu_dis_uops_1_valid(core_io_lsu_dis_uops_1_valid),
-    .io_lsu_dis_uops_1_bits_switch(core_io_lsu_dis_uops_1_bits_switch),
-    .io_lsu_dis_uops_1_bits_switch_off(core_io_lsu_dis_uops_1_bits_switch_off),
-    .io_lsu_dis_uops_1_bits_is_unicore(core_io_lsu_dis_uops_1_bits_is_unicore),
-    .io_lsu_dis_uops_1_bits_shift(core_io_lsu_dis_uops_1_bits_shift),
-    .io_lsu_dis_uops_1_bits_lrs3_rtype(core_io_lsu_dis_uops_1_bits_lrs3_rtype),
-    .io_lsu_dis_uops_1_bits_rflag(core_io_lsu_dis_uops_1_bits_rflag),
-    .io_lsu_dis_uops_1_bits_wflag(core_io_lsu_dis_uops_1_bits_wflag),
-    .io_lsu_dis_uops_1_bits_prflag(core_io_lsu_dis_uops_1_bits_prflag),
-    .io_lsu_dis_uops_1_bits_pwflag(core_io_lsu_dis_uops_1_bits_pwflag),
-    .io_lsu_dis_uops_1_bits_pflag_busy(core_io_lsu_dis_uops_1_bits_pflag_busy),
-    .io_lsu_dis_uops_1_bits_stale_pflag(core_io_lsu_dis_uops_1_bits_stale_pflag),
-    .io_lsu_dis_uops_1_bits_op1_sel(core_io_lsu_dis_uops_1_bits_op1_sel),
-    .io_lsu_dis_uops_1_bits_op2_sel(core_io_lsu_dis_uops_1_bits_op2_sel),
-    .io_lsu_dis_uops_1_bits_split_num(core_io_lsu_dis_uops_1_bits_split_num),
-    .io_lsu_dis_uops_1_bits_self_index(core_io_lsu_dis_uops_1_bits_self_index),
-    .io_lsu_dis_uops_1_bits_rob_inst_idx(core_io_lsu_dis_uops_1_bits_rob_inst_idx),
-    .io_lsu_dis_uops_1_bits_address_num(core_io_lsu_dis_uops_1_bits_address_num),
     .io_lsu_dis_uops_1_bits_uopc(core_io_lsu_dis_uops_1_bits_uopc),
     .io_lsu_dis_uops_1_bits_inst(core_io_lsu_dis_uops_1_bits_inst),
     .io_lsu_dis_uops_1_bits_debug_inst(core_io_lsu_dis_uops_1_bits_debug_inst),
@@ -10221,7 +7802,6 @@ module BoomTile(
     .io_lsu_dis_uops_1_bits_ctrl_is_load(core_io_lsu_dis_uops_1_bits_ctrl_is_load),
     .io_lsu_dis_uops_1_bits_ctrl_is_sta(core_io_lsu_dis_uops_1_bits_ctrl_is_sta),
     .io_lsu_dis_uops_1_bits_ctrl_is_std(core_io_lsu_dis_uops_1_bits_ctrl_is_std),
-    .io_lsu_dis_uops_1_bits_ctrl_op3_sel(core_io_lsu_dis_uops_1_bits_ctrl_op3_sel),
     .io_lsu_dis_uops_1_bits_iw_state(core_io_lsu_dis_uops_1_bits_iw_state),
     .io_lsu_dis_uops_1_bits_iw_p1_poisoned(core_io_lsu_dis_uops_1_bits_iw_p1_poisoned),
     .io_lsu_dis_uops_1_bits_iw_p2_poisoned(core_io_lsu_dis_uops_1_bits_iw_p2_poisoned),
@@ -10294,23 +7874,6 @@ module BoomTile(
     .io_lsu_stq_full_1(core_io_lsu_stq_full_1),
     .io_lsu_fp_stdata_ready(core_io_lsu_fp_stdata_ready),
     .io_lsu_fp_stdata_valid(core_io_lsu_fp_stdata_valid),
-    .io_lsu_fp_stdata_bits_uop_switch(core_io_lsu_fp_stdata_bits_uop_switch),
-    .io_lsu_fp_stdata_bits_uop_switch_off(core_io_lsu_fp_stdata_bits_uop_switch_off),
-    .io_lsu_fp_stdata_bits_uop_is_unicore(core_io_lsu_fp_stdata_bits_uop_is_unicore),
-    .io_lsu_fp_stdata_bits_uop_shift(core_io_lsu_fp_stdata_bits_uop_shift),
-    .io_lsu_fp_stdata_bits_uop_lrs3_rtype(core_io_lsu_fp_stdata_bits_uop_lrs3_rtype),
-    .io_lsu_fp_stdata_bits_uop_rflag(core_io_lsu_fp_stdata_bits_uop_rflag),
-    .io_lsu_fp_stdata_bits_uop_wflag(core_io_lsu_fp_stdata_bits_uop_wflag),
-    .io_lsu_fp_stdata_bits_uop_prflag(core_io_lsu_fp_stdata_bits_uop_prflag),
-    .io_lsu_fp_stdata_bits_uop_pwflag(core_io_lsu_fp_stdata_bits_uop_pwflag),
-    .io_lsu_fp_stdata_bits_uop_pflag_busy(core_io_lsu_fp_stdata_bits_uop_pflag_busy),
-    .io_lsu_fp_stdata_bits_uop_stale_pflag(core_io_lsu_fp_stdata_bits_uop_stale_pflag),
-    .io_lsu_fp_stdata_bits_uop_op1_sel(core_io_lsu_fp_stdata_bits_uop_op1_sel),
-    .io_lsu_fp_stdata_bits_uop_op2_sel(core_io_lsu_fp_stdata_bits_uop_op2_sel),
-    .io_lsu_fp_stdata_bits_uop_split_num(core_io_lsu_fp_stdata_bits_uop_split_num),
-    .io_lsu_fp_stdata_bits_uop_self_index(core_io_lsu_fp_stdata_bits_uop_self_index),
-    .io_lsu_fp_stdata_bits_uop_rob_inst_idx(core_io_lsu_fp_stdata_bits_uop_rob_inst_idx),
-    .io_lsu_fp_stdata_bits_uop_address_num(core_io_lsu_fp_stdata_bits_uop_address_num),
     .io_lsu_fp_stdata_bits_uop_uopc(core_io_lsu_fp_stdata_bits_uop_uopc),
     .io_lsu_fp_stdata_bits_uop_inst(core_io_lsu_fp_stdata_bits_uop_inst),
     .io_lsu_fp_stdata_bits_uop_debug_inst(core_io_lsu_fp_stdata_bits_uop_debug_inst),
@@ -10328,7 +7891,6 @@ module BoomTile(
     .io_lsu_fp_stdata_bits_uop_ctrl_is_load(core_io_lsu_fp_stdata_bits_uop_ctrl_is_load),
     .io_lsu_fp_stdata_bits_uop_ctrl_is_sta(core_io_lsu_fp_stdata_bits_uop_ctrl_is_sta),
     .io_lsu_fp_stdata_bits_uop_ctrl_is_std(core_io_lsu_fp_stdata_bits_uop_ctrl_is_std),
-    .io_lsu_fp_stdata_bits_uop_ctrl_op3_sel(core_io_lsu_fp_stdata_bits_uop_ctrl_op3_sel),
     .io_lsu_fp_stdata_bits_uop_iw_state(core_io_lsu_fp_stdata_bits_uop_iw_state),
     .io_lsu_fp_stdata_bits_uop_iw_p1_poisoned(core_io_lsu_fp_stdata_bits_uop_iw_p1_poisoned),
     .io_lsu_fp_stdata_bits_uop_iw_p2_poisoned(core_io_lsu_fp_stdata_bits_uop_iw_p2_poisoned),
@@ -10394,23 +7956,6 @@ module BoomTile(
     .io_lsu_fp_stdata_bits_data(core_io_lsu_fp_stdata_bits_data),
     .io_lsu_fp_stdata_bits_predicated(core_io_lsu_fp_stdata_bits_predicated),
     .io_lsu_fp_stdata_bits_fflags_valid(core_io_lsu_fp_stdata_bits_fflags_valid),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_switch(core_io_lsu_fp_stdata_bits_fflags_bits_uop_switch),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_switch_off(core_io_lsu_fp_stdata_bits_fflags_bits_uop_switch_off),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_is_unicore(core_io_lsu_fp_stdata_bits_fflags_bits_uop_is_unicore),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_shift(core_io_lsu_fp_stdata_bits_fflags_bits_uop_shift),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_lrs3_rtype(core_io_lsu_fp_stdata_bits_fflags_bits_uop_lrs3_rtype),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_rflag(core_io_lsu_fp_stdata_bits_fflags_bits_uop_rflag),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_wflag(core_io_lsu_fp_stdata_bits_fflags_bits_uop_wflag),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_prflag(core_io_lsu_fp_stdata_bits_fflags_bits_uop_prflag),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_pwflag(core_io_lsu_fp_stdata_bits_fflags_bits_uop_pwflag),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_pflag_busy(core_io_lsu_fp_stdata_bits_fflags_bits_uop_pflag_busy),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_stale_pflag(core_io_lsu_fp_stdata_bits_fflags_bits_uop_stale_pflag),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_op1_sel(core_io_lsu_fp_stdata_bits_fflags_bits_uop_op1_sel),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_op2_sel(core_io_lsu_fp_stdata_bits_fflags_bits_uop_op2_sel),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_split_num(core_io_lsu_fp_stdata_bits_fflags_bits_uop_split_num),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_self_index(core_io_lsu_fp_stdata_bits_fflags_bits_uop_self_index),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_rob_inst_idx(core_io_lsu_fp_stdata_bits_fflags_bits_uop_rob_inst_idx),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_address_num(core_io_lsu_fp_stdata_bits_fflags_bits_uop_address_num),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_uopc(core_io_lsu_fp_stdata_bits_fflags_bits_uop_uopc),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_inst(core_io_lsu_fp_stdata_bits_fflags_bits_uop_inst),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_debug_inst(core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_inst),
@@ -10428,7 +7973,6 @@ module BoomTile(
     .io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_load(core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_load),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_sta(core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_sta),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_std(core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_std),
-    .io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel(core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_iw_state(core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_state),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned(core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_iw_p2_poisoned(core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_p2_poisoned),
@@ -10492,131 +8036,10 @@ module BoomTile(
     .io_lsu_fp_stdata_bits_fflags_bits_uop_debug_fsrc(core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_fsrc),
     .io_lsu_fp_stdata_bits_fflags_bits_uop_debug_tsrc(core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_tsrc),
     .io_lsu_fp_stdata_bits_fflags_bits_flags(core_io_lsu_fp_stdata_bits_fflags_bits_flags),
-    .io_lsu_fp_stdata_bits_flagdata(core_io_lsu_fp_stdata_bits_flagdata),
-    .io_lsu_fp_stdata_bits_fflagdata_valid(core_io_lsu_fp_stdata_bits_fflagdata_valid),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch_off(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch_off),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unicore(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unicore),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_shift(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_shift),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_rflag(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rflag),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_wflag(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_wflag),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_prflag(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prflag),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_pwflag(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pwflag),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_pflag_busy(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pflag_busy),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pflag(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pflag),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_op1_sel(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_op1_sel),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_op2_sel(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_op2_sel),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_split_num(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_split_num),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_self_index(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_self_index),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_address_num(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_address_num),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_uopc(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uopc),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_inst(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_inst),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_inst(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_inst),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_rvc(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_rvc),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_pc(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_pc),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_iq_type(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iq_type),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_fu_code(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fu_code),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_state(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_state),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_br(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_br),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jalr(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jalr),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jal(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jal),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sfb(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sfb),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_mask(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_mask),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_tag(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_tag),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ftq_idx(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ftq_idx),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_edge_inst(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_edge_inst),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_pc_lob(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pc_lob),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_taken(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_taken),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_imm_packed(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_imm_packed),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_csr_addr(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_csr_addr),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_idx(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_idx),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldq_idx(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldq_idx),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_stq_idx(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stq_idx),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_rxq_idx(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rxq_idx),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_pdst(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pdst),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1_busy(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1_busy),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2_busy(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2_busy),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3_busy(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3_busy),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred_busy(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred_busy),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pdst(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pdst),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_exception(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_exception),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_exc_cause(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_exc_cause),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_bypassable(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bypassable),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_cmd(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_cmd),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_size(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_size),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_signed(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_signed),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fence(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fence),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fencei(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fencei),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_amo(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_amo),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_ldq(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_ldq),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_stq(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_stq),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc)
-      ,
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unique(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unique),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit(
-      core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_val(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_val),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_dst_rtype(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_dst_rtype),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_frs3_en(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_frs3_en),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_val(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_val),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_single(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_single),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc(core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_lsu_fp_stdata_bits_fflagdata_bits_fflag(core_io_lsu_fp_stdata_bits_fflagdata_bits_fflag),
     .io_lsu_commit_valids_0(core_io_lsu_commit_valids_0),
     .io_lsu_commit_valids_1(core_io_lsu_commit_valids_1),
     .io_lsu_commit_arch_valids_0(core_io_lsu_commit_arch_valids_0),
     .io_lsu_commit_arch_valids_1(core_io_lsu_commit_arch_valids_1),
-    .io_lsu_commit_uops_0_switch(core_io_lsu_commit_uops_0_switch),
-    .io_lsu_commit_uops_0_switch_off(core_io_lsu_commit_uops_0_switch_off),
-    .io_lsu_commit_uops_0_is_unicore(core_io_lsu_commit_uops_0_is_unicore),
-    .io_lsu_commit_uops_0_shift(core_io_lsu_commit_uops_0_shift),
-    .io_lsu_commit_uops_0_lrs3_rtype(core_io_lsu_commit_uops_0_lrs3_rtype),
-    .io_lsu_commit_uops_0_rflag(core_io_lsu_commit_uops_0_rflag),
-    .io_lsu_commit_uops_0_wflag(core_io_lsu_commit_uops_0_wflag),
-    .io_lsu_commit_uops_0_prflag(core_io_lsu_commit_uops_0_prflag),
-    .io_lsu_commit_uops_0_pwflag(core_io_lsu_commit_uops_0_pwflag),
-    .io_lsu_commit_uops_0_pflag_busy(core_io_lsu_commit_uops_0_pflag_busy),
-    .io_lsu_commit_uops_0_stale_pflag(core_io_lsu_commit_uops_0_stale_pflag),
-    .io_lsu_commit_uops_0_op1_sel(core_io_lsu_commit_uops_0_op1_sel),
-    .io_lsu_commit_uops_0_op2_sel(core_io_lsu_commit_uops_0_op2_sel),
-    .io_lsu_commit_uops_0_split_num(core_io_lsu_commit_uops_0_split_num),
-    .io_lsu_commit_uops_0_self_index(core_io_lsu_commit_uops_0_self_index),
-    .io_lsu_commit_uops_0_rob_inst_idx(core_io_lsu_commit_uops_0_rob_inst_idx),
-    .io_lsu_commit_uops_0_address_num(core_io_lsu_commit_uops_0_address_num),
     .io_lsu_commit_uops_0_uopc(core_io_lsu_commit_uops_0_uopc),
     .io_lsu_commit_uops_0_inst(core_io_lsu_commit_uops_0_inst),
     .io_lsu_commit_uops_0_debug_inst(core_io_lsu_commit_uops_0_debug_inst),
@@ -10634,7 +8057,6 @@ module BoomTile(
     .io_lsu_commit_uops_0_ctrl_is_load(core_io_lsu_commit_uops_0_ctrl_is_load),
     .io_lsu_commit_uops_0_ctrl_is_sta(core_io_lsu_commit_uops_0_ctrl_is_sta),
     .io_lsu_commit_uops_0_ctrl_is_std(core_io_lsu_commit_uops_0_ctrl_is_std),
-    .io_lsu_commit_uops_0_ctrl_op3_sel(core_io_lsu_commit_uops_0_ctrl_op3_sel),
     .io_lsu_commit_uops_0_iw_state(core_io_lsu_commit_uops_0_iw_state),
     .io_lsu_commit_uops_0_iw_p1_poisoned(core_io_lsu_commit_uops_0_iw_p1_poisoned),
     .io_lsu_commit_uops_0_iw_p2_poisoned(core_io_lsu_commit_uops_0_iw_p2_poisoned),
@@ -10697,23 +8119,6 @@ module BoomTile(
     .io_lsu_commit_uops_0_bp_xcpt_if(core_io_lsu_commit_uops_0_bp_xcpt_if),
     .io_lsu_commit_uops_0_debug_fsrc(core_io_lsu_commit_uops_0_debug_fsrc),
     .io_lsu_commit_uops_0_debug_tsrc(core_io_lsu_commit_uops_0_debug_tsrc),
-    .io_lsu_commit_uops_1_switch(core_io_lsu_commit_uops_1_switch),
-    .io_lsu_commit_uops_1_switch_off(core_io_lsu_commit_uops_1_switch_off),
-    .io_lsu_commit_uops_1_is_unicore(core_io_lsu_commit_uops_1_is_unicore),
-    .io_lsu_commit_uops_1_shift(core_io_lsu_commit_uops_1_shift),
-    .io_lsu_commit_uops_1_lrs3_rtype(core_io_lsu_commit_uops_1_lrs3_rtype),
-    .io_lsu_commit_uops_1_rflag(core_io_lsu_commit_uops_1_rflag),
-    .io_lsu_commit_uops_1_wflag(core_io_lsu_commit_uops_1_wflag),
-    .io_lsu_commit_uops_1_prflag(core_io_lsu_commit_uops_1_prflag),
-    .io_lsu_commit_uops_1_pwflag(core_io_lsu_commit_uops_1_pwflag),
-    .io_lsu_commit_uops_1_pflag_busy(core_io_lsu_commit_uops_1_pflag_busy),
-    .io_lsu_commit_uops_1_stale_pflag(core_io_lsu_commit_uops_1_stale_pflag),
-    .io_lsu_commit_uops_1_op1_sel(core_io_lsu_commit_uops_1_op1_sel),
-    .io_lsu_commit_uops_1_op2_sel(core_io_lsu_commit_uops_1_op2_sel),
-    .io_lsu_commit_uops_1_split_num(core_io_lsu_commit_uops_1_split_num),
-    .io_lsu_commit_uops_1_self_index(core_io_lsu_commit_uops_1_self_index),
-    .io_lsu_commit_uops_1_rob_inst_idx(core_io_lsu_commit_uops_1_rob_inst_idx),
-    .io_lsu_commit_uops_1_address_num(core_io_lsu_commit_uops_1_address_num),
     .io_lsu_commit_uops_1_uopc(core_io_lsu_commit_uops_1_uopc),
     .io_lsu_commit_uops_1_inst(core_io_lsu_commit_uops_1_inst),
     .io_lsu_commit_uops_1_debug_inst(core_io_lsu_commit_uops_1_debug_inst),
@@ -10731,7 +8136,6 @@ module BoomTile(
     .io_lsu_commit_uops_1_ctrl_is_load(core_io_lsu_commit_uops_1_ctrl_is_load),
     .io_lsu_commit_uops_1_ctrl_is_sta(core_io_lsu_commit_uops_1_ctrl_is_sta),
     .io_lsu_commit_uops_1_ctrl_is_std(core_io_lsu_commit_uops_1_ctrl_is_std),
-    .io_lsu_commit_uops_1_ctrl_op3_sel(core_io_lsu_commit_uops_1_ctrl_op3_sel),
     .io_lsu_commit_uops_1_iw_state(core_io_lsu_commit_uops_1_iw_state),
     .io_lsu_commit_uops_1_iw_p1_poisoned(core_io_lsu_commit_uops_1_iw_p1_poisoned),
     .io_lsu_commit_uops_1_iw_p2_poisoned(core_io_lsu_commit_uops_1_iw_p2_poisoned),
@@ -10796,8 +8200,6 @@ module BoomTile(
     .io_lsu_commit_uops_1_debug_tsrc(core_io_lsu_commit_uops_1_debug_tsrc),
     .io_lsu_commit_fflags_valid(core_io_lsu_commit_fflags_valid),
     .io_lsu_commit_fflags_bits(core_io_lsu_commit_fflags_bits),
-    .io_lsu_commit_fflag_exception_valid(core_io_lsu_commit_fflag_exception_valid),
-    .io_lsu_commit_fflag_exception_bits(core_io_lsu_commit_fflag_exception_bits),
     .io_lsu_commit_debug_insts_0(core_io_lsu_commit_debug_insts_0),
     .io_lsu_commit_debug_insts_1(core_io_lsu_commit_debug_insts_1),
     .io_lsu_commit_rbk_valids_0(core_io_lsu_commit_rbk_valids_0),
@@ -10805,8 +8207,6 @@ module BoomTile(
     .io_lsu_commit_rollback(core_io_lsu_commit_rollback),
     .io_lsu_commit_debug_wdata_0(core_io_lsu_commit_debug_wdata_0),
     .io_lsu_commit_debug_wdata_1(core_io_lsu_commit_debug_wdata_1),
-    .io_lsu_commit_debug_wflagdata_0(core_io_lsu_commit_debug_wflagdata_0),
-    .io_lsu_commit_debug_wflagdata_1(core_io_lsu_commit_debug_wflagdata_1),
     .io_lsu_commit_load_at_rob_head(core_io_lsu_commit_load_at_rob_head),
     .io_lsu_clr_bsy_0_valid(core_io_lsu_clr_bsy_0_valid),
     .io_lsu_clr_bsy_0_bits(core_io_lsu_clr_bsy_0_bits),
@@ -10814,33 +8214,12 @@ module BoomTile(
     .io_lsu_clr_bsy_1_bits(core_io_lsu_clr_bsy_1_bits),
     .io_lsu_clr_unsafe_0_valid(core_io_lsu_clr_unsafe_0_valid),
     .io_lsu_clr_unsafe_0_bits(core_io_lsu_clr_unsafe_0_bits),
-    .io_lsu_clr_bsy_first_idx_0(core_io_lsu_clr_bsy_first_idx_0),
-    .io_lsu_clr_bsy_first_idx_1(core_io_lsu_clr_bsy_first_idx_1),
-    .io_lsu_clr_bsy_self_idx_0(core_io_lsu_clr_bsy_self_idx_0),
-    .io_lsu_clr_bsy_self_idx_1(core_io_lsu_clr_bsy_self_idx_1),
     .io_lsu_fence_dmem(core_io_lsu_fence_dmem),
     .io_lsu_spec_ld_wakeup_0_valid(core_io_lsu_spec_ld_wakeup_0_valid),
     .io_lsu_spec_ld_wakeup_0_bits(core_io_lsu_spec_ld_wakeup_0_bits),
     .io_lsu_ld_miss(core_io_lsu_ld_miss),
     .io_lsu_brupdate_b1_resolve_mask(core_io_lsu_brupdate_b1_resolve_mask),
     .io_lsu_brupdate_b1_mispredict_mask(core_io_lsu_brupdate_b1_mispredict_mask),
-    .io_lsu_brupdate_b2_uop_switch(core_io_lsu_brupdate_b2_uop_switch),
-    .io_lsu_brupdate_b2_uop_switch_off(core_io_lsu_brupdate_b2_uop_switch_off),
-    .io_lsu_brupdate_b2_uop_is_unicore(core_io_lsu_brupdate_b2_uop_is_unicore),
-    .io_lsu_brupdate_b2_uop_shift(core_io_lsu_brupdate_b2_uop_shift),
-    .io_lsu_brupdate_b2_uop_lrs3_rtype(core_io_lsu_brupdate_b2_uop_lrs3_rtype),
-    .io_lsu_brupdate_b2_uop_rflag(core_io_lsu_brupdate_b2_uop_rflag),
-    .io_lsu_brupdate_b2_uop_wflag(core_io_lsu_brupdate_b2_uop_wflag),
-    .io_lsu_brupdate_b2_uop_prflag(core_io_lsu_brupdate_b2_uop_prflag),
-    .io_lsu_brupdate_b2_uop_pwflag(core_io_lsu_brupdate_b2_uop_pwflag),
-    .io_lsu_brupdate_b2_uop_pflag_busy(core_io_lsu_brupdate_b2_uop_pflag_busy),
-    .io_lsu_brupdate_b2_uop_stale_pflag(core_io_lsu_brupdate_b2_uop_stale_pflag),
-    .io_lsu_brupdate_b2_uop_op1_sel(core_io_lsu_brupdate_b2_uop_op1_sel),
-    .io_lsu_brupdate_b2_uop_op2_sel(core_io_lsu_brupdate_b2_uop_op2_sel),
-    .io_lsu_brupdate_b2_uop_split_num(core_io_lsu_brupdate_b2_uop_split_num),
-    .io_lsu_brupdate_b2_uop_self_index(core_io_lsu_brupdate_b2_uop_self_index),
-    .io_lsu_brupdate_b2_uop_rob_inst_idx(core_io_lsu_brupdate_b2_uop_rob_inst_idx),
-    .io_lsu_brupdate_b2_uop_address_num(core_io_lsu_brupdate_b2_uop_address_num),
     .io_lsu_brupdate_b2_uop_uopc(core_io_lsu_brupdate_b2_uop_uopc),
     .io_lsu_brupdate_b2_uop_inst(core_io_lsu_brupdate_b2_uop_inst),
     .io_lsu_brupdate_b2_uop_debug_inst(core_io_lsu_brupdate_b2_uop_debug_inst),
@@ -10858,7 +8237,6 @@ module BoomTile(
     .io_lsu_brupdate_b2_uop_ctrl_is_load(core_io_lsu_brupdate_b2_uop_ctrl_is_load),
     .io_lsu_brupdate_b2_uop_ctrl_is_sta(core_io_lsu_brupdate_b2_uop_ctrl_is_sta),
     .io_lsu_brupdate_b2_uop_ctrl_is_std(core_io_lsu_brupdate_b2_uop_ctrl_is_std),
-    .io_lsu_brupdate_b2_uop_ctrl_op3_sel(core_io_lsu_brupdate_b2_uop_ctrl_op3_sel),
     .io_lsu_brupdate_b2_uop_iw_state(core_io_lsu_brupdate_b2_uop_iw_state),
     .io_lsu_brupdate_b2_uop_iw_p1_poisoned(core_io_lsu_brupdate_b2_uop_iw_p1_poisoned),
     .io_lsu_brupdate_b2_uop_iw_p2_poisoned(core_io_lsu_brupdate_b2_uop_iw_p2_poisoned),
@@ -10933,23 +8311,6 @@ module BoomTile(
     .io_lsu_exception(core_io_lsu_exception),
     .io_lsu_fencei_rdy(core_io_lsu_fencei_rdy),
     .io_lsu_lxcpt_valid(core_io_lsu_lxcpt_valid),
-    .io_lsu_lxcpt_bits_uop_switch(core_io_lsu_lxcpt_bits_uop_switch),
-    .io_lsu_lxcpt_bits_uop_switch_off(core_io_lsu_lxcpt_bits_uop_switch_off),
-    .io_lsu_lxcpt_bits_uop_is_unicore(core_io_lsu_lxcpt_bits_uop_is_unicore),
-    .io_lsu_lxcpt_bits_uop_shift(core_io_lsu_lxcpt_bits_uop_shift),
-    .io_lsu_lxcpt_bits_uop_lrs3_rtype(core_io_lsu_lxcpt_bits_uop_lrs3_rtype),
-    .io_lsu_lxcpt_bits_uop_rflag(core_io_lsu_lxcpt_bits_uop_rflag),
-    .io_lsu_lxcpt_bits_uop_wflag(core_io_lsu_lxcpt_bits_uop_wflag),
-    .io_lsu_lxcpt_bits_uop_prflag(core_io_lsu_lxcpt_bits_uop_prflag),
-    .io_lsu_lxcpt_bits_uop_pwflag(core_io_lsu_lxcpt_bits_uop_pwflag),
-    .io_lsu_lxcpt_bits_uop_pflag_busy(core_io_lsu_lxcpt_bits_uop_pflag_busy),
-    .io_lsu_lxcpt_bits_uop_stale_pflag(core_io_lsu_lxcpt_bits_uop_stale_pflag),
-    .io_lsu_lxcpt_bits_uop_op1_sel(core_io_lsu_lxcpt_bits_uop_op1_sel),
-    .io_lsu_lxcpt_bits_uop_op2_sel(core_io_lsu_lxcpt_bits_uop_op2_sel),
-    .io_lsu_lxcpt_bits_uop_split_num(core_io_lsu_lxcpt_bits_uop_split_num),
-    .io_lsu_lxcpt_bits_uop_self_index(core_io_lsu_lxcpt_bits_uop_self_index),
-    .io_lsu_lxcpt_bits_uop_rob_inst_idx(core_io_lsu_lxcpt_bits_uop_rob_inst_idx),
-    .io_lsu_lxcpt_bits_uop_address_num(core_io_lsu_lxcpt_bits_uop_address_num),
     .io_lsu_lxcpt_bits_uop_uopc(core_io_lsu_lxcpt_bits_uop_uopc),
     .io_lsu_lxcpt_bits_uop_inst(core_io_lsu_lxcpt_bits_uop_inst),
     .io_lsu_lxcpt_bits_uop_debug_inst(core_io_lsu_lxcpt_bits_uop_debug_inst),
@@ -10967,7 +8328,6 @@ module BoomTile(
     .io_lsu_lxcpt_bits_uop_ctrl_is_load(core_io_lsu_lxcpt_bits_uop_ctrl_is_load),
     .io_lsu_lxcpt_bits_uop_ctrl_is_sta(core_io_lsu_lxcpt_bits_uop_ctrl_is_sta),
     .io_lsu_lxcpt_bits_uop_ctrl_is_std(core_io_lsu_lxcpt_bits_uop_ctrl_is_std),
-    .io_lsu_lxcpt_bits_uop_ctrl_op3_sel(core_io_lsu_lxcpt_bits_uop_ctrl_op3_sel),
     .io_lsu_lxcpt_bits_uop_iw_state(core_io_lsu_lxcpt_bits_uop_iw_state),
     .io_lsu_lxcpt_bits_uop_iw_p1_poisoned(core_io_lsu_lxcpt_bits_uop_iw_p1_poisoned),
     .io_lsu_lxcpt_bits_uop_iw_p2_poisoned(core_io_lsu_lxcpt_bits_uop_iw_p2_poisoned),
@@ -11300,23 +8660,6 @@ module BoomTile(
     .io_ptw_customCSRs_csrs_0_wdata(lsu_io_ptw_customCSRs_csrs_0_wdata),
     .io_ptw_customCSRs_csrs_0_value(lsu_io_ptw_customCSRs_csrs_0_value),
     .io_core_exe_0_req_valid(lsu_io_core_exe_0_req_valid),
-    .io_core_exe_0_req_bits_uop_switch(lsu_io_core_exe_0_req_bits_uop_switch),
-    .io_core_exe_0_req_bits_uop_switch_off(lsu_io_core_exe_0_req_bits_uop_switch_off),
-    .io_core_exe_0_req_bits_uop_is_unicore(lsu_io_core_exe_0_req_bits_uop_is_unicore),
-    .io_core_exe_0_req_bits_uop_shift(lsu_io_core_exe_0_req_bits_uop_shift),
-    .io_core_exe_0_req_bits_uop_lrs3_rtype(lsu_io_core_exe_0_req_bits_uop_lrs3_rtype),
-    .io_core_exe_0_req_bits_uop_rflag(lsu_io_core_exe_0_req_bits_uop_rflag),
-    .io_core_exe_0_req_bits_uop_wflag(lsu_io_core_exe_0_req_bits_uop_wflag),
-    .io_core_exe_0_req_bits_uop_prflag(lsu_io_core_exe_0_req_bits_uop_prflag),
-    .io_core_exe_0_req_bits_uop_pwflag(lsu_io_core_exe_0_req_bits_uop_pwflag),
-    .io_core_exe_0_req_bits_uop_pflag_busy(lsu_io_core_exe_0_req_bits_uop_pflag_busy),
-    .io_core_exe_0_req_bits_uop_stale_pflag(lsu_io_core_exe_0_req_bits_uop_stale_pflag),
-    .io_core_exe_0_req_bits_uop_op1_sel(lsu_io_core_exe_0_req_bits_uop_op1_sel),
-    .io_core_exe_0_req_bits_uop_op2_sel(lsu_io_core_exe_0_req_bits_uop_op2_sel),
-    .io_core_exe_0_req_bits_uop_split_num(lsu_io_core_exe_0_req_bits_uop_split_num),
-    .io_core_exe_0_req_bits_uop_self_index(lsu_io_core_exe_0_req_bits_uop_self_index),
-    .io_core_exe_0_req_bits_uop_rob_inst_idx(lsu_io_core_exe_0_req_bits_uop_rob_inst_idx),
-    .io_core_exe_0_req_bits_uop_address_num(lsu_io_core_exe_0_req_bits_uop_address_num),
     .io_core_exe_0_req_bits_uop_uopc(lsu_io_core_exe_0_req_bits_uop_uopc),
     .io_core_exe_0_req_bits_uop_inst(lsu_io_core_exe_0_req_bits_uop_inst),
     .io_core_exe_0_req_bits_uop_debug_inst(lsu_io_core_exe_0_req_bits_uop_debug_inst),
@@ -11334,7 +8677,6 @@ module BoomTile(
     .io_core_exe_0_req_bits_uop_ctrl_is_load(lsu_io_core_exe_0_req_bits_uop_ctrl_is_load),
     .io_core_exe_0_req_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_req_bits_uop_ctrl_is_sta),
     .io_core_exe_0_req_bits_uop_ctrl_is_std(lsu_io_core_exe_0_req_bits_uop_ctrl_is_std),
-    .io_core_exe_0_req_bits_uop_ctrl_op3_sel(lsu_io_core_exe_0_req_bits_uop_ctrl_op3_sel),
     .io_core_exe_0_req_bits_uop_iw_state(lsu_io_core_exe_0_req_bits_uop_iw_state),
     .io_core_exe_0_req_bits_uop_iw_p1_poisoned(lsu_io_core_exe_0_req_bits_uop_iw_p1_poisoned),
     .io_core_exe_0_req_bits_uop_iw_p2_poisoned(lsu_io_core_exe_0_req_bits_uop_iw_p2_poisoned),
@@ -11400,23 +8742,6 @@ module BoomTile(
     .io_core_exe_0_req_bits_predicated(lsu_io_core_exe_0_req_bits_predicated),
     .io_core_exe_0_req_bits_data(lsu_io_core_exe_0_req_bits_data),
     .io_core_exe_0_req_bits_fflags_valid(lsu_io_core_exe_0_req_bits_fflags_valid),
-    .io_core_exe_0_req_bits_fflags_bits_uop_switch(lsu_io_core_exe_0_req_bits_fflags_bits_uop_switch),
-    .io_core_exe_0_req_bits_fflags_bits_uop_switch_off(lsu_io_core_exe_0_req_bits_fflags_bits_uop_switch_off),
-    .io_core_exe_0_req_bits_fflags_bits_uop_is_unicore(lsu_io_core_exe_0_req_bits_fflags_bits_uop_is_unicore),
-    .io_core_exe_0_req_bits_fflags_bits_uop_shift(lsu_io_core_exe_0_req_bits_fflags_bits_uop_shift),
-    .io_core_exe_0_req_bits_fflags_bits_uop_lrs3_rtype(lsu_io_core_exe_0_req_bits_fflags_bits_uop_lrs3_rtype),
-    .io_core_exe_0_req_bits_fflags_bits_uop_rflag(lsu_io_core_exe_0_req_bits_fflags_bits_uop_rflag),
-    .io_core_exe_0_req_bits_fflags_bits_uop_wflag(lsu_io_core_exe_0_req_bits_fflags_bits_uop_wflag),
-    .io_core_exe_0_req_bits_fflags_bits_uop_prflag(lsu_io_core_exe_0_req_bits_fflags_bits_uop_prflag),
-    .io_core_exe_0_req_bits_fflags_bits_uop_pwflag(lsu_io_core_exe_0_req_bits_fflags_bits_uop_pwflag),
-    .io_core_exe_0_req_bits_fflags_bits_uop_pflag_busy(lsu_io_core_exe_0_req_bits_fflags_bits_uop_pflag_busy),
-    .io_core_exe_0_req_bits_fflags_bits_uop_stale_pflag(lsu_io_core_exe_0_req_bits_fflags_bits_uop_stale_pflag),
-    .io_core_exe_0_req_bits_fflags_bits_uop_op1_sel(lsu_io_core_exe_0_req_bits_fflags_bits_uop_op1_sel),
-    .io_core_exe_0_req_bits_fflags_bits_uop_op2_sel(lsu_io_core_exe_0_req_bits_fflags_bits_uop_op2_sel),
-    .io_core_exe_0_req_bits_fflags_bits_uop_split_num(lsu_io_core_exe_0_req_bits_fflags_bits_uop_split_num),
-    .io_core_exe_0_req_bits_fflags_bits_uop_self_index(lsu_io_core_exe_0_req_bits_fflags_bits_uop_self_index),
-    .io_core_exe_0_req_bits_fflags_bits_uop_rob_inst_idx(lsu_io_core_exe_0_req_bits_fflags_bits_uop_rob_inst_idx),
-    .io_core_exe_0_req_bits_fflags_bits_uop_address_num(lsu_io_core_exe_0_req_bits_fflags_bits_uop_address_num),
     .io_core_exe_0_req_bits_fflags_bits_uop_uopc(lsu_io_core_exe_0_req_bits_fflags_bits_uop_uopc),
     .io_core_exe_0_req_bits_fflags_bits_uop_inst(lsu_io_core_exe_0_req_bits_fflags_bits_uop_inst),
     .io_core_exe_0_req_bits_fflags_bits_uop_debug_inst(lsu_io_core_exe_0_req_bits_fflags_bits_uop_debug_inst),
@@ -11434,7 +8759,6 @@ module BoomTile(
     .io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_load(lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_load),
     .io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_sta),
     .io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_std(lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_std),
-    .io_core_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel(lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_core_exe_0_req_bits_fflags_bits_uop_iw_state(lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_state),
     .io_core_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned(lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned),
     .io_core_exe_0_req_bits_fflags_bits_uop_iw_p2_poisoned(lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_p2_poisoned),
@@ -11506,129 +8830,8 @@ module BoomTile(
     .io_core_exe_0_req_bits_sfence_bits_rs2(lsu_io_core_exe_0_req_bits_sfence_bits_rs2),
     .io_core_exe_0_req_bits_sfence_bits_addr(lsu_io_core_exe_0_req_bits_sfence_bits_addr),
     .io_core_exe_0_req_bits_sfence_bits_asid(lsu_io_core_exe_0_req_bits_sfence_bits_asid),
-    .io_core_exe_0_req_bits_flagdata(lsu_io_core_exe_0_req_bits_flagdata),
-    .io_core_exe_0_req_bits_fflagdata_valid(lsu_io_core_exe_0_req_bits_fflagdata_valid),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_switch(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_switch),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_switch_off(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_switch_off),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_unicore(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_unicore),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_shift(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_shift),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_rflag(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rflag),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_wflag(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_wflag),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_prflag(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prflag),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_pwflag(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pwflag),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_pflag_busy(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pflag_busy),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pflag(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pflag),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_op1_sel(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_op1_sel),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_op2_sel(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_op2_sel),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_split_num(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_split_num),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_self_index(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_self_index),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_address_num(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_address_num),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_uopc(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uopc),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_inst(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_inst),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_debug_inst(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_inst),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_rvc(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_rvc),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_debug_pc(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_pc),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_iq_type(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iq_type),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_fu_code(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fu_code),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_iw_state(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_state),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_br(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_br),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_jalr(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_jalr),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_jal(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_jal),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_sfb(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_sfb),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_br_mask(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_br_mask),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_br_tag(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_br_tag),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ftq_idx(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ftq_idx),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_edge_inst(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_edge_inst),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_pc_lob(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pc_lob),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_taken(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_taken),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_imm_packed(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_imm_packed),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_csr_addr(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_csr_addr),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_rob_idx(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rob_idx),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ldq_idx(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldq_idx),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_stq_idx(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stq_idx),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_rxq_idx(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rxq_idx),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_pdst(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pdst),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_prs1(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs1),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_prs2(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs2),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_prs3(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs3),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ppred(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ppred),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_prs1_busy(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs1_busy),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_prs2_busy(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs2_busy),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_prs3_busy(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs3_busy),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ppred_busy(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ppred_busy),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pdst(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pdst),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_exception(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_exception),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_exc_cause(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_exc_cause),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_bypassable(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bypassable),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_mem_cmd(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_cmd),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_mem_size(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_size),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_mem_signed(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_signed),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_fence(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_fence),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_fencei(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_fencei),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_amo(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_amo),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_uses_ldq(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uses_ldq),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_uses_stq(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uses_stq),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc
-      ),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_is_unique(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_unique),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit(
-      lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ldst(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_val(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_val),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_dst_rtype(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_dst_rtype),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_frs3_en(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_frs3_en),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_fp_val(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fp_val),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_fp_single(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fp_single),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_core_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc(lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_core_exe_0_req_bits_fflagdata_bits_fflag(lsu_io_core_exe_0_req_bits_fflagdata_bits_fflag),
     .io_core_exe_0_iresp_ready(lsu_io_core_exe_0_iresp_ready),
     .io_core_exe_0_iresp_valid(lsu_io_core_exe_0_iresp_valid),
-    .io_core_exe_0_iresp_bits_uop_switch(lsu_io_core_exe_0_iresp_bits_uop_switch),
-    .io_core_exe_0_iresp_bits_uop_switch_off(lsu_io_core_exe_0_iresp_bits_uop_switch_off),
-    .io_core_exe_0_iresp_bits_uop_is_unicore(lsu_io_core_exe_0_iresp_bits_uop_is_unicore),
-    .io_core_exe_0_iresp_bits_uop_shift(lsu_io_core_exe_0_iresp_bits_uop_shift),
-    .io_core_exe_0_iresp_bits_uop_lrs3_rtype(lsu_io_core_exe_0_iresp_bits_uop_lrs3_rtype),
-    .io_core_exe_0_iresp_bits_uop_rflag(lsu_io_core_exe_0_iresp_bits_uop_rflag),
-    .io_core_exe_0_iresp_bits_uop_wflag(lsu_io_core_exe_0_iresp_bits_uop_wflag),
-    .io_core_exe_0_iresp_bits_uop_prflag(lsu_io_core_exe_0_iresp_bits_uop_prflag),
-    .io_core_exe_0_iresp_bits_uop_pwflag(lsu_io_core_exe_0_iresp_bits_uop_pwflag),
-    .io_core_exe_0_iresp_bits_uop_pflag_busy(lsu_io_core_exe_0_iresp_bits_uop_pflag_busy),
-    .io_core_exe_0_iresp_bits_uop_stale_pflag(lsu_io_core_exe_0_iresp_bits_uop_stale_pflag),
-    .io_core_exe_0_iresp_bits_uop_op1_sel(lsu_io_core_exe_0_iresp_bits_uop_op1_sel),
-    .io_core_exe_0_iresp_bits_uop_op2_sel(lsu_io_core_exe_0_iresp_bits_uop_op2_sel),
-    .io_core_exe_0_iresp_bits_uop_split_num(lsu_io_core_exe_0_iresp_bits_uop_split_num),
-    .io_core_exe_0_iresp_bits_uop_self_index(lsu_io_core_exe_0_iresp_bits_uop_self_index),
-    .io_core_exe_0_iresp_bits_uop_rob_inst_idx(lsu_io_core_exe_0_iresp_bits_uop_rob_inst_idx),
-    .io_core_exe_0_iresp_bits_uop_address_num(lsu_io_core_exe_0_iresp_bits_uop_address_num),
     .io_core_exe_0_iresp_bits_uop_uopc(lsu_io_core_exe_0_iresp_bits_uop_uopc),
     .io_core_exe_0_iresp_bits_uop_inst(lsu_io_core_exe_0_iresp_bits_uop_inst),
     .io_core_exe_0_iresp_bits_uop_debug_inst(lsu_io_core_exe_0_iresp_bits_uop_debug_inst),
@@ -11646,7 +8849,6 @@ module BoomTile(
     .io_core_exe_0_iresp_bits_uop_ctrl_is_load(lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_load),
     .io_core_exe_0_iresp_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_sta),
     .io_core_exe_0_iresp_bits_uop_ctrl_is_std(lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_std),
-    .io_core_exe_0_iresp_bits_uop_ctrl_op3_sel(lsu_io_core_exe_0_iresp_bits_uop_ctrl_op3_sel),
     .io_core_exe_0_iresp_bits_uop_iw_state(lsu_io_core_exe_0_iresp_bits_uop_iw_state),
     .io_core_exe_0_iresp_bits_uop_iw_p1_poisoned(lsu_io_core_exe_0_iresp_bits_uop_iw_p1_poisoned),
     .io_core_exe_0_iresp_bits_uop_iw_p2_poisoned(lsu_io_core_exe_0_iresp_bits_uop_iw_p2_poisoned),
@@ -11712,23 +8914,6 @@ module BoomTile(
     .io_core_exe_0_iresp_bits_data(lsu_io_core_exe_0_iresp_bits_data),
     .io_core_exe_0_iresp_bits_predicated(lsu_io_core_exe_0_iresp_bits_predicated),
     .io_core_exe_0_iresp_bits_fflags_valid(lsu_io_core_exe_0_iresp_bits_fflags_valid),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_switch(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_switch),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_switch_off(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_switch_off),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_is_unicore(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_is_unicore),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_shift(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_shift),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_rflag(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rflag),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_wflag(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_wflag),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_prflag(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prflag),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_pwflag(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pwflag),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_pflag_busy(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pflag_busy),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_stale_pflag(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_stale_pflag),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_op1_sel(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_op1_sel),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_op2_sel(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_op2_sel),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_split_num(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_split_num),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_self_index(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_self_index),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_address_num(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_address_num),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_uopc(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_uopc),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_inst(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_inst),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_debug_inst(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_debug_inst),
@@ -11746,7 +8931,6 @@ module BoomTile(
     .io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_load(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_load),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_sta),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std),
-    .io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_iw_state(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_iw_state),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned
       ),
@@ -11813,145 +8997,8 @@ module BoomTile(
     .io_core_exe_0_iresp_bits_fflags_bits_uop_debug_fsrc(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_debug_fsrc),
     .io_core_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc(lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc),
     .io_core_exe_0_iresp_bits_fflags_bits_flags(lsu_io_core_exe_0_iresp_bits_fflags_bits_flags),
-    .io_core_exe_0_iresp_bits_flagdata(lsu_io_core_exe_0_iresp_bits_flagdata),
-    .io_core_exe_0_iresp_bits_fflagdata_valid(lsu_io_core_exe_0_iresp_bits_fflagdata_valid),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch_off(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch_off),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_shift(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_shift),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_rflag(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rflag),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_wflag(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_wflag),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_prflag(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prflag),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_pwflag(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pwflag),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_split_num(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_split_num),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_self_index(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_self_index),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_address_num(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_address_num
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_uopc(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uopc),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_inst(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_inst),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_iq_type(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iq_type),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_fu_code(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fu_code),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_state(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_state),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_br(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_br),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jal(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jal),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_mask(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_mask),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_tag(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_tag),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_taken(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_taken),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_pdst(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pdst),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_exception(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_exception),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_bypassable(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bypassable),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_size(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_size),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fence(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fence),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_amo(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_amo),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unique(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unique),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit(
-      lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_val(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_val),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_single(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_single),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if
-      ),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_core_exe_0_iresp_bits_fflagdata_bits_fflag(lsu_io_core_exe_0_iresp_bits_fflagdata_bits_fflag),
     .io_core_exe_0_fresp_ready(lsu_io_core_exe_0_fresp_ready),
     .io_core_exe_0_fresp_valid(lsu_io_core_exe_0_fresp_valid),
-    .io_core_exe_0_fresp_bits_uop_switch(lsu_io_core_exe_0_fresp_bits_uop_switch),
-    .io_core_exe_0_fresp_bits_uop_switch_off(lsu_io_core_exe_0_fresp_bits_uop_switch_off),
-    .io_core_exe_0_fresp_bits_uop_is_unicore(lsu_io_core_exe_0_fresp_bits_uop_is_unicore),
-    .io_core_exe_0_fresp_bits_uop_shift(lsu_io_core_exe_0_fresp_bits_uop_shift),
-    .io_core_exe_0_fresp_bits_uop_lrs3_rtype(lsu_io_core_exe_0_fresp_bits_uop_lrs3_rtype),
-    .io_core_exe_0_fresp_bits_uop_rflag(lsu_io_core_exe_0_fresp_bits_uop_rflag),
-    .io_core_exe_0_fresp_bits_uop_wflag(lsu_io_core_exe_0_fresp_bits_uop_wflag),
-    .io_core_exe_0_fresp_bits_uop_prflag(lsu_io_core_exe_0_fresp_bits_uop_prflag),
-    .io_core_exe_0_fresp_bits_uop_pwflag(lsu_io_core_exe_0_fresp_bits_uop_pwflag),
-    .io_core_exe_0_fresp_bits_uop_pflag_busy(lsu_io_core_exe_0_fresp_bits_uop_pflag_busy),
-    .io_core_exe_0_fresp_bits_uop_stale_pflag(lsu_io_core_exe_0_fresp_bits_uop_stale_pflag),
-    .io_core_exe_0_fresp_bits_uop_op1_sel(lsu_io_core_exe_0_fresp_bits_uop_op1_sel),
-    .io_core_exe_0_fresp_bits_uop_op2_sel(lsu_io_core_exe_0_fresp_bits_uop_op2_sel),
-    .io_core_exe_0_fresp_bits_uop_split_num(lsu_io_core_exe_0_fresp_bits_uop_split_num),
-    .io_core_exe_0_fresp_bits_uop_self_index(lsu_io_core_exe_0_fresp_bits_uop_self_index),
-    .io_core_exe_0_fresp_bits_uop_rob_inst_idx(lsu_io_core_exe_0_fresp_bits_uop_rob_inst_idx),
-    .io_core_exe_0_fresp_bits_uop_address_num(lsu_io_core_exe_0_fresp_bits_uop_address_num),
     .io_core_exe_0_fresp_bits_uop_uopc(lsu_io_core_exe_0_fresp_bits_uop_uopc),
     .io_core_exe_0_fresp_bits_uop_inst(lsu_io_core_exe_0_fresp_bits_uop_inst),
     .io_core_exe_0_fresp_bits_uop_debug_inst(lsu_io_core_exe_0_fresp_bits_uop_debug_inst),
@@ -11969,7 +9016,6 @@ module BoomTile(
     .io_core_exe_0_fresp_bits_uop_ctrl_is_load(lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_load),
     .io_core_exe_0_fresp_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_sta),
     .io_core_exe_0_fresp_bits_uop_ctrl_is_std(lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_std),
-    .io_core_exe_0_fresp_bits_uop_ctrl_op3_sel(lsu_io_core_exe_0_fresp_bits_uop_ctrl_op3_sel),
     .io_core_exe_0_fresp_bits_uop_iw_state(lsu_io_core_exe_0_fresp_bits_uop_iw_state),
     .io_core_exe_0_fresp_bits_uop_iw_p1_poisoned(lsu_io_core_exe_0_fresp_bits_uop_iw_p1_poisoned),
     .io_core_exe_0_fresp_bits_uop_iw_p2_poisoned(lsu_io_core_exe_0_fresp_bits_uop_iw_p2_poisoned),
@@ -12035,23 +9081,6 @@ module BoomTile(
     .io_core_exe_0_fresp_bits_data(lsu_io_core_exe_0_fresp_bits_data),
     .io_core_exe_0_fresp_bits_predicated(lsu_io_core_exe_0_fresp_bits_predicated),
     .io_core_exe_0_fresp_bits_fflags_valid(lsu_io_core_exe_0_fresp_bits_fflags_valid),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_switch(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_switch),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_switch_off(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_switch_off),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_is_unicore(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_is_unicore),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_shift(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_shift),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_rflag(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rflag),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_wflag(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_wflag),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_prflag(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prflag),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_pwflag(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pwflag),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_pflag_busy(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pflag_busy),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_stale_pflag(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_stale_pflag),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_op1_sel(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_op1_sel),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_op2_sel(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_op2_sel),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_split_num(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_split_num),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_self_index(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_self_index),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_address_num(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_address_num),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_uopc(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_uopc),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_inst(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_inst),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_debug_inst(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_debug_inst),
@@ -12069,7 +9098,6 @@ module BoomTile(
     .io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_load(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_load),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_sta),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std),
-    .io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_iw_state(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_iw_state),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned
       ),
@@ -12136,144 +9164,7 @@ module BoomTile(
     .io_core_exe_0_fresp_bits_fflags_bits_uop_debug_fsrc(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_debug_fsrc),
     .io_core_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc(lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc),
     .io_core_exe_0_fresp_bits_fflags_bits_flags(lsu_io_core_exe_0_fresp_bits_fflags_bits_flags),
-    .io_core_exe_0_fresp_bits_flagdata(lsu_io_core_exe_0_fresp_bits_flagdata),
-    .io_core_exe_0_fresp_bits_fflagdata_valid(lsu_io_core_exe_0_fresp_bits_fflagdata_valid),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch_off(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch_off),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_shift(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_shift),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_rflag(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rflag),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_wflag(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_wflag),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_prflag(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prflag),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_pwflag(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pwflag),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_split_num(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_split_num),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_self_index(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_self_index),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_address_num(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_address_num
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_uopc(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uopc),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_inst(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_inst),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_iq_type(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iq_type),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_fu_code(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fu_code),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_state(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_state),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_br(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_br),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jal(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jal),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_mask(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_mask),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_tag(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_tag),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_taken(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_taken),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_pdst(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pdst),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_exception(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_exception),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_bypassable(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bypassable),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_size(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_size),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fence(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fence),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_amo(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_amo),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unique(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unique),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit(
-      lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_val(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_val),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_single(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_single),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if
-      ),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_core_exe_0_fresp_bits_fflagdata_bits_fflag(lsu_io_core_exe_0_fresp_bits_fflagdata_bits_fflag),
     .io_core_dis_uops_0_valid(lsu_io_core_dis_uops_0_valid),
-    .io_core_dis_uops_0_bits_switch(lsu_io_core_dis_uops_0_bits_switch),
-    .io_core_dis_uops_0_bits_switch_off(lsu_io_core_dis_uops_0_bits_switch_off),
-    .io_core_dis_uops_0_bits_is_unicore(lsu_io_core_dis_uops_0_bits_is_unicore),
-    .io_core_dis_uops_0_bits_shift(lsu_io_core_dis_uops_0_bits_shift),
-    .io_core_dis_uops_0_bits_lrs3_rtype(lsu_io_core_dis_uops_0_bits_lrs3_rtype),
-    .io_core_dis_uops_0_bits_rflag(lsu_io_core_dis_uops_0_bits_rflag),
-    .io_core_dis_uops_0_bits_wflag(lsu_io_core_dis_uops_0_bits_wflag),
-    .io_core_dis_uops_0_bits_prflag(lsu_io_core_dis_uops_0_bits_prflag),
-    .io_core_dis_uops_0_bits_pwflag(lsu_io_core_dis_uops_0_bits_pwflag),
-    .io_core_dis_uops_0_bits_pflag_busy(lsu_io_core_dis_uops_0_bits_pflag_busy),
-    .io_core_dis_uops_0_bits_stale_pflag(lsu_io_core_dis_uops_0_bits_stale_pflag),
-    .io_core_dis_uops_0_bits_op1_sel(lsu_io_core_dis_uops_0_bits_op1_sel),
-    .io_core_dis_uops_0_bits_op2_sel(lsu_io_core_dis_uops_0_bits_op2_sel),
-    .io_core_dis_uops_0_bits_split_num(lsu_io_core_dis_uops_0_bits_split_num),
-    .io_core_dis_uops_0_bits_self_index(lsu_io_core_dis_uops_0_bits_self_index),
-    .io_core_dis_uops_0_bits_rob_inst_idx(lsu_io_core_dis_uops_0_bits_rob_inst_idx),
-    .io_core_dis_uops_0_bits_address_num(lsu_io_core_dis_uops_0_bits_address_num),
     .io_core_dis_uops_0_bits_uopc(lsu_io_core_dis_uops_0_bits_uopc),
     .io_core_dis_uops_0_bits_inst(lsu_io_core_dis_uops_0_bits_inst),
     .io_core_dis_uops_0_bits_debug_inst(lsu_io_core_dis_uops_0_bits_debug_inst),
@@ -12291,7 +9182,6 @@ module BoomTile(
     .io_core_dis_uops_0_bits_ctrl_is_load(lsu_io_core_dis_uops_0_bits_ctrl_is_load),
     .io_core_dis_uops_0_bits_ctrl_is_sta(lsu_io_core_dis_uops_0_bits_ctrl_is_sta),
     .io_core_dis_uops_0_bits_ctrl_is_std(lsu_io_core_dis_uops_0_bits_ctrl_is_std),
-    .io_core_dis_uops_0_bits_ctrl_op3_sel(lsu_io_core_dis_uops_0_bits_ctrl_op3_sel),
     .io_core_dis_uops_0_bits_iw_state(lsu_io_core_dis_uops_0_bits_iw_state),
     .io_core_dis_uops_0_bits_iw_p1_poisoned(lsu_io_core_dis_uops_0_bits_iw_p1_poisoned),
     .io_core_dis_uops_0_bits_iw_p2_poisoned(lsu_io_core_dis_uops_0_bits_iw_p2_poisoned),
@@ -12355,23 +9245,6 @@ module BoomTile(
     .io_core_dis_uops_0_bits_debug_fsrc(lsu_io_core_dis_uops_0_bits_debug_fsrc),
     .io_core_dis_uops_0_bits_debug_tsrc(lsu_io_core_dis_uops_0_bits_debug_tsrc),
     .io_core_dis_uops_1_valid(lsu_io_core_dis_uops_1_valid),
-    .io_core_dis_uops_1_bits_switch(lsu_io_core_dis_uops_1_bits_switch),
-    .io_core_dis_uops_1_bits_switch_off(lsu_io_core_dis_uops_1_bits_switch_off),
-    .io_core_dis_uops_1_bits_is_unicore(lsu_io_core_dis_uops_1_bits_is_unicore),
-    .io_core_dis_uops_1_bits_shift(lsu_io_core_dis_uops_1_bits_shift),
-    .io_core_dis_uops_1_bits_lrs3_rtype(lsu_io_core_dis_uops_1_bits_lrs3_rtype),
-    .io_core_dis_uops_1_bits_rflag(lsu_io_core_dis_uops_1_bits_rflag),
-    .io_core_dis_uops_1_bits_wflag(lsu_io_core_dis_uops_1_bits_wflag),
-    .io_core_dis_uops_1_bits_prflag(lsu_io_core_dis_uops_1_bits_prflag),
-    .io_core_dis_uops_1_bits_pwflag(lsu_io_core_dis_uops_1_bits_pwflag),
-    .io_core_dis_uops_1_bits_pflag_busy(lsu_io_core_dis_uops_1_bits_pflag_busy),
-    .io_core_dis_uops_1_bits_stale_pflag(lsu_io_core_dis_uops_1_bits_stale_pflag),
-    .io_core_dis_uops_1_bits_op1_sel(lsu_io_core_dis_uops_1_bits_op1_sel),
-    .io_core_dis_uops_1_bits_op2_sel(lsu_io_core_dis_uops_1_bits_op2_sel),
-    .io_core_dis_uops_1_bits_split_num(lsu_io_core_dis_uops_1_bits_split_num),
-    .io_core_dis_uops_1_bits_self_index(lsu_io_core_dis_uops_1_bits_self_index),
-    .io_core_dis_uops_1_bits_rob_inst_idx(lsu_io_core_dis_uops_1_bits_rob_inst_idx),
-    .io_core_dis_uops_1_bits_address_num(lsu_io_core_dis_uops_1_bits_address_num),
     .io_core_dis_uops_1_bits_uopc(lsu_io_core_dis_uops_1_bits_uopc),
     .io_core_dis_uops_1_bits_inst(lsu_io_core_dis_uops_1_bits_inst),
     .io_core_dis_uops_1_bits_debug_inst(lsu_io_core_dis_uops_1_bits_debug_inst),
@@ -12389,7 +9262,6 @@ module BoomTile(
     .io_core_dis_uops_1_bits_ctrl_is_load(lsu_io_core_dis_uops_1_bits_ctrl_is_load),
     .io_core_dis_uops_1_bits_ctrl_is_sta(lsu_io_core_dis_uops_1_bits_ctrl_is_sta),
     .io_core_dis_uops_1_bits_ctrl_is_std(lsu_io_core_dis_uops_1_bits_ctrl_is_std),
-    .io_core_dis_uops_1_bits_ctrl_op3_sel(lsu_io_core_dis_uops_1_bits_ctrl_op3_sel),
     .io_core_dis_uops_1_bits_iw_state(lsu_io_core_dis_uops_1_bits_iw_state),
     .io_core_dis_uops_1_bits_iw_p1_poisoned(lsu_io_core_dis_uops_1_bits_iw_p1_poisoned),
     .io_core_dis_uops_1_bits_iw_p2_poisoned(lsu_io_core_dis_uops_1_bits_iw_p2_poisoned),
@@ -12462,23 +9334,6 @@ module BoomTile(
     .io_core_stq_full_1(lsu_io_core_stq_full_1),
     .io_core_fp_stdata_ready(lsu_io_core_fp_stdata_ready),
     .io_core_fp_stdata_valid(lsu_io_core_fp_stdata_valid),
-    .io_core_fp_stdata_bits_uop_switch(lsu_io_core_fp_stdata_bits_uop_switch),
-    .io_core_fp_stdata_bits_uop_switch_off(lsu_io_core_fp_stdata_bits_uop_switch_off),
-    .io_core_fp_stdata_bits_uop_is_unicore(lsu_io_core_fp_stdata_bits_uop_is_unicore),
-    .io_core_fp_stdata_bits_uop_shift(lsu_io_core_fp_stdata_bits_uop_shift),
-    .io_core_fp_stdata_bits_uop_lrs3_rtype(lsu_io_core_fp_stdata_bits_uop_lrs3_rtype),
-    .io_core_fp_stdata_bits_uop_rflag(lsu_io_core_fp_stdata_bits_uop_rflag),
-    .io_core_fp_stdata_bits_uop_wflag(lsu_io_core_fp_stdata_bits_uop_wflag),
-    .io_core_fp_stdata_bits_uop_prflag(lsu_io_core_fp_stdata_bits_uop_prflag),
-    .io_core_fp_stdata_bits_uop_pwflag(lsu_io_core_fp_stdata_bits_uop_pwflag),
-    .io_core_fp_stdata_bits_uop_pflag_busy(lsu_io_core_fp_stdata_bits_uop_pflag_busy),
-    .io_core_fp_stdata_bits_uop_stale_pflag(lsu_io_core_fp_stdata_bits_uop_stale_pflag),
-    .io_core_fp_stdata_bits_uop_op1_sel(lsu_io_core_fp_stdata_bits_uop_op1_sel),
-    .io_core_fp_stdata_bits_uop_op2_sel(lsu_io_core_fp_stdata_bits_uop_op2_sel),
-    .io_core_fp_stdata_bits_uop_split_num(lsu_io_core_fp_stdata_bits_uop_split_num),
-    .io_core_fp_stdata_bits_uop_self_index(lsu_io_core_fp_stdata_bits_uop_self_index),
-    .io_core_fp_stdata_bits_uop_rob_inst_idx(lsu_io_core_fp_stdata_bits_uop_rob_inst_idx),
-    .io_core_fp_stdata_bits_uop_address_num(lsu_io_core_fp_stdata_bits_uop_address_num),
     .io_core_fp_stdata_bits_uop_uopc(lsu_io_core_fp_stdata_bits_uop_uopc),
     .io_core_fp_stdata_bits_uop_inst(lsu_io_core_fp_stdata_bits_uop_inst),
     .io_core_fp_stdata_bits_uop_debug_inst(lsu_io_core_fp_stdata_bits_uop_debug_inst),
@@ -12496,7 +9351,6 @@ module BoomTile(
     .io_core_fp_stdata_bits_uop_ctrl_is_load(lsu_io_core_fp_stdata_bits_uop_ctrl_is_load),
     .io_core_fp_stdata_bits_uop_ctrl_is_sta(lsu_io_core_fp_stdata_bits_uop_ctrl_is_sta),
     .io_core_fp_stdata_bits_uop_ctrl_is_std(lsu_io_core_fp_stdata_bits_uop_ctrl_is_std),
-    .io_core_fp_stdata_bits_uop_ctrl_op3_sel(lsu_io_core_fp_stdata_bits_uop_ctrl_op3_sel),
     .io_core_fp_stdata_bits_uop_iw_state(lsu_io_core_fp_stdata_bits_uop_iw_state),
     .io_core_fp_stdata_bits_uop_iw_p1_poisoned(lsu_io_core_fp_stdata_bits_uop_iw_p1_poisoned),
     .io_core_fp_stdata_bits_uop_iw_p2_poisoned(lsu_io_core_fp_stdata_bits_uop_iw_p2_poisoned),
@@ -12562,23 +9416,6 @@ module BoomTile(
     .io_core_fp_stdata_bits_data(lsu_io_core_fp_stdata_bits_data),
     .io_core_fp_stdata_bits_predicated(lsu_io_core_fp_stdata_bits_predicated),
     .io_core_fp_stdata_bits_fflags_valid(lsu_io_core_fp_stdata_bits_fflags_valid),
-    .io_core_fp_stdata_bits_fflags_bits_uop_switch(lsu_io_core_fp_stdata_bits_fflags_bits_uop_switch),
-    .io_core_fp_stdata_bits_fflags_bits_uop_switch_off(lsu_io_core_fp_stdata_bits_fflags_bits_uop_switch_off),
-    .io_core_fp_stdata_bits_fflags_bits_uop_is_unicore(lsu_io_core_fp_stdata_bits_fflags_bits_uop_is_unicore),
-    .io_core_fp_stdata_bits_fflags_bits_uop_shift(lsu_io_core_fp_stdata_bits_fflags_bits_uop_shift),
-    .io_core_fp_stdata_bits_fflags_bits_uop_lrs3_rtype(lsu_io_core_fp_stdata_bits_fflags_bits_uop_lrs3_rtype),
-    .io_core_fp_stdata_bits_fflags_bits_uop_rflag(lsu_io_core_fp_stdata_bits_fflags_bits_uop_rflag),
-    .io_core_fp_stdata_bits_fflags_bits_uop_wflag(lsu_io_core_fp_stdata_bits_fflags_bits_uop_wflag),
-    .io_core_fp_stdata_bits_fflags_bits_uop_prflag(lsu_io_core_fp_stdata_bits_fflags_bits_uop_prflag),
-    .io_core_fp_stdata_bits_fflags_bits_uop_pwflag(lsu_io_core_fp_stdata_bits_fflags_bits_uop_pwflag),
-    .io_core_fp_stdata_bits_fflags_bits_uop_pflag_busy(lsu_io_core_fp_stdata_bits_fflags_bits_uop_pflag_busy),
-    .io_core_fp_stdata_bits_fflags_bits_uop_stale_pflag(lsu_io_core_fp_stdata_bits_fflags_bits_uop_stale_pflag),
-    .io_core_fp_stdata_bits_fflags_bits_uop_op1_sel(lsu_io_core_fp_stdata_bits_fflags_bits_uop_op1_sel),
-    .io_core_fp_stdata_bits_fflags_bits_uop_op2_sel(lsu_io_core_fp_stdata_bits_fflags_bits_uop_op2_sel),
-    .io_core_fp_stdata_bits_fflags_bits_uop_split_num(lsu_io_core_fp_stdata_bits_fflags_bits_uop_split_num),
-    .io_core_fp_stdata_bits_fflags_bits_uop_self_index(lsu_io_core_fp_stdata_bits_fflags_bits_uop_self_index),
-    .io_core_fp_stdata_bits_fflags_bits_uop_rob_inst_idx(lsu_io_core_fp_stdata_bits_fflags_bits_uop_rob_inst_idx),
-    .io_core_fp_stdata_bits_fflags_bits_uop_address_num(lsu_io_core_fp_stdata_bits_fflags_bits_uop_address_num),
     .io_core_fp_stdata_bits_fflags_bits_uop_uopc(lsu_io_core_fp_stdata_bits_fflags_bits_uop_uopc),
     .io_core_fp_stdata_bits_fflags_bits_uop_inst(lsu_io_core_fp_stdata_bits_fflags_bits_uop_inst),
     .io_core_fp_stdata_bits_fflags_bits_uop_debug_inst(lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_inst),
@@ -12596,7 +9433,6 @@ module BoomTile(
     .io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_load(lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_load),
     .io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_sta(lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_sta),
     .io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_std(lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_std),
-    .io_core_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel(lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel),
     .io_core_fp_stdata_bits_fflags_bits_uop_iw_state(lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_state),
     .io_core_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned(lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned),
     .io_core_fp_stdata_bits_fflags_bits_uop_iw_p2_poisoned(lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_p2_poisoned),
@@ -12660,131 +9496,10 @@ module BoomTile(
     .io_core_fp_stdata_bits_fflags_bits_uop_debug_fsrc(lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_fsrc),
     .io_core_fp_stdata_bits_fflags_bits_uop_debug_tsrc(lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_tsrc),
     .io_core_fp_stdata_bits_fflags_bits_flags(lsu_io_core_fp_stdata_bits_fflags_bits_flags),
-    .io_core_fp_stdata_bits_flagdata(lsu_io_core_fp_stdata_bits_flagdata),
-    .io_core_fp_stdata_bits_fflagdata_valid(lsu_io_core_fp_stdata_bits_fflagdata_valid),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_switch(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_switch),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_switch_off(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_switch_off),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_unicore(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_unicore),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_shift(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_shift),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_rflag(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rflag),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_wflag(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_wflag),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_prflag(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prflag),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_pwflag(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pwflag),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_pflag_busy(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pflag_busy),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pflag(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pflag),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_op1_sel(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_op1_sel),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_op2_sel(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_op2_sel),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_split_num(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_split_num),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_self_index(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_self_index),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_address_num(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_address_num),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_uopc(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uopc),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_inst(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_inst),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_debug_inst(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_inst),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_rvc(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_rvc),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_debug_pc(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_pc),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_iq_type(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iq_type),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_fu_code(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fu_code),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_iw_state(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_state),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned(
-      lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned(
-      lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_br(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_br),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_jalr(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_jalr),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_jal(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_jal),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_sfb(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_sfb),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_br_mask(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_br_mask),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_br_tag(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_br_tag),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ftq_idx(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ftq_idx),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_edge_inst(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_edge_inst),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_pc_lob(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pc_lob),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_taken(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_taken),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_imm_packed(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_imm_packed),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_csr_addr(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_csr_addr),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_rob_idx(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rob_idx),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ldq_idx(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldq_idx),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_stq_idx(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stq_idx),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_rxq_idx(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rxq_idx),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_pdst(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pdst),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_prs1(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs1),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_prs2(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs2),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_prs3(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs3),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ppred(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ppred),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_prs1_busy(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs1_busy),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_prs2_busy(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs2_busy),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_prs3_busy(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs3_busy),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ppred_busy(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ppred_busy),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pdst(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pdst),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_exception(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_exception),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_exc_cause(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_exc_cause),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_bypassable(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bypassable),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_mem_cmd(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_cmd),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_mem_size(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_size),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_mem_signed(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_signed),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_fence(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_fence),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_fencei(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_fencei),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_amo(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_amo),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_uses_ldq(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uses_ldq),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_uses_stq(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uses_stq),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc
-      ),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_is_unique(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_unique),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit(
-      lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ldst(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_val(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_val),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_dst_rtype(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_dst_rtype),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_frs3_en(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_frs3_en),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_fp_val(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fp_val),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_fp_single(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fp_single),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc),
-    .io_core_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc(lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc),
-    .io_core_fp_stdata_bits_fflagdata_bits_fflag(lsu_io_core_fp_stdata_bits_fflagdata_bits_fflag),
     .io_core_commit_valids_0(lsu_io_core_commit_valids_0),
     .io_core_commit_valids_1(lsu_io_core_commit_valids_1),
     .io_core_commit_arch_valids_0(lsu_io_core_commit_arch_valids_0),
     .io_core_commit_arch_valids_1(lsu_io_core_commit_arch_valids_1),
-    .io_core_commit_uops_0_switch(lsu_io_core_commit_uops_0_switch),
-    .io_core_commit_uops_0_switch_off(lsu_io_core_commit_uops_0_switch_off),
-    .io_core_commit_uops_0_is_unicore(lsu_io_core_commit_uops_0_is_unicore),
-    .io_core_commit_uops_0_shift(lsu_io_core_commit_uops_0_shift),
-    .io_core_commit_uops_0_lrs3_rtype(lsu_io_core_commit_uops_0_lrs3_rtype),
-    .io_core_commit_uops_0_rflag(lsu_io_core_commit_uops_0_rflag),
-    .io_core_commit_uops_0_wflag(lsu_io_core_commit_uops_0_wflag),
-    .io_core_commit_uops_0_prflag(lsu_io_core_commit_uops_0_prflag),
-    .io_core_commit_uops_0_pwflag(lsu_io_core_commit_uops_0_pwflag),
-    .io_core_commit_uops_0_pflag_busy(lsu_io_core_commit_uops_0_pflag_busy),
-    .io_core_commit_uops_0_stale_pflag(lsu_io_core_commit_uops_0_stale_pflag),
-    .io_core_commit_uops_0_op1_sel(lsu_io_core_commit_uops_0_op1_sel),
-    .io_core_commit_uops_0_op2_sel(lsu_io_core_commit_uops_0_op2_sel),
-    .io_core_commit_uops_0_split_num(lsu_io_core_commit_uops_0_split_num),
-    .io_core_commit_uops_0_self_index(lsu_io_core_commit_uops_0_self_index),
-    .io_core_commit_uops_0_rob_inst_idx(lsu_io_core_commit_uops_0_rob_inst_idx),
-    .io_core_commit_uops_0_address_num(lsu_io_core_commit_uops_0_address_num),
     .io_core_commit_uops_0_uopc(lsu_io_core_commit_uops_0_uopc),
     .io_core_commit_uops_0_inst(lsu_io_core_commit_uops_0_inst),
     .io_core_commit_uops_0_debug_inst(lsu_io_core_commit_uops_0_debug_inst),
@@ -12802,7 +9517,6 @@ module BoomTile(
     .io_core_commit_uops_0_ctrl_is_load(lsu_io_core_commit_uops_0_ctrl_is_load),
     .io_core_commit_uops_0_ctrl_is_sta(lsu_io_core_commit_uops_0_ctrl_is_sta),
     .io_core_commit_uops_0_ctrl_is_std(lsu_io_core_commit_uops_0_ctrl_is_std),
-    .io_core_commit_uops_0_ctrl_op3_sel(lsu_io_core_commit_uops_0_ctrl_op3_sel),
     .io_core_commit_uops_0_iw_state(lsu_io_core_commit_uops_0_iw_state),
     .io_core_commit_uops_0_iw_p1_poisoned(lsu_io_core_commit_uops_0_iw_p1_poisoned),
     .io_core_commit_uops_0_iw_p2_poisoned(lsu_io_core_commit_uops_0_iw_p2_poisoned),
@@ -12865,23 +9579,6 @@ module BoomTile(
     .io_core_commit_uops_0_bp_xcpt_if(lsu_io_core_commit_uops_0_bp_xcpt_if),
     .io_core_commit_uops_0_debug_fsrc(lsu_io_core_commit_uops_0_debug_fsrc),
     .io_core_commit_uops_0_debug_tsrc(lsu_io_core_commit_uops_0_debug_tsrc),
-    .io_core_commit_uops_1_switch(lsu_io_core_commit_uops_1_switch),
-    .io_core_commit_uops_1_switch_off(lsu_io_core_commit_uops_1_switch_off),
-    .io_core_commit_uops_1_is_unicore(lsu_io_core_commit_uops_1_is_unicore),
-    .io_core_commit_uops_1_shift(lsu_io_core_commit_uops_1_shift),
-    .io_core_commit_uops_1_lrs3_rtype(lsu_io_core_commit_uops_1_lrs3_rtype),
-    .io_core_commit_uops_1_rflag(lsu_io_core_commit_uops_1_rflag),
-    .io_core_commit_uops_1_wflag(lsu_io_core_commit_uops_1_wflag),
-    .io_core_commit_uops_1_prflag(lsu_io_core_commit_uops_1_prflag),
-    .io_core_commit_uops_1_pwflag(lsu_io_core_commit_uops_1_pwflag),
-    .io_core_commit_uops_1_pflag_busy(lsu_io_core_commit_uops_1_pflag_busy),
-    .io_core_commit_uops_1_stale_pflag(lsu_io_core_commit_uops_1_stale_pflag),
-    .io_core_commit_uops_1_op1_sel(lsu_io_core_commit_uops_1_op1_sel),
-    .io_core_commit_uops_1_op2_sel(lsu_io_core_commit_uops_1_op2_sel),
-    .io_core_commit_uops_1_split_num(lsu_io_core_commit_uops_1_split_num),
-    .io_core_commit_uops_1_self_index(lsu_io_core_commit_uops_1_self_index),
-    .io_core_commit_uops_1_rob_inst_idx(lsu_io_core_commit_uops_1_rob_inst_idx),
-    .io_core_commit_uops_1_address_num(lsu_io_core_commit_uops_1_address_num),
     .io_core_commit_uops_1_uopc(lsu_io_core_commit_uops_1_uopc),
     .io_core_commit_uops_1_inst(lsu_io_core_commit_uops_1_inst),
     .io_core_commit_uops_1_debug_inst(lsu_io_core_commit_uops_1_debug_inst),
@@ -12899,7 +9596,6 @@ module BoomTile(
     .io_core_commit_uops_1_ctrl_is_load(lsu_io_core_commit_uops_1_ctrl_is_load),
     .io_core_commit_uops_1_ctrl_is_sta(lsu_io_core_commit_uops_1_ctrl_is_sta),
     .io_core_commit_uops_1_ctrl_is_std(lsu_io_core_commit_uops_1_ctrl_is_std),
-    .io_core_commit_uops_1_ctrl_op3_sel(lsu_io_core_commit_uops_1_ctrl_op3_sel),
     .io_core_commit_uops_1_iw_state(lsu_io_core_commit_uops_1_iw_state),
     .io_core_commit_uops_1_iw_p1_poisoned(lsu_io_core_commit_uops_1_iw_p1_poisoned),
     .io_core_commit_uops_1_iw_p2_poisoned(lsu_io_core_commit_uops_1_iw_p2_poisoned),
@@ -12964,8 +9660,6 @@ module BoomTile(
     .io_core_commit_uops_1_debug_tsrc(lsu_io_core_commit_uops_1_debug_tsrc),
     .io_core_commit_fflags_valid(lsu_io_core_commit_fflags_valid),
     .io_core_commit_fflags_bits(lsu_io_core_commit_fflags_bits),
-    .io_core_commit_fflag_exception_valid(lsu_io_core_commit_fflag_exception_valid),
-    .io_core_commit_fflag_exception_bits(lsu_io_core_commit_fflag_exception_bits),
     .io_core_commit_debug_insts_0(lsu_io_core_commit_debug_insts_0),
     .io_core_commit_debug_insts_1(lsu_io_core_commit_debug_insts_1),
     .io_core_commit_rbk_valids_0(lsu_io_core_commit_rbk_valids_0),
@@ -12973,8 +9667,6 @@ module BoomTile(
     .io_core_commit_rollback(lsu_io_core_commit_rollback),
     .io_core_commit_debug_wdata_0(lsu_io_core_commit_debug_wdata_0),
     .io_core_commit_debug_wdata_1(lsu_io_core_commit_debug_wdata_1),
-    .io_core_commit_debug_wflagdata_0(lsu_io_core_commit_debug_wflagdata_0),
-    .io_core_commit_debug_wflagdata_1(lsu_io_core_commit_debug_wflagdata_1),
     .io_core_commit_load_at_rob_head(lsu_io_core_commit_load_at_rob_head),
     .io_core_clr_bsy_0_valid(lsu_io_core_clr_bsy_0_valid),
     .io_core_clr_bsy_0_bits(lsu_io_core_clr_bsy_0_bits),
@@ -12982,33 +9674,12 @@ module BoomTile(
     .io_core_clr_bsy_1_bits(lsu_io_core_clr_bsy_1_bits),
     .io_core_clr_unsafe_0_valid(lsu_io_core_clr_unsafe_0_valid),
     .io_core_clr_unsafe_0_bits(lsu_io_core_clr_unsafe_0_bits),
-    .io_core_clr_bsy_first_idx_0(lsu_io_core_clr_bsy_first_idx_0),
-    .io_core_clr_bsy_first_idx_1(lsu_io_core_clr_bsy_first_idx_1),
-    .io_core_clr_bsy_self_idx_0(lsu_io_core_clr_bsy_self_idx_0),
-    .io_core_clr_bsy_self_idx_1(lsu_io_core_clr_bsy_self_idx_1),
     .io_core_fence_dmem(lsu_io_core_fence_dmem),
     .io_core_spec_ld_wakeup_0_valid(lsu_io_core_spec_ld_wakeup_0_valid),
     .io_core_spec_ld_wakeup_0_bits(lsu_io_core_spec_ld_wakeup_0_bits),
     .io_core_ld_miss(lsu_io_core_ld_miss),
     .io_core_brupdate_b1_resolve_mask(lsu_io_core_brupdate_b1_resolve_mask),
     .io_core_brupdate_b1_mispredict_mask(lsu_io_core_brupdate_b1_mispredict_mask),
-    .io_core_brupdate_b2_uop_switch(lsu_io_core_brupdate_b2_uop_switch),
-    .io_core_brupdate_b2_uop_switch_off(lsu_io_core_brupdate_b2_uop_switch_off),
-    .io_core_brupdate_b2_uop_is_unicore(lsu_io_core_brupdate_b2_uop_is_unicore),
-    .io_core_brupdate_b2_uop_shift(lsu_io_core_brupdate_b2_uop_shift),
-    .io_core_brupdate_b2_uop_lrs3_rtype(lsu_io_core_brupdate_b2_uop_lrs3_rtype),
-    .io_core_brupdate_b2_uop_rflag(lsu_io_core_brupdate_b2_uop_rflag),
-    .io_core_brupdate_b2_uop_wflag(lsu_io_core_brupdate_b2_uop_wflag),
-    .io_core_brupdate_b2_uop_prflag(lsu_io_core_brupdate_b2_uop_prflag),
-    .io_core_brupdate_b2_uop_pwflag(lsu_io_core_brupdate_b2_uop_pwflag),
-    .io_core_brupdate_b2_uop_pflag_busy(lsu_io_core_brupdate_b2_uop_pflag_busy),
-    .io_core_brupdate_b2_uop_stale_pflag(lsu_io_core_brupdate_b2_uop_stale_pflag),
-    .io_core_brupdate_b2_uop_op1_sel(lsu_io_core_brupdate_b2_uop_op1_sel),
-    .io_core_brupdate_b2_uop_op2_sel(lsu_io_core_brupdate_b2_uop_op2_sel),
-    .io_core_brupdate_b2_uop_split_num(lsu_io_core_brupdate_b2_uop_split_num),
-    .io_core_brupdate_b2_uop_self_index(lsu_io_core_brupdate_b2_uop_self_index),
-    .io_core_brupdate_b2_uop_rob_inst_idx(lsu_io_core_brupdate_b2_uop_rob_inst_idx),
-    .io_core_brupdate_b2_uop_address_num(lsu_io_core_brupdate_b2_uop_address_num),
     .io_core_brupdate_b2_uop_uopc(lsu_io_core_brupdate_b2_uop_uopc),
     .io_core_brupdate_b2_uop_inst(lsu_io_core_brupdate_b2_uop_inst),
     .io_core_brupdate_b2_uop_debug_inst(lsu_io_core_brupdate_b2_uop_debug_inst),
@@ -13026,7 +9697,6 @@ module BoomTile(
     .io_core_brupdate_b2_uop_ctrl_is_load(lsu_io_core_brupdate_b2_uop_ctrl_is_load),
     .io_core_brupdate_b2_uop_ctrl_is_sta(lsu_io_core_brupdate_b2_uop_ctrl_is_sta),
     .io_core_brupdate_b2_uop_ctrl_is_std(lsu_io_core_brupdate_b2_uop_ctrl_is_std),
-    .io_core_brupdate_b2_uop_ctrl_op3_sel(lsu_io_core_brupdate_b2_uop_ctrl_op3_sel),
     .io_core_brupdate_b2_uop_iw_state(lsu_io_core_brupdate_b2_uop_iw_state),
     .io_core_brupdate_b2_uop_iw_p1_poisoned(lsu_io_core_brupdate_b2_uop_iw_p1_poisoned),
     .io_core_brupdate_b2_uop_iw_p2_poisoned(lsu_io_core_brupdate_b2_uop_iw_p2_poisoned),
@@ -13101,23 +9771,6 @@ module BoomTile(
     .io_core_exception(lsu_io_core_exception),
     .io_core_fencei_rdy(lsu_io_core_fencei_rdy),
     .io_core_lxcpt_valid(lsu_io_core_lxcpt_valid),
-    .io_core_lxcpt_bits_uop_switch(lsu_io_core_lxcpt_bits_uop_switch),
-    .io_core_lxcpt_bits_uop_switch_off(lsu_io_core_lxcpt_bits_uop_switch_off),
-    .io_core_lxcpt_bits_uop_is_unicore(lsu_io_core_lxcpt_bits_uop_is_unicore),
-    .io_core_lxcpt_bits_uop_shift(lsu_io_core_lxcpt_bits_uop_shift),
-    .io_core_lxcpt_bits_uop_lrs3_rtype(lsu_io_core_lxcpt_bits_uop_lrs3_rtype),
-    .io_core_lxcpt_bits_uop_rflag(lsu_io_core_lxcpt_bits_uop_rflag),
-    .io_core_lxcpt_bits_uop_wflag(lsu_io_core_lxcpt_bits_uop_wflag),
-    .io_core_lxcpt_bits_uop_prflag(lsu_io_core_lxcpt_bits_uop_prflag),
-    .io_core_lxcpt_bits_uop_pwflag(lsu_io_core_lxcpt_bits_uop_pwflag),
-    .io_core_lxcpt_bits_uop_pflag_busy(lsu_io_core_lxcpt_bits_uop_pflag_busy),
-    .io_core_lxcpt_bits_uop_stale_pflag(lsu_io_core_lxcpt_bits_uop_stale_pflag),
-    .io_core_lxcpt_bits_uop_op1_sel(lsu_io_core_lxcpt_bits_uop_op1_sel),
-    .io_core_lxcpt_bits_uop_op2_sel(lsu_io_core_lxcpt_bits_uop_op2_sel),
-    .io_core_lxcpt_bits_uop_split_num(lsu_io_core_lxcpt_bits_uop_split_num),
-    .io_core_lxcpt_bits_uop_self_index(lsu_io_core_lxcpt_bits_uop_self_index),
-    .io_core_lxcpt_bits_uop_rob_inst_idx(lsu_io_core_lxcpt_bits_uop_rob_inst_idx),
-    .io_core_lxcpt_bits_uop_address_num(lsu_io_core_lxcpt_bits_uop_address_num),
     .io_core_lxcpt_bits_uop_uopc(lsu_io_core_lxcpt_bits_uop_uopc),
     .io_core_lxcpt_bits_uop_inst(lsu_io_core_lxcpt_bits_uop_inst),
     .io_core_lxcpt_bits_uop_debug_inst(lsu_io_core_lxcpt_bits_uop_debug_inst),
@@ -13135,7 +9788,6 @@ module BoomTile(
     .io_core_lxcpt_bits_uop_ctrl_is_load(lsu_io_core_lxcpt_bits_uop_ctrl_is_load),
     .io_core_lxcpt_bits_uop_ctrl_is_sta(lsu_io_core_lxcpt_bits_uop_ctrl_is_sta),
     .io_core_lxcpt_bits_uop_ctrl_is_std(lsu_io_core_lxcpt_bits_uop_ctrl_is_std),
-    .io_core_lxcpt_bits_uop_ctrl_op3_sel(lsu_io_core_lxcpt_bits_uop_ctrl_op3_sel),
     .io_core_lxcpt_bits_uop_iw_state(lsu_io_core_lxcpt_bits_uop_iw_state),
     .io_core_lxcpt_bits_uop_iw_p1_poisoned(lsu_io_core_lxcpt_bits_uop_iw_p1_poisoned),
     .io_core_lxcpt_bits_uop_iw_p2_poisoned(lsu_io_core_lxcpt_bits_uop_iw_p2_poisoned),
@@ -13207,23 +9859,6 @@ module BoomTile(
     .io_dmem_req_ready(lsu_io_dmem_req_ready),
     .io_dmem_req_valid(lsu_io_dmem_req_valid),
     .io_dmem_req_bits_0_valid(lsu_io_dmem_req_bits_0_valid),
-    .io_dmem_req_bits_0_bits_uop_switch(lsu_io_dmem_req_bits_0_bits_uop_switch),
-    .io_dmem_req_bits_0_bits_uop_switch_off(lsu_io_dmem_req_bits_0_bits_uop_switch_off),
-    .io_dmem_req_bits_0_bits_uop_is_unicore(lsu_io_dmem_req_bits_0_bits_uop_is_unicore),
-    .io_dmem_req_bits_0_bits_uop_shift(lsu_io_dmem_req_bits_0_bits_uop_shift),
-    .io_dmem_req_bits_0_bits_uop_lrs3_rtype(lsu_io_dmem_req_bits_0_bits_uop_lrs3_rtype),
-    .io_dmem_req_bits_0_bits_uop_rflag(lsu_io_dmem_req_bits_0_bits_uop_rflag),
-    .io_dmem_req_bits_0_bits_uop_wflag(lsu_io_dmem_req_bits_0_bits_uop_wflag),
-    .io_dmem_req_bits_0_bits_uop_prflag(lsu_io_dmem_req_bits_0_bits_uop_prflag),
-    .io_dmem_req_bits_0_bits_uop_pwflag(lsu_io_dmem_req_bits_0_bits_uop_pwflag),
-    .io_dmem_req_bits_0_bits_uop_pflag_busy(lsu_io_dmem_req_bits_0_bits_uop_pflag_busy),
-    .io_dmem_req_bits_0_bits_uop_stale_pflag(lsu_io_dmem_req_bits_0_bits_uop_stale_pflag),
-    .io_dmem_req_bits_0_bits_uop_op1_sel(lsu_io_dmem_req_bits_0_bits_uop_op1_sel),
-    .io_dmem_req_bits_0_bits_uop_op2_sel(lsu_io_dmem_req_bits_0_bits_uop_op2_sel),
-    .io_dmem_req_bits_0_bits_uop_split_num(lsu_io_dmem_req_bits_0_bits_uop_split_num),
-    .io_dmem_req_bits_0_bits_uop_self_index(lsu_io_dmem_req_bits_0_bits_uop_self_index),
-    .io_dmem_req_bits_0_bits_uop_rob_inst_idx(lsu_io_dmem_req_bits_0_bits_uop_rob_inst_idx),
-    .io_dmem_req_bits_0_bits_uop_address_num(lsu_io_dmem_req_bits_0_bits_uop_address_num),
     .io_dmem_req_bits_0_bits_uop_uopc(lsu_io_dmem_req_bits_0_bits_uop_uopc),
     .io_dmem_req_bits_0_bits_uop_inst(lsu_io_dmem_req_bits_0_bits_uop_inst),
     .io_dmem_req_bits_0_bits_uop_debug_inst(lsu_io_dmem_req_bits_0_bits_uop_debug_inst),
@@ -13241,7 +9876,6 @@ module BoomTile(
     .io_dmem_req_bits_0_bits_uop_ctrl_is_load(lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_load),
     .io_dmem_req_bits_0_bits_uop_ctrl_is_sta(lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_sta),
     .io_dmem_req_bits_0_bits_uop_ctrl_is_std(lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_std),
-    .io_dmem_req_bits_0_bits_uop_ctrl_op3_sel(lsu_io_dmem_req_bits_0_bits_uop_ctrl_op3_sel),
     .io_dmem_req_bits_0_bits_uop_iw_state(lsu_io_dmem_req_bits_0_bits_uop_iw_state),
     .io_dmem_req_bits_0_bits_uop_iw_p1_poisoned(lsu_io_dmem_req_bits_0_bits_uop_iw_p1_poisoned),
     .io_dmem_req_bits_0_bits_uop_iw_p2_poisoned(lsu_io_dmem_req_bits_0_bits_uop_iw_p2_poisoned),
@@ -13309,23 +9943,6 @@ module BoomTile(
     .io_dmem_req_bits_0_bits_is_hella(lsu_io_dmem_req_bits_0_bits_is_hella),
     .io_dmem_s1_kill_0(lsu_io_dmem_s1_kill_0),
     .io_dmem_resp_0_valid(lsu_io_dmem_resp_0_valid),
-    .io_dmem_resp_0_bits_uop_switch(lsu_io_dmem_resp_0_bits_uop_switch),
-    .io_dmem_resp_0_bits_uop_switch_off(lsu_io_dmem_resp_0_bits_uop_switch_off),
-    .io_dmem_resp_0_bits_uop_is_unicore(lsu_io_dmem_resp_0_bits_uop_is_unicore),
-    .io_dmem_resp_0_bits_uop_shift(lsu_io_dmem_resp_0_bits_uop_shift),
-    .io_dmem_resp_0_bits_uop_lrs3_rtype(lsu_io_dmem_resp_0_bits_uop_lrs3_rtype),
-    .io_dmem_resp_0_bits_uop_rflag(lsu_io_dmem_resp_0_bits_uop_rflag),
-    .io_dmem_resp_0_bits_uop_wflag(lsu_io_dmem_resp_0_bits_uop_wflag),
-    .io_dmem_resp_0_bits_uop_prflag(lsu_io_dmem_resp_0_bits_uop_prflag),
-    .io_dmem_resp_0_bits_uop_pwflag(lsu_io_dmem_resp_0_bits_uop_pwflag),
-    .io_dmem_resp_0_bits_uop_pflag_busy(lsu_io_dmem_resp_0_bits_uop_pflag_busy),
-    .io_dmem_resp_0_bits_uop_stale_pflag(lsu_io_dmem_resp_0_bits_uop_stale_pflag),
-    .io_dmem_resp_0_bits_uop_op1_sel(lsu_io_dmem_resp_0_bits_uop_op1_sel),
-    .io_dmem_resp_0_bits_uop_op2_sel(lsu_io_dmem_resp_0_bits_uop_op2_sel),
-    .io_dmem_resp_0_bits_uop_split_num(lsu_io_dmem_resp_0_bits_uop_split_num),
-    .io_dmem_resp_0_bits_uop_self_index(lsu_io_dmem_resp_0_bits_uop_self_index),
-    .io_dmem_resp_0_bits_uop_rob_inst_idx(lsu_io_dmem_resp_0_bits_uop_rob_inst_idx),
-    .io_dmem_resp_0_bits_uop_address_num(lsu_io_dmem_resp_0_bits_uop_address_num),
     .io_dmem_resp_0_bits_uop_uopc(lsu_io_dmem_resp_0_bits_uop_uopc),
     .io_dmem_resp_0_bits_uop_inst(lsu_io_dmem_resp_0_bits_uop_inst),
     .io_dmem_resp_0_bits_uop_debug_inst(lsu_io_dmem_resp_0_bits_uop_debug_inst),
@@ -13343,7 +9960,6 @@ module BoomTile(
     .io_dmem_resp_0_bits_uop_ctrl_is_load(lsu_io_dmem_resp_0_bits_uop_ctrl_is_load),
     .io_dmem_resp_0_bits_uop_ctrl_is_sta(lsu_io_dmem_resp_0_bits_uop_ctrl_is_sta),
     .io_dmem_resp_0_bits_uop_ctrl_is_std(lsu_io_dmem_resp_0_bits_uop_ctrl_is_std),
-    .io_dmem_resp_0_bits_uop_ctrl_op3_sel(lsu_io_dmem_resp_0_bits_uop_ctrl_op3_sel),
     .io_dmem_resp_0_bits_uop_iw_state(lsu_io_dmem_resp_0_bits_uop_iw_state),
     .io_dmem_resp_0_bits_uop_iw_p1_poisoned(lsu_io_dmem_resp_0_bits_uop_iw_p1_poisoned),
     .io_dmem_resp_0_bits_uop_iw_p2_poisoned(lsu_io_dmem_resp_0_bits_uop_iw_p2_poisoned),
@@ -13409,23 +10025,6 @@ module BoomTile(
     .io_dmem_resp_0_bits_data(lsu_io_dmem_resp_0_bits_data),
     .io_dmem_resp_0_bits_is_hella(lsu_io_dmem_resp_0_bits_is_hella),
     .io_dmem_nack_0_valid(lsu_io_dmem_nack_0_valid),
-    .io_dmem_nack_0_bits_uop_switch(lsu_io_dmem_nack_0_bits_uop_switch),
-    .io_dmem_nack_0_bits_uop_switch_off(lsu_io_dmem_nack_0_bits_uop_switch_off),
-    .io_dmem_nack_0_bits_uop_is_unicore(lsu_io_dmem_nack_0_bits_uop_is_unicore),
-    .io_dmem_nack_0_bits_uop_shift(lsu_io_dmem_nack_0_bits_uop_shift),
-    .io_dmem_nack_0_bits_uop_lrs3_rtype(lsu_io_dmem_nack_0_bits_uop_lrs3_rtype),
-    .io_dmem_nack_0_bits_uop_rflag(lsu_io_dmem_nack_0_bits_uop_rflag),
-    .io_dmem_nack_0_bits_uop_wflag(lsu_io_dmem_nack_0_bits_uop_wflag),
-    .io_dmem_nack_0_bits_uop_prflag(lsu_io_dmem_nack_0_bits_uop_prflag),
-    .io_dmem_nack_0_bits_uop_pwflag(lsu_io_dmem_nack_0_bits_uop_pwflag),
-    .io_dmem_nack_0_bits_uop_pflag_busy(lsu_io_dmem_nack_0_bits_uop_pflag_busy),
-    .io_dmem_nack_0_bits_uop_stale_pflag(lsu_io_dmem_nack_0_bits_uop_stale_pflag),
-    .io_dmem_nack_0_bits_uop_op1_sel(lsu_io_dmem_nack_0_bits_uop_op1_sel),
-    .io_dmem_nack_0_bits_uop_op2_sel(lsu_io_dmem_nack_0_bits_uop_op2_sel),
-    .io_dmem_nack_0_bits_uop_split_num(lsu_io_dmem_nack_0_bits_uop_split_num),
-    .io_dmem_nack_0_bits_uop_self_index(lsu_io_dmem_nack_0_bits_uop_self_index),
-    .io_dmem_nack_0_bits_uop_rob_inst_idx(lsu_io_dmem_nack_0_bits_uop_rob_inst_idx),
-    .io_dmem_nack_0_bits_uop_address_num(lsu_io_dmem_nack_0_bits_uop_address_num),
     .io_dmem_nack_0_bits_uop_uopc(lsu_io_dmem_nack_0_bits_uop_uopc),
     .io_dmem_nack_0_bits_uop_inst(lsu_io_dmem_nack_0_bits_uop_inst),
     .io_dmem_nack_0_bits_uop_debug_inst(lsu_io_dmem_nack_0_bits_uop_debug_inst),
@@ -13443,7 +10042,6 @@ module BoomTile(
     .io_dmem_nack_0_bits_uop_ctrl_is_load(lsu_io_dmem_nack_0_bits_uop_ctrl_is_load),
     .io_dmem_nack_0_bits_uop_ctrl_is_sta(lsu_io_dmem_nack_0_bits_uop_ctrl_is_sta),
     .io_dmem_nack_0_bits_uop_ctrl_is_std(lsu_io_dmem_nack_0_bits_uop_ctrl_is_std),
-    .io_dmem_nack_0_bits_uop_ctrl_op3_sel(lsu_io_dmem_nack_0_bits_uop_ctrl_op3_sel),
     .io_dmem_nack_0_bits_uop_iw_state(lsu_io_dmem_nack_0_bits_uop_iw_state),
     .io_dmem_nack_0_bits_uop_iw_p1_poisoned(lsu_io_dmem_nack_0_bits_uop_iw_p1_poisoned),
     .io_dmem_nack_0_bits_uop_iw_p2_poisoned(lsu_io_dmem_nack_0_bits_uop_iw_p2_poisoned),
@@ -13511,23 +10109,6 @@ module BoomTile(
     .io_dmem_nack_0_bits_is_hella(lsu_io_dmem_nack_0_bits_is_hella),
     .io_dmem_brupdate_b1_resolve_mask(lsu_io_dmem_brupdate_b1_resolve_mask),
     .io_dmem_brupdate_b1_mispredict_mask(lsu_io_dmem_brupdate_b1_mispredict_mask),
-    .io_dmem_brupdate_b2_uop_switch(lsu_io_dmem_brupdate_b2_uop_switch),
-    .io_dmem_brupdate_b2_uop_switch_off(lsu_io_dmem_brupdate_b2_uop_switch_off),
-    .io_dmem_brupdate_b2_uop_is_unicore(lsu_io_dmem_brupdate_b2_uop_is_unicore),
-    .io_dmem_brupdate_b2_uop_shift(lsu_io_dmem_brupdate_b2_uop_shift),
-    .io_dmem_brupdate_b2_uop_lrs3_rtype(lsu_io_dmem_brupdate_b2_uop_lrs3_rtype),
-    .io_dmem_brupdate_b2_uop_rflag(lsu_io_dmem_brupdate_b2_uop_rflag),
-    .io_dmem_brupdate_b2_uop_wflag(lsu_io_dmem_brupdate_b2_uop_wflag),
-    .io_dmem_brupdate_b2_uop_prflag(lsu_io_dmem_brupdate_b2_uop_prflag),
-    .io_dmem_brupdate_b2_uop_pwflag(lsu_io_dmem_brupdate_b2_uop_pwflag),
-    .io_dmem_brupdate_b2_uop_pflag_busy(lsu_io_dmem_brupdate_b2_uop_pflag_busy),
-    .io_dmem_brupdate_b2_uop_stale_pflag(lsu_io_dmem_brupdate_b2_uop_stale_pflag),
-    .io_dmem_brupdate_b2_uop_op1_sel(lsu_io_dmem_brupdate_b2_uop_op1_sel),
-    .io_dmem_brupdate_b2_uop_op2_sel(lsu_io_dmem_brupdate_b2_uop_op2_sel),
-    .io_dmem_brupdate_b2_uop_split_num(lsu_io_dmem_brupdate_b2_uop_split_num),
-    .io_dmem_brupdate_b2_uop_self_index(lsu_io_dmem_brupdate_b2_uop_self_index),
-    .io_dmem_brupdate_b2_uop_rob_inst_idx(lsu_io_dmem_brupdate_b2_uop_rob_inst_idx),
-    .io_dmem_brupdate_b2_uop_address_num(lsu_io_dmem_brupdate_b2_uop_address_num),
     .io_dmem_brupdate_b2_uop_uopc(lsu_io_dmem_brupdate_b2_uop_uopc),
     .io_dmem_brupdate_b2_uop_inst(lsu_io_dmem_brupdate_b2_uop_inst),
     .io_dmem_brupdate_b2_uop_debug_inst(lsu_io_dmem_brupdate_b2_uop_debug_inst),
@@ -13545,7 +10126,6 @@ module BoomTile(
     .io_dmem_brupdate_b2_uop_ctrl_is_load(lsu_io_dmem_brupdate_b2_uop_ctrl_is_load),
     .io_dmem_brupdate_b2_uop_ctrl_is_sta(lsu_io_dmem_brupdate_b2_uop_ctrl_is_sta),
     .io_dmem_brupdate_b2_uop_ctrl_is_std(lsu_io_dmem_brupdate_b2_uop_ctrl_is_std),
-    .io_dmem_brupdate_b2_uop_ctrl_op3_sel(lsu_io_dmem_brupdate_b2_uop_ctrl_op3_sel),
     .io_dmem_brupdate_b2_uop_iw_state(lsu_io_dmem_brupdate_b2_uop_iw_state),
     .io_dmem_brupdate_b2_uop_iw_p1_poisoned(lsu_io_dmem_brupdate_b2_uop_iw_p1_poisoned),
     .io_dmem_brupdate_b2_uop_iw_p2_poisoned(lsu_io_dmem_brupdate_b2_uop_iw_p2_poisoned),
@@ -14542,23 +11122,6 @@ module BoomTile(
   assign dcache_auto_out_e_ready = tlMasterXbar_auto_in_0_e_ready; // @[Nodes.scala 1207:84 LazyModule.scala 298:16]
   assign dcache_io_lsu_req_valid = lsu_io_dmem_req_valid; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_valid = lsu_io_dmem_req_bits_0_valid; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_switch = lsu_io_dmem_req_bits_0_bits_uop_switch; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_switch_off = lsu_io_dmem_req_bits_0_bits_uop_switch_off; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_is_unicore = lsu_io_dmem_req_bits_0_bits_uop_is_unicore; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_shift = lsu_io_dmem_req_bits_0_bits_uop_shift; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_lrs3_rtype = lsu_io_dmem_req_bits_0_bits_uop_lrs3_rtype; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_rflag = lsu_io_dmem_req_bits_0_bits_uop_rflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_wflag = lsu_io_dmem_req_bits_0_bits_uop_wflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_prflag = lsu_io_dmem_req_bits_0_bits_uop_prflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_pwflag = lsu_io_dmem_req_bits_0_bits_uop_pwflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_pflag_busy = lsu_io_dmem_req_bits_0_bits_uop_pflag_busy; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_stale_pflag = lsu_io_dmem_req_bits_0_bits_uop_stale_pflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_op1_sel = lsu_io_dmem_req_bits_0_bits_uop_op1_sel; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_op2_sel = lsu_io_dmem_req_bits_0_bits_uop_op2_sel; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_split_num = lsu_io_dmem_req_bits_0_bits_uop_split_num; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_self_index = lsu_io_dmem_req_bits_0_bits_uop_self_index; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_rob_inst_idx = lsu_io_dmem_req_bits_0_bits_uop_rob_inst_idx; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_address_num = lsu_io_dmem_req_bits_0_bits_uop_address_num; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_uopc = lsu_io_dmem_req_bits_0_bits_uop_uopc; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_inst = lsu_io_dmem_req_bits_0_bits_uop_inst; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_debug_inst = lsu_io_dmem_req_bits_0_bits_uop_debug_inst; // @[tile.scala 239:30]
@@ -14576,7 +11139,6 @@ module BoomTile(
   assign dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_load = lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_load; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_sta = lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_sta; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_ctrl_is_std = lsu_io_dmem_req_bits_0_bits_uop_ctrl_is_std; // @[tile.scala 239:30]
-  assign dcache_io_lsu_req_bits_0_bits_uop_ctrl_op3_sel = lsu_io_dmem_req_bits_0_bits_uop_ctrl_op3_sel; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_iw_state = lsu_io_dmem_req_bits_0_bits_uop_iw_state; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_iw_p1_poisoned = lsu_io_dmem_req_bits_0_bits_uop_iw_p1_poisoned; // @[tile.scala 239:30]
   assign dcache_io_lsu_req_bits_0_bits_uop_iw_p2_poisoned = lsu_io_dmem_req_bits_0_bits_uop_iw_p2_poisoned; // @[tile.scala 239:30]
@@ -14645,23 +11207,6 @@ module BoomTile(
   assign dcache_io_lsu_s1_kill_0 = lsu_io_dmem_s1_kill_0; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b1_resolve_mask = lsu_io_dmem_brupdate_b1_resolve_mask; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b1_mispredict_mask = lsu_io_dmem_brupdate_b1_mispredict_mask; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_switch = lsu_io_dmem_brupdate_b2_uop_switch; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_switch_off = lsu_io_dmem_brupdate_b2_uop_switch_off; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_is_unicore = lsu_io_dmem_brupdate_b2_uop_is_unicore; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_shift = lsu_io_dmem_brupdate_b2_uop_shift; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_lrs3_rtype = lsu_io_dmem_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_rflag = lsu_io_dmem_brupdate_b2_uop_rflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_wflag = lsu_io_dmem_brupdate_b2_uop_wflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_prflag = lsu_io_dmem_brupdate_b2_uop_prflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_pwflag = lsu_io_dmem_brupdate_b2_uop_pwflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_pflag_busy = lsu_io_dmem_brupdate_b2_uop_pflag_busy; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_stale_pflag = lsu_io_dmem_brupdate_b2_uop_stale_pflag; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_op1_sel = lsu_io_dmem_brupdate_b2_uop_op1_sel; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_op2_sel = lsu_io_dmem_brupdate_b2_uop_op2_sel; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_split_num = lsu_io_dmem_brupdate_b2_uop_split_num; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_self_index = lsu_io_dmem_brupdate_b2_uop_self_index; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_rob_inst_idx = lsu_io_dmem_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_address_num = lsu_io_dmem_brupdate_b2_uop_address_num; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_uopc = lsu_io_dmem_brupdate_b2_uop_uopc; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_inst = lsu_io_dmem_brupdate_b2_uop_inst; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_debug_inst = lsu_io_dmem_brupdate_b2_uop_debug_inst; // @[tile.scala 239:30]
@@ -14679,7 +11224,6 @@ module BoomTile(
   assign dcache_io_lsu_brupdate_b2_uop_ctrl_is_load = lsu_io_dmem_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_ctrl_is_sta = lsu_io_dmem_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_ctrl_is_std = lsu_io_dmem_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 239:30]
-  assign dcache_io_lsu_brupdate_b2_uop_ctrl_op3_sel = lsu_io_dmem_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_iw_state = lsu_io_dmem_brupdate_b2_uop_iw_state; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_iw_p1_poisoned = lsu_io_dmem_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 239:30]
   assign dcache_io_lsu_brupdate_b2_uop_iw_p2_poisoned = lsu_io_dmem_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 239:30]
@@ -14770,8 +11314,6 @@ module BoomTile(
   assign frontend_io_cpu_fetchpacket_ready = core_io_ifu_fetchpacket_ready; // @[tile.scala 177:32]
   assign frontend_io_cpu_get_pc_0_ftq_idx = core_io_ifu_get_pc_0_ftq_idx; // @[tile.scala 177:32]
   assign frontend_io_cpu_get_pc_1_ftq_idx = core_io_ifu_get_pc_1_ftq_idx; // @[tile.scala 177:32]
-  assign frontend_io_cpu_get_pc_2_ftq_idx = core_io_ifu_get_pc_2_ftq_idx; // @[tile.scala 177:32]
-  assign frontend_io_cpu_get_pc_3_ftq_idx = core_io_ifu_get_pc_3_ftq_idx; // @[tile.scala 177:32]
   assign frontend_io_cpu_debug_ftq_idx_0 = core_io_ifu_debug_ftq_idx_0; // @[tile.scala 177:32]
   assign frontend_io_cpu_debug_ftq_idx_1 = core_io_ifu_debug_ftq_idx_1; // @[tile.scala 177:32]
   assign frontend_io_cpu_status_debug = core_io_ifu_status_debug; // @[tile.scala 177:32]
@@ -14812,23 +11354,6 @@ module BoomTile(
   assign frontend_io_cpu_sfence_bits_asid = core_io_ifu_sfence_bits_asid; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b1_resolve_mask = core_io_ifu_brupdate_b1_resolve_mask; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b1_mispredict_mask = core_io_ifu_brupdate_b1_mispredict_mask; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_switch = core_io_ifu_brupdate_b2_uop_switch; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_switch_off = core_io_ifu_brupdate_b2_uop_switch_off; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_is_unicore = core_io_ifu_brupdate_b2_uop_is_unicore; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_shift = core_io_ifu_brupdate_b2_uop_shift; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_lrs3_rtype = core_io_ifu_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_rflag = core_io_ifu_brupdate_b2_uop_rflag; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_wflag = core_io_ifu_brupdate_b2_uop_wflag; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_prflag = core_io_ifu_brupdate_b2_uop_prflag; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_pwflag = core_io_ifu_brupdate_b2_uop_pwflag; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_pflag_busy = core_io_ifu_brupdate_b2_uop_pflag_busy; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_stale_pflag = core_io_ifu_brupdate_b2_uop_stale_pflag; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_op1_sel = core_io_ifu_brupdate_b2_uop_op1_sel; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_op2_sel = core_io_ifu_brupdate_b2_uop_op2_sel; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_split_num = core_io_ifu_brupdate_b2_uop_split_num; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_self_index = core_io_ifu_brupdate_b2_uop_self_index; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_rob_inst_idx = core_io_ifu_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_address_num = core_io_ifu_brupdate_b2_uop_address_num; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_uopc = core_io_ifu_brupdate_b2_uop_uopc; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_inst = core_io_ifu_brupdate_b2_uop_inst; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_debug_inst = core_io_ifu_brupdate_b2_uop_debug_inst; // @[tile.scala 177:32]
@@ -14846,7 +11371,6 @@ module BoomTile(
   assign frontend_io_cpu_brupdate_b2_uop_ctrl_is_load = core_io_ifu_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_ctrl_is_sta = core_io_ifu_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_ctrl_is_std = core_io_ifu_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 177:32]
-  assign frontend_io_cpu_brupdate_b2_uop_ctrl_op3_sel = core_io_ifu_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_iw_state = core_io_ifu_brupdate_b2_uop_iw_state; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_iw_p1_poisoned = core_io_ifu_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 177:32]
   assign frontend_io_cpu_brupdate_b2_uop_iw_p2_poisoned = core_io_ifu_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 177:32]
@@ -14929,7 +11453,6 @@ module BoomTile(
   assign frontend_io_cpu_commit_valid = core_io_ifu_commit_valid; // @[tile.scala 177:32]
   assign frontend_io_cpu_commit_bits = core_io_ifu_commit_bits; // @[tile.scala 177:32]
   assign frontend_io_cpu_flush_icache = core_io_ifu_flush_icache; // @[tile.scala 177:32]
-  assign frontend_io_cpu_is_unicore = core_io_ifu_is_unicore; // @[tile.scala 177:32]
   assign frontend_io_ptw_req_ready = ptw_io_requestor_1_req_ready; // @[tile.scala 232:20]
   assign frontend_io_ptw_resp_valid = ptw_io_requestor_1_resp_valid; // @[tile.scala 232:20]
   assign frontend_io_ptw_resp_bits_ae = ptw_io_requestor_1_resp_bits_ae; // @[tile.scala 232:20]
@@ -15057,26 +11580,6 @@ module BoomTile(
   assign core_io_interrupts_seip = intXbar_auto_int_out_4; // @[Nodes.scala 1210:84 LazyModule.scala 296:16]
   assign core_io_ifu_fetchpacket_valid = frontend_io_cpu_fetchpacket_valid; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_valid = frontend_io_cpu_fetchpacket_bits_uops_0_valid; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_switch = frontend_io_cpu_fetchpacket_bits_uops_0_bits_switch; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_switch_off = frontend_io_cpu_fetchpacket_bits_uops_0_bits_switch_off; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_is_unicore = frontend_io_cpu_fetchpacket_bits_uops_0_bits_is_unicore; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_shift = frontend_io_cpu_fetchpacket_bits_uops_0_bits_shift; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_lrs3_rtype = frontend_io_cpu_fetchpacket_bits_uops_0_bits_lrs3_rtype; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_rflag = frontend_io_cpu_fetchpacket_bits_uops_0_bits_rflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_wflag = frontend_io_cpu_fetchpacket_bits_uops_0_bits_wflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_prflag = frontend_io_cpu_fetchpacket_bits_uops_0_bits_prflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_pwflag = frontend_io_cpu_fetchpacket_bits_uops_0_bits_pwflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_pflag_busy = frontend_io_cpu_fetchpacket_bits_uops_0_bits_pflag_busy; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_stale_pflag = frontend_io_cpu_fetchpacket_bits_uops_0_bits_stale_pflag
-    ; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_op1_sel = frontend_io_cpu_fetchpacket_bits_uops_0_bits_op1_sel; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_op2_sel = frontend_io_cpu_fetchpacket_bits_uops_0_bits_op2_sel; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_split_num = frontend_io_cpu_fetchpacket_bits_uops_0_bits_split_num; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_self_index = frontend_io_cpu_fetchpacket_bits_uops_0_bits_self_index; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_rob_inst_idx =
-    frontend_io_cpu_fetchpacket_bits_uops_0_bits_rob_inst_idx; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_address_num = frontend_io_cpu_fetchpacket_bits_uops_0_bits_address_num
-    ; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_uopc = frontend_io_cpu_fetchpacket_bits_uops_0_bits_uopc; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_inst = frontend_io_cpu_fetchpacket_bits_uops_0_bits_inst; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_debug_inst = frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_inst; // @[tile.scala 177:32]
@@ -15104,8 +11607,6 @@ module BoomTile(
     ; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_is_std = frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_is_std
     ; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel =
-    frontend_io_cpu_fetchpacket_bits_uops_0_bits_ctrl_op3_sel; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_iw_state = frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_state; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned =
     frontend_io_cpu_fetchpacket_bits_uops_0_bits_iw_p1_poisoned; // @[tile.scala 177:32]
@@ -15175,26 +11676,6 @@ module BoomTile(
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_debug_fsrc = frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_fsrc; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_0_bits_debug_tsrc = frontend_io_cpu_fetchpacket_bits_uops_0_bits_debug_tsrc; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_1_valid = frontend_io_cpu_fetchpacket_bits_uops_1_valid; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_switch = frontend_io_cpu_fetchpacket_bits_uops_1_bits_switch; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_switch_off = frontend_io_cpu_fetchpacket_bits_uops_1_bits_switch_off; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_is_unicore = frontend_io_cpu_fetchpacket_bits_uops_1_bits_is_unicore; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_shift = frontend_io_cpu_fetchpacket_bits_uops_1_bits_shift; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_lrs3_rtype = frontend_io_cpu_fetchpacket_bits_uops_1_bits_lrs3_rtype; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_rflag = frontend_io_cpu_fetchpacket_bits_uops_1_bits_rflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_wflag = frontend_io_cpu_fetchpacket_bits_uops_1_bits_wflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_prflag = frontend_io_cpu_fetchpacket_bits_uops_1_bits_prflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_pwflag = frontend_io_cpu_fetchpacket_bits_uops_1_bits_pwflag; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_pflag_busy = frontend_io_cpu_fetchpacket_bits_uops_1_bits_pflag_busy; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_stale_pflag = frontend_io_cpu_fetchpacket_bits_uops_1_bits_stale_pflag
-    ; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_op1_sel = frontend_io_cpu_fetchpacket_bits_uops_1_bits_op1_sel; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_op2_sel = frontend_io_cpu_fetchpacket_bits_uops_1_bits_op2_sel; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_split_num = frontend_io_cpu_fetchpacket_bits_uops_1_bits_split_num; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_self_index = frontend_io_cpu_fetchpacket_bits_uops_1_bits_self_index; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_rob_inst_idx =
-    frontend_io_cpu_fetchpacket_bits_uops_1_bits_rob_inst_idx; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_address_num = frontend_io_cpu_fetchpacket_bits_uops_1_bits_address_num
-    ; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_1_bits_uopc = frontend_io_cpu_fetchpacket_bits_uops_1_bits_uopc; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_1_bits_inst = frontend_io_cpu_fetchpacket_bits_uops_1_bits_inst; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_1_bits_debug_inst = frontend_io_cpu_fetchpacket_bits_uops_1_bits_debug_inst; // @[tile.scala 177:32]
@@ -15222,8 +11703,6 @@ module BoomTile(
     ; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_is_std = frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_is_std
     ; // @[tile.scala 177:32]
-  assign core_io_ifu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel =
-    frontend_io_cpu_fetchpacket_bits_uops_1_bits_ctrl_op3_sel; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_1_bits_iw_state = frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_state; // @[tile.scala 177:32]
   assign core_io_ifu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned =
     frontend_io_cpu_fetchpacket_bits_uops_1_bits_iw_p1_poisoned; // @[tile.scala 177:32]
@@ -15336,50 +11815,6 @@ module BoomTile(
   assign core_io_ifu_get_pc_1_com_pc = frontend_io_cpu_get_pc_1_com_pc; // @[tile.scala 177:32]
   assign core_io_ifu_get_pc_1_next_val = frontend_io_cpu_get_pc_1_next_val; // @[tile.scala 177:32]
   assign core_io_ifu_get_pc_1_next_pc = frontend_io_cpu_get_pc_1_next_pc; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_idx_valid = frontend_io_cpu_get_pc_2_entry_cfi_idx_valid; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_idx_bits = frontend_io_cpu_get_pc_2_entry_cfi_idx_bits; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_taken = frontend_io_cpu_get_pc_2_entry_cfi_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_mispredicted = frontend_io_cpu_get_pc_2_entry_cfi_mispredicted; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_type = frontend_io_cpu_get_pc_2_entry_cfi_type; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_br_mask = frontend_io_cpu_get_pc_2_entry_br_mask; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_is_call = frontend_io_cpu_get_pc_2_entry_cfi_is_call; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_is_ret = frontend_io_cpu_get_pc_2_entry_cfi_is_ret; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_cfi_npc_plus4 = frontend_io_cpu_get_pc_2_entry_cfi_npc_plus4; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_ras_top = frontend_io_cpu_get_pc_2_entry_ras_top; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_ras_idx = frontend_io_cpu_get_pc_2_entry_ras_idx; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_entry_start_bank = frontend_io_cpu_get_pc_2_entry_start_bank; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_ghist_old_history = frontend_io_cpu_get_pc_2_ghist_old_history; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_ghist_current_saw_branch_not_taken =
-    frontend_io_cpu_get_pc_2_ghist_current_saw_branch_not_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_ghist_new_saw_branch_not_taken = frontend_io_cpu_get_pc_2_ghist_new_saw_branch_not_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_ghist_new_saw_branch_taken = frontend_io_cpu_get_pc_2_ghist_new_saw_branch_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_ghist_ras_idx = frontend_io_cpu_get_pc_2_ghist_ras_idx; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_pc = frontend_io_cpu_get_pc_2_pc; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_com_pc = frontend_io_cpu_get_pc_2_com_pc; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_next_val = frontend_io_cpu_get_pc_2_next_val; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_2_next_pc = frontend_io_cpu_get_pc_2_next_pc; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_idx_valid = frontend_io_cpu_get_pc_3_entry_cfi_idx_valid; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_idx_bits = frontend_io_cpu_get_pc_3_entry_cfi_idx_bits; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_taken = frontend_io_cpu_get_pc_3_entry_cfi_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_mispredicted = frontend_io_cpu_get_pc_3_entry_cfi_mispredicted; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_type = frontend_io_cpu_get_pc_3_entry_cfi_type; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_br_mask = frontend_io_cpu_get_pc_3_entry_br_mask; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_is_call = frontend_io_cpu_get_pc_3_entry_cfi_is_call; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_is_ret = frontend_io_cpu_get_pc_3_entry_cfi_is_ret; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_cfi_npc_plus4 = frontend_io_cpu_get_pc_3_entry_cfi_npc_plus4; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_ras_top = frontend_io_cpu_get_pc_3_entry_ras_top; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_ras_idx = frontend_io_cpu_get_pc_3_entry_ras_idx; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_entry_start_bank = frontend_io_cpu_get_pc_3_entry_start_bank; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_ghist_old_history = frontend_io_cpu_get_pc_3_ghist_old_history; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_ghist_current_saw_branch_not_taken =
-    frontend_io_cpu_get_pc_3_ghist_current_saw_branch_not_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_ghist_new_saw_branch_not_taken = frontend_io_cpu_get_pc_3_ghist_new_saw_branch_not_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_ghist_new_saw_branch_taken = frontend_io_cpu_get_pc_3_ghist_new_saw_branch_taken; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_ghist_ras_idx = frontend_io_cpu_get_pc_3_ghist_ras_idx; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_pc = frontend_io_cpu_get_pc_3_pc; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_com_pc = frontend_io_cpu_get_pc_3_com_pc; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_next_val = frontend_io_cpu_get_pc_3_next_val; // @[tile.scala 177:32]
-  assign core_io_ifu_get_pc_3_next_pc = frontend_io_cpu_get_pc_3_next_pc; // @[tile.scala 177:32]
   assign core_io_ifu_debug_fetch_pc_0 = frontend_io_cpu_debug_fetch_pc_0; // @[tile.scala 177:32]
   assign core_io_ifu_debug_fetch_pc_1 = frontend_io_cpu_debug_fetch_pc_1; // @[tile.scala 177:32]
   assign core_io_ifu_perf_acquire = frontend_io_cpu_perf_acquire; // @[tile.scala 177:32]
@@ -15413,23 +11848,6 @@ module BoomTile(
   assign core_io_rocc_busy = 1'h0;
   assign core_io_rocc_interrupt = 1'h0;
   assign core_io_lsu_exe_0_iresp_valid = lsu_io_core_exe_0_iresp_valid; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_switch = lsu_io_core_exe_0_iresp_bits_uop_switch; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_switch_off = lsu_io_core_exe_0_iresp_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_is_unicore = lsu_io_core_exe_0_iresp_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_shift = lsu_io_core_exe_0_iresp_bits_uop_shift; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_lrs3_rtype = lsu_io_core_exe_0_iresp_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_rflag = lsu_io_core_exe_0_iresp_bits_uop_rflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_wflag = lsu_io_core_exe_0_iresp_bits_uop_wflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_prflag = lsu_io_core_exe_0_iresp_bits_uop_prflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_pwflag = lsu_io_core_exe_0_iresp_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_pflag_busy = lsu_io_core_exe_0_iresp_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_stale_pflag = lsu_io_core_exe_0_iresp_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_op1_sel = lsu_io_core_exe_0_iresp_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_op2_sel = lsu_io_core_exe_0_iresp_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_split_num = lsu_io_core_exe_0_iresp_bits_uop_split_num; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_self_index = lsu_io_core_exe_0_iresp_bits_uop_self_index; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_rob_inst_idx = lsu_io_core_exe_0_iresp_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_address_num = lsu_io_core_exe_0_iresp_bits_uop_address_num; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_uopc = lsu_io_core_exe_0_iresp_bits_uop_uopc; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_inst = lsu_io_core_exe_0_iresp_bits_uop_inst; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_debug_inst = lsu_io_core_exe_0_iresp_bits_uop_debug_inst; // @[tile.scala 178:15]
@@ -15447,7 +11865,6 @@ module BoomTile(
   assign core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_load = lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_sta = lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_ctrl_is_std = lsu_io_core_exe_0_iresp_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_uop_ctrl_op3_sel = lsu_io_core_exe_0_iresp_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_iw_state = lsu_io_core_exe_0_iresp_bits_uop_iw_state; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_iw_p1_poisoned = lsu_io_core_exe_0_iresp_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_uop_iw_p2_poisoned = lsu_io_core_exe_0_iresp_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -15513,32 +11930,6 @@ module BoomTile(
   assign core_io_lsu_exe_0_iresp_bits_data = lsu_io_core_exe_0_iresp_bits_data; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_predicated = lsu_io_core_exe_0_iresp_bits_predicated; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_valid = lsu_io_core_exe_0_iresp_bits_fflags_valid; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_switch; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_switch_off =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_is_unicore =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_shift = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_shift; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rflag = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_wflag = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_wflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_prflag = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_prflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pwflag = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_pflag_busy =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_stale_pflag =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_op1_sel = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_op2_sel = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_split_num = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_split_num
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_self_index =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_self_index; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_address_num =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_address_num; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_uopc = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_uopc; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_inst = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_inst; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_inst =
@@ -15567,8 +11958,6 @@ module BoomTile(
     lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std =
     lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel =
-    lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_state = lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_iw_state; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned =
     lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
@@ -15661,205 +12050,7 @@ module BoomTile(
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc =
     lsu_io_core_exe_0_iresp_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_iresp_bits_fflags_bits_flags = lsu_io_core_exe_0_iresp_bits_fflags_bits_flags; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_flagdata = lsu_io_core_exe_0_iresp_bits_flagdata; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_valid = lsu_io_core_exe_0_iresp_bits_fflagdata_valid; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_switch_off =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_shift = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_shift; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rflag = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_wflag = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_wflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prflag = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prflag
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pwflag = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pwflag
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_split_num =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_split_num; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_self_index =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_self_index; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_address_num =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_address_num; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uopc = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uopc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_inst = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_inst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_rvc
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iq_type =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fu_code =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_state =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_br = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_br; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_jal = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_jal
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sfb
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_mask =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_br_tag = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_br_tag
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pc_lob
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_taken = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_taken; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_pdst = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_pdst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1 = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2 = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3 = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exception =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_exception; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bypassable =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_size =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fence =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_amo = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_amo
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_is_unique =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1 =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1 = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2 = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs3 = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_val = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_val
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_fp_single =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc =
-    lsu_io_core_exe_0_iresp_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_iresp_bits_fflagdata_bits_fflag = lsu_io_core_exe_0_iresp_bits_fflagdata_bits_fflag; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_valid = lsu_io_core_exe_0_fresp_valid; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_switch = lsu_io_core_exe_0_fresp_bits_uop_switch; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_switch_off = lsu_io_core_exe_0_fresp_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_is_unicore = lsu_io_core_exe_0_fresp_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_shift = lsu_io_core_exe_0_fresp_bits_uop_shift; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_lrs3_rtype = lsu_io_core_exe_0_fresp_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_rflag = lsu_io_core_exe_0_fresp_bits_uop_rflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_wflag = lsu_io_core_exe_0_fresp_bits_uop_wflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_prflag = lsu_io_core_exe_0_fresp_bits_uop_prflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_pwflag = lsu_io_core_exe_0_fresp_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_pflag_busy = lsu_io_core_exe_0_fresp_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_stale_pflag = lsu_io_core_exe_0_fresp_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_op1_sel = lsu_io_core_exe_0_fresp_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_op2_sel = lsu_io_core_exe_0_fresp_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_split_num = lsu_io_core_exe_0_fresp_bits_uop_split_num; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_self_index = lsu_io_core_exe_0_fresp_bits_uop_self_index; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_rob_inst_idx = lsu_io_core_exe_0_fresp_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_address_num = lsu_io_core_exe_0_fresp_bits_uop_address_num; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_uopc = lsu_io_core_exe_0_fresp_bits_uop_uopc; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_inst = lsu_io_core_exe_0_fresp_bits_uop_inst; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_debug_inst = lsu_io_core_exe_0_fresp_bits_uop_debug_inst; // @[tile.scala 178:15]
@@ -15877,7 +12068,6 @@ module BoomTile(
   assign core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_load = lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_sta = lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_ctrl_is_std = lsu_io_core_exe_0_fresp_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_uop_ctrl_op3_sel = lsu_io_core_exe_0_fresp_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_iw_state = lsu_io_core_exe_0_fresp_bits_uop_iw_state; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_iw_p1_poisoned = lsu_io_core_exe_0_fresp_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_uop_iw_p2_poisoned = lsu_io_core_exe_0_fresp_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -15943,32 +12133,6 @@ module BoomTile(
   assign core_io_lsu_exe_0_fresp_bits_data = lsu_io_core_exe_0_fresp_bits_data; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_predicated = lsu_io_core_exe_0_fresp_bits_predicated; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_valid = lsu_io_core_exe_0_fresp_bits_fflags_valid; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_switch; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_switch_off =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_is_unicore =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_shift = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_shift; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rflag = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_wflag = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_wflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_prflag = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_prflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pwflag = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_pflag_busy =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_stale_pflag =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_op1_sel = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_op2_sel = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_split_num = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_split_num
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_self_index =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_self_index; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_address_num =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_address_num; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_uopc = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_uopc; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_inst = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_inst; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_inst =
@@ -15997,8 +12161,6 @@ module BoomTile(
     lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std =
     lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel =
-    lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_state = lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_iw_state; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned =
     lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
@@ -16091,187 +12253,6 @@ module BoomTile(
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc =
     lsu_io_core_exe_0_fresp_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 178:15]
   assign core_io_lsu_exe_0_fresp_bits_fflags_bits_flags = lsu_io_core_exe_0_fresp_bits_fflags_bits_flags; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_flagdata = lsu_io_core_exe_0_fresp_bits_flagdata; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_valid = lsu_io_core_exe_0_fresp_bits_fflagdata_valid; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_switch_off =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_shift = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_shift; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rflag = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_wflag = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_wflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prflag = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prflag
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pwflag = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pwflag
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_split_num =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_split_num; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_self_index =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_self_index; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_address_num =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_address_num; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uopc = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uopc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_inst = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_inst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_rvc
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_pc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iq_type =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fu_code =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_state =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_state; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_br = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_br; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_jal = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_jal
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sfb
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_mask =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_br_tag = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_br_tag
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pc_lob
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_taken = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_taken; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_csr_addr; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_pdst = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_pdst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1 = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2 = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3 = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exception =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_exception; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bypassable =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_size =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_size; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fence =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fence; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_amo = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_amo
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_ldq; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_uses_stq; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_is_unique =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1 =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1 = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2 = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs3 = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_ldst_val; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_val = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_val
-    ; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_fp_single =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc =
-    lsu_io_core_exe_0_fresp_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 178:15]
-  assign core_io_lsu_exe_0_fresp_bits_fflagdata_bits_fflag = lsu_io_core_exe_0_fresp_bits_fflagdata_bits_fflag; // @[tile.scala 178:15]
   assign core_io_lsu_dis_ldq_idx_0 = lsu_io_core_dis_ldq_idx_0; // @[tile.scala 178:15]
   assign core_io_lsu_dis_ldq_idx_1 = lsu_io_core_dis_ldq_idx_1; // @[tile.scala 178:15]
   assign core_io_lsu_dis_stq_idx_0 = lsu_io_core_dis_stq_idx_0; // @[tile.scala 178:15]
@@ -16287,32 +12268,11 @@ module BoomTile(
   assign core_io_lsu_clr_bsy_1_bits = lsu_io_core_clr_bsy_1_bits; // @[tile.scala 178:15]
   assign core_io_lsu_clr_unsafe_0_valid = lsu_io_core_clr_unsafe_0_valid; // @[tile.scala 178:15]
   assign core_io_lsu_clr_unsafe_0_bits = lsu_io_core_clr_unsafe_0_bits; // @[tile.scala 178:15]
-  assign core_io_lsu_clr_bsy_first_idx_0 = lsu_io_core_clr_bsy_first_idx_0; // @[tile.scala 178:15]
-  assign core_io_lsu_clr_bsy_first_idx_1 = lsu_io_core_clr_bsy_first_idx_1; // @[tile.scala 178:15]
-  assign core_io_lsu_clr_bsy_self_idx_0 = lsu_io_core_clr_bsy_self_idx_0; // @[tile.scala 178:15]
-  assign core_io_lsu_clr_bsy_self_idx_1 = lsu_io_core_clr_bsy_self_idx_1; // @[tile.scala 178:15]
   assign core_io_lsu_spec_ld_wakeup_0_valid = lsu_io_core_spec_ld_wakeup_0_valid; // @[tile.scala 178:15]
   assign core_io_lsu_spec_ld_wakeup_0_bits = lsu_io_core_spec_ld_wakeup_0_bits; // @[tile.scala 178:15]
   assign core_io_lsu_ld_miss = lsu_io_core_ld_miss; // @[tile.scala 178:15]
   assign core_io_lsu_fencei_rdy = lsu_io_core_fencei_rdy; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_valid = lsu_io_core_lxcpt_valid; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_switch = lsu_io_core_lxcpt_bits_uop_switch; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_switch_off = lsu_io_core_lxcpt_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_is_unicore = lsu_io_core_lxcpt_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_shift = lsu_io_core_lxcpt_bits_uop_shift; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_lrs3_rtype = lsu_io_core_lxcpt_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_rflag = lsu_io_core_lxcpt_bits_uop_rflag; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_wflag = lsu_io_core_lxcpt_bits_uop_wflag; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_prflag = lsu_io_core_lxcpt_bits_uop_prflag; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_pwflag = lsu_io_core_lxcpt_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_pflag_busy = lsu_io_core_lxcpt_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_stale_pflag = lsu_io_core_lxcpt_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_op1_sel = lsu_io_core_lxcpt_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_op2_sel = lsu_io_core_lxcpt_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_split_num = lsu_io_core_lxcpt_bits_uop_split_num; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_self_index = lsu_io_core_lxcpt_bits_uop_self_index; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_rob_inst_idx = lsu_io_core_lxcpt_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_address_num = lsu_io_core_lxcpt_bits_uop_address_num; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_uopc = lsu_io_core_lxcpt_bits_uop_uopc; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_inst = lsu_io_core_lxcpt_bits_uop_inst; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_debug_inst = lsu_io_core_lxcpt_bits_uop_debug_inst; // @[tile.scala 178:15]
@@ -16330,7 +12290,6 @@ module BoomTile(
   assign core_io_lsu_lxcpt_bits_uop_ctrl_is_load = lsu_io_core_lxcpt_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_ctrl_is_sta = lsu_io_core_lxcpt_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_ctrl_is_std = lsu_io_core_lxcpt_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign core_io_lsu_lxcpt_bits_uop_ctrl_op3_sel = lsu_io_core_lxcpt_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_iw_state = lsu_io_core_lxcpt_bits_uop_iw_state; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_iw_p1_poisoned = lsu_io_core_lxcpt_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
   assign core_io_lsu_lxcpt_bits_uop_iw_p2_poisoned = lsu_io_core_lxcpt_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -16635,23 +12594,6 @@ module BoomTile(
   assign lsu_io_ptw_customCSRs_csrs_0_wdata = ptw_io_requestor_0_customCSRs_csrs_0_wdata; // @[tile.scala 232:20]
   assign lsu_io_ptw_customCSRs_csrs_0_value = ptw_io_requestor_0_customCSRs_csrs_0_value; // @[tile.scala 232:20]
   assign lsu_io_core_exe_0_req_valid = core_io_lsu_exe_0_req_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_switch = core_io_lsu_exe_0_req_bits_uop_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_switch_off = core_io_lsu_exe_0_req_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_is_unicore = core_io_lsu_exe_0_req_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_shift = core_io_lsu_exe_0_req_bits_uop_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_lrs3_rtype = core_io_lsu_exe_0_req_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_rflag = core_io_lsu_exe_0_req_bits_uop_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_wflag = core_io_lsu_exe_0_req_bits_uop_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_prflag = core_io_lsu_exe_0_req_bits_uop_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_pwflag = core_io_lsu_exe_0_req_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_pflag_busy = core_io_lsu_exe_0_req_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_stale_pflag = core_io_lsu_exe_0_req_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_op1_sel = core_io_lsu_exe_0_req_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_op2_sel = core_io_lsu_exe_0_req_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_split_num = core_io_lsu_exe_0_req_bits_uop_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_self_index = core_io_lsu_exe_0_req_bits_uop_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_rob_inst_idx = core_io_lsu_exe_0_req_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_address_num = core_io_lsu_exe_0_req_bits_uop_address_num; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_uopc = core_io_lsu_exe_0_req_bits_uop_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_inst = core_io_lsu_exe_0_req_bits_uop_inst; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_debug_inst = core_io_lsu_exe_0_req_bits_uop_debug_inst; // @[tile.scala 178:15]
@@ -16669,7 +12611,6 @@ module BoomTile(
   assign lsu_io_core_exe_0_req_bits_uop_ctrl_is_load = core_io_lsu_exe_0_req_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_ctrl_is_sta = core_io_lsu_exe_0_req_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_ctrl_is_std = core_io_lsu_exe_0_req_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_uop_ctrl_op3_sel = core_io_lsu_exe_0_req_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_iw_state = core_io_lsu_exe_0_req_bits_uop_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_iw_p1_poisoned = core_io_lsu_exe_0_req_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_uop_iw_p2_poisoned = core_io_lsu_exe_0_req_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -16735,26 +12676,6 @@ module BoomTile(
   assign lsu_io_core_exe_0_req_bits_predicated = core_io_lsu_exe_0_req_bits_predicated; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_data = core_io_lsu_exe_0_req_bits_data; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_fflags_valid = core_io_lsu_exe_0_req_bits_fflags_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_switch = core_io_lsu_exe_0_req_bits_fflags_bits_uop_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_switch_off = core_io_lsu_exe_0_req_bits_fflags_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_is_unicore = core_io_lsu_exe_0_req_bits_fflags_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_shift = core_io_lsu_exe_0_req_bits_fflags_bits_uop_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_lrs3_rtype = core_io_lsu_exe_0_req_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_rflag = core_io_lsu_exe_0_req_bits_fflags_bits_uop_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_wflag = core_io_lsu_exe_0_req_bits_fflags_bits_uop_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_prflag = core_io_lsu_exe_0_req_bits_fflags_bits_uop_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_pwflag = core_io_lsu_exe_0_req_bits_fflags_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_pflag_busy = core_io_lsu_exe_0_req_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_stale_pflag = core_io_lsu_exe_0_req_bits_fflags_bits_uop_stale_pflag
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_op1_sel = core_io_lsu_exe_0_req_bits_fflags_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_op2_sel = core_io_lsu_exe_0_req_bits_fflags_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_split_num = core_io_lsu_exe_0_req_bits_fflags_bits_uop_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_self_index = core_io_lsu_exe_0_req_bits_fflags_bits_uop_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_rob_inst_idx =
-    core_io_lsu_exe_0_req_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_address_num = core_io_lsu_exe_0_req_bits_fflags_bits_uop_address_num
-    ; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_uopc = core_io_lsu_exe_0_req_bits_fflags_bits_uop_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_inst = core_io_lsu_exe_0_req_bits_fflags_bits_uop_inst; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_debug_inst = core_io_lsu_exe_0_req_bits_fflags_bits_uop_debug_inst; // @[tile.scala 178:15]
@@ -16782,8 +12703,6 @@ module BoomTile(
     ; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_is_std = core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_is_std
     ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel =
-    core_io_lsu_exe_0_req_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_state = core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned =
     core_io_lsu_exe_0_req_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
@@ -16861,184 +12780,9 @@ module BoomTile(
   assign lsu_io_core_exe_0_req_bits_sfence_bits_rs2 = core_io_lsu_exe_0_req_bits_sfence_bits_rs2; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_sfence_bits_addr = core_io_lsu_exe_0_req_bits_sfence_bits_addr; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_req_bits_sfence_bits_asid = core_io_lsu_exe_0_req_bits_sfence_bits_asid; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_flagdata = core_io_lsu_exe_0_req_bits_flagdata; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_valid = core_io_lsu_exe_0_req_bits_fflagdata_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_switch = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_switch_off =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_unicore =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_shift = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rflag = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_wflag = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prflag = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pwflag = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pflag_busy =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pflag =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_op1_sel = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_op2_sel = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_split_num =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_self_index =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_address_num =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_address_num; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uopc = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uopc; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_inst = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_inst; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_inst =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_rvc = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_pc = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_pc
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iq_type = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fu_code = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_state = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_state
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_br = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_br; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_jalr = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_jal = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_sfb = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_br_mask = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_br_tag = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ftq_idx = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_edge_inst =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pc_lob = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_taken = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_taken; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_imm_packed =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_csr_addr = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_csr_addr
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rob_idx = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldq_idx = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stq_idx = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_rxq_idx = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_pdst = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_pdst; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs1 = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs2 = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs3 = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ppred = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs1_busy =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs2_busy =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_prs3_busy =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ppred_busy =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_stale_pdst =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_exception =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_exception; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_exc_cause =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bypassable =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_cmd = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_size = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_size
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_mem_signed =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_fence = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fence
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_fencei =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_amo = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uses_ldq = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_ldq
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_uses_stq = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_uses_stq
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_is_unique =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1 =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1 = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2 = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs3 = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_ldst_val = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_ldst_val
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_dst_rtype =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_frs3_en = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fp_val = core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_fp_single =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc =
-    core_io_lsu_exe_0_req_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 178:15]
-  assign lsu_io_core_exe_0_req_bits_fflagdata_bits_fflag = core_io_lsu_exe_0_req_bits_fflagdata_bits_fflag; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_iresp_ready = core_io_lsu_exe_0_iresp_ready; // @[tile.scala 178:15]
   assign lsu_io_core_exe_0_fresp_ready = core_io_lsu_exe_0_fresp_ready; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_valid = core_io_lsu_dis_uops_0_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_switch = core_io_lsu_dis_uops_0_bits_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_switch_off = core_io_lsu_dis_uops_0_bits_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_is_unicore = core_io_lsu_dis_uops_0_bits_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_shift = core_io_lsu_dis_uops_0_bits_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_lrs3_rtype = core_io_lsu_dis_uops_0_bits_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_rflag = core_io_lsu_dis_uops_0_bits_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_wflag = core_io_lsu_dis_uops_0_bits_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_prflag = core_io_lsu_dis_uops_0_bits_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_pwflag = core_io_lsu_dis_uops_0_bits_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_pflag_busy = core_io_lsu_dis_uops_0_bits_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_stale_pflag = core_io_lsu_dis_uops_0_bits_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_op1_sel = core_io_lsu_dis_uops_0_bits_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_op2_sel = core_io_lsu_dis_uops_0_bits_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_split_num = core_io_lsu_dis_uops_0_bits_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_self_index = core_io_lsu_dis_uops_0_bits_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_rob_inst_idx = core_io_lsu_dis_uops_0_bits_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_address_num = core_io_lsu_dis_uops_0_bits_address_num; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_uopc = core_io_lsu_dis_uops_0_bits_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_inst = core_io_lsu_dis_uops_0_bits_inst; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_debug_inst = core_io_lsu_dis_uops_0_bits_debug_inst; // @[tile.scala 178:15]
@@ -17056,7 +12800,6 @@ module BoomTile(
   assign lsu_io_core_dis_uops_0_bits_ctrl_is_load = core_io_lsu_dis_uops_0_bits_ctrl_is_load; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_ctrl_is_sta = core_io_lsu_dis_uops_0_bits_ctrl_is_sta; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_ctrl_is_std = core_io_lsu_dis_uops_0_bits_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_0_bits_ctrl_op3_sel = core_io_lsu_dis_uops_0_bits_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_iw_state = core_io_lsu_dis_uops_0_bits_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_iw_p1_poisoned = core_io_lsu_dis_uops_0_bits_iw_p1_poisoned; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_iw_p2_poisoned = core_io_lsu_dis_uops_0_bits_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -17120,23 +12863,6 @@ module BoomTile(
   assign lsu_io_core_dis_uops_0_bits_debug_fsrc = core_io_lsu_dis_uops_0_bits_debug_fsrc; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_0_bits_debug_tsrc = core_io_lsu_dis_uops_0_bits_debug_tsrc; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_valid = core_io_lsu_dis_uops_1_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_switch = core_io_lsu_dis_uops_1_bits_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_switch_off = core_io_lsu_dis_uops_1_bits_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_is_unicore = core_io_lsu_dis_uops_1_bits_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_shift = core_io_lsu_dis_uops_1_bits_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_lrs3_rtype = core_io_lsu_dis_uops_1_bits_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_rflag = core_io_lsu_dis_uops_1_bits_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_wflag = core_io_lsu_dis_uops_1_bits_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_prflag = core_io_lsu_dis_uops_1_bits_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_pwflag = core_io_lsu_dis_uops_1_bits_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_pflag_busy = core_io_lsu_dis_uops_1_bits_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_stale_pflag = core_io_lsu_dis_uops_1_bits_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_op1_sel = core_io_lsu_dis_uops_1_bits_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_op2_sel = core_io_lsu_dis_uops_1_bits_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_split_num = core_io_lsu_dis_uops_1_bits_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_self_index = core_io_lsu_dis_uops_1_bits_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_rob_inst_idx = core_io_lsu_dis_uops_1_bits_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_address_num = core_io_lsu_dis_uops_1_bits_address_num; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_uopc = core_io_lsu_dis_uops_1_bits_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_inst = core_io_lsu_dis_uops_1_bits_inst; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_debug_inst = core_io_lsu_dis_uops_1_bits_debug_inst; // @[tile.scala 178:15]
@@ -17154,7 +12880,6 @@ module BoomTile(
   assign lsu_io_core_dis_uops_1_bits_ctrl_is_load = core_io_lsu_dis_uops_1_bits_ctrl_is_load; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_ctrl_is_sta = core_io_lsu_dis_uops_1_bits_ctrl_is_sta; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_ctrl_is_std = core_io_lsu_dis_uops_1_bits_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_dis_uops_1_bits_ctrl_op3_sel = core_io_lsu_dis_uops_1_bits_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_iw_state = core_io_lsu_dis_uops_1_bits_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_iw_p1_poisoned = core_io_lsu_dis_uops_1_bits_iw_p1_poisoned; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_iw_p2_poisoned = core_io_lsu_dis_uops_1_bits_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -17218,23 +12943,6 @@ module BoomTile(
   assign lsu_io_core_dis_uops_1_bits_debug_fsrc = core_io_lsu_dis_uops_1_bits_debug_fsrc; // @[tile.scala 178:15]
   assign lsu_io_core_dis_uops_1_bits_debug_tsrc = core_io_lsu_dis_uops_1_bits_debug_tsrc; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_valid = core_io_lsu_fp_stdata_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_switch = core_io_lsu_fp_stdata_bits_uop_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_switch_off = core_io_lsu_fp_stdata_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_is_unicore = core_io_lsu_fp_stdata_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_shift = core_io_lsu_fp_stdata_bits_uop_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_lrs3_rtype = core_io_lsu_fp_stdata_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_rflag = core_io_lsu_fp_stdata_bits_uop_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_wflag = core_io_lsu_fp_stdata_bits_uop_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_prflag = core_io_lsu_fp_stdata_bits_uop_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_pwflag = core_io_lsu_fp_stdata_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_pflag_busy = core_io_lsu_fp_stdata_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_stale_pflag = core_io_lsu_fp_stdata_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_op1_sel = core_io_lsu_fp_stdata_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_op2_sel = core_io_lsu_fp_stdata_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_split_num = core_io_lsu_fp_stdata_bits_uop_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_self_index = core_io_lsu_fp_stdata_bits_uop_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_rob_inst_idx = core_io_lsu_fp_stdata_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_address_num = core_io_lsu_fp_stdata_bits_uop_address_num; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_uopc = core_io_lsu_fp_stdata_bits_uop_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_inst = core_io_lsu_fp_stdata_bits_uop_inst; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_debug_inst = core_io_lsu_fp_stdata_bits_uop_debug_inst; // @[tile.scala 178:15]
@@ -17252,7 +12960,6 @@ module BoomTile(
   assign lsu_io_core_fp_stdata_bits_uop_ctrl_is_load = core_io_lsu_fp_stdata_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_ctrl_is_sta = core_io_lsu_fp_stdata_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_ctrl_is_std = core_io_lsu_fp_stdata_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_uop_ctrl_op3_sel = core_io_lsu_fp_stdata_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_iw_state = core_io_lsu_fp_stdata_bits_uop_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_iw_p1_poisoned = core_io_lsu_fp_stdata_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_uop_iw_p2_poisoned = core_io_lsu_fp_stdata_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -17318,26 +13025,6 @@ module BoomTile(
   assign lsu_io_core_fp_stdata_bits_data = core_io_lsu_fp_stdata_bits_data; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_predicated = core_io_lsu_fp_stdata_bits_predicated; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_valid = core_io_lsu_fp_stdata_bits_fflags_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_switch = core_io_lsu_fp_stdata_bits_fflags_bits_uop_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_switch_off = core_io_lsu_fp_stdata_bits_fflags_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_is_unicore = core_io_lsu_fp_stdata_bits_fflags_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_shift = core_io_lsu_fp_stdata_bits_fflags_bits_uop_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_lrs3_rtype = core_io_lsu_fp_stdata_bits_fflags_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_rflag = core_io_lsu_fp_stdata_bits_fflags_bits_uop_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_wflag = core_io_lsu_fp_stdata_bits_fflags_bits_uop_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_prflag = core_io_lsu_fp_stdata_bits_fflags_bits_uop_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_pwflag = core_io_lsu_fp_stdata_bits_fflags_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_pflag_busy = core_io_lsu_fp_stdata_bits_fflags_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_stale_pflag = core_io_lsu_fp_stdata_bits_fflags_bits_uop_stale_pflag
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_op1_sel = core_io_lsu_fp_stdata_bits_fflags_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_op2_sel = core_io_lsu_fp_stdata_bits_fflags_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_split_num = core_io_lsu_fp_stdata_bits_fflags_bits_uop_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_self_index = core_io_lsu_fp_stdata_bits_fflags_bits_uop_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_rob_inst_idx =
-    core_io_lsu_fp_stdata_bits_fflags_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_address_num = core_io_lsu_fp_stdata_bits_fflags_bits_uop_address_num
-    ; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_uopc = core_io_lsu_fp_stdata_bits_fflags_bits_uop_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_inst = core_io_lsu_fp_stdata_bits_fflags_bits_uop_inst; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_inst = core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_inst; // @[tile.scala 178:15]
@@ -17365,8 +13052,6 @@ module BoomTile(
     ; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_is_std = core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_is_std
     ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel =
-    core_io_lsu_fp_stdata_bits_fflags_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_state = core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned =
     core_io_lsu_fp_stdata_bits_fflags_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
@@ -17436,185 +13121,10 @@ module BoomTile(
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_fsrc = core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_fsrc; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_uop_debug_tsrc = core_io_lsu_fp_stdata_bits_fflags_bits_uop_debug_tsrc; // @[tile.scala 178:15]
   assign lsu_io_core_fp_stdata_bits_fflags_bits_flags = core_io_lsu_fp_stdata_bits_fflags_bits_flags; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_flagdata = core_io_lsu_fp_stdata_bits_flagdata; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_valid = core_io_lsu_fp_stdata_bits_fflagdata_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_switch = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_switch_off =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_unicore =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_shift = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rflag = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_wflag = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prflag = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pwflag = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pflag_busy =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pflag =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_op1_sel = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_op2_sel = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_split_num =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_self_index =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_address_num =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_address_num; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uopc = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uopc; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_inst = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_inst; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_inst =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_inst; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_rvc = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_rvc; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_pc = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_pc
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iq_type = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iq_type; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fu_code = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fu_code; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_br_type; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_imm_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op_fcn; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_fcn_dw; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_csr_cmd; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_load; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_sta; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ctrl_op3_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_state = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_state
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p1_poisoned; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_iw_p2_poisoned; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_br = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_br; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_jalr = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jalr; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_jal = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_jal; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_sfb = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sfb; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_br_mask = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_mask; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_br_tag = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_br_tag; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ftq_idx = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ftq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_edge_inst =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_edge_inst; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pc_lob = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pc_lob; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_taken = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_taken; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_imm_packed =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_imm_packed; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_csr_addr = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_csr_addr
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rob_idx = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rob_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldq_idx = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stq_idx = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_rxq_idx = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_rxq_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_pdst = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_pdst; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs1 = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs2 = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs3 = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ppred = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs1_busy =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs1_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs2_busy =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs2_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_prs3_busy =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_prs3_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ppred_busy =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ppred_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_stale_pdst =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_stale_pdst; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_exception =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_exception; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_exc_cause =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_exc_cause; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bypassable =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bypassable; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_cmd = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_cmd; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_size = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_size
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_mem_signed =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_mem_signed; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_fence = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fence
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_fencei =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_fencei; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_amo = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_amo; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uses_ldq = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_ldq
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_uses_stq = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_uses_stq
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_sys_pc2epc; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_is_unique =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_is_unique; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_flush_on_commit; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1 =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_is_rs1; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1 = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2 = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs3 = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs3; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_ldst_val = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_ldst_val
-    ; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_dst_rtype =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_dst_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs1_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_lrs2_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_frs3_en = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_frs3_en; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fp_val = core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_val; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_fp_single =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_fp_single; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_pf_if; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ae_if; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_xcpt_ma_if; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_debug_if; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_bp_xcpt_if; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_fsrc; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc =
-    core_io_lsu_fp_stdata_bits_fflagdata_bits_uop_debug_tsrc; // @[tile.scala 178:15]
-  assign lsu_io_core_fp_stdata_bits_fflagdata_bits_fflag = core_io_lsu_fp_stdata_bits_fflagdata_bits_fflag; // @[tile.scala 178:15]
   assign lsu_io_core_commit_valids_0 = core_io_lsu_commit_valids_0; // @[tile.scala 178:15]
   assign lsu_io_core_commit_valids_1 = core_io_lsu_commit_valids_1; // @[tile.scala 178:15]
   assign lsu_io_core_commit_arch_valids_0 = core_io_lsu_commit_arch_valids_0; // @[tile.scala 178:15]
   assign lsu_io_core_commit_arch_valids_1 = core_io_lsu_commit_arch_valids_1; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_switch = core_io_lsu_commit_uops_0_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_switch_off = core_io_lsu_commit_uops_0_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_is_unicore = core_io_lsu_commit_uops_0_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_shift = core_io_lsu_commit_uops_0_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_lrs3_rtype = core_io_lsu_commit_uops_0_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_rflag = core_io_lsu_commit_uops_0_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_wflag = core_io_lsu_commit_uops_0_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_prflag = core_io_lsu_commit_uops_0_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_pwflag = core_io_lsu_commit_uops_0_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_pflag_busy = core_io_lsu_commit_uops_0_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_stale_pflag = core_io_lsu_commit_uops_0_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_op1_sel = core_io_lsu_commit_uops_0_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_op2_sel = core_io_lsu_commit_uops_0_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_split_num = core_io_lsu_commit_uops_0_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_self_index = core_io_lsu_commit_uops_0_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_rob_inst_idx = core_io_lsu_commit_uops_0_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_address_num = core_io_lsu_commit_uops_0_address_num; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_uopc = core_io_lsu_commit_uops_0_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_inst = core_io_lsu_commit_uops_0_inst; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_debug_inst = core_io_lsu_commit_uops_0_debug_inst; // @[tile.scala 178:15]
@@ -17632,7 +13142,6 @@ module BoomTile(
   assign lsu_io_core_commit_uops_0_ctrl_is_load = core_io_lsu_commit_uops_0_ctrl_is_load; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_ctrl_is_sta = core_io_lsu_commit_uops_0_ctrl_is_sta; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_ctrl_is_std = core_io_lsu_commit_uops_0_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_0_ctrl_op3_sel = core_io_lsu_commit_uops_0_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_iw_state = core_io_lsu_commit_uops_0_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_iw_p1_poisoned = core_io_lsu_commit_uops_0_iw_p1_poisoned; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_iw_p2_poisoned = core_io_lsu_commit_uops_0_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -17695,23 +13204,6 @@ module BoomTile(
   assign lsu_io_core_commit_uops_0_bp_xcpt_if = core_io_lsu_commit_uops_0_bp_xcpt_if; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_debug_fsrc = core_io_lsu_commit_uops_0_debug_fsrc; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_0_debug_tsrc = core_io_lsu_commit_uops_0_debug_tsrc; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_switch = core_io_lsu_commit_uops_1_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_switch_off = core_io_lsu_commit_uops_1_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_is_unicore = core_io_lsu_commit_uops_1_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_shift = core_io_lsu_commit_uops_1_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_lrs3_rtype = core_io_lsu_commit_uops_1_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_rflag = core_io_lsu_commit_uops_1_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_wflag = core_io_lsu_commit_uops_1_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_prflag = core_io_lsu_commit_uops_1_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_pwflag = core_io_lsu_commit_uops_1_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_pflag_busy = core_io_lsu_commit_uops_1_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_stale_pflag = core_io_lsu_commit_uops_1_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_op1_sel = core_io_lsu_commit_uops_1_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_op2_sel = core_io_lsu_commit_uops_1_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_split_num = core_io_lsu_commit_uops_1_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_self_index = core_io_lsu_commit_uops_1_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_rob_inst_idx = core_io_lsu_commit_uops_1_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_address_num = core_io_lsu_commit_uops_1_address_num; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_uopc = core_io_lsu_commit_uops_1_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_inst = core_io_lsu_commit_uops_1_inst; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_debug_inst = core_io_lsu_commit_uops_1_debug_inst; // @[tile.scala 178:15]
@@ -17729,7 +13221,6 @@ module BoomTile(
   assign lsu_io_core_commit_uops_1_ctrl_is_load = core_io_lsu_commit_uops_1_ctrl_is_load; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_ctrl_is_sta = core_io_lsu_commit_uops_1_ctrl_is_sta; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_ctrl_is_std = core_io_lsu_commit_uops_1_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_uops_1_ctrl_op3_sel = core_io_lsu_commit_uops_1_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_iw_state = core_io_lsu_commit_uops_1_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_iw_p1_poisoned = core_io_lsu_commit_uops_1_iw_p1_poisoned; // @[tile.scala 178:15]
   assign lsu_io_core_commit_uops_1_iw_p2_poisoned = core_io_lsu_commit_uops_1_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -17794,8 +13285,6 @@ module BoomTile(
   assign lsu_io_core_commit_uops_1_debug_tsrc = core_io_lsu_commit_uops_1_debug_tsrc; // @[tile.scala 178:15]
   assign lsu_io_core_commit_fflags_valid = core_io_lsu_commit_fflags_valid; // @[tile.scala 178:15]
   assign lsu_io_core_commit_fflags_bits = core_io_lsu_commit_fflags_bits; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_fflag_exception_valid = core_io_lsu_commit_fflag_exception_valid; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_fflag_exception_bits = core_io_lsu_commit_fflag_exception_bits; // @[tile.scala 178:15]
   assign lsu_io_core_commit_debug_insts_0 = core_io_lsu_commit_debug_insts_0; // @[tile.scala 178:15]
   assign lsu_io_core_commit_debug_insts_1 = core_io_lsu_commit_debug_insts_1; // @[tile.scala 178:15]
   assign lsu_io_core_commit_rbk_valids_0 = core_io_lsu_commit_rbk_valids_0; // @[tile.scala 178:15]
@@ -17803,29 +13292,10 @@ module BoomTile(
   assign lsu_io_core_commit_rollback = core_io_lsu_commit_rollback; // @[tile.scala 178:15]
   assign lsu_io_core_commit_debug_wdata_0 = core_io_lsu_commit_debug_wdata_0; // @[tile.scala 178:15]
   assign lsu_io_core_commit_debug_wdata_1 = core_io_lsu_commit_debug_wdata_1; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_debug_wflagdata_0 = core_io_lsu_commit_debug_wflagdata_0; // @[tile.scala 178:15]
-  assign lsu_io_core_commit_debug_wflagdata_1 = core_io_lsu_commit_debug_wflagdata_1; // @[tile.scala 178:15]
   assign lsu_io_core_commit_load_at_rob_head = core_io_lsu_commit_load_at_rob_head; // @[tile.scala 178:15]
   assign lsu_io_core_fence_dmem = core_io_lsu_fence_dmem; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b1_resolve_mask = core_io_lsu_brupdate_b1_resolve_mask; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b1_mispredict_mask = core_io_lsu_brupdate_b1_mispredict_mask; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_switch = core_io_lsu_brupdate_b2_uop_switch; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_switch_off = core_io_lsu_brupdate_b2_uop_switch_off; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_is_unicore = core_io_lsu_brupdate_b2_uop_is_unicore; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_shift = core_io_lsu_brupdate_b2_uop_shift; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_lrs3_rtype = core_io_lsu_brupdate_b2_uop_lrs3_rtype; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_rflag = core_io_lsu_brupdate_b2_uop_rflag; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_wflag = core_io_lsu_brupdate_b2_uop_wflag; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_prflag = core_io_lsu_brupdate_b2_uop_prflag; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_pwflag = core_io_lsu_brupdate_b2_uop_pwflag; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_pflag_busy = core_io_lsu_brupdate_b2_uop_pflag_busy; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_stale_pflag = core_io_lsu_brupdate_b2_uop_stale_pflag; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_op1_sel = core_io_lsu_brupdate_b2_uop_op1_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_op2_sel = core_io_lsu_brupdate_b2_uop_op2_sel; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_split_num = core_io_lsu_brupdate_b2_uop_split_num; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_self_index = core_io_lsu_brupdate_b2_uop_self_index; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_rob_inst_idx = core_io_lsu_brupdate_b2_uop_rob_inst_idx; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_address_num = core_io_lsu_brupdate_b2_uop_address_num; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_uopc = core_io_lsu_brupdate_b2_uop_uopc; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_inst = core_io_lsu_brupdate_b2_uop_inst; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_debug_inst = core_io_lsu_brupdate_b2_uop_debug_inst; // @[tile.scala 178:15]
@@ -17843,7 +13313,6 @@ module BoomTile(
   assign lsu_io_core_brupdate_b2_uop_ctrl_is_load = core_io_lsu_brupdate_b2_uop_ctrl_is_load; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_ctrl_is_sta = core_io_lsu_brupdate_b2_uop_ctrl_is_sta; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_ctrl_is_std = core_io_lsu_brupdate_b2_uop_ctrl_is_std; // @[tile.scala 178:15]
-  assign lsu_io_core_brupdate_b2_uop_ctrl_op3_sel = core_io_lsu_brupdate_b2_uop_ctrl_op3_sel; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_iw_state = core_io_lsu_brupdate_b2_uop_iw_state; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_iw_p1_poisoned = core_io_lsu_brupdate_b2_uop_iw_p1_poisoned; // @[tile.scala 178:15]
   assign lsu_io_core_brupdate_b2_uop_iw_p2_poisoned = core_io_lsu_brupdate_b2_uop_iw_p2_poisoned; // @[tile.scala 178:15]
@@ -17919,23 +13388,6 @@ module BoomTile(
   assign lsu_io_core_tsc_reg = core_io_lsu_tsc_reg; // @[tile.scala 178:15]
   assign lsu_io_dmem_req_ready = dcache_io_lsu_req_ready; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_valid = dcache_io_lsu_resp_0_valid; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_switch = dcache_io_lsu_resp_0_bits_uop_switch; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_switch_off = dcache_io_lsu_resp_0_bits_uop_switch_off; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_is_unicore = dcache_io_lsu_resp_0_bits_uop_is_unicore; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_shift = dcache_io_lsu_resp_0_bits_uop_shift; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_lrs3_rtype = dcache_io_lsu_resp_0_bits_uop_lrs3_rtype; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_rflag = dcache_io_lsu_resp_0_bits_uop_rflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_wflag = dcache_io_lsu_resp_0_bits_uop_wflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_prflag = dcache_io_lsu_resp_0_bits_uop_prflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_pwflag = dcache_io_lsu_resp_0_bits_uop_pwflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_pflag_busy = dcache_io_lsu_resp_0_bits_uop_pflag_busy; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_stale_pflag = dcache_io_lsu_resp_0_bits_uop_stale_pflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_op1_sel = dcache_io_lsu_resp_0_bits_uop_op1_sel; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_op2_sel = dcache_io_lsu_resp_0_bits_uop_op2_sel; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_split_num = dcache_io_lsu_resp_0_bits_uop_split_num; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_self_index = dcache_io_lsu_resp_0_bits_uop_self_index; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_rob_inst_idx = dcache_io_lsu_resp_0_bits_uop_rob_inst_idx; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_address_num = dcache_io_lsu_resp_0_bits_uop_address_num; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_uopc = dcache_io_lsu_resp_0_bits_uop_uopc; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_inst = dcache_io_lsu_resp_0_bits_uop_inst; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_debug_inst = dcache_io_lsu_resp_0_bits_uop_debug_inst; // @[tile.scala 239:30]
@@ -17953,7 +13405,6 @@ module BoomTile(
   assign lsu_io_dmem_resp_0_bits_uop_ctrl_is_load = dcache_io_lsu_resp_0_bits_uop_ctrl_is_load; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_ctrl_is_sta = dcache_io_lsu_resp_0_bits_uop_ctrl_is_sta; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_ctrl_is_std = dcache_io_lsu_resp_0_bits_uop_ctrl_is_std; // @[tile.scala 239:30]
-  assign lsu_io_dmem_resp_0_bits_uop_ctrl_op3_sel = dcache_io_lsu_resp_0_bits_uop_ctrl_op3_sel; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_iw_state = dcache_io_lsu_resp_0_bits_uop_iw_state; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_iw_p1_poisoned = dcache_io_lsu_resp_0_bits_uop_iw_p1_poisoned; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_uop_iw_p2_poisoned = dcache_io_lsu_resp_0_bits_uop_iw_p2_poisoned; // @[tile.scala 239:30]
@@ -18019,23 +13470,6 @@ module BoomTile(
   assign lsu_io_dmem_resp_0_bits_data = dcache_io_lsu_resp_0_bits_data; // @[tile.scala 239:30]
   assign lsu_io_dmem_resp_0_bits_is_hella = dcache_io_lsu_resp_0_bits_is_hella; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_valid = dcache_io_lsu_nack_0_valid; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_switch = dcache_io_lsu_nack_0_bits_uop_switch; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_switch_off = dcache_io_lsu_nack_0_bits_uop_switch_off; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_is_unicore = dcache_io_lsu_nack_0_bits_uop_is_unicore; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_shift = dcache_io_lsu_nack_0_bits_uop_shift; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_lrs3_rtype = dcache_io_lsu_nack_0_bits_uop_lrs3_rtype; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_rflag = dcache_io_lsu_nack_0_bits_uop_rflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_wflag = dcache_io_lsu_nack_0_bits_uop_wflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_prflag = dcache_io_lsu_nack_0_bits_uop_prflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_pwflag = dcache_io_lsu_nack_0_bits_uop_pwflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_pflag_busy = dcache_io_lsu_nack_0_bits_uop_pflag_busy; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_stale_pflag = dcache_io_lsu_nack_0_bits_uop_stale_pflag; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_op1_sel = dcache_io_lsu_nack_0_bits_uop_op1_sel; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_op2_sel = dcache_io_lsu_nack_0_bits_uop_op2_sel; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_split_num = dcache_io_lsu_nack_0_bits_uop_split_num; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_self_index = dcache_io_lsu_nack_0_bits_uop_self_index; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_rob_inst_idx = dcache_io_lsu_nack_0_bits_uop_rob_inst_idx; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_address_num = dcache_io_lsu_nack_0_bits_uop_address_num; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_uopc = dcache_io_lsu_nack_0_bits_uop_uopc; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_inst = dcache_io_lsu_nack_0_bits_uop_inst; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_debug_inst = dcache_io_lsu_nack_0_bits_uop_debug_inst; // @[tile.scala 239:30]
@@ -18053,7 +13487,6 @@ module BoomTile(
   assign lsu_io_dmem_nack_0_bits_uop_ctrl_is_load = dcache_io_lsu_nack_0_bits_uop_ctrl_is_load; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_ctrl_is_sta = dcache_io_lsu_nack_0_bits_uop_ctrl_is_sta; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_ctrl_is_std = dcache_io_lsu_nack_0_bits_uop_ctrl_is_std; // @[tile.scala 239:30]
-  assign lsu_io_dmem_nack_0_bits_uop_ctrl_op3_sel = dcache_io_lsu_nack_0_bits_uop_ctrl_op3_sel; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_iw_state = dcache_io_lsu_nack_0_bits_uop_iw_state; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_iw_p1_poisoned = dcache_io_lsu_nack_0_bits_uop_iw_p1_poisoned; // @[tile.scala 239:30]
   assign lsu_io_dmem_nack_0_bits_uop_iw_p2_poisoned = dcache_io_lsu_nack_0_bits_uop_iw_p2_poisoned; // @[tile.scala 239:30]

@@ -23,12 +23,12 @@ module BoomProbeUnit(
   input         io_meta_read_ready,
   output        io_meta_read_valid,
   output [5:0]  io_meta_read_bits_idx,
-  output        io_meta_read_bits_way_en,
+  output [3:0]  io_meta_read_bits_way_en,
   output [19:0] io_meta_read_bits_tag,
   input         io_meta_write_ready,
   output        io_meta_write_valid,
   output [5:0]  io_meta_write_bits_idx,
-  output        io_meta_write_bits_way_en,
+  output [3:0]  io_meta_write_bits_way_en,
   output [19:0] io_meta_write_bits_tag,
   output [1:0]  io_meta_write_bits_data_coh_state,
   output [19:0] io_meta_write_bits_data_tag,
@@ -38,9 +38,9 @@ module BoomProbeUnit(
   output [5:0]  io_wb_req_bits_idx,
   output [1:0]  io_wb_req_bits_source,
   output [2:0]  io_wb_req_bits_param,
-  output        io_wb_req_bits_way_en,
+  output [3:0]  io_wb_req_bits_way_en,
   output        io_wb_req_bits_voluntary,
-  input         io_way_en,
+  input  [3:0]  io_way_en,
   input         io_wb_rdy,
   input         io_mshr_rdy,
   output        io_mshr_wb_rdy,
@@ -71,7 +71,7 @@ module BoomProbeUnit(
   reg [3:0] req_size; // @[dcache.scala 167:16]
   reg [1:0] req_source; // @[dcache.scala 167:16]
   reg [31:0] req_address; // @[dcache.scala 167:16]
-  reg  way_en; // @[dcache.scala 171:19]
+  reg [3:0] way_en; // @[dcache.scala 171:19]
   wire  tag_matches = |way_en; // @[dcache.scala 172:28]
   reg [1:0] old_coh_state; // @[dcache.scala 173:20]
   wire [1:0] reply_coh_state = tag_matches ? old_coh_state : 2'h0; // @[dcache.scala 175:22]
@@ -154,7 +154,7 @@ module BoomProbeUnit(
   assign io_rep_bits_corrupt = 1'h0; // @[Edges.scala 407:17 Edges.scala 414:15]
   assign io_meta_read_valid = state == 4'h1; // @[dcache.scala 188:31]
   assign io_meta_read_bits_idx = req_address[11:6]; // @[dcache.scala 168:28]
-  assign io_meta_read_bits_way_en = 1'h0;
+  assign io_meta_read_bits_way_en = 4'h0;
   assign io_meta_read_bits_tag = req_address[31:12]; // @[dcache.scala 169:29]
   assign io_meta_write_valid = state == 4'h9; // @[dcache.scala 192:32]
   assign io_meta_write_bits_idx = req_address[11:6]; // @[dcache.scala 168:28]
@@ -306,7 +306,7 @@ initial begin
   _RAND_4 = {1{`RANDOM}};
   req_address = _RAND_4[31:0];
   _RAND_5 = {1{`RANDOM}};
-  way_en = _RAND_5[0:0];
+  way_en = _RAND_5[3:0];
   _RAND_6 = {1{`RANDOM}};
   old_coh_state = _RAND_6[1:0];
 `endif // RANDOMIZE_REG_INIT

@@ -1226,13 +1226,13 @@ module PTW(
     .io_out_bits_bits_addr(arb_io_out_bits_bits_addr),
     .io_chosen(arb_io_chosen)
   );
-  OptimizationBarrier_36 state_barrier ( // @[package.scala 258:25]
+  OptimizationBarrier_60 state_barrier ( // @[package.scala 258:25]
     .clock(state_barrier_clock),
     .reset(state_barrier_reset),
     .io_x(state_barrier_io_x),
     .io_y(state_barrier_io_y)
   );
-  OptimizationBarrier_37 r_pte_barrier ( // @[package.scala 258:25]
+  OptimizationBarrier_61 r_pte_barrier ( // @[package.scala 258:25]
     .clock(r_pte_barrier_clock),
     .reset(r_pte_barrier_reset),
     .io_x_ppn(r_pte_barrier_io_x_ppn),

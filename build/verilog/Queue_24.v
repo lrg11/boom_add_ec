@@ -1,135 +1,135 @@
 module Queue_24(
-  input         clock,
-  input         reset,
-  output        io_enq_ready,
-  input         io_enq_valid,
-  input  [39:0] io_enq_bits_pc,
-  input  [39:0] io_enq_bits_next_pc,
-  input         io_enq_bits_edge_inst_0,
-  input  [31:0] io_enq_bits_insts_0,
-  input  [31:0] io_enq_bits_insts_1,
-  input  [31:0] io_enq_bits_insts_2,
-  input  [31:0] io_enq_bits_insts_3,
-  input  [31:0] io_enq_bits_exp_insts_0,
-  input  [31:0] io_enq_bits_exp_insts_1,
-  input  [31:0] io_enq_bits_exp_insts_2,
-  input  [31:0] io_enq_bits_exp_insts_3,
-  input         io_enq_bits_sfbs_0,
-  input         io_enq_bits_sfbs_1,
-  input         io_enq_bits_sfbs_2,
-  input         io_enq_bits_sfbs_3,
-  input  [7:0]  io_enq_bits_sfb_masks_0,
-  input  [7:0]  io_enq_bits_sfb_masks_1,
-  input  [7:0]  io_enq_bits_sfb_masks_2,
-  input  [7:0]  io_enq_bits_sfb_masks_3,
-  input  [3:0]  io_enq_bits_sfb_dests_0,
-  input  [3:0]  io_enq_bits_sfb_dests_1,
-  input  [3:0]  io_enq_bits_sfb_dests_2,
-  input  [3:0]  io_enq_bits_sfb_dests_3,
-  input         io_enq_bits_shadowable_mask_0,
-  input         io_enq_bits_shadowable_mask_1,
-  input         io_enq_bits_shadowable_mask_2,
-  input         io_enq_bits_shadowable_mask_3,
-  input         io_enq_bits_shadowed_mask_0,
-  input         io_enq_bits_shadowed_mask_1,
-  input         io_enq_bits_shadowed_mask_2,
-  input         io_enq_bits_shadowed_mask_3,
-  input         io_enq_bits_cfi_idx_valid,
-  input  [1:0]  io_enq_bits_cfi_idx_bits,
-  input  [2:0]  io_enq_bits_cfi_type,
-  input         io_enq_bits_cfi_is_call,
-  input         io_enq_bits_cfi_is_ret,
-  input         io_enq_bits_cfi_npc_plus4,
-  input  [39:0] io_enq_bits_ras_top,
-  input  [4:0]  io_enq_bits_ftq_idx,
-  input  [3:0]  io_enq_bits_mask,
-  input  [3:0]  io_enq_bits_br_mask,
-  input  [15:0] io_enq_bits_ghist_old_history,
-  input         io_enq_bits_ghist_current_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_taken,
-  input  [4:0]  io_enq_bits_ghist_ras_idx,
-  input         io_enq_bits_lhist_0,
-  input         io_enq_bits_xcpt_pf_if,
-  input         io_enq_bits_xcpt_ae_if,
-  input         io_enq_bits_bp_debug_if_oh_0,
-  input         io_enq_bits_bp_debug_if_oh_1,
-  input         io_enq_bits_bp_debug_if_oh_2,
-  input         io_enq_bits_bp_debug_if_oh_3,
-  input         io_enq_bits_bp_xcpt_if_oh_0,
-  input         io_enq_bits_bp_xcpt_if_oh_1,
-  input         io_enq_bits_bp_xcpt_if_oh_2,
-  input         io_enq_bits_bp_xcpt_if_oh_3,
-  input         io_enq_bits_end_half_valid,
-  input  [15:0] io_enq_bits_end_half_bits,
-  input  [44:0] io_enq_bits_bpd_meta_0,
-  input  [1:0]  io_enq_bits_fsrc,
-  input  [1:0]  io_enq_bits_tsrc,
-  input         io_deq_ready,
-  output        io_deq_valid,
-  output [39:0] io_deq_bits_pc,
-  output [39:0] io_deq_bits_next_pc,
-  output        io_deq_bits_edge_inst_0,
-  output [31:0] io_deq_bits_insts_0,
-  output [31:0] io_deq_bits_insts_1,
-  output [31:0] io_deq_bits_insts_2,
-  output [31:0] io_deq_bits_insts_3,
-  output [31:0] io_deq_bits_exp_insts_0,
-  output [31:0] io_deq_bits_exp_insts_1,
-  output [31:0] io_deq_bits_exp_insts_2,
-  output [31:0] io_deq_bits_exp_insts_3,
-  output        io_deq_bits_sfbs_0,
-  output        io_deq_bits_sfbs_1,
-  output        io_deq_bits_sfbs_2,
-  output        io_deq_bits_sfbs_3,
-  output [7:0]  io_deq_bits_sfb_masks_0,
-  output [7:0]  io_deq_bits_sfb_masks_1,
-  output [7:0]  io_deq_bits_sfb_masks_2,
-  output [7:0]  io_deq_bits_sfb_masks_3,
-  output [3:0]  io_deq_bits_sfb_dests_0,
-  output [3:0]  io_deq_bits_sfb_dests_1,
-  output [3:0]  io_deq_bits_sfb_dests_2,
-  output [3:0]  io_deq_bits_sfb_dests_3,
-  output        io_deq_bits_shadowable_mask_0,
-  output        io_deq_bits_shadowable_mask_1,
-  output        io_deq_bits_shadowable_mask_2,
-  output        io_deq_bits_shadowable_mask_3,
-  output        io_deq_bits_shadowed_mask_0,
-  output        io_deq_bits_shadowed_mask_1,
-  output        io_deq_bits_shadowed_mask_2,
-  output        io_deq_bits_shadowed_mask_3,
-  output        io_deq_bits_cfi_idx_valid,
-  output [1:0]  io_deq_bits_cfi_idx_bits,
-  output [2:0]  io_deq_bits_cfi_type,
-  output        io_deq_bits_cfi_is_call,
-  output        io_deq_bits_cfi_is_ret,
-  output        io_deq_bits_cfi_npc_plus4,
-  output [39:0] io_deq_bits_ras_top,
-  output [4:0]  io_deq_bits_ftq_idx,
-  output [3:0]  io_deq_bits_mask,
-  output [3:0]  io_deq_bits_br_mask,
-  output [15:0] io_deq_bits_ghist_old_history,
-  output        io_deq_bits_ghist_current_saw_branch_not_taken,
-  output        io_deq_bits_ghist_new_saw_branch_not_taken,
-  output        io_deq_bits_ghist_new_saw_branch_taken,
-  output [4:0]  io_deq_bits_ghist_ras_idx,
-  output        io_deq_bits_lhist_0,
-  output        io_deq_bits_xcpt_pf_if,
-  output        io_deq_bits_xcpt_ae_if,
-  output        io_deq_bits_bp_debug_if_oh_0,
-  output        io_deq_bits_bp_debug_if_oh_1,
-  output        io_deq_bits_bp_debug_if_oh_2,
-  output        io_deq_bits_bp_debug_if_oh_3,
-  output        io_deq_bits_bp_xcpt_if_oh_0,
-  output        io_deq_bits_bp_xcpt_if_oh_1,
-  output        io_deq_bits_bp_xcpt_if_oh_2,
-  output        io_deq_bits_bp_xcpt_if_oh_3,
-  output        io_deq_bits_end_half_valid,
-  output [15:0] io_deq_bits_end_half_bits,
-  output [44:0] io_deq_bits_bpd_meta_0,
-  output [1:0]  io_deq_bits_fsrc,
-  output [1:0]  io_deq_bits_tsrc,
-  output        io_count
+  input          clock,
+  input          reset,
+  output         io_enq_ready,
+  input          io_enq_valid,
+  input  [39:0]  io_enq_bits_pc,
+  input  [39:0]  io_enq_bits_next_pc,
+  input          io_enq_bits_edge_inst_0,
+  input  [31:0]  io_enq_bits_insts_0,
+  input  [31:0]  io_enq_bits_insts_1,
+  input  [31:0]  io_enq_bits_insts_2,
+  input  [31:0]  io_enq_bits_insts_3,
+  input  [31:0]  io_enq_bits_exp_insts_0,
+  input  [31:0]  io_enq_bits_exp_insts_1,
+  input  [31:0]  io_enq_bits_exp_insts_2,
+  input  [31:0]  io_enq_bits_exp_insts_3,
+  input          io_enq_bits_sfbs_0,
+  input          io_enq_bits_sfbs_1,
+  input          io_enq_bits_sfbs_2,
+  input          io_enq_bits_sfbs_3,
+  input  [7:0]   io_enq_bits_sfb_masks_0,
+  input  [7:0]   io_enq_bits_sfb_masks_1,
+  input  [7:0]   io_enq_bits_sfb_masks_2,
+  input  [7:0]   io_enq_bits_sfb_masks_3,
+  input  [3:0]   io_enq_bits_sfb_dests_0,
+  input  [3:0]   io_enq_bits_sfb_dests_1,
+  input  [3:0]   io_enq_bits_sfb_dests_2,
+  input  [3:0]   io_enq_bits_sfb_dests_3,
+  input          io_enq_bits_shadowable_mask_0,
+  input          io_enq_bits_shadowable_mask_1,
+  input          io_enq_bits_shadowable_mask_2,
+  input          io_enq_bits_shadowable_mask_3,
+  input          io_enq_bits_shadowed_mask_0,
+  input          io_enq_bits_shadowed_mask_1,
+  input          io_enq_bits_shadowed_mask_2,
+  input          io_enq_bits_shadowed_mask_3,
+  input          io_enq_bits_cfi_idx_valid,
+  input  [1:0]   io_enq_bits_cfi_idx_bits,
+  input  [2:0]   io_enq_bits_cfi_type,
+  input          io_enq_bits_cfi_is_call,
+  input          io_enq_bits_cfi_is_ret,
+  input          io_enq_bits_cfi_npc_plus4,
+  input  [39:0]  io_enq_bits_ras_top,
+  input  [4:0]   io_enq_bits_ftq_idx,
+  input  [3:0]   io_enq_bits_mask,
+  input  [3:0]   io_enq_bits_br_mask,
+  input  [63:0]  io_enq_bits_ghist_old_history,
+  input          io_enq_bits_ghist_current_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_taken,
+  input  [4:0]   io_enq_bits_ghist_ras_idx,
+  input          io_enq_bits_lhist_0,
+  input          io_enq_bits_xcpt_pf_if,
+  input          io_enq_bits_xcpt_ae_if,
+  input          io_enq_bits_bp_debug_if_oh_0,
+  input          io_enq_bits_bp_debug_if_oh_1,
+  input          io_enq_bits_bp_debug_if_oh_2,
+  input          io_enq_bits_bp_debug_if_oh_3,
+  input          io_enq_bits_bp_xcpt_if_oh_0,
+  input          io_enq_bits_bp_xcpt_if_oh_1,
+  input          io_enq_bits_bp_xcpt_if_oh_2,
+  input          io_enq_bits_bp_xcpt_if_oh_3,
+  input          io_enq_bits_end_half_valid,
+  input  [15:0]  io_enq_bits_end_half_bits,
+  input  [119:0] io_enq_bits_bpd_meta_0,
+  input  [1:0]   io_enq_bits_fsrc,
+  input  [1:0]   io_enq_bits_tsrc,
+  input          io_deq_ready,
+  output         io_deq_valid,
+  output [39:0]  io_deq_bits_pc,
+  output [39:0]  io_deq_bits_next_pc,
+  output         io_deq_bits_edge_inst_0,
+  output [31:0]  io_deq_bits_insts_0,
+  output [31:0]  io_deq_bits_insts_1,
+  output [31:0]  io_deq_bits_insts_2,
+  output [31:0]  io_deq_bits_insts_3,
+  output [31:0]  io_deq_bits_exp_insts_0,
+  output [31:0]  io_deq_bits_exp_insts_1,
+  output [31:0]  io_deq_bits_exp_insts_2,
+  output [31:0]  io_deq_bits_exp_insts_3,
+  output         io_deq_bits_sfbs_0,
+  output         io_deq_bits_sfbs_1,
+  output         io_deq_bits_sfbs_2,
+  output         io_deq_bits_sfbs_3,
+  output [7:0]   io_deq_bits_sfb_masks_0,
+  output [7:0]   io_deq_bits_sfb_masks_1,
+  output [7:0]   io_deq_bits_sfb_masks_2,
+  output [7:0]   io_deq_bits_sfb_masks_3,
+  output [3:0]   io_deq_bits_sfb_dests_0,
+  output [3:0]   io_deq_bits_sfb_dests_1,
+  output [3:0]   io_deq_bits_sfb_dests_2,
+  output [3:0]   io_deq_bits_sfb_dests_3,
+  output         io_deq_bits_shadowable_mask_0,
+  output         io_deq_bits_shadowable_mask_1,
+  output         io_deq_bits_shadowable_mask_2,
+  output         io_deq_bits_shadowable_mask_3,
+  output         io_deq_bits_shadowed_mask_0,
+  output         io_deq_bits_shadowed_mask_1,
+  output         io_deq_bits_shadowed_mask_2,
+  output         io_deq_bits_shadowed_mask_3,
+  output         io_deq_bits_cfi_idx_valid,
+  output [1:0]   io_deq_bits_cfi_idx_bits,
+  output [2:0]   io_deq_bits_cfi_type,
+  output         io_deq_bits_cfi_is_call,
+  output         io_deq_bits_cfi_is_ret,
+  output         io_deq_bits_cfi_npc_plus4,
+  output [39:0]  io_deq_bits_ras_top,
+  output [4:0]   io_deq_bits_ftq_idx,
+  output [3:0]   io_deq_bits_mask,
+  output [3:0]   io_deq_bits_br_mask,
+  output [63:0]  io_deq_bits_ghist_old_history,
+  output         io_deq_bits_ghist_current_saw_branch_not_taken,
+  output         io_deq_bits_ghist_new_saw_branch_not_taken,
+  output         io_deq_bits_ghist_new_saw_branch_taken,
+  output [4:0]   io_deq_bits_ghist_ras_idx,
+  output         io_deq_bits_lhist_0,
+  output         io_deq_bits_xcpt_pf_if,
+  output         io_deq_bits_xcpt_ae_if,
+  output         io_deq_bits_bp_debug_if_oh_0,
+  output         io_deq_bits_bp_debug_if_oh_1,
+  output         io_deq_bits_bp_debug_if_oh_2,
+  output         io_deq_bits_bp_debug_if_oh_3,
+  output         io_deq_bits_bp_xcpt_if_oh_0,
+  output         io_deq_bits_bp_xcpt_if_oh_1,
+  output         io_deq_bits_bp_xcpt_if_oh_2,
+  output         io_deq_bits_bp_xcpt_if_oh_3,
+  output         io_deq_bits_end_half_valid,
+  output [15:0]  io_deq_bits_end_half_bits,
+  output [119:0] io_deq_bits_bpd_meta_0,
+  output [1:0]   io_deq_bits_fsrc,
+  output [1:0]   io_deq_bits_tsrc,
+  output         io_count
 );
 `ifdef RANDOMIZE_MEM_INIT
   reg [63:0] _RAND_0;
@@ -173,7 +173,7 @@ module Queue_24(
   reg [31:0] _RAND_38;
   reg [31:0] _RAND_39;
   reg [31:0] _RAND_40;
-  reg [31:0] _RAND_41;
+  reg [63:0] _RAND_41;
   reg [31:0] _RAND_42;
   reg [31:0] _RAND_43;
   reg [31:0] _RAND_44;
@@ -191,7 +191,7 @@ module Queue_24(
   reg [31:0] _RAND_56;
   reg [31:0] _RAND_57;
   reg [31:0] _RAND_58;
-  reg [63:0] _RAND_59;
+  reg [127:0] _RAND_59;
   reg [31:0] _RAND_60;
   reg [31:0] _RAND_61;
 `endif // RANDOMIZE_MEM_INIT
@@ -485,10 +485,10 @@ module Queue_24(
   wire  ram_br_mask_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_br_mask_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_br_mask_MPORT_en; // @[Decoupled.scala 218:16]
-  reg [15:0] ram_ghist_old_history [0:0]; // @[Decoupled.scala 218:16]
-  wire [15:0] ram_ghist_old_history_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
+  reg [63:0] ram_ghist_old_history [0:0]; // @[Decoupled.scala 218:16]
+  wire [63:0] ram_ghist_old_history_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_io_deq_bits_MPORT_addr; // @[Decoupled.scala 218:16]
-  wire [15:0] ram_ghist_old_history_MPORT_data; // @[Decoupled.scala 218:16]
+  wire [63:0] ram_ghist_old_history_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_en; // @[Decoupled.scala 218:16]
@@ -611,10 +611,10 @@ module Queue_24(
   wire  ram_end_half_bits_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_end_half_bits_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_end_half_bits_MPORT_en; // @[Decoupled.scala 218:16]
-  reg [44:0] ram_bpd_meta_0 [0:0]; // @[Decoupled.scala 218:16]
-  wire [44:0] ram_bpd_meta_0_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
+  reg [119:0] ram_bpd_meta_0 [0:0]; // @[Decoupled.scala 218:16]
+  wire [119:0] ram_bpd_meta_0_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_bpd_meta_0_io_deq_bits_MPORT_addr; // @[Decoupled.scala 218:16]
-  wire [44:0] ram_bpd_meta_0_MPORT_data; // @[Decoupled.scala 218:16]
+  wire [119:0] ram_bpd_meta_0_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_bpd_meta_0_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_bpd_meta_0_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_bpd_meta_0_MPORT_en; // @[Decoupled.scala 218:16]
@@ -1440,9 +1440,9 @@ initial begin
   _RAND_40 = {1{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_br_mask[initvar] = _RAND_40[3:0];
-  _RAND_41 = {1{`RANDOM}};
+  _RAND_41 = {2{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
-    ram_ghist_old_history[initvar] = _RAND_41[15:0];
+    ram_ghist_old_history[initvar] = _RAND_41[63:0];
   _RAND_42 = {1{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_ghist_current_saw_branch_not_taken[initvar] = _RAND_42[0:0];
@@ -1494,9 +1494,9 @@ initial begin
   _RAND_58 = {1{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_end_half_bits[initvar] = _RAND_58[15:0];
-  _RAND_59 = {2{`RANDOM}};
+  _RAND_59 = {4{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
-    ram_bpd_meta_0[initvar] = _RAND_59[44:0];
+    ram_bpd_meta_0[initvar] = _RAND_59[119:0];
   _RAND_60 = {1{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_fsrc[initvar] = _RAND_60[1:0];

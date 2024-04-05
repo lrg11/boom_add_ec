@@ -1,306 +1,244 @@
 module FetchTargetQueue(
-  input         clock,
-  input         reset,
-  output        io_enq_ready,
-  input         io_enq_valid,
-  input  [39:0] io_enq_bits_pc,
-  input  [39:0] io_enq_bits_next_pc,
-  input         io_enq_bits_edge_inst_0,
-  input  [31:0] io_enq_bits_insts_0,
-  input  [31:0] io_enq_bits_insts_1,
-  input  [31:0] io_enq_bits_insts_2,
-  input  [31:0] io_enq_bits_insts_3,
-  input  [31:0] io_enq_bits_exp_insts_0,
-  input  [31:0] io_enq_bits_exp_insts_1,
-  input  [31:0] io_enq_bits_exp_insts_2,
-  input  [31:0] io_enq_bits_exp_insts_3,
-  input         io_enq_bits_sfbs_0,
-  input         io_enq_bits_sfbs_1,
-  input         io_enq_bits_sfbs_2,
-  input         io_enq_bits_sfbs_3,
-  input  [7:0]  io_enq_bits_sfb_masks_0,
-  input  [7:0]  io_enq_bits_sfb_masks_1,
-  input  [7:0]  io_enq_bits_sfb_masks_2,
-  input  [7:0]  io_enq_bits_sfb_masks_3,
-  input  [3:0]  io_enq_bits_sfb_dests_0,
-  input  [3:0]  io_enq_bits_sfb_dests_1,
-  input  [3:0]  io_enq_bits_sfb_dests_2,
-  input  [3:0]  io_enq_bits_sfb_dests_3,
-  input         io_enq_bits_shadowable_mask_0,
-  input         io_enq_bits_shadowable_mask_1,
-  input         io_enq_bits_shadowable_mask_2,
-  input         io_enq_bits_shadowable_mask_3,
-  input         io_enq_bits_shadowed_mask_0,
-  input         io_enq_bits_shadowed_mask_1,
-  input         io_enq_bits_shadowed_mask_2,
-  input         io_enq_bits_shadowed_mask_3,
-  input         io_enq_bits_cfi_idx_valid,
-  input  [1:0]  io_enq_bits_cfi_idx_bits,
-  input  [2:0]  io_enq_bits_cfi_type,
-  input         io_enq_bits_cfi_is_call,
-  input         io_enq_bits_cfi_is_ret,
-  input         io_enq_bits_cfi_npc_plus4,
-  input  [39:0] io_enq_bits_ras_top,
-  input  [4:0]  io_enq_bits_ftq_idx,
-  input  [3:0]  io_enq_bits_mask,
-  input  [3:0]  io_enq_bits_br_mask,
-  input  [15:0] io_enq_bits_ghist_old_history,
-  input         io_enq_bits_ghist_current_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_taken,
-  input  [4:0]  io_enq_bits_ghist_ras_idx,
-  input         io_enq_bits_lhist_0,
-  input         io_enq_bits_xcpt_pf_if,
-  input         io_enq_bits_xcpt_ae_if,
-  input         io_enq_bits_bp_debug_if_oh_0,
-  input         io_enq_bits_bp_debug_if_oh_1,
-  input         io_enq_bits_bp_debug_if_oh_2,
-  input         io_enq_bits_bp_debug_if_oh_3,
-  input         io_enq_bits_bp_xcpt_if_oh_0,
-  input         io_enq_bits_bp_xcpt_if_oh_1,
-  input         io_enq_bits_bp_xcpt_if_oh_2,
-  input         io_enq_bits_bp_xcpt_if_oh_3,
-  input         io_enq_bits_end_half_valid,
-  input  [15:0] io_enq_bits_end_half_bits,
-  input  [44:0] io_enq_bits_bpd_meta_0,
-  input  [1:0]  io_enq_bits_fsrc,
-  input  [1:0]  io_enq_bits_tsrc,
-  output [4:0]  io_enq_idx,
-  input         io_deq_valid,
-  input  [4:0]  io_deq_bits,
-  input  [4:0]  io_get_ftq_pc_0_ftq_idx,
-  output        io_get_ftq_pc_0_entry_cfi_idx_valid,
-  output [1:0]  io_get_ftq_pc_0_entry_cfi_idx_bits,
-  output        io_get_ftq_pc_0_entry_cfi_taken,
-  output        io_get_ftq_pc_0_entry_cfi_mispredicted,
-  output [2:0]  io_get_ftq_pc_0_entry_cfi_type,
-  output [3:0]  io_get_ftq_pc_0_entry_br_mask,
-  output        io_get_ftq_pc_0_entry_cfi_is_call,
-  output        io_get_ftq_pc_0_entry_cfi_is_ret,
-  output        io_get_ftq_pc_0_entry_cfi_npc_plus4,
-  output [39:0] io_get_ftq_pc_0_entry_ras_top,
-  output [4:0]  io_get_ftq_pc_0_entry_ras_idx,
-  output        io_get_ftq_pc_0_entry_start_bank,
-  output [15:0] io_get_ftq_pc_0_ghist_old_history,
-  output        io_get_ftq_pc_0_ghist_current_saw_branch_not_taken,
-  output        io_get_ftq_pc_0_ghist_new_saw_branch_not_taken,
-  output        io_get_ftq_pc_0_ghist_new_saw_branch_taken,
-  output [4:0]  io_get_ftq_pc_0_ghist_ras_idx,
-  output [39:0] io_get_ftq_pc_0_pc,
-  output [39:0] io_get_ftq_pc_0_com_pc,
-  output        io_get_ftq_pc_0_next_val,
-  output [39:0] io_get_ftq_pc_0_next_pc,
-  input  [4:0]  io_get_ftq_pc_1_ftq_idx,
-  output        io_get_ftq_pc_1_entry_cfi_idx_valid,
-  output [1:0]  io_get_ftq_pc_1_entry_cfi_idx_bits,
-  output        io_get_ftq_pc_1_entry_cfi_taken,
-  output        io_get_ftq_pc_1_entry_cfi_mispredicted,
-  output [2:0]  io_get_ftq_pc_1_entry_cfi_type,
-  output [3:0]  io_get_ftq_pc_1_entry_br_mask,
-  output        io_get_ftq_pc_1_entry_cfi_is_call,
-  output        io_get_ftq_pc_1_entry_cfi_is_ret,
-  output        io_get_ftq_pc_1_entry_cfi_npc_plus4,
-  output [39:0] io_get_ftq_pc_1_entry_ras_top,
-  output [4:0]  io_get_ftq_pc_1_entry_ras_idx,
-  output        io_get_ftq_pc_1_entry_start_bank,
-  output [15:0] io_get_ftq_pc_1_ghist_old_history,
-  output        io_get_ftq_pc_1_ghist_current_saw_branch_not_taken,
-  output        io_get_ftq_pc_1_ghist_new_saw_branch_not_taken,
-  output        io_get_ftq_pc_1_ghist_new_saw_branch_taken,
-  output [4:0]  io_get_ftq_pc_1_ghist_ras_idx,
-  output [39:0] io_get_ftq_pc_1_pc,
-  output [39:0] io_get_ftq_pc_1_com_pc,
-  output        io_get_ftq_pc_1_next_val,
-  output [39:0] io_get_ftq_pc_1_next_pc,
-  input  [4:0]  io_get_ftq_pc_2_ftq_idx,
-  output        io_get_ftq_pc_2_entry_cfi_idx_valid,
-  output [1:0]  io_get_ftq_pc_2_entry_cfi_idx_bits,
-  output        io_get_ftq_pc_2_entry_cfi_taken,
-  output        io_get_ftq_pc_2_entry_cfi_mispredicted,
-  output [2:0]  io_get_ftq_pc_2_entry_cfi_type,
-  output [3:0]  io_get_ftq_pc_2_entry_br_mask,
-  output        io_get_ftq_pc_2_entry_cfi_is_call,
-  output        io_get_ftq_pc_2_entry_cfi_is_ret,
-  output        io_get_ftq_pc_2_entry_cfi_npc_plus4,
-  output [39:0] io_get_ftq_pc_2_entry_ras_top,
-  output [4:0]  io_get_ftq_pc_2_entry_ras_idx,
-  output        io_get_ftq_pc_2_entry_start_bank,
-  output [15:0] io_get_ftq_pc_2_ghist_old_history,
-  output        io_get_ftq_pc_2_ghist_current_saw_branch_not_taken,
-  output        io_get_ftq_pc_2_ghist_new_saw_branch_not_taken,
-  output        io_get_ftq_pc_2_ghist_new_saw_branch_taken,
-  output [4:0]  io_get_ftq_pc_2_ghist_ras_idx,
-  output [39:0] io_get_ftq_pc_2_pc,
-  output [39:0] io_get_ftq_pc_2_com_pc,
-  output        io_get_ftq_pc_2_next_val,
-  output [39:0] io_get_ftq_pc_2_next_pc,
-  input  [4:0]  io_get_ftq_pc_3_ftq_idx,
-  output        io_get_ftq_pc_3_entry_cfi_idx_valid,
-  output [1:0]  io_get_ftq_pc_3_entry_cfi_idx_bits,
-  output        io_get_ftq_pc_3_entry_cfi_taken,
-  output        io_get_ftq_pc_3_entry_cfi_mispredicted,
-  output [2:0]  io_get_ftq_pc_3_entry_cfi_type,
-  output [3:0]  io_get_ftq_pc_3_entry_br_mask,
-  output        io_get_ftq_pc_3_entry_cfi_is_call,
-  output        io_get_ftq_pc_3_entry_cfi_is_ret,
-  output        io_get_ftq_pc_3_entry_cfi_npc_plus4,
-  output [39:0] io_get_ftq_pc_3_entry_ras_top,
-  output [4:0]  io_get_ftq_pc_3_entry_ras_idx,
-  output        io_get_ftq_pc_3_entry_start_bank,
-  output [15:0] io_get_ftq_pc_3_ghist_old_history,
-  output        io_get_ftq_pc_3_ghist_current_saw_branch_not_taken,
-  output        io_get_ftq_pc_3_ghist_new_saw_branch_not_taken,
-  output        io_get_ftq_pc_3_ghist_new_saw_branch_taken,
-  output [4:0]  io_get_ftq_pc_3_ghist_ras_idx,
-  output [39:0] io_get_ftq_pc_3_pc,
-  output [39:0] io_get_ftq_pc_3_com_pc,
-  output        io_get_ftq_pc_3_next_val,
-  output [39:0] io_get_ftq_pc_3_next_pc,
-  input  [4:0]  io_debug_ftq_idx_0,
-  input  [4:0]  io_debug_ftq_idx_1,
-  output [39:0] io_debug_fetch_pc_0,
-  output [39:0] io_debug_fetch_pc_1,
-  input         io_redirect_valid,
-  input  [4:0]  io_redirect_bits,
-  input  [11:0] io_brupdate_b1_resolve_mask,
-  input  [11:0] io_brupdate_b1_mispredict_mask,
-  input         io_brupdate_b2_uop_switch,
-  input         io_brupdate_b2_uop_switch_off,
-  input         io_brupdate_b2_uop_is_unicore,
-  input  [2:0]  io_brupdate_b2_uop_shift,
-  input  [1:0]  io_brupdate_b2_uop_lrs3_rtype,
-  input         io_brupdate_b2_uop_rflag,
-  input         io_brupdate_b2_uop_wflag,
-  input  [3:0]  io_brupdate_b2_uop_prflag,
-  input  [3:0]  io_brupdate_b2_uop_pwflag,
-  input         io_brupdate_b2_uop_pflag_busy,
-  input  [3:0]  io_brupdate_b2_uop_stale_pflag,
-  input  [3:0]  io_brupdate_b2_uop_op1_sel,
-  input  [3:0]  io_brupdate_b2_uop_op2_sel,
-  input  [5:0]  io_brupdate_b2_uop_split_num,
-  input  [5:0]  io_brupdate_b2_uop_self_index,
-  input  [5:0]  io_brupdate_b2_uop_rob_inst_idx,
-  input  [5:0]  io_brupdate_b2_uop_address_num,
-  input  [6:0]  io_brupdate_b2_uop_uopc,
-  input  [31:0] io_brupdate_b2_uop_inst,
-  input  [31:0] io_brupdate_b2_uop_debug_inst,
-  input         io_brupdate_b2_uop_is_rvc,
-  input  [39:0] io_brupdate_b2_uop_debug_pc,
-  input  [2:0]  io_brupdate_b2_uop_iq_type,
-  input  [9:0]  io_brupdate_b2_uop_fu_code,
-  input  [3:0]  io_brupdate_b2_uop_ctrl_br_type,
-  input  [1:0]  io_brupdate_b2_uop_ctrl_op1_sel,
-  input  [2:0]  io_brupdate_b2_uop_ctrl_op2_sel,
-  input  [2:0]  io_brupdate_b2_uop_ctrl_imm_sel,
-  input  [3:0]  io_brupdate_b2_uop_ctrl_op_fcn,
-  input         io_brupdate_b2_uop_ctrl_fcn_dw,
-  input  [2:0]  io_brupdate_b2_uop_ctrl_csr_cmd,
-  input         io_brupdate_b2_uop_ctrl_is_load,
-  input         io_brupdate_b2_uop_ctrl_is_sta,
-  input         io_brupdate_b2_uop_ctrl_is_std,
-  input  [1:0]  io_brupdate_b2_uop_ctrl_op3_sel,
-  input  [1:0]  io_brupdate_b2_uop_iw_state,
-  input         io_brupdate_b2_uop_iw_p1_poisoned,
-  input         io_brupdate_b2_uop_iw_p2_poisoned,
-  input         io_brupdate_b2_uop_is_br,
-  input         io_brupdate_b2_uop_is_jalr,
-  input         io_brupdate_b2_uop_is_jal,
-  input         io_brupdate_b2_uop_is_sfb,
-  input  [11:0] io_brupdate_b2_uop_br_mask,
-  input  [3:0]  io_brupdate_b2_uop_br_tag,
-  input  [4:0]  io_brupdate_b2_uop_ftq_idx,
-  input         io_brupdate_b2_uop_edge_inst,
-  input  [5:0]  io_brupdate_b2_uop_pc_lob,
-  input         io_brupdate_b2_uop_taken,
-  input  [19:0] io_brupdate_b2_uop_imm_packed,
-  input  [11:0] io_brupdate_b2_uop_csr_addr,
-  input  [5:0]  io_brupdate_b2_uop_rob_idx,
-  input  [4:0]  io_brupdate_b2_uop_ldq_idx,
-  input  [4:0]  io_brupdate_b2_uop_stq_idx,
-  input  [1:0]  io_brupdate_b2_uop_rxq_idx,
-  input  [6:0]  io_brupdate_b2_uop_pdst,
-  input  [6:0]  io_brupdate_b2_uop_prs1,
-  input  [6:0]  io_brupdate_b2_uop_prs2,
-  input  [6:0]  io_brupdate_b2_uop_prs3,
-  input  [4:0]  io_brupdate_b2_uop_ppred,
-  input         io_brupdate_b2_uop_prs1_busy,
-  input         io_brupdate_b2_uop_prs2_busy,
-  input         io_brupdate_b2_uop_prs3_busy,
-  input         io_brupdate_b2_uop_ppred_busy,
-  input  [6:0]  io_brupdate_b2_uop_stale_pdst,
-  input         io_brupdate_b2_uop_exception,
-  input  [63:0] io_brupdate_b2_uop_exc_cause,
-  input         io_brupdate_b2_uop_bypassable,
-  input  [4:0]  io_brupdate_b2_uop_mem_cmd,
-  input  [1:0]  io_brupdate_b2_uop_mem_size,
-  input         io_brupdate_b2_uop_mem_signed,
-  input         io_brupdate_b2_uop_is_fence,
-  input         io_brupdate_b2_uop_is_fencei,
-  input         io_brupdate_b2_uop_is_amo,
-  input         io_brupdate_b2_uop_uses_ldq,
-  input         io_brupdate_b2_uop_uses_stq,
-  input         io_brupdate_b2_uop_is_sys_pc2epc,
-  input         io_brupdate_b2_uop_is_unique,
-  input         io_brupdate_b2_uop_flush_on_commit,
-  input         io_brupdate_b2_uop_ldst_is_rs1,
-  input  [5:0]  io_brupdate_b2_uop_ldst,
-  input  [5:0]  io_brupdate_b2_uop_lrs1,
-  input  [5:0]  io_brupdate_b2_uop_lrs2,
-  input  [5:0]  io_brupdate_b2_uop_lrs3,
-  input         io_brupdate_b2_uop_ldst_val,
-  input  [1:0]  io_brupdate_b2_uop_dst_rtype,
-  input  [1:0]  io_brupdate_b2_uop_lrs1_rtype,
-  input  [1:0]  io_brupdate_b2_uop_lrs2_rtype,
-  input         io_brupdate_b2_uop_frs3_en,
-  input         io_brupdate_b2_uop_fp_val,
-  input         io_brupdate_b2_uop_fp_single,
-  input         io_brupdate_b2_uop_xcpt_pf_if,
-  input         io_brupdate_b2_uop_xcpt_ae_if,
-  input         io_brupdate_b2_uop_xcpt_ma_if,
-  input         io_brupdate_b2_uop_bp_debug_if,
-  input         io_brupdate_b2_uop_bp_xcpt_if,
-  input  [1:0]  io_brupdate_b2_uop_debug_fsrc,
-  input  [1:0]  io_brupdate_b2_uop_debug_tsrc,
-  input         io_brupdate_b2_valid,
-  input         io_brupdate_b2_mispredict,
-  input         io_brupdate_b2_taken,
-  input  [2:0]  io_brupdate_b2_cfi_type,
-  input  [1:0]  io_brupdate_b2_pc_sel,
-  input  [39:0] io_brupdate_b2_jalr_target,
-  input  [31:0] io_brupdate_b2_target_offset,
-  output        io_bpdupdate_valid,
-  output        io_bpdupdate_bits_is_mispredict_update,
-  output        io_bpdupdate_bits_is_repair_update,
-  output [3:0]  io_bpdupdate_bits_btb_mispredicts,
-  output [39:0] io_bpdupdate_bits_pc,
-  output [3:0]  io_bpdupdate_bits_br_mask,
-  output        io_bpdupdate_bits_cfi_idx_valid,
-  output [1:0]  io_bpdupdate_bits_cfi_idx_bits,
-  output        io_bpdupdate_bits_cfi_taken,
-  output        io_bpdupdate_bits_cfi_mispredicted,
-  output        io_bpdupdate_bits_cfi_is_br,
-  output        io_bpdupdate_bits_cfi_is_jal,
-  output        io_bpdupdate_bits_cfi_is_jalr,
-  output [15:0] io_bpdupdate_bits_ghist_old_history,
-  output        io_bpdupdate_bits_ghist_current_saw_branch_not_taken,
-  output        io_bpdupdate_bits_ghist_new_saw_branch_not_taken,
-  output        io_bpdupdate_bits_ghist_new_saw_branch_taken,
-  output [4:0]  io_bpdupdate_bits_ghist_ras_idx,
-  output        io_bpdupdate_bits_lhist_0,
-  output [39:0] io_bpdupdate_bits_target,
-  output [44:0] io_bpdupdate_bits_meta_0,
-  output        io_ras_update,
-  output [4:0]  io_ras_update_idx,
-  output [39:0] io_ras_update_pc
+  input          clock,
+  input          reset,
+  output         io_enq_ready,
+  input          io_enq_valid,
+  input  [39:0]  io_enq_bits_pc,
+  input  [39:0]  io_enq_bits_next_pc,
+  input          io_enq_bits_edge_inst_0,
+  input  [31:0]  io_enq_bits_insts_0,
+  input  [31:0]  io_enq_bits_insts_1,
+  input  [31:0]  io_enq_bits_insts_2,
+  input  [31:0]  io_enq_bits_insts_3,
+  input  [31:0]  io_enq_bits_exp_insts_0,
+  input  [31:0]  io_enq_bits_exp_insts_1,
+  input  [31:0]  io_enq_bits_exp_insts_2,
+  input  [31:0]  io_enq_bits_exp_insts_3,
+  input          io_enq_bits_sfbs_0,
+  input          io_enq_bits_sfbs_1,
+  input          io_enq_bits_sfbs_2,
+  input          io_enq_bits_sfbs_3,
+  input  [7:0]   io_enq_bits_sfb_masks_0,
+  input  [7:0]   io_enq_bits_sfb_masks_1,
+  input  [7:0]   io_enq_bits_sfb_masks_2,
+  input  [7:0]   io_enq_bits_sfb_masks_3,
+  input  [3:0]   io_enq_bits_sfb_dests_0,
+  input  [3:0]   io_enq_bits_sfb_dests_1,
+  input  [3:0]   io_enq_bits_sfb_dests_2,
+  input  [3:0]   io_enq_bits_sfb_dests_3,
+  input          io_enq_bits_shadowable_mask_0,
+  input          io_enq_bits_shadowable_mask_1,
+  input          io_enq_bits_shadowable_mask_2,
+  input          io_enq_bits_shadowable_mask_3,
+  input          io_enq_bits_shadowed_mask_0,
+  input          io_enq_bits_shadowed_mask_1,
+  input          io_enq_bits_shadowed_mask_2,
+  input          io_enq_bits_shadowed_mask_3,
+  input          io_enq_bits_cfi_idx_valid,
+  input  [1:0]   io_enq_bits_cfi_idx_bits,
+  input  [2:0]   io_enq_bits_cfi_type,
+  input          io_enq_bits_cfi_is_call,
+  input          io_enq_bits_cfi_is_ret,
+  input          io_enq_bits_cfi_npc_plus4,
+  input  [39:0]  io_enq_bits_ras_top,
+  input  [4:0]   io_enq_bits_ftq_idx,
+  input  [3:0]   io_enq_bits_mask,
+  input  [3:0]   io_enq_bits_br_mask,
+  input  [63:0]  io_enq_bits_ghist_old_history,
+  input          io_enq_bits_ghist_current_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_taken,
+  input  [4:0]   io_enq_bits_ghist_ras_idx,
+  input          io_enq_bits_lhist_0,
+  input          io_enq_bits_xcpt_pf_if,
+  input          io_enq_bits_xcpt_ae_if,
+  input          io_enq_bits_bp_debug_if_oh_0,
+  input          io_enq_bits_bp_debug_if_oh_1,
+  input          io_enq_bits_bp_debug_if_oh_2,
+  input          io_enq_bits_bp_debug_if_oh_3,
+  input          io_enq_bits_bp_xcpt_if_oh_0,
+  input          io_enq_bits_bp_xcpt_if_oh_1,
+  input          io_enq_bits_bp_xcpt_if_oh_2,
+  input          io_enq_bits_bp_xcpt_if_oh_3,
+  input          io_enq_bits_end_half_valid,
+  input  [15:0]  io_enq_bits_end_half_bits,
+  input  [119:0] io_enq_bits_bpd_meta_0,
+  input  [1:0]   io_enq_bits_fsrc,
+  input  [1:0]   io_enq_bits_tsrc,
+  output [4:0]   io_enq_idx,
+  input          io_deq_valid,
+  input  [4:0]   io_deq_bits,
+  input  [4:0]   io_get_ftq_pc_0_ftq_idx,
+  output         io_get_ftq_pc_0_entry_cfi_idx_valid,
+  output [1:0]   io_get_ftq_pc_0_entry_cfi_idx_bits,
+  output         io_get_ftq_pc_0_entry_cfi_taken,
+  output         io_get_ftq_pc_0_entry_cfi_mispredicted,
+  output [2:0]   io_get_ftq_pc_0_entry_cfi_type,
+  output [3:0]   io_get_ftq_pc_0_entry_br_mask,
+  output         io_get_ftq_pc_0_entry_cfi_is_call,
+  output         io_get_ftq_pc_0_entry_cfi_is_ret,
+  output         io_get_ftq_pc_0_entry_cfi_npc_plus4,
+  output [39:0]  io_get_ftq_pc_0_entry_ras_top,
+  output [4:0]   io_get_ftq_pc_0_entry_ras_idx,
+  output         io_get_ftq_pc_0_entry_start_bank,
+  output [63:0]  io_get_ftq_pc_0_ghist_old_history,
+  output         io_get_ftq_pc_0_ghist_current_saw_branch_not_taken,
+  output         io_get_ftq_pc_0_ghist_new_saw_branch_not_taken,
+  output         io_get_ftq_pc_0_ghist_new_saw_branch_taken,
+  output [4:0]   io_get_ftq_pc_0_ghist_ras_idx,
+  output [39:0]  io_get_ftq_pc_0_pc,
+  output [39:0]  io_get_ftq_pc_0_com_pc,
+  output         io_get_ftq_pc_0_next_val,
+  output [39:0]  io_get_ftq_pc_0_next_pc,
+  input  [4:0]   io_get_ftq_pc_1_ftq_idx,
+  output         io_get_ftq_pc_1_entry_cfi_idx_valid,
+  output [1:0]   io_get_ftq_pc_1_entry_cfi_idx_bits,
+  output         io_get_ftq_pc_1_entry_cfi_taken,
+  output         io_get_ftq_pc_1_entry_cfi_mispredicted,
+  output [2:0]   io_get_ftq_pc_1_entry_cfi_type,
+  output [3:0]   io_get_ftq_pc_1_entry_br_mask,
+  output         io_get_ftq_pc_1_entry_cfi_is_call,
+  output         io_get_ftq_pc_1_entry_cfi_is_ret,
+  output         io_get_ftq_pc_1_entry_cfi_npc_plus4,
+  output [39:0]  io_get_ftq_pc_1_entry_ras_top,
+  output [4:0]   io_get_ftq_pc_1_entry_ras_idx,
+  output         io_get_ftq_pc_1_entry_start_bank,
+  output [63:0]  io_get_ftq_pc_1_ghist_old_history,
+  output         io_get_ftq_pc_1_ghist_current_saw_branch_not_taken,
+  output         io_get_ftq_pc_1_ghist_new_saw_branch_not_taken,
+  output         io_get_ftq_pc_1_ghist_new_saw_branch_taken,
+  output [4:0]   io_get_ftq_pc_1_ghist_ras_idx,
+  output [39:0]  io_get_ftq_pc_1_pc,
+  output [39:0]  io_get_ftq_pc_1_com_pc,
+  output         io_get_ftq_pc_1_next_val,
+  output [39:0]  io_get_ftq_pc_1_next_pc,
+  input  [4:0]   io_debug_ftq_idx_0,
+  input  [4:0]   io_debug_ftq_idx_1,
+  output [39:0]  io_debug_fetch_pc_0,
+  output [39:0]  io_debug_fetch_pc_1,
+  input          io_redirect_valid,
+  input  [4:0]   io_redirect_bits,
+  input  [11:0]  io_brupdate_b1_resolve_mask,
+  input  [11:0]  io_brupdate_b1_mispredict_mask,
+  input  [6:0]   io_brupdate_b2_uop_uopc,
+  input  [31:0]  io_brupdate_b2_uop_inst,
+  input  [31:0]  io_brupdate_b2_uop_debug_inst,
+  input          io_brupdate_b2_uop_is_rvc,
+  input  [39:0]  io_brupdate_b2_uop_debug_pc,
+  input  [2:0]   io_brupdate_b2_uop_iq_type,
+  input  [9:0]   io_brupdate_b2_uop_fu_code,
+  input  [3:0]   io_brupdate_b2_uop_ctrl_br_type,
+  input  [1:0]   io_brupdate_b2_uop_ctrl_op1_sel,
+  input  [2:0]   io_brupdate_b2_uop_ctrl_op2_sel,
+  input  [2:0]   io_brupdate_b2_uop_ctrl_imm_sel,
+  input  [3:0]   io_brupdate_b2_uop_ctrl_op_fcn,
+  input          io_brupdate_b2_uop_ctrl_fcn_dw,
+  input  [2:0]   io_brupdate_b2_uop_ctrl_csr_cmd,
+  input          io_brupdate_b2_uop_ctrl_is_load,
+  input          io_brupdate_b2_uop_ctrl_is_sta,
+  input          io_brupdate_b2_uop_ctrl_is_std,
+  input  [1:0]   io_brupdate_b2_uop_iw_state,
+  input          io_brupdate_b2_uop_iw_p1_poisoned,
+  input          io_brupdate_b2_uop_iw_p2_poisoned,
+  input          io_brupdate_b2_uop_is_br,
+  input          io_brupdate_b2_uop_is_jalr,
+  input          io_brupdate_b2_uop_is_jal,
+  input          io_brupdate_b2_uop_is_sfb,
+  input  [11:0]  io_brupdate_b2_uop_br_mask,
+  input  [3:0]   io_brupdate_b2_uop_br_tag,
+  input  [4:0]   io_brupdate_b2_uop_ftq_idx,
+  input          io_brupdate_b2_uop_edge_inst,
+  input  [5:0]   io_brupdate_b2_uop_pc_lob,
+  input          io_brupdate_b2_uop_taken,
+  input  [19:0]  io_brupdate_b2_uop_imm_packed,
+  input  [11:0]  io_brupdate_b2_uop_csr_addr,
+  input  [5:0]   io_brupdate_b2_uop_rob_idx,
+  input  [3:0]   io_brupdate_b2_uop_ldq_idx,
+  input  [3:0]   io_brupdate_b2_uop_stq_idx,
+  input  [1:0]   io_brupdate_b2_uop_rxq_idx,
+  input  [5:0]   io_brupdate_b2_uop_pdst,
+  input  [5:0]   io_brupdate_b2_uop_prs1,
+  input  [5:0]   io_brupdate_b2_uop_prs2,
+  input  [5:0]   io_brupdate_b2_uop_prs3,
+  input  [4:0]   io_brupdate_b2_uop_ppred,
+  input          io_brupdate_b2_uop_prs1_busy,
+  input          io_brupdate_b2_uop_prs2_busy,
+  input          io_brupdate_b2_uop_prs3_busy,
+  input          io_brupdate_b2_uop_ppred_busy,
+  input  [5:0]   io_brupdate_b2_uop_stale_pdst,
+  input          io_brupdate_b2_uop_exception,
+  input  [63:0]  io_brupdate_b2_uop_exc_cause,
+  input          io_brupdate_b2_uop_bypassable,
+  input  [4:0]   io_brupdate_b2_uop_mem_cmd,
+  input  [1:0]   io_brupdate_b2_uop_mem_size,
+  input          io_brupdate_b2_uop_mem_signed,
+  input          io_brupdate_b2_uop_is_fence,
+  input          io_brupdate_b2_uop_is_fencei,
+  input          io_brupdate_b2_uop_is_amo,
+  input          io_brupdate_b2_uop_uses_ldq,
+  input          io_brupdate_b2_uop_uses_stq,
+  input          io_brupdate_b2_uop_is_sys_pc2epc,
+  input          io_brupdate_b2_uop_is_unique,
+  input          io_brupdate_b2_uop_flush_on_commit,
+  input          io_brupdate_b2_uop_ldst_is_rs1,
+  input  [5:0]   io_brupdate_b2_uop_ldst,
+  input  [5:0]   io_brupdate_b2_uop_lrs1,
+  input  [5:0]   io_brupdate_b2_uop_lrs2,
+  input  [5:0]   io_brupdate_b2_uop_lrs3,
+  input          io_brupdate_b2_uop_ldst_val,
+  input  [1:0]   io_brupdate_b2_uop_dst_rtype,
+  input  [1:0]   io_brupdate_b2_uop_lrs1_rtype,
+  input  [1:0]   io_brupdate_b2_uop_lrs2_rtype,
+  input          io_brupdate_b2_uop_frs3_en,
+  input          io_brupdate_b2_uop_fp_val,
+  input          io_brupdate_b2_uop_fp_single,
+  input          io_brupdate_b2_uop_xcpt_pf_if,
+  input          io_brupdate_b2_uop_xcpt_ae_if,
+  input          io_brupdate_b2_uop_xcpt_ma_if,
+  input          io_brupdate_b2_uop_bp_debug_if,
+  input          io_brupdate_b2_uop_bp_xcpt_if,
+  input  [1:0]   io_brupdate_b2_uop_debug_fsrc,
+  input  [1:0]   io_brupdate_b2_uop_debug_tsrc,
+  input          io_brupdate_b2_valid,
+  input          io_brupdate_b2_mispredict,
+  input          io_brupdate_b2_taken,
+  input  [2:0]   io_brupdate_b2_cfi_type,
+  input  [1:0]   io_brupdate_b2_pc_sel,
+  input  [39:0]  io_brupdate_b2_jalr_target,
+  input  [20:0]  io_brupdate_b2_target_offset,
+  output         io_bpdupdate_valid,
+  output         io_bpdupdate_bits_is_mispredict_update,
+  output         io_bpdupdate_bits_is_repair_update,
+  output [3:0]   io_bpdupdate_bits_btb_mispredicts,
+  output [39:0]  io_bpdupdate_bits_pc,
+  output [3:0]   io_bpdupdate_bits_br_mask,
+  output         io_bpdupdate_bits_cfi_idx_valid,
+  output [1:0]   io_bpdupdate_bits_cfi_idx_bits,
+  output         io_bpdupdate_bits_cfi_taken,
+  output         io_bpdupdate_bits_cfi_mispredicted,
+  output         io_bpdupdate_bits_cfi_is_br,
+  output         io_bpdupdate_bits_cfi_is_jal,
+  output         io_bpdupdate_bits_cfi_is_jalr,
+  output [63:0]  io_bpdupdate_bits_ghist_old_history,
+  output         io_bpdupdate_bits_ghist_current_saw_branch_not_taken,
+  output         io_bpdupdate_bits_ghist_new_saw_branch_not_taken,
+  output         io_bpdupdate_bits_ghist_new_saw_branch_taken,
+  output [4:0]   io_bpdupdate_bits_ghist_ras_idx,
+  output         io_bpdupdate_bits_lhist_0,
+  output [39:0]  io_bpdupdate_bits_target,
+  output [119:0] io_bpdupdate_bits_meta_0,
+  output         io_ras_update,
+  output [4:0]   io_ras_update_idx,
+  output [39:0]  io_ras_update_pc
 );
 `ifdef RANDOMIZE_MEM_INIT
-  reg [63:0] _RAND_0;
-  reg [31:0] _RAND_2;
+  reg [127:0] _RAND_0;
+  reg [63:0] _RAND_2;
   reg [31:0] _RAND_4;
   reg [31:0] _RAND_6;
   reg [31:0] _RAND_8;
   reg [31:0] _RAND_10;
-  reg [31:0] _RAND_12;
+  reg [63:0] _RAND_12;
   reg [31:0] _RAND_14;
   reg [31:0] _RAND_16;
   reg [31:0] _RAND_18;
@@ -737,7 +675,7 @@ module FetchTargetQueue(
   reg [63:0] _RAND_438;
   reg [31:0] _RAND_439;
   reg [31:0] _RAND_440;
-  reg [31:0] _RAND_441;
+  reg [63:0] _RAND_441;
   reg [31:0] _RAND_442;
   reg [31:0] _RAND_443;
   reg [31:0] _RAND_444;
@@ -825,53 +763,21 @@ module FetchTargetQueue(
   reg [63:0] _RAND_526;
   reg [31:0] _RAND_527;
   reg [63:0] _RAND_528;
-  reg [31:0] _RAND_529;
-  reg [31:0] _RAND_530;
-  reg [31:0] _RAND_531;
-  reg [31:0] _RAND_532;
-  reg [31:0] _RAND_533;
-  reg [31:0] _RAND_534;
-  reg [31:0] _RAND_535;
-  reg [31:0] _RAND_536;
-  reg [31:0] _RAND_537;
-  reg [63:0] _RAND_538;
-  reg [31:0] _RAND_539;
-  reg [31:0] _RAND_540;
-  reg [63:0] _RAND_541;
-  reg [63:0] _RAND_542;
-  reg [31:0] _RAND_543;
-  reg [63:0] _RAND_544;
-  reg [31:0] _RAND_545;
-  reg [31:0] _RAND_546;
-  reg [31:0] _RAND_547;
-  reg [31:0] _RAND_548;
-  reg [31:0] _RAND_549;
-  reg [31:0] _RAND_550;
-  reg [31:0] _RAND_551;
-  reg [31:0] _RAND_552;
-  reg [31:0] _RAND_553;
-  reg [63:0] _RAND_554;
-  reg [31:0] _RAND_555;
-  reg [31:0] _RAND_556;
-  reg [63:0] _RAND_557;
-  reg [63:0] _RAND_558;
-  reg [31:0] _RAND_559;
-  reg [63:0] _RAND_560;
-  reg [63:0] _RAND_561;
-  reg [63:0] _RAND_562;
+  reg [63:0] _RAND_529;
+  reg [63:0] _RAND_530;
 `endif // RANDOMIZE_REG_INIT
-  reg [44:0] meta_0 [0:31]; // @[fetch-target-queue.scala 142:29]
-  wire [44:0] meta_0_bpd_meta_data; // @[fetch-target-queue.scala 142:29]
+  reg [119:0] meta_0 [0:31]; // @[fetch-target-queue.scala 142:29]
+  wire [119:0] meta_0_bpd_meta_data; // @[fetch-target-queue.scala 142:29]
   wire [4:0] meta_0_bpd_meta_addr; // @[fetch-target-queue.scala 142:29]
-  wire [44:0] meta_0_MPORT_2_data; // @[fetch-target-queue.scala 142:29]
+  wire [119:0] meta_0_MPORT_2_data; // @[fetch-target-queue.scala 142:29]
   wire [4:0] meta_0_MPORT_2_addr; // @[fetch-target-queue.scala 142:29]
   wire  meta_0_MPORT_2_mask; // @[fetch-target-queue.scala 142:29]
   wire  meta_0_MPORT_2_en; // @[fetch-target-queue.scala 142:29]
   reg [4:0] meta_0_bpd_meta_addr_pipe_0;
-  reg [15:0] ghist_0_old_history [0:31]; // @[fetch-target-queue.scala 144:43]
-  wire [15:0] ghist_0_old_history_bpd_ghist_data; // @[fetch-target-queue.scala 144:43]
+  reg [63:0] ghist_0_old_history [0:31]; // @[fetch-target-queue.scala 144:43]
+  wire [63:0] ghist_0_old_history_bpd_ghist_data; // @[fetch-target-queue.scala 144:43]
   wire [4:0] ghist_0_old_history_bpd_ghist_addr; // @[fetch-target-queue.scala 144:43]
-  wire [15:0] ghist_0_old_history_MPORT_data; // @[fetch-target-queue.scala 144:43]
+  wire [63:0] ghist_0_old_history_MPORT_data; // @[fetch-target-queue.scala 144:43]
   wire [4:0] ghist_0_old_history_MPORT_addr; // @[fetch-target-queue.scala 144:43]
   wire  ghist_0_old_history_MPORT_mask; // @[fetch-target-queue.scala 144:43]
   wire  ghist_0_old_history_MPORT_en; // @[fetch-target-queue.scala 144:43]
@@ -908,10 +814,10 @@ module FetchTargetQueue(
   wire  ghist_0_ras_idx_MPORT_mask; // @[fetch-target-queue.scala 144:43]
   wire  ghist_0_ras_idx_MPORT_en; // @[fetch-target-queue.scala 144:43]
   reg [4:0] ghist_0_ras_idx_bpd_ghist_addr_pipe_0;
-  reg [15:0] ghist_1_old_history [0:31]; // @[fetch-target-queue.scala 144:43]
-  wire [15:0] ghist_1_old_history_MPORT_3_data; // @[fetch-target-queue.scala 144:43]
+  reg [63:0] ghist_1_old_history [0:31]; // @[fetch-target-queue.scala 144:43]
+  wire [63:0] ghist_1_old_history_MPORT_3_data; // @[fetch-target-queue.scala 144:43]
   wire [4:0] ghist_1_old_history_MPORT_3_addr; // @[fetch-target-queue.scala 144:43]
-  wire [15:0] ghist_1_old_history_MPORT_1_data; // @[fetch-target-queue.scala 144:43]
+  wire [63:0] ghist_1_old_history_MPORT_1_data; // @[fetch-target-queue.scala 144:43]
   wire [4:0] ghist_1_old_history_MPORT_1_addr; // @[fetch-target-queue.scala 144:43]
   wire  ghist_1_old_history_MPORT_1_mask; // @[fetch-target-queue.scala 144:43]
   wire  ghist_1_old_history_MPORT_1_en; // @[fetch-target-queue.scala 144:43]
@@ -951,8 +857,8 @@ module FetchTargetQueue(
   reg [4:0] bpd_ptr; // @[fetch-target-queue.scala 133:27]
   reg [4:0] deq_ptr; // @[fetch-target-queue.scala 134:27]
   reg [4:0] enq_ptr; // @[fetch-target-queue.scala 135:27]
-  wire [4:0] _T_1 = enq_ptr + 5'h1; // @[util.scala 260:14]
-  wire [4:0] _T_4 = _T_1 + 5'h1; // @[util.scala 260:14]
+  wire [4:0] _T_1 = enq_ptr + 5'h1; // @[util.scala 203:14]
+  wire [4:0] _T_4 = _T_1 + 5'h1; // @[util.scala 203:14]
   wire  _T_10 = _T_1 == bpd_ptr; // @[fetch-target-queue.scala 138:46]
   wire  full = _T_4 == bpd_ptr | _T_10; // @[fetch-target-queue.scala 137:81]
   reg [39:0] pcs_0; // @[fetch-target-queue.scala 141:21]
@@ -1372,7 +1278,7 @@ module FetchTargetQueue(
   reg [4:0] ram_31_ras_idx; // @[fetch-target-queue.scala 143:21]
   reg  ram_31_start_bank; // @[fetch-target-queue.scala 143:21]
   wire  do_enq = io_enq_ready & io_enq_valid; // @[Decoupled.scala 40:37]
-  reg [15:0] prev_ghist_old_history; // @[fetch-target-queue.scala 155:27]
+  reg [63:0] prev_ghist_old_history; // @[fetch-target-queue.scala 155:27]
   reg  prev_ghist_current_saw_branch_not_taken; // @[fetch-target-queue.scala 155:27]
   reg [4:0] prev_ghist_ras_idx; // @[fetch-target-queue.scala 155:27]
   reg  prev_entry_cfi_idx_valid; // @[fetch-target-queue.scala 156:27]
@@ -1384,12 +1290,12 @@ module FetchTargetQueue(
   wire [3:0] _T_11 = io_enq_bits_br_mask & io_enq_bits_mask; // @[fetch-target-queue.scala 175:52]
   wire [3:0] _T_12 = prev_entry_br_mask >> prev_entry_cfi_idx_bits; // @[fetch-target-queue.scala 183:27]
   wire [3:0] _T_15 = 4'h1 << prev_entry_cfi_idx_bits; // @[OneHot.scala 58:35]
-  wire [3:0] _T_17 = {{1'd0}, _T_15[3:1]}; // @[util.scala 444:29]
-  wire [3:0] _T_18 = {{2'd0}, _T_15[3:2]}; // @[util.scala 444:29]
-  wire [3:0] _T_19 = {{3'd0}, _T_15[3]}; // @[util.scala 444:29]
-  wire [3:0] _T_20 = _T_15 | _T_17; // @[util.scala 444:45]
-  wire [3:0] _T_21 = _T_20 | _T_18; // @[util.scala 444:45]
-  wire [3:0] _T_22 = _T_21 | _T_19; // @[util.scala 444:45]
+  wire [3:0] _T_17 = {{1'd0}, _T_15[3:1]}; // @[util.scala 373:29]
+  wire [3:0] _T_18 = {{2'd0}, _T_15[3:2]}; // @[util.scala 373:29]
+  wire [3:0] _T_19 = {{3'd0}, _T_15[3]}; // @[util.scala 373:29]
+  wire [3:0] _T_20 = _T_15 | _T_17; // @[util.scala 373:45]
+  wire [3:0] _T_21 = _T_20 | _T_18; // @[util.scala 373:45]
+  wire [3:0] _T_22 = _T_21 | _T_19; // @[util.scala 373:45]
   wire  _T_23 = _T_12[0] & prev_entry_cfi_taken; // @[frontend.scala 91:84]
   wire [3:0] _T_24 = _T_12[0] & prev_entry_cfi_taken ? _T_15 : 4'h0; // @[frontend.scala 91:73]
   wire [3:0] _T_25 = ~_T_24; // @[frontend.scala 91:69]
@@ -1397,16 +1303,16 @@ module FetchTargetQueue(
   wire [3:0] _T_28 = prev_entry_cfi_idx_valid ? _T_26 : 4'hf; // @[frontend.scala 90:44]
   wire [3:0] _T_29 = prev_entry_br_mask & _T_28; // @[frontend.scala 90:39]
   wire  _T_31 = _T_29 != 4'h0 | prev_ghist_current_saw_branch_not_taken; // @[frontend.scala 98:61]
-  wire [16:0] _T_34 = {prev_ghist_old_history, 1'h0}; // @[frontend.scala 99:91]
-  wire [16:0] _T_35 = _T_34 | 17'h1; // @[frontend.scala 99:96]
-  wire [16:0] _T_37 = _T_31 ? _T_34 : {{1'd0}, prev_ghist_old_history}; // @[frontend.scala 100:37]
-  wire [16:0] _T_38 = _T_23 & prev_entry_cfi_idx_valid ? _T_35 : _T_37; // @[frontend.scala 99:37]
-  wire [4:0] _T_41 = prev_ghist_ras_idx + 5'h1; // @[util.scala 260:14]
-  wire [4:0] _T_45 = prev_ghist_ras_idx - 5'h1; // @[util.scala 277:14]
+  wire [64:0] _T_34 = {prev_ghist_old_history, 1'h0}; // @[frontend.scala 99:91]
+  wire [64:0] _T_35 = _T_34 | 65'h1; // @[frontend.scala 99:96]
+  wire [64:0] _T_37 = _T_31 ? _T_34 : {{1'd0}, prev_ghist_old_history}; // @[frontend.scala 100:37]
+  wire [64:0] _T_38 = _T_23 & prev_entry_cfi_idx_valid ? _T_35 : _T_37; // @[frontend.scala 99:37]
+  wire [4:0] _T_41 = prev_ghist_ras_idx + 5'h1; // @[util.scala 203:14]
+  wire [4:0] _T_45 = prev_ghist_ras_idx - 5'h1; // @[util.scala 220:14]
   wire [4:0] _T_47 = prev_entry_cfi_idx_valid & prev_entry_cfi_is_ret ? _T_45 : prev_ghist_ras_idx; // @[frontend.scala 125:31]
   wire [4:0] _T_48 = prev_entry_cfi_idx_valid & prev_entry_cfi_is_call ? _T_41 : _T_47; // @[frontend.scala 124:31]
-  wire [15:0] _T_49_old_history = io_enq_bits_ghist_current_saw_branch_not_taken ? io_enq_bits_ghist_old_history : _T_38
-    [15:0]; // @[fetch-target-queue.scala 178:24]
+  wire [63:0] _T_49_old_history = io_enq_bits_ghist_current_saw_branch_not_taken ? io_enq_bits_ghist_old_history : _T_38
+    [63:0]; // @[fetch-target-queue.scala 178:24]
   wire [4:0] _T_49_ras_idx = io_enq_bits_ghist_current_saw_branch_not_taken ? io_enq_bits_ghist_ras_idx : _T_48; // @[fetch-target-queue.scala 178:24]
   wire  _GEN_32 = 5'h0 == enq_ptr ? 1'h0 : ram_0_start_bank; // @[fetch-target-queue.scala 195:18 fetch-target-queue.scala 195:18 fetch-target-queue.scala 143:21]
   wire  _GEN_33 = 5'h1 == enq_ptr ? 1'h0 : ram_1_start_bank; // @[fetch-target-queue.scala 195:18 fetch-target-queue.scala 195:18 fetch-target-queue.scala 143:21]
@@ -2184,7 +2090,7 @@ module FetchTargetQueue(
   wire  _GEN_854 = do_enq ? io_enq_bits_cfi_idx_valid : prev_entry_cfi_idx_valid; // @[fetch-target-queue.scala 158:17 fetch-target-queue.scala 198:16 fetch-target-queue.scala 156:27]
   wire [4:0] _GEN_855 = do_enq ? _T_49_ras_idx : prev_ghist_ras_idx; // @[fetch-target-queue.scala 158:17 fetch-target-queue.scala 199:16 fetch-target-queue.scala 155:27]
   wire  _GEN_858 = do_enq ? io_enq_bits_ghist_current_saw_branch_not_taken : prev_ghist_current_saw_branch_not_taken; // @[fetch-target-queue.scala 158:17 fetch-target-queue.scala 199:16 fetch-target-queue.scala 155:27]
-  wire [15:0] _GEN_859 = do_enq ? _T_49_old_history : prev_ghist_old_history; // @[fetch-target-queue.scala 158:17 fetch-target-queue.scala 199:16 fetch-target-queue.scala 155:27]
+  wire [63:0] _GEN_859 = do_enq ? _T_49_old_history : prev_ghist_old_history; // @[fetch-target-queue.scala 158:17 fetch-target-queue.scala 199:16 fetch-target-queue.scala 155:27]
   wire [4:0] _GEN_861 = io_deq_valid ? io_deq_bits : deq_ptr; // @[fetch-target-queue.scala 209:23 fetch-target-queue.scala 210:13 fetch-target-queue.scala 134:27]
   reg  first_empty; // @[fetch-target-queue.scala 214:28]
   reg  REG; // @[fetch-target-queue.scala 222:31]
@@ -2393,7 +2299,7 @@ module FetchTargetQueue(
   wire [39:0] _GEN_1276 = 5'h19 == bpd_idx ? pcs_25 : _GEN_1275; // @[fetch-target-queue.scala 242:26 fetch-target-queue.scala 242:26]
   wire [39:0] _GEN_1277 = 5'h1a == bpd_idx ? pcs_26 : _GEN_1276; // @[fetch-target-queue.scala 242:26 fetch-target-queue.scala 242:26]
   wire [39:0] _GEN_1278 = 5'h1b == bpd_idx ? pcs_27 : _GEN_1277; // @[fetch-target-queue.scala 242:26 fetch-target-queue.scala 242:26]
-  wire [4:0] _T_60 = bpd_idx + 5'h1; // @[util.scala 260:14]
+  wire [4:0] _T_60 = bpd_idx + 5'h1; // @[util.scala 203:14]
   reg [39:0] bpd_target; // @[fetch-target-queue.scala 243:27]
   wire [39:0] _GEN_1284 = 5'h1 == _T_60 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 243:27 fetch-target-queue.scala 243:27]
   wire [39:0] _GEN_1285 = 5'h2 == _T_60 ? pcs_2 : _GEN_1284; // @[fetch-target-queue.scala 243:27 fetch-target-queue.scala 243:27]
@@ -2425,7 +2331,7 @@ module FetchTargetQueue(
   reg  REG_3; // @[fetch-target-queue.scala 248:23]
   reg [4:0] REG_4; // @[fetch-target-queue.scala 250:37]
   reg [4:0] REG_5; // @[fetch-target-queue.scala 251:37]
-  wire [4:0] _T_63 = bpd_repair_idx + 5'h1; // @[util.scala 260:14]
+  wire [4:0] _T_63 = bpd_repair_idx + 5'h1; // @[util.scala 203:14]
   reg  REG_6; // @[fetch-target-queue.scala 256:44]
   wire  _T_76 = bpd_pc == bpd_repair_pc; // @[fetch-target-queue.scala 262:14]
   wire  _T_77 = _T_63 == bpd_end_idx | _T_76; // @[fetch-target-queue.scala 261:64]
@@ -2440,7 +2346,7 @@ module FetchTargetQueue(
   wire  _T_80 = ~bpd_update_mispredict & _T_79; // @[fetch-target-queue.scala 269:54]
   wire  _T_81 = bpd_ptr != deq_ptr; // @[fetch-target-queue.scala 271:40]
   wire  _T_82 = _T_80 & _T_81; // @[fetch-target-queue.scala 270:50]
-  wire [4:0] _T_84 = bpd_ptr + 5'h1; // @[util.scala 260:14]
+  wire [4:0] _T_84 = bpd_ptr + 5'h1; // @[util.scala 203:14]
   wire  _T_86 = enq_ptr != _T_84; // @[fetch-target-queue.scala 272:40]
   wire  _T_87 = _T_82 & _T_86; // @[fetch-target-queue.scala 271:52]
   wire  _T_88 = ~io_brupdate_b2_mispredict; // @[fetch-target-queue.scala 273:31]
@@ -2459,12 +2365,12 @@ module FetchTargetQueue(
   reg  REG_10; // @[fetch-target-queue.scala 285:54]
   reg  REG_11; // @[fetch-target-queue.scala 286:54]
   wire [3:0] _T_104 = 4'h1 << bpd_entry_cfi_idx_bits; // @[OneHot.scala 58:35]
-  wire [3:0] _T_106 = {{1'd0}, _T_104[3:1]}; // @[util.scala 444:29]
-  wire [3:0] _T_107 = {{2'd0}, _T_104[3:2]}; // @[util.scala 444:29]
-  wire [3:0] _T_108 = {{3'd0}, _T_104[3]}; // @[util.scala 444:29]
-  wire [3:0] _T_109 = _T_104 | _T_106; // @[util.scala 444:45]
-  wire [3:0] _T_110 = _T_109 | _T_107; // @[util.scala 444:45]
-  wire [3:0] _T_111 = _T_110 | _T_108; // @[util.scala 444:45]
+  wire [3:0] _T_106 = {{1'd0}, _T_104[3:1]}; // @[util.scala 373:29]
+  wire [3:0] _T_107 = {{2'd0}, _T_104[3:2]}; // @[util.scala 373:29]
+  wire [3:0] _T_108 = {{3'd0}, _T_104[3]}; // @[util.scala 373:29]
+  wire [3:0] _T_109 = _T_104 | _T_106; // @[util.scala 373:45]
+  wire [3:0] _T_110 = _T_109 | _T_107; // @[util.scala 373:45]
+  wire [3:0] _T_111 = _T_110 | _T_108; // @[util.scala 373:45]
   wire [3:0] _T_112 = _T_111 & bpd_entry_br_mask; // @[fetch-target-queue.scala 290:36]
   wire [3:0] _T_114 = bpd_entry_br_mask >> bpd_entry_cfi_idx_bits; // @[fetch-target-queue.scala 295:54]
   wire  _GEN_1355 = REG_8 ? 1'h0 : first_empty; // @[fetch-target-queue.scala 278:80 fetch-target-queue.scala 301:17 fetch-target-queue.scala 214:28]
@@ -2823,10 +2729,10 @@ module FetchTargetQueue(
   wire  _GEN_1738 = 5'h1d == io_redirect_bits ? ram_29_cfi_idx_valid : _GEN_1737; // @[]
   wire  _GEN_1739 = 5'h1e == io_redirect_bits ? ram_30_cfi_idx_valid : _GEN_1738; // @[]
   wire  _GEN_1740 = 5'h1f == io_redirect_bits ? ram_31_cfi_idx_valid : _GEN_1739; // @[]
-  wire [4:0] _T_125 = io_redirect_bits + 5'h1; // @[util.scala 260:14]
+  wire [4:0] _T_125 = io_redirect_bits + 5'h1; // @[util.scala 203:14]
   wire [3:0] _T_129 = redirect_new_entry_start_bank ? 4'h8 : 4'h0; // @[fetch-target-queue.scala 319:10]
-  wire [5:0] _GEN_4937 = {{2'd0}, _T_129}; // @[fetch-target-queue.scala 318:50]
-  wire [5:0] _T_130 = io_brupdate_b2_uop_pc_lob ^ _GEN_4937; // @[fetch-target-queue.scala 318:50]
+  wire [5:0] _GEN_3977 = {{2'd0}, _T_129}; // @[fetch-target-queue.scala 318:50]
+  wire [5:0] _T_130 = io_brupdate_b2_uop_pc_lob ^ _GEN_3977; // @[fetch-target-queue.scala 318:50]
   wire  _T_132 = _GEN_1708 == _T_130[2:1]; // @[fetch-target-queue.scala 324:104]
   wire  _GEN_1741 = io_brupdate_b2_mispredict | _GEN_1740; // @[fetch-target-queue.scala 317:38 fetch-target-queue.scala 320:43]
   wire  _GEN_1743 = io_brupdate_b2_mispredict | _GEN_1644; // @[fetch-target-queue.scala 317:38 fetch-target-queue.scala 322:43]
@@ -2850,7 +2756,7 @@ module FetchTargetQueue(
   reg [39:0] REG_16_ras_top; // @[fetch-target-queue.scala 337:46]
   reg [4:0] REG_16_ras_idx; // @[fetch-target-queue.scala 337:46]
   reg  REG_16_start_bank; // @[fetch-target-queue.scala 337:46]
-  wire [4:0] _T_139 = io_get_ftq_pc_0_ftq_idx + 5'h1; // @[util.scala 260:14]
+  wire [4:0] _T_139 = io_get_ftq_pc_0_ftq_idx + 5'h1; // @[util.scala 203:14]
   wire  _T_143 = _T_139 == enq_ptr & do_enq; // @[fetch-target-queue.scala 347:46]
   wire [39:0] _GEN_2946 = 5'h1 == _T_139 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
   wire [39:0] _GEN_2947 = 5'h2 == _T_139 ? pcs_2 : _GEN_2946; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
@@ -3274,7 +3180,7 @@ module FetchTargetQueue(
   wire [39:0] _GEN_3418 = 5'h19 == _GEN_861 ? pcs_25 : _GEN_3417; // @[fetch-target-queue.scala 359:42 fetch-target-queue.scala 359:42]
   wire [39:0] _GEN_3419 = 5'h1a == _GEN_861 ? pcs_26 : _GEN_3418; // @[fetch-target-queue.scala 359:42 fetch-target-queue.scala 359:42]
   wire [39:0] _GEN_3420 = 5'h1b == _GEN_861 ? pcs_27 : _GEN_3419; // @[fetch-target-queue.scala 359:42 fetch-target-queue.scala 359:42]
-  wire [4:0] _T_149 = io_get_ftq_pc_1_ftq_idx + 5'h1; // @[util.scala 260:14]
+  wire [4:0] _T_149 = io_get_ftq_pc_1_ftq_idx + 5'h1; // @[util.scala 203:14]
   wire  _T_153 = _T_149 == enq_ptr & do_enq; // @[fetch-target-queue.scala 347:46]
   wire [39:0] _GEN_3426 = 5'h1 == _T_149 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
   wire [39:0] _GEN_3427 = 5'h2 == _T_149 ? pcs_2 : _GEN_3426; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
@@ -3671,856 +3577,62 @@ module FetchTargetQueue(
   reg [39:0] REG_24; // @[fetch-target-queue.scala 357:42]
   reg  REG_25; // @[fetch-target-queue.scala 358:42]
   reg [39:0] REG_26; // @[fetch-target-queue.scala 359:42]
-  wire [4:0] _T_161 = io_get_ftq_pc_2_ftq_idx + 5'h1; // @[util.scala 260:14]
-  wire  _T_165 = _T_161 == enq_ptr & do_enq; // @[fetch-target-queue.scala 347:46]
-  wire [39:0] _GEN_3908 = 5'h1 == _T_161 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3909 = 5'h2 == _T_161 ? pcs_2 : _GEN_3908; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3910 = 5'h3 == _T_161 ? pcs_3 : _GEN_3909; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3911 = 5'h4 == _T_161 ? pcs_4 : _GEN_3910; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3912 = 5'h5 == _T_161 ? pcs_5 : _GEN_3911; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3913 = 5'h6 == _T_161 ? pcs_6 : _GEN_3912; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3914 = 5'h7 == _T_161 ? pcs_7 : _GEN_3913; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3915 = 5'h8 == _T_161 ? pcs_8 : _GEN_3914; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3916 = 5'h9 == _T_161 ? pcs_9 : _GEN_3915; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3917 = 5'ha == _T_161 ? pcs_10 : _GEN_3916; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3918 = 5'hb == _T_161 ? pcs_11 : _GEN_3917; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3919 = 5'hc == _T_161 ? pcs_12 : _GEN_3918; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3920 = 5'hd == _T_161 ? pcs_13 : _GEN_3919; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3921 = 5'he == _T_161 ? pcs_14 : _GEN_3920; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3922 = 5'hf == _T_161 ? pcs_15 : _GEN_3921; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3923 = 5'h10 == _T_161 ? pcs_16 : _GEN_3922; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3924 = 5'h11 == _T_161 ? pcs_17 : _GEN_3923; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3925 = 5'h12 == _T_161 ? pcs_18 : _GEN_3924; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3926 = 5'h13 == _T_161 ? pcs_19 : _GEN_3925; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3927 = 5'h14 == _T_161 ? pcs_20 : _GEN_3926; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3928 = 5'h15 == _T_161 ? pcs_21 : _GEN_3927; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3929 = 5'h16 == _T_161 ? pcs_22 : _GEN_3928; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3930 = 5'h17 == _T_161 ? pcs_23 : _GEN_3929; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3931 = 5'h18 == _T_161 ? pcs_24 : _GEN_3930; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3932 = 5'h19 == _T_161 ? pcs_25 : _GEN_3931; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3933 = 5'h1a == _T_161 ? pcs_26 : _GEN_3932; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3934 = 5'h1b == _T_161 ? pcs_27 : _GEN_3933; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_3935 = 5'h1c == _T_161 ? pcs_28 : _GEN_3934; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  reg  REG_27_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-  reg [1:0] REG_27_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-  reg  REG_27_cfi_taken; // @[fetch-target-queue.scala 351:42]
-  reg  REG_27_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-  reg [2:0] REG_27_cfi_type; // @[fetch-target-queue.scala 351:42]
-  reg [3:0] REG_27_br_mask; // @[fetch-target-queue.scala 351:42]
-  reg  REG_27_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-  reg  REG_27_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-  reg  REG_27_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-  reg [39:0] REG_27_ras_top; // @[fetch-target-queue.scala 351:42]
-  reg [4:0] REG_27_ras_idx; // @[fetch-target-queue.scala 351:42]
-  reg  REG_27_start_bank; // @[fetch-target-queue.scala 351:42]
-  wire  _GEN_3940 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_start_bank : ram_0_start_bank; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3941 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_start_bank : _GEN_3940; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3942 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_start_bank : _GEN_3941; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3943 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_start_bank : _GEN_3942; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3944 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_start_bank : _GEN_3943; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3945 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_start_bank : _GEN_3944; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3946 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_start_bank : _GEN_3945; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3947 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_start_bank : _GEN_3946; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3948 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_start_bank : _GEN_3947; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3949 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_start_bank : _GEN_3948; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3950 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_start_bank : _GEN_3949; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3951 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_start_bank : _GEN_3950; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3952 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_start_bank : _GEN_3951; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3953 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_start_bank : _GEN_3952; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3954 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_start_bank : _GEN_3953; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3955 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_start_bank : _GEN_3954; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3956 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_start_bank : _GEN_3955; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3957 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_start_bank : _GEN_3956; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3958 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_start_bank : _GEN_3957; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3959 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_start_bank : _GEN_3958; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3960 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_start_bank : _GEN_3959; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3961 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_start_bank : _GEN_3960; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3962 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_start_bank : _GEN_3961; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3963 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_start_bank : _GEN_3962; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3964 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_start_bank : _GEN_3963; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3965 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_start_bank : _GEN_3964; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_3966 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_start_bank : _GEN_3965; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3972 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_ras_idx : ram_0_ras_idx; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3973 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_ras_idx : _GEN_3972; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3974 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_ras_idx : _GEN_3973; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3975 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_ras_idx : _GEN_3974; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3976 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_ras_idx : _GEN_3975; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3977 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_ras_idx : _GEN_3976; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3978 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_ras_idx : _GEN_3977; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3979 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_ras_idx : _GEN_3978; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3980 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_ras_idx : _GEN_3979; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3981 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_ras_idx : _GEN_3980; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3982 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_ras_idx : _GEN_3981; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3983 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_ras_idx : _GEN_3982; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3984 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_ras_idx : _GEN_3983; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3985 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_ras_idx : _GEN_3984; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3986 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_ras_idx : _GEN_3985; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3987 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_ras_idx : _GEN_3986; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3988 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_ras_idx : _GEN_3987; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3989 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_ras_idx : _GEN_3988; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3990 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_ras_idx : _GEN_3989; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3991 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_ras_idx : _GEN_3990; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3992 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_ras_idx : _GEN_3991; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3993 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_ras_idx : _GEN_3992; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3994 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_ras_idx : _GEN_3993; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3995 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_ras_idx : _GEN_3994; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3996 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_ras_idx : _GEN_3995; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3997 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_ras_idx : _GEN_3996; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_3998 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_ras_idx : _GEN_3997; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4004 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_ras_top : ram_0_ras_top; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4005 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_ras_top : _GEN_4004; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4006 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_ras_top : _GEN_4005; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4007 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_ras_top : _GEN_4006; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4008 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_ras_top : _GEN_4007; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4009 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_ras_top : _GEN_4008; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4010 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_ras_top : _GEN_4009; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4011 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_ras_top : _GEN_4010; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4012 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_ras_top : _GEN_4011; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4013 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_ras_top : _GEN_4012; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4014 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_ras_top : _GEN_4013; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4015 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_ras_top : _GEN_4014; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4016 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_ras_top : _GEN_4015; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4017 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_ras_top : _GEN_4016; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4018 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_ras_top : _GEN_4017; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4019 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_ras_top : _GEN_4018; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4020 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_ras_top : _GEN_4019; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4021 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_ras_top : _GEN_4020; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4022 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_ras_top : _GEN_4021; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4023 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_ras_top : _GEN_4022; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4024 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_ras_top : _GEN_4023; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4025 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_ras_top : _GEN_4024; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4026 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_ras_top : _GEN_4025; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4027 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_ras_top : _GEN_4026; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4028 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_ras_top : _GEN_4027; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4029 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_ras_top : _GEN_4028; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4030 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_ras_top : _GEN_4029; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4036 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_npc_plus4 : ram_0_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4037 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_npc_plus4 : _GEN_4036; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4038 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_npc_plus4 : _GEN_4037; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4039 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_npc_plus4 : _GEN_4038; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4040 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_npc_plus4 : _GEN_4039; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4041 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_npc_plus4 : _GEN_4040; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4042 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_npc_plus4 : _GEN_4041; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4043 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_npc_plus4 : _GEN_4042; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4044 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_npc_plus4 : _GEN_4043; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4045 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_npc_plus4 : _GEN_4044; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4046 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_npc_plus4 : _GEN_4045; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4047 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_npc_plus4 : _GEN_4046; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4048 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_npc_plus4 : _GEN_4047; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4049 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_npc_plus4 : _GEN_4048; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4050 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_npc_plus4 : _GEN_4049; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4051 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_npc_plus4 : _GEN_4050; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4052 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_npc_plus4 : _GEN_4051; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4053 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_npc_plus4 : _GEN_4052; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4054 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_npc_plus4 : _GEN_4053; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4055 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_npc_plus4 : _GEN_4054; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4056 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_npc_plus4 : _GEN_4055; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4057 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_npc_plus4 : _GEN_4056; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4058 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_npc_plus4 : _GEN_4057; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4059 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_npc_plus4 : _GEN_4058; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4060 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_npc_plus4 : _GEN_4059; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4061 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_npc_plus4 : _GEN_4060; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4062 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_npc_plus4 : _GEN_4061; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4068 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_is_ret : ram_0_cfi_is_ret; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4069 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_is_ret : _GEN_4068; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4070 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_is_ret : _GEN_4069; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4071 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_is_ret : _GEN_4070; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4072 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_is_ret : _GEN_4071; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4073 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_is_ret : _GEN_4072; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4074 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_is_ret : _GEN_4073; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4075 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_is_ret : _GEN_4074; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4076 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_is_ret : _GEN_4075; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4077 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_is_ret : _GEN_4076; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4078 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_is_ret : _GEN_4077; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4079 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_is_ret : _GEN_4078; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4080 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_is_ret : _GEN_4079; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4081 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_is_ret : _GEN_4080; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4082 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_is_ret : _GEN_4081; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4083 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_is_ret : _GEN_4082; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4084 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_is_ret : _GEN_4083; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4085 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_is_ret : _GEN_4084; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4086 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_is_ret : _GEN_4085; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4087 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_is_ret : _GEN_4086; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4088 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_is_ret : _GEN_4087; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4089 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_is_ret : _GEN_4088; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4090 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_is_ret : _GEN_4089; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4091 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_is_ret : _GEN_4090; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4092 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_is_ret : _GEN_4091; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4093 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_is_ret : _GEN_4092; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4094 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_is_ret : _GEN_4093; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4100 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_is_call : ram_0_cfi_is_call; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4101 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_is_call : _GEN_4100; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4102 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_is_call : _GEN_4101; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4103 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_is_call : _GEN_4102; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4104 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_is_call : _GEN_4103; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4105 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_is_call : _GEN_4104; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4106 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_is_call : _GEN_4105; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4107 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_is_call : _GEN_4106; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4108 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_is_call : _GEN_4107; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4109 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_is_call : _GEN_4108; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4110 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_is_call : _GEN_4109; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4111 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_is_call : _GEN_4110; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4112 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_is_call : _GEN_4111; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4113 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_is_call : _GEN_4112; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4114 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_is_call : _GEN_4113; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4115 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_is_call : _GEN_4114; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4116 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_is_call : _GEN_4115; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4117 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_is_call : _GEN_4116; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4118 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_is_call : _GEN_4117; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4119 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_is_call : _GEN_4118; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4120 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_is_call : _GEN_4119; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4121 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_is_call : _GEN_4120; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4122 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_is_call : _GEN_4121; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4123 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_is_call : _GEN_4122; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4124 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_is_call : _GEN_4123; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4125 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_is_call : _GEN_4124; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4126 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_is_call : _GEN_4125; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4132 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_br_mask : ram_0_br_mask; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4133 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_br_mask : _GEN_4132; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4134 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_br_mask : _GEN_4133; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4135 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_br_mask : _GEN_4134; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4136 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_br_mask : _GEN_4135; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4137 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_br_mask : _GEN_4136; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4138 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_br_mask : _GEN_4137; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4139 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_br_mask : _GEN_4138; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4140 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_br_mask : _GEN_4139; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4141 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_br_mask : _GEN_4140; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4142 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_br_mask : _GEN_4141; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4143 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_br_mask : _GEN_4142; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4144 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_br_mask : _GEN_4143; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4145 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_br_mask : _GEN_4144; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4146 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_br_mask : _GEN_4145; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4147 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_br_mask : _GEN_4146; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4148 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_br_mask : _GEN_4147; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4149 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_br_mask : _GEN_4148; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4150 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_br_mask : _GEN_4149; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4151 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_br_mask : _GEN_4150; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4152 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_br_mask : _GEN_4151; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4153 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_br_mask : _GEN_4152; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4154 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_br_mask : _GEN_4153; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4155 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_br_mask : _GEN_4154; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4156 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_br_mask : _GEN_4155; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4157 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_br_mask : _GEN_4156; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4158 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_br_mask : _GEN_4157; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4164 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_type : ram_0_cfi_type; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4165 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_type : _GEN_4164; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4166 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_type : _GEN_4165; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4167 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_type : _GEN_4166; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4168 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_type : _GEN_4167; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4169 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_type : _GEN_4168; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4170 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_type : _GEN_4169; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4171 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_type : _GEN_4170; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4172 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_type : _GEN_4171; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4173 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_type : _GEN_4172; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4174 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_type : _GEN_4173; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4175 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_type : _GEN_4174; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4176 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_type : _GEN_4175; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4177 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_type : _GEN_4176; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4178 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_type : _GEN_4177; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4179 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_type : _GEN_4178; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4180 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_type : _GEN_4179; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4181 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_type : _GEN_4180; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4182 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_type : _GEN_4181; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4183 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_type : _GEN_4182; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4184 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_type : _GEN_4183; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4185 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_type : _GEN_4184; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4186 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_type : _GEN_4185; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4187 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_type : _GEN_4186; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4188 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_type : _GEN_4187; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4189 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_type : _GEN_4188; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4190 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_type : _GEN_4189; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4196 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_mispredicted : ram_0_cfi_mispredicted; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4197 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_mispredicted : _GEN_4196; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4198 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_mispredicted : _GEN_4197; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4199 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_mispredicted : _GEN_4198; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4200 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_mispredicted : _GEN_4199; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4201 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_mispredicted : _GEN_4200; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4202 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_mispredicted : _GEN_4201; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4203 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_mispredicted : _GEN_4202; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4204 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_mispredicted : _GEN_4203; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4205 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_mispredicted : _GEN_4204; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4206 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_mispredicted : _GEN_4205; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4207 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_mispredicted : _GEN_4206; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4208 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_mispredicted : _GEN_4207; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4209 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_mispredicted : _GEN_4208; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4210 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_mispredicted : _GEN_4209; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4211 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_mispredicted : _GEN_4210; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4212 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_mispredicted : _GEN_4211; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4213 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_mispredicted : _GEN_4212; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4214 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_mispredicted : _GEN_4213; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4215 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_mispredicted : _GEN_4214; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4216 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_mispredicted : _GEN_4215; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4217 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_mispredicted : _GEN_4216; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4218 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_mispredicted : _GEN_4217; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4219 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_mispredicted : _GEN_4218; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4220 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_mispredicted : _GEN_4219; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4221 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_mispredicted : _GEN_4220; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4222 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_mispredicted : _GEN_4221; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4228 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_taken : ram_0_cfi_taken; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4229 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_taken : _GEN_4228; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4230 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_taken : _GEN_4229; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4231 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_taken : _GEN_4230; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4232 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_taken : _GEN_4231; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4233 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_taken : _GEN_4232; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4234 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_taken : _GEN_4233; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4235 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_taken : _GEN_4234; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4236 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_taken : _GEN_4235; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4237 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_taken : _GEN_4236; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4238 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_taken : _GEN_4237; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4239 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_taken : _GEN_4238; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4240 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_taken : _GEN_4239; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4241 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_taken : _GEN_4240; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4242 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_taken : _GEN_4241; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4243 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_taken : _GEN_4242; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4244 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_taken : _GEN_4243; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4245 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_taken : _GEN_4244; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4246 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_taken : _GEN_4245; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4247 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_taken : _GEN_4246; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4248 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_taken : _GEN_4247; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4249 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_taken : _GEN_4248; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4250 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_taken : _GEN_4249; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4251 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_taken : _GEN_4250; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4252 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_taken : _GEN_4251; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4253 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_taken : _GEN_4252; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4254 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_taken : _GEN_4253; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4260 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_idx_bits : ram_0_cfi_idx_bits; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4261 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_idx_bits : _GEN_4260; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4262 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_idx_bits : _GEN_4261; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4263 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_idx_bits : _GEN_4262; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4264 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_idx_bits : _GEN_4263; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4265 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_idx_bits : _GEN_4264; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4266 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_idx_bits : _GEN_4265; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4267 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_idx_bits : _GEN_4266; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4268 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_idx_bits : _GEN_4267; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4269 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_idx_bits : _GEN_4268; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4270 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_idx_bits : _GEN_4269; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4271 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_idx_bits : _GEN_4270; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4272 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_idx_bits : _GEN_4271; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4273 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_idx_bits : _GEN_4272; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4274 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_idx_bits : _GEN_4273; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4275 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_idx_bits : _GEN_4274; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4276 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_idx_bits : _GEN_4275; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4277 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_idx_bits : _GEN_4276; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4278 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_idx_bits : _GEN_4277; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4279 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_idx_bits : _GEN_4278; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4280 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_idx_bits : _GEN_4279; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4281 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_idx_bits : _GEN_4280; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4282 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_idx_bits : _GEN_4281; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4283 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_idx_bits : _GEN_4282; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4284 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_idx_bits : _GEN_4283; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4285 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_idx_bits : _GEN_4284; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4286 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_idx_bits : _GEN_4285; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4292 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? ram_1_cfi_idx_valid : ram_0_cfi_idx_valid; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4293 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? ram_2_cfi_idx_valid : _GEN_4292; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4294 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? ram_3_cfi_idx_valid : _GEN_4293; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4295 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? ram_4_cfi_idx_valid : _GEN_4294; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4296 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? ram_5_cfi_idx_valid : _GEN_4295; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4297 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? ram_6_cfi_idx_valid : _GEN_4296; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4298 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? ram_7_cfi_idx_valid : _GEN_4297; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4299 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? ram_8_cfi_idx_valid : _GEN_4298; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4300 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? ram_9_cfi_idx_valid : _GEN_4299; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4301 = 5'ha == io_get_ftq_pc_2_ftq_idx ? ram_10_cfi_idx_valid : _GEN_4300; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4302 = 5'hb == io_get_ftq_pc_2_ftq_idx ? ram_11_cfi_idx_valid : _GEN_4301; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4303 = 5'hc == io_get_ftq_pc_2_ftq_idx ? ram_12_cfi_idx_valid : _GEN_4302; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4304 = 5'hd == io_get_ftq_pc_2_ftq_idx ? ram_13_cfi_idx_valid : _GEN_4303; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4305 = 5'he == io_get_ftq_pc_2_ftq_idx ? ram_14_cfi_idx_valid : _GEN_4304; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4306 = 5'hf == io_get_ftq_pc_2_ftq_idx ? ram_15_cfi_idx_valid : _GEN_4305; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4307 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? ram_16_cfi_idx_valid : _GEN_4306; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4308 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? ram_17_cfi_idx_valid : _GEN_4307; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4309 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? ram_18_cfi_idx_valid : _GEN_4308; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4310 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? ram_19_cfi_idx_valid : _GEN_4309; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4311 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? ram_20_cfi_idx_valid : _GEN_4310; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4312 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? ram_21_cfi_idx_valid : _GEN_4311; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4313 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? ram_22_cfi_idx_valid : _GEN_4312; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4314 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? ram_23_cfi_idx_valid : _GEN_4313; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4315 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? ram_24_cfi_idx_valid : _GEN_4314; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4316 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? ram_25_cfi_idx_valid : _GEN_4315; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4317 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? ram_26_cfi_idx_valid : _GEN_4316; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4318 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? ram_27_cfi_idx_valid : _GEN_4317; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  reg [39:0] REG_28; // @[fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4324 = 5'h1 == io_get_ftq_pc_2_ftq_idx ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4325 = 5'h2 == io_get_ftq_pc_2_ftq_idx ? pcs_2 : _GEN_4324; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4326 = 5'h3 == io_get_ftq_pc_2_ftq_idx ? pcs_3 : _GEN_4325; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4327 = 5'h4 == io_get_ftq_pc_2_ftq_idx ? pcs_4 : _GEN_4326; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4328 = 5'h5 == io_get_ftq_pc_2_ftq_idx ? pcs_5 : _GEN_4327; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4329 = 5'h6 == io_get_ftq_pc_2_ftq_idx ? pcs_6 : _GEN_4328; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4330 = 5'h7 == io_get_ftq_pc_2_ftq_idx ? pcs_7 : _GEN_4329; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4331 = 5'h8 == io_get_ftq_pc_2_ftq_idx ? pcs_8 : _GEN_4330; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4332 = 5'h9 == io_get_ftq_pc_2_ftq_idx ? pcs_9 : _GEN_4331; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4333 = 5'ha == io_get_ftq_pc_2_ftq_idx ? pcs_10 : _GEN_4332; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4334 = 5'hb == io_get_ftq_pc_2_ftq_idx ? pcs_11 : _GEN_4333; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4335 = 5'hc == io_get_ftq_pc_2_ftq_idx ? pcs_12 : _GEN_4334; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4336 = 5'hd == io_get_ftq_pc_2_ftq_idx ? pcs_13 : _GEN_4335; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4337 = 5'he == io_get_ftq_pc_2_ftq_idx ? pcs_14 : _GEN_4336; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4338 = 5'hf == io_get_ftq_pc_2_ftq_idx ? pcs_15 : _GEN_4337; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4339 = 5'h10 == io_get_ftq_pc_2_ftq_idx ? pcs_16 : _GEN_4338; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4340 = 5'h11 == io_get_ftq_pc_2_ftq_idx ? pcs_17 : _GEN_4339; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4341 = 5'h12 == io_get_ftq_pc_2_ftq_idx ? pcs_18 : _GEN_4340; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4342 = 5'h13 == io_get_ftq_pc_2_ftq_idx ? pcs_19 : _GEN_4341; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4343 = 5'h14 == io_get_ftq_pc_2_ftq_idx ? pcs_20 : _GEN_4342; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4344 = 5'h15 == io_get_ftq_pc_2_ftq_idx ? pcs_21 : _GEN_4343; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4345 = 5'h16 == io_get_ftq_pc_2_ftq_idx ? pcs_22 : _GEN_4344; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4346 = 5'h17 == io_get_ftq_pc_2_ftq_idx ? pcs_23 : _GEN_4345; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4347 = 5'h18 == io_get_ftq_pc_2_ftq_idx ? pcs_24 : _GEN_4346; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4348 = 5'h19 == io_get_ftq_pc_2_ftq_idx ? pcs_25 : _GEN_4347; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4349 = 5'h1a == io_get_ftq_pc_2_ftq_idx ? pcs_26 : _GEN_4348; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4350 = 5'h1b == io_get_ftq_pc_2_ftq_idx ? pcs_27 : _GEN_4349; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  reg [39:0] REG_29; // @[fetch-target-queue.scala 357:42]
-  reg  REG_30; // @[fetch-target-queue.scala 358:42]
-  reg [39:0] REG_31; // @[fetch-target-queue.scala 359:42]
-  wire [4:0] _T_171 = io_get_ftq_pc_3_ftq_idx + 5'h1; // @[util.scala 260:14]
-  wire  _T_175 = _T_171 == enq_ptr & do_enq; // @[fetch-target-queue.scala 347:46]
-  wire [39:0] _GEN_4388 = 5'h1 == _T_171 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4389 = 5'h2 == _T_171 ? pcs_2 : _GEN_4388; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4390 = 5'h3 == _T_171 ? pcs_3 : _GEN_4389; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4391 = 5'h4 == _T_171 ? pcs_4 : _GEN_4390; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4392 = 5'h5 == _T_171 ? pcs_5 : _GEN_4391; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4393 = 5'h6 == _T_171 ? pcs_6 : _GEN_4392; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4394 = 5'h7 == _T_171 ? pcs_7 : _GEN_4393; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4395 = 5'h8 == _T_171 ? pcs_8 : _GEN_4394; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4396 = 5'h9 == _T_171 ? pcs_9 : _GEN_4395; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4397 = 5'ha == _T_171 ? pcs_10 : _GEN_4396; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4398 = 5'hb == _T_171 ? pcs_11 : _GEN_4397; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4399 = 5'hc == _T_171 ? pcs_12 : _GEN_4398; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4400 = 5'hd == _T_171 ? pcs_13 : _GEN_4399; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4401 = 5'he == _T_171 ? pcs_14 : _GEN_4400; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4402 = 5'hf == _T_171 ? pcs_15 : _GEN_4401; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4403 = 5'h10 == _T_171 ? pcs_16 : _GEN_4402; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4404 = 5'h11 == _T_171 ? pcs_17 : _GEN_4403; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4405 = 5'h12 == _T_171 ? pcs_18 : _GEN_4404; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4406 = 5'h13 == _T_171 ? pcs_19 : _GEN_4405; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4407 = 5'h14 == _T_171 ? pcs_20 : _GEN_4406; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4408 = 5'h15 == _T_171 ? pcs_21 : _GEN_4407; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4409 = 5'h16 == _T_171 ? pcs_22 : _GEN_4408; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4410 = 5'h17 == _T_171 ? pcs_23 : _GEN_4409; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4411 = 5'h18 == _T_171 ? pcs_24 : _GEN_4410; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4412 = 5'h19 == _T_171 ? pcs_25 : _GEN_4411; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4413 = 5'h1a == _T_171 ? pcs_26 : _GEN_4412; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4414 = 5'h1b == _T_171 ? pcs_27 : _GEN_4413; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  wire [39:0] _GEN_4415 = 5'h1c == _T_171 ? pcs_28 : _GEN_4414; // @[fetch-target-queue.scala 348:22 fetch-target-queue.scala 348:22]
-  reg  REG_32_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-  reg [1:0] REG_32_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-  reg  REG_32_cfi_taken; // @[fetch-target-queue.scala 351:42]
-  reg  REG_32_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-  reg [2:0] REG_32_cfi_type; // @[fetch-target-queue.scala 351:42]
-  reg [3:0] REG_32_br_mask; // @[fetch-target-queue.scala 351:42]
-  reg  REG_32_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-  reg  REG_32_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-  reg  REG_32_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-  reg [39:0] REG_32_ras_top; // @[fetch-target-queue.scala 351:42]
-  reg [4:0] REG_32_ras_idx; // @[fetch-target-queue.scala 351:42]
-  reg  REG_32_start_bank; // @[fetch-target-queue.scala 351:42]
-  wire  _GEN_4420 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_start_bank : ram_0_start_bank; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4421 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_start_bank : _GEN_4420; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4422 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_start_bank : _GEN_4421; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4423 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_start_bank : _GEN_4422; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4424 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_start_bank : _GEN_4423; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4425 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_start_bank : _GEN_4424; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4426 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_start_bank : _GEN_4425; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4427 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_start_bank : _GEN_4426; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4428 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_start_bank : _GEN_4427; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4429 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_start_bank : _GEN_4428; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4430 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_start_bank : _GEN_4429; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4431 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_start_bank : _GEN_4430; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4432 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_start_bank : _GEN_4431; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4433 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_start_bank : _GEN_4432; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4434 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_start_bank : _GEN_4433; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4435 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_start_bank : _GEN_4434; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4436 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_start_bank : _GEN_4435; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4437 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_start_bank : _GEN_4436; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4438 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_start_bank : _GEN_4437; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4439 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_start_bank : _GEN_4438; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4440 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_start_bank : _GEN_4439; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4441 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_start_bank : _GEN_4440; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4442 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_start_bank : _GEN_4441; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4443 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_start_bank : _GEN_4442; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4444 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_start_bank : _GEN_4443; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4445 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_start_bank : _GEN_4444; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4446 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_start_bank : _GEN_4445; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4452 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_ras_idx : ram_0_ras_idx; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4453 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_ras_idx : _GEN_4452; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4454 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_ras_idx : _GEN_4453; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4455 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_ras_idx : _GEN_4454; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4456 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_ras_idx : _GEN_4455; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4457 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_ras_idx : _GEN_4456; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4458 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_ras_idx : _GEN_4457; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4459 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_ras_idx : _GEN_4458; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4460 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_ras_idx : _GEN_4459; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4461 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_ras_idx : _GEN_4460; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4462 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_ras_idx : _GEN_4461; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4463 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_ras_idx : _GEN_4462; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4464 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_ras_idx : _GEN_4463; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4465 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_ras_idx : _GEN_4464; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4466 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_ras_idx : _GEN_4465; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4467 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_ras_idx : _GEN_4466; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4468 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_ras_idx : _GEN_4467; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4469 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_ras_idx : _GEN_4468; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4470 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_ras_idx : _GEN_4469; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4471 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_ras_idx : _GEN_4470; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4472 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_ras_idx : _GEN_4471; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4473 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_ras_idx : _GEN_4472; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4474 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_ras_idx : _GEN_4473; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4475 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_ras_idx : _GEN_4474; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4476 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_ras_idx : _GEN_4475; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4477 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_ras_idx : _GEN_4476; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [4:0] _GEN_4478 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_ras_idx : _GEN_4477; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4484 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_ras_top : ram_0_ras_top; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4485 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_ras_top : _GEN_4484; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4486 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_ras_top : _GEN_4485; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4487 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_ras_top : _GEN_4486; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4488 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_ras_top : _GEN_4487; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4489 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_ras_top : _GEN_4488; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4490 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_ras_top : _GEN_4489; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4491 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_ras_top : _GEN_4490; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4492 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_ras_top : _GEN_4491; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4493 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_ras_top : _GEN_4492; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4494 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_ras_top : _GEN_4493; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4495 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_ras_top : _GEN_4494; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4496 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_ras_top : _GEN_4495; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4497 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_ras_top : _GEN_4496; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4498 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_ras_top : _GEN_4497; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4499 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_ras_top : _GEN_4498; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4500 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_ras_top : _GEN_4499; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4501 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_ras_top : _GEN_4500; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4502 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_ras_top : _GEN_4501; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4503 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_ras_top : _GEN_4502; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4504 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_ras_top : _GEN_4503; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4505 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_ras_top : _GEN_4504; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4506 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_ras_top : _GEN_4505; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4507 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_ras_top : _GEN_4506; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4508 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_ras_top : _GEN_4507; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4509 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_ras_top : _GEN_4508; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [39:0] _GEN_4510 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_ras_top : _GEN_4509; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4516 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_npc_plus4 : ram_0_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4517 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_npc_plus4 : _GEN_4516; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4518 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_npc_plus4 : _GEN_4517; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4519 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_npc_plus4 : _GEN_4518; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4520 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_npc_plus4 : _GEN_4519; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4521 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_npc_plus4 : _GEN_4520; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4522 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_npc_plus4 : _GEN_4521; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4523 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_npc_plus4 : _GEN_4522; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4524 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_npc_plus4 : _GEN_4523; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4525 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_npc_plus4 : _GEN_4524; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4526 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_npc_plus4 : _GEN_4525; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4527 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_npc_plus4 : _GEN_4526; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4528 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_npc_plus4 : _GEN_4527; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4529 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_npc_plus4 : _GEN_4528; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4530 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_npc_plus4 : _GEN_4529; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4531 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_npc_plus4 : _GEN_4530; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4532 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_npc_plus4 : _GEN_4531; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4533 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_npc_plus4 : _GEN_4532; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4534 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_npc_plus4 : _GEN_4533; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4535 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_npc_plus4 : _GEN_4534; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4536 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_npc_plus4 : _GEN_4535; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4537 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_npc_plus4 : _GEN_4536; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4538 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_npc_plus4 : _GEN_4537; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4539 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_npc_plus4 : _GEN_4538; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4540 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_npc_plus4 : _GEN_4539; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4541 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_npc_plus4 : _GEN_4540; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4542 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_npc_plus4 : _GEN_4541; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4548 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_is_ret : ram_0_cfi_is_ret; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4549 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_is_ret : _GEN_4548; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4550 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_is_ret : _GEN_4549; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4551 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_is_ret : _GEN_4550; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4552 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_is_ret : _GEN_4551; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4553 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_is_ret : _GEN_4552; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4554 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_is_ret : _GEN_4553; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4555 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_is_ret : _GEN_4554; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4556 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_is_ret : _GEN_4555; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4557 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_is_ret : _GEN_4556; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4558 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_is_ret : _GEN_4557; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4559 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_is_ret : _GEN_4558; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4560 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_is_ret : _GEN_4559; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4561 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_is_ret : _GEN_4560; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4562 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_is_ret : _GEN_4561; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4563 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_is_ret : _GEN_4562; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4564 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_is_ret : _GEN_4563; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4565 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_is_ret : _GEN_4564; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4566 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_is_ret : _GEN_4565; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4567 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_is_ret : _GEN_4566; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4568 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_is_ret : _GEN_4567; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4569 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_is_ret : _GEN_4568; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4570 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_is_ret : _GEN_4569; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4571 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_is_ret : _GEN_4570; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4572 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_is_ret : _GEN_4571; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4573 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_is_ret : _GEN_4572; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4574 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_is_ret : _GEN_4573; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4580 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_is_call : ram_0_cfi_is_call; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4581 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_is_call : _GEN_4580; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4582 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_is_call : _GEN_4581; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4583 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_is_call : _GEN_4582; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4584 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_is_call : _GEN_4583; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4585 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_is_call : _GEN_4584; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4586 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_is_call : _GEN_4585; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4587 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_is_call : _GEN_4586; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4588 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_is_call : _GEN_4587; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4589 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_is_call : _GEN_4588; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4590 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_is_call : _GEN_4589; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4591 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_is_call : _GEN_4590; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4592 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_is_call : _GEN_4591; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4593 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_is_call : _GEN_4592; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4594 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_is_call : _GEN_4593; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4595 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_is_call : _GEN_4594; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4596 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_is_call : _GEN_4595; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4597 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_is_call : _GEN_4596; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4598 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_is_call : _GEN_4597; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4599 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_is_call : _GEN_4598; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4600 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_is_call : _GEN_4599; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4601 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_is_call : _GEN_4600; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4602 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_is_call : _GEN_4601; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4603 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_is_call : _GEN_4602; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4604 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_is_call : _GEN_4603; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4605 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_is_call : _GEN_4604; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4606 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_is_call : _GEN_4605; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4612 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_br_mask : ram_0_br_mask; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4613 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_br_mask : _GEN_4612; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4614 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_br_mask : _GEN_4613; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4615 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_br_mask : _GEN_4614; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4616 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_br_mask : _GEN_4615; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4617 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_br_mask : _GEN_4616; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4618 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_br_mask : _GEN_4617; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4619 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_br_mask : _GEN_4618; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4620 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_br_mask : _GEN_4619; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4621 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_br_mask : _GEN_4620; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4622 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_br_mask : _GEN_4621; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4623 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_br_mask : _GEN_4622; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4624 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_br_mask : _GEN_4623; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4625 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_br_mask : _GEN_4624; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4626 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_br_mask : _GEN_4625; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4627 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_br_mask : _GEN_4626; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4628 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_br_mask : _GEN_4627; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4629 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_br_mask : _GEN_4628; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4630 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_br_mask : _GEN_4629; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4631 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_br_mask : _GEN_4630; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4632 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_br_mask : _GEN_4631; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4633 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_br_mask : _GEN_4632; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4634 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_br_mask : _GEN_4633; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4635 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_br_mask : _GEN_4634; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4636 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_br_mask : _GEN_4635; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4637 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_br_mask : _GEN_4636; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [3:0] _GEN_4638 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_br_mask : _GEN_4637; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4644 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_type : ram_0_cfi_type; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4645 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_type : _GEN_4644; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4646 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_type : _GEN_4645; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4647 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_type : _GEN_4646; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4648 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_type : _GEN_4647; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4649 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_type : _GEN_4648; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4650 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_type : _GEN_4649; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4651 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_type : _GEN_4650; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4652 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_type : _GEN_4651; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4653 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_type : _GEN_4652; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4654 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_type : _GEN_4653; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4655 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_type : _GEN_4654; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4656 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_type : _GEN_4655; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4657 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_type : _GEN_4656; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4658 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_type : _GEN_4657; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4659 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_type : _GEN_4658; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4660 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_type : _GEN_4659; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4661 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_type : _GEN_4660; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4662 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_type : _GEN_4661; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4663 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_type : _GEN_4662; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4664 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_type : _GEN_4663; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4665 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_type : _GEN_4664; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4666 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_type : _GEN_4665; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4667 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_type : _GEN_4666; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4668 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_type : _GEN_4667; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4669 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_type : _GEN_4668; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [2:0] _GEN_4670 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_type : _GEN_4669; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4676 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_mispredicted : ram_0_cfi_mispredicted; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4677 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_mispredicted : _GEN_4676; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4678 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_mispredicted : _GEN_4677; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4679 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_mispredicted : _GEN_4678; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4680 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_mispredicted : _GEN_4679; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4681 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_mispredicted : _GEN_4680; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4682 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_mispredicted : _GEN_4681; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4683 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_mispredicted : _GEN_4682; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4684 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_mispredicted : _GEN_4683; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4685 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_mispredicted : _GEN_4684; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4686 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_mispredicted : _GEN_4685; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4687 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_mispredicted : _GEN_4686; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4688 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_mispredicted : _GEN_4687; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4689 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_mispredicted : _GEN_4688; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4690 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_mispredicted : _GEN_4689; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4691 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_mispredicted : _GEN_4690; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4692 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_mispredicted : _GEN_4691; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4693 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_mispredicted : _GEN_4692; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4694 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_mispredicted : _GEN_4693; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4695 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_mispredicted : _GEN_4694; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4696 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_mispredicted : _GEN_4695; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4697 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_mispredicted : _GEN_4696; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4698 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_mispredicted : _GEN_4697; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4699 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_mispredicted : _GEN_4698; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4700 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_mispredicted : _GEN_4699; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4701 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_mispredicted : _GEN_4700; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4702 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_mispredicted : _GEN_4701; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4708 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_taken : ram_0_cfi_taken; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4709 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_taken : _GEN_4708; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4710 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_taken : _GEN_4709; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4711 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_taken : _GEN_4710; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4712 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_taken : _GEN_4711; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4713 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_taken : _GEN_4712; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4714 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_taken : _GEN_4713; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4715 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_taken : _GEN_4714; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4716 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_taken : _GEN_4715; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4717 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_taken : _GEN_4716; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4718 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_taken : _GEN_4717; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4719 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_taken : _GEN_4718; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4720 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_taken : _GEN_4719; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4721 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_taken : _GEN_4720; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4722 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_taken : _GEN_4721; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4723 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_taken : _GEN_4722; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4724 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_taken : _GEN_4723; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4725 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_taken : _GEN_4724; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4726 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_taken : _GEN_4725; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4727 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_taken : _GEN_4726; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4728 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_taken : _GEN_4727; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4729 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_taken : _GEN_4728; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4730 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_taken : _GEN_4729; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4731 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_taken : _GEN_4730; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4732 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_taken : _GEN_4731; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4733 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_taken : _GEN_4732; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4734 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_taken : _GEN_4733; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4740 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_idx_bits : ram_0_cfi_idx_bits; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4741 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_idx_bits : _GEN_4740; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4742 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_idx_bits : _GEN_4741; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4743 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_idx_bits : _GEN_4742; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4744 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_idx_bits : _GEN_4743; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4745 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_idx_bits : _GEN_4744; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4746 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_idx_bits : _GEN_4745; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4747 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_idx_bits : _GEN_4746; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4748 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_idx_bits : _GEN_4747; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4749 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_idx_bits : _GEN_4748; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4750 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_idx_bits : _GEN_4749; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4751 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_idx_bits : _GEN_4750; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4752 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_idx_bits : _GEN_4751; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4753 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_idx_bits : _GEN_4752; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4754 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_idx_bits : _GEN_4753; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4755 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_idx_bits : _GEN_4754; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4756 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_idx_bits : _GEN_4755; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4757 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_idx_bits : _GEN_4756; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4758 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_idx_bits : _GEN_4757; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4759 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_idx_bits : _GEN_4758; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4760 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_idx_bits : _GEN_4759; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4761 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_idx_bits : _GEN_4760; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4762 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_idx_bits : _GEN_4761; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4763 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_idx_bits : _GEN_4762; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4764 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_idx_bits : _GEN_4763; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4765 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_idx_bits : _GEN_4764; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire [1:0] _GEN_4766 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_idx_bits : _GEN_4765; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4772 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? ram_1_cfi_idx_valid : ram_0_cfi_idx_valid; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4773 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? ram_2_cfi_idx_valid : _GEN_4772; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4774 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? ram_3_cfi_idx_valid : _GEN_4773; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4775 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? ram_4_cfi_idx_valid : _GEN_4774; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4776 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? ram_5_cfi_idx_valid : _GEN_4775; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4777 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? ram_6_cfi_idx_valid : _GEN_4776; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4778 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? ram_7_cfi_idx_valid : _GEN_4777; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4779 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? ram_8_cfi_idx_valid : _GEN_4778; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4780 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? ram_9_cfi_idx_valid : _GEN_4779; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4781 = 5'ha == io_get_ftq_pc_3_ftq_idx ? ram_10_cfi_idx_valid : _GEN_4780; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4782 = 5'hb == io_get_ftq_pc_3_ftq_idx ? ram_11_cfi_idx_valid : _GEN_4781; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4783 = 5'hc == io_get_ftq_pc_3_ftq_idx ? ram_12_cfi_idx_valid : _GEN_4782; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4784 = 5'hd == io_get_ftq_pc_3_ftq_idx ? ram_13_cfi_idx_valid : _GEN_4783; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4785 = 5'he == io_get_ftq_pc_3_ftq_idx ? ram_14_cfi_idx_valid : _GEN_4784; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4786 = 5'hf == io_get_ftq_pc_3_ftq_idx ? ram_15_cfi_idx_valid : _GEN_4785; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4787 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? ram_16_cfi_idx_valid : _GEN_4786; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4788 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? ram_17_cfi_idx_valid : _GEN_4787; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4789 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? ram_18_cfi_idx_valid : _GEN_4788; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4790 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? ram_19_cfi_idx_valid : _GEN_4789; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4791 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? ram_20_cfi_idx_valid : _GEN_4790; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4792 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? ram_21_cfi_idx_valid : _GEN_4791; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4793 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? ram_22_cfi_idx_valid : _GEN_4792; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4794 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? ram_23_cfi_idx_valid : _GEN_4793; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4795 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? ram_24_cfi_idx_valid : _GEN_4794; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4796 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? ram_25_cfi_idx_valid : _GEN_4795; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4797 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? ram_26_cfi_idx_valid : _GEN_4796; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  wire  _GEN_4798 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? ram_27_cfi_idx_valid : _GEN_4797; // @[fetch-target-queue.scala 351:42 fetch-target-queue.scala 351:42]
-  reg [39:0] REG_33; // @[fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4804 = 5'h1 == io_get_ftq_pc_3_ftq_idx ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4805 = 5'h2 == io_get_ftq_pc_3_ftq_idx ? pcs_2 : _GEN_4804; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4806 = 5'h3 == io_get_ftq_pc_3_ftq_idx ? pcs_3 : _GEN_4805; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4807 = 5'h4 == io_get_ftq_pc_3_ftq_idx ? pcs_4 : _GEN_4806; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4808 = 5'h5 == io_get_ftq_pc_3_ftq_idx ? pcs_5 : _GEN_4807; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4809 = 5'h6 == io_get_ftq_pc_3_ftq_idx ? pcs_6 : _GEN_4808; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4810 = 5'h7 == io_get_ftq_pc_3_ftq_idx ? pcs_7 : _GEN_4809; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4811 = 5'h8 == io_get_ftq_pc_3_ftq_idx ? pcs_8 : _GEN_4810; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4812 = 5'h9 == io_get_ftq_pc_3_ftq_idx ? pcs_9 : _GEN_4811; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4813 = 5'ha == io_get_ftq_pc_3_ftq_idx ? pcs_10 : _GEN_4812; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4814 = 5'hb == io_get_ftq_pc_3_ftq_idx ? pcs_11 : _GEN_4813; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4815 = 5'hc == io_get_ftq_pc_3_ftq_idx ? pcs_12 : _GEN_4814; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4816 = 5'hd == io_get_ftq_pc_3_ftq_idx ? pcs_13 : _GEN_4815; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4817 = 5'he == io_get_ftq_pc_3_ftq_idx ? pcs_14 : _GEN_4816; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4818 = 5'hf == io_get_ftq_pc_3_ftq_idx ? pcs_15 : _GEN_4817; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4819 = 5'h10 == io_get_ftq_pc_3_ftq_idx ? pcs_16 : _GEN_4818; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4820 = 5'h11 == io_get_ftq_pc_3_ftq_idx ? pcs_17 : _GEN_4819; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4821 = 5'h12 == io_get_ftq_pc_3_ftq_idx ? pcs_18 : _GEN_4820; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4822 = 5'h13 == io_get_ftq_pc_3_ftq_idx ? pcs_19 : _GEN_4821; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4823 = 5'h14 == io_get_ftq_pc_3_ftq_idx ? pcs_20 : _GEN_4822; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4824 = 5'h15 == io_get_ftq_pc_3_ftq_idx ? pcs_21 : _GEN_4823; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4825 = 5'h16 == io_get_ftq_pc_3_ftq_idx ? pcs_22 : _GEN_4824; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4826 = 5'h17 == io_get_ftq_pc_3_ftq_idx ? pcs_23 : _GEN_4825; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4827 = 5'h18 == io_get_ftq_pc_3_ftq_idx ? pcs_24 : _GEN_4826; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4828 = 5'h19 == io_get_ftq_pc_3_ftq_idx ? pcs_25 : _GEN_4827; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4829 = 5'h1a == io_get_ftq_pc_3_ftq_idx ? pcs_26 : _GEN_4828; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  wire [39:0] _GEN_4830 = 5'h1b == io_get_ftq_pc_3_ftq_idx ? pcs_27 : _GEN_4829; // @[fetch-target-queue.scala 356:42 fetch-target-queue.scala 356:42]
-  reg [39:0] REG_34; // @[fetch-target-queue.scala 357:42]
-  reg  REG_35; // @[fetch-target-queue.scala 358:42]
-  reg [39:0] REG_36; // @[fetch-target-queue.scala 359:42]
-  reg [39:0] REG_37; // @[fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4868 = 5'h1 == io_debug_ftq_idx_0 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4869 = 5'h2 == io_debug_ftq_idx_0 ? pcs_2 : _GEN_4868; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4870 = 5'h3 == io_debug_ftq_idx_0 ? pcs_3 : _GEN_4869; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4871 = 5'h4 == io_debug_ftq_idx_0 ? pcs_4 : _GEN_4870; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4872 = 5'h5 == io_debug_ftq_idx_0 ? pcs_5 : _GEN_4871; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4873 = 5'h6 == io_debug_ftq_idx_0 ? pcs_6 : _GEN_4872; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4874 = 5'h7 == io_debug_ftq_idx_0 ? pcs_7 : _GEN_4873; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4875 = 5'h8 == io_debug_ftq_idx_0 ? pcs_8 : _GEN_4874; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4876 = 5'h9 == io_debug_ftq_idx_0 ? pcs_9 : _GEN_4875; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4877 = 5'ha == io_debug_ftq_idx_0 ? pcs_10 : _GEN_4876; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4878 = 5'hb == io_debug_ftq_idx_0 ? pcs_11 : _GEN_4877; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4879 = 5'hc == io_debug_ftq_idx_0 ? pcs_12 : _GEN_4878; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4880 = 5'hd == io_debug_ftq_idx_0 ? pcs_13 : _GEN_4879; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4881 = 5'he == io_debug_ftq_idx_0 ? pcs_14 : _GEN_4880; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4882 = 5'hf == io_debug_ftq_idx_0 ? pcs_15 : _GEN_4881; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4883 = 5'h10 == io_debug_ftq_idx_0 ? pcs_16 : _GEN_4882; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4884 = 5'h11 == io_debug_ftq_idx_0 ? pcs_17 : _GEN_4883; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4885 = 5'h12 == io_debug_ftq_idx_0 ? pcs_18 : _GEN_4884; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4886 = 5'h13 == io_debug_ftq_idx_0 ? pcs_19 : _GEN_4885; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4887 = 5'h14 == io_debug_ftq_idx_0 ? pcs_20 : _GEN_4886; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4888 = 5'h15 == io_debug_ftq_idx_0 ? pcs_21 : _GEN_4887; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4889 = 5'h16 == io_debug_ftq_idx_0 ? pcs_22 : _GEN_4888; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4890 = 5'h17 == io_debug_ftq_idx_0 ? pcs_23 : _GEN_4889; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4891 = 5'h18 == io_debug_ftq_idx_0 ? pcs_24 : _GEN_4890; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4892 = 5'h19 == io_debug_ftq_idx_0 ? pcs_25 : _GEN_4891; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4893 = 5'h1a == io_debug_ftq_idx_0 ? pcs_26 : _GEN_4892; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4894 = 5'h1b == io_debug_ftq_idx_0 ? pcs_27 : _GEN_4893; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  reg [39:0] REG_38; // @[fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4900 = 5'h1 == io_debug_ftq_idx_1 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4901 = 5'h2 == io_debug_ftq_idx_1 ? pcs_2 : _GEN_4900; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4902 = 5'h3 == io_debug_ftq_idx_1 ? pcs_3 : _GEN_4901; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4903 = 5'h4 == io_debug_ftq_idx_1 ? pcs_4 : _GEN_4902; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4904 = 5'h5 == io_debug_ftq_idx_1 ? pcs_5 : _GEN_4903; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4905 = 5'h6 == io_debug_ftq_idx_1 ? pcs_6 : _GEN_4904; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4906 = 5'h7 == io_debug_ftq_idx_1 ? pcs_7 : _GEN_4905; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4907 = 5'h8 == io_debug_ftq_idx_1 ? pcs_8 : _GEN_4906; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4908 = 5'h9 == io_debug_ftq_idx_1 ? pcs_9 : _GEN_4907; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4909 = 5'ha == io_debug_ftq_idx_1 ? pcs_10 : _GEN_4908; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4910 = 5'hb == io_debug_ftq_idx_1 ? pcs_11 : _GEN_4909; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4911 = 5'hc == io_debug_ftq_idx_1 ? pcs_12 : _GEN_4910; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4912 = 5'hd == io_debug_ftq_idx_1 ? pcs_13 : _GEN_4911; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4913 = 5'he == io_debug_ftq_idx_1 ? pcs_14 : _GEN_4912; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4914 = 5'hf == io_debug_ftq_idx_1 ? pcs_15 : _GEN_4913; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4915 = 5'h10 == io_debug_ftq_idx_1 ? pcs_16 : _GEN_4914; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4916 = 5'h11 == io_debug_ftq_idx_1 ? pcs_17 : _GEN_4915; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4917 = 5'h12 == io_debug_ftq_idx_1 ? pcs_18 : _GEN_4916; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4918 = 5'h13 == io_debug_ftq_idx_1 ? pcs_19 : _GEN_4917; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4919 = 5'h14 == io_debug_ftq_idx_1 ? pcs_20 : _GEN_4918; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4920 = 5'h15 == io_debug_ftq_idx_1 ? pcs_21 : _GEN_4919; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4921 = 5'h16 == io_debug_ftq_idx_1 ? pcs_22 : _GEN_4920; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4922 = 5'h17 == io_debug_ftq_idx_1 ? pcs_23 : _GEN_4921; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4923 = 5'h18 == io_debug_ftq_idx_1 ? pcs_24 : _GEN_4922; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4924 = 5'h19 == io_debug_ftq_idx_1 ? pcs_25 : _GEN_4923; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4925 = 5'h1a == io_debug_ftq_idx_1 ? pcs_26 : _GEN_4924; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
-  wire [39:0] _GEN_4926 = 5'h1b == io_debug_ftq_idx_1 ? pcs_27 : _GEN_4925; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  reg [39:0] REG_27; // @[fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3908 = 5'h1 == io_debug_ftq_idx_0 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3909 = 5'h2 == io_debug_ftq_idx_0 ? pcs_2 : _GEN_3908; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3910 = 5'h3 == io_debug_ftq_idx_0 ? pcs_3 : _GEN_3909; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3911 = 5'h4 == io_debug_ftq_idx_0 ? pcs_4 : _GEN_3910; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3912 = 5'h5 == io_debug_ftq_idx_0 ? pcs_5 : _GEN_3911; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3913 = 5'h6 == io_debug_ftq_idx_0 ? pcs_6 : _GEN_3912; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3914 = 5'h7 == io_debug_ftq_idx_0 ? pcs_7 : _GEN_3913; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3915 = 5'h8 == io_debug_ftq_idx_0 ? pcs_8 : _GEN_3914; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3916 = 5'h9 == io_debug_ftq_idx_0 ? pcs_9 : _GEN_3915; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3917 = 5'ha == io_debug_ftq_idx_0 ? pcs_10 : _GEN_3916; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3918 = 5'hb == io_debug_ftq_idx_0 ? pcs_11 : _GEN_3917; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3919 = 5'hc == io_debug_ftq_idx_0 ? pcs_12 : _GEN_3918; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3920 = 5'hd == io_debug_ftq_idx_0 ? pcs_13 : _GEN_3919; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3921 = 5'he == io_debug_ftq_idx_0 ? pcs_14 : _GEN_3920; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3922 = 5'hf == io_debug_ftq_idx_0 ? pcs_15 : _GEN_3921; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3923 = 5'h10 == io_debug_ftq_idx_0 ? pcs_16 : _GEN_3922; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3924 = 5'h11 == io_debug_ftq_idx_0 ? pcs_17 : _GEN_3923; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3925 = 5'h12 == io_debug_ftq_idx_0 ? pcs_18 : _GEN_3924; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3926 = 5'h13 == io_debug_ftq_idx_0 ? pcs_19 : _GEN_3925; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3927 = 5'h14 == io_debug_ftq_idx_0 ? pcs_20 : _GEN_3926; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3928 = 5'h15 == io_debug_ftq_idx_0 ? pcs_21 : _GEN_3927; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3929 = 5'h16 == io_debug_ftq_idx_0 ? pcs_22 : _GEN_3928; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3930 = 5'h17 == io_debug_ftq_idx_0 ? pcs_23 : _GEN_3929; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3931 = 5'h18 == io_debug_ftq_idx_0 ? pcs_24 : _GEN_3930; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3932 = 5'h19 == io_debug_ftq_idx_0 ? pcs_25 : _GEN_3931; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3933 = 5'h1a == io_debug_ftq_idx_0 ? pcs_26 : _GEN_3932; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3934 = 5'h1b == io_debug_ftq_idx_0 ? pcs_27 : _GEN_3933; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  reg [39:0] REG_28; // @[fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3940 = 5'h1 == io_debug_ftq_idx_1 ? pcs_1 : pcs_0; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3941 = 5'h2 == io_debug_ftq_idx_1 ? pcs_2 : _GEN_3940; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3942 = 5'h3 == io_debug_ftq_idx_1 ? pcs_3 : _GEN_3941; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3943 = 5'h4 == io_debug_ftq_idx_1 ? pcs_4 : _GEN_3942; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3944 = 5'h5 == io_debug_ftq_idx_1 ? pcs_5 : _GEN_3943; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3945 = 5'h6 == io_debug_ftq_idx_1 ? pcs_6 : _GEN_3944; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3946 = 5'h7 == io_debug_ftq_idx_1 ? pcs_7 : _GEN_3945; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3947 = 5'h8 == io_debug_ftq_idx_1 ? pcs_8 : _GEN_3946; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3948 = 5'h9 == io_debug_ftq_idx_1 ? pcs_9 : _GEN_3947; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3949 = 5'ha == io_debug_ftq_idx_1 ? pcs_10 : _GEN_3948; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3950 = 5'hb == io_debug_ftq_idx_1 ? pcs_11 : _GEN_3949; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3951 = 5'hc == io_debug_ftq_idx_1 ? pcs_12 : _GEN_3950; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3952 = 5'hd == io_debug_ftq_idx_1 ? pcs_13 : _GEN_3951; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3953 = 5'he == io_debug_ftq_idx_1 ? pcs_14 : _GEN_3952; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3954 = 5'hf == io_debug_ftq_idx_1 ? pcs_15 : _GEN_3953; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3955 = 5'h10 == io_debug_ftq_idx_1 ? pcs_16 : _GEN_3954; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3956 = 5'h11 == io_debug_ftq_idx_1 ? pcs_17 : _GEN_3955; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3957 = 5'h12 == io_debug_ftq_idx_1 ? pcs_18 : _GEN_3956; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3958 = 5'h13 == io_debug_ftq_idx_1 ? pcs_19 : _GEN_3957; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3959 = 5'h14 == io_debug_ftq_idx_1 ? pcs_20 : _GEN_3958; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3960 = 5'h15 == io_debug_ftq_idx_1 ? pcs_21 : _GEN_3959; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3961 = 5'h16 == io_debug_ftq_idx_1 ? pcs_22 : _GEN_3960; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3962 = 5'h17 == io_debug_ftq_idx_1 ? pcs_23 : _GEN_3961; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3963 = 5'h18 == io_debug_ftq_idx_1 ? pcs_24 : _GEN_3962; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3964 = 5'h19 == io_debug_ftq_idx_1 ? pcs_25 : _GEN_3963; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3965 = 5'h1a == io_debug_ftq_idx_1 ? pcs_26 : _GEN_3964; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
+  wire [39:0] _GEN_3966 = 5'h1b == io_debug_ftq_idx_1 ? pcs_27 : _GEN_3965; // @[fetch-target-queue.scala 363:36 fetch-target-queue.scala 363:36]
   assign meta_0_bpd_meta_addr = meta_0_bpd_meta_addr_pipe_0;
   assign meta_0_bpd_meta_data = meta_0[meta_0_bpd_meta_addr]; // @[fetch-target-queue.scala 142:29]
   assign meta_0_MPORT_2_data = io_enq_bits_bpd_meta_0;
@@ -4530,7 +3642,7 @@ module FetchTargetQueue(
   assign ghist_0_old_history_bpd_ghist_addr = ghist_0_old_history_bpd_ghist_addr_pipe_0;
   assign ghist_0_old_history_bpd_ghist_data = ghist_0_old_history[ghist_0_old_history_bpd_ghist_addr]; // @[fetch-target-queue.scala 144:43]
   assign ghist_0_old_history_MPORT_data = io_enq_bits_ghist_current_saw_branch_not_taken ? io_enq_bits_ghist_old_history
-     : _T_38[15:0];
+     : _T_38[63:0];
   assign ghist_0_old_history_MPORT_addr = enq_ptr;
   assign ghist_0_old_history_MPORT_mask = 1'h1;
   assign ghist_0_old_history_MPORT_en = io_enq_ready & io_enq_valid;
@@ -4568,7 +3680,7 @@ module FetchTargetQueue(
   assign ghist_1_old_history_MPORT_3_addr = ghist_1_old_history_MPORT_3_addr_pipe_0;
   assign ghist_1_old_history_MPORT_3_data = ghist_1_old_history[ghist_1_old_history_MPORT_3_addr]; // @[fetch-target-queue.scala 144:43]
   assign ghist_1_old_history_MPORT_1_data = io_enq_bits_ghist_current_saw_branch_not_taken ?
-    io_enq_bits_ghist_old_history : _T_38[15:0];
+    io_enq_bits_ghist_old_history : _T_38[63:0];
   assign ghist_1_old_history_MPORT_1_addr = enq_ptr;
   assign ghist_1_old_history_MPORT_1_mask = 1'h1;
   assign ghist_1_old_history_MPORT_1_en = io_enq_ready & io_enq_valid;
@@ -4616,7 +3728,7 @@ module FetchTargetQueue(
   assign io_get_ftq_pc_0_entry_ras_top = REG_17_ras_top; // @[fetch-target-queue.scala 351:32]
   assign io_get_ftq_pc_0_entry_ras_idx = REG_17_ras_idx; // @[fetch-target-queue.scala 351:32]
   assign io_get_ftq_pc_0_entry_start_bank = REG_17_start_bank; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_0_ghist_old_history = 16'h0;
+  assign io_get_ftq_pc_0_ghist_old_history = 64'h0;
   assign io_get_ftq_pc_0_ghist_current_saw_branch_not_taken = 1'h0;
   assign io_get_ftq_pc_0_ghist_new_saw_branch_not_taken = 1'h0;
   assign io_get_ftq_pc_0_ghist_new_saw_branch_taken = 1'h0;
@@ -4646,50 +3758,8 @@ module FetchTargetQueue(
   assign io_get_ftq_pc_1_com_pc = REG_26; // @[fetch-target-queue.scala 359:32]
   assign io_get_ftq_pc_1_next_val = REG_25; // @[fetch-target-queue.scala 358:32]
   assign io_get_ftq_pc_1_next_pc = REG_24; // @[fetch-target-queue.scala 357:32]
-  assign io_get_ftq_pc_2_entry_cfi_idx_valid = REG_27_cfi_idx_valid; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_cfi_idx_bits = REG_27_cfi_idx_bits; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_cfi_taken = REG_27_cfi_taken; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_cfi_mispredicted = REG_27_cfi_mispredicted; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_cfi_type = REG_27_cfi_type; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_br_mask = REG_27_br_mask; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_cfi_is_call = REG_27_cfi_is_call; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_cfi_is_ret = REG_27_cfi_is_ret; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_cfi_npc_plus4 = REG_27_cfi_npc_plus4; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_ras_top = REG_27_ras_top; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_ras_idx = REG_27_ras_idx; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_entry_start_bank = REG_27_start_bank; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_2_ghist_old_history = 16'h0;
-  assign io_get_ftq_pc_2_ghist_current_saw_branch_not_taken = 1'h0;
-  assign io_get_ftq_pc_2_ghist_new_saw_branch_not_taken = 1'h0;
-  assign io_get_ftq_pc_2_ghist_new_saw_branch_taken = 1'h0;
-  assign io_get_ftq_pc_2_ghist_ras_idx = 5'h0;
-  assign io_get_ftq_pc_2_pc = REG_28; // @[fetch-target-queue.scala 356:32]
-  assign io_get_ftq_pc_2_com_pc = REG_31; // @[fetch-target-queue.scala 359:32]
-  assign io_get_ftq_pc_2_next_val = REG_30; // @[fetch-target-queue.scala 358:32]
-  assign io_get_ftq_pc_2_next_pc = REG_29; // @[fetch-target-queue.scala 357:32]
-  assign io_get_ftq_pc_3_entry_cfi_idx_valid = REG_32_cfi_idx_valid; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_cfi_idx_bits = REG_32_cfi_idx_bits; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_cfi_taken = REG_32_cfi_taken; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_cfi_mispredicted = REG_32_cfi_mispredicted; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_cfi_type = REG_32_cfi_type; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_br_mask = REG_32_br_mask; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_cfi_is_call = REG_32_cfi_is_call; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_cfi_is_ret = REG_32_cfi_is_ret; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_cfi_npc_plus4 = REG_32_cfi_npc_plus4; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_ras_top = REG_32_ras_top; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_ras_idx = REG_32_ras_idx; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_entry_start_bank = REG_32_start_bank; // @[fetch-target-queue.scala 351:32]
-  assign io_get_ftq_pc_3_ghist_old_history = 16'h0;
-  assign io_get_ftq_pc_3_ghist_current_saw_branch_not_taken = 1'h0;
-  assign io_get_ftq_pc_3_ghist_new_saw_branch_not_taken = 1'h0;
-  assign io_get_ftq_pc_3_ghist_new_saw_branch_taken = 1'h0;
-  assign io_get_ftq_pc_3_ghist_ras_idx = 5'h0;
-  assign io_get_ftq_pc_3_pc = REG_33; // @[fetch-target-queue.scala 356:32]
-  assign io_get_ftq_pc_3_com_pc = REG_36; // @[fetch-target-queue.scala 359:32]
-  assign io_get_ftq_pc_3_next_val = REG_35; // @[fetch-target-queue.scala 358:32]
-  assign io_get_ftq_pc_3_next_pc = REG_34; // @[fetch-target-queue.scala 357:32]
-  assign io_debug_fetch_pc_0 = REG_37; // @[fetch-target-queue.scala 363:26]
-  assign io_debug_fetch_pc_1 = REG_38; // @[fetch-target-queue.scala 363:26]
+  assign io_debug_fetch_pc_0 = REG_27; // @[fetch-target-queue.scala 363:26]
+  assign io_debug_fetch_pc_1 = REG_28; // @[fetch-target-queue.scala 363:26]
   assign io_bpdupdate_valid = REG_8 & _T_103; // @[fetch-target-queue.scala 278:80 fetch-target-queue.scala 282:24 fetch-target-queue.scala 206:22]
   assign io_bpdupdate_bits_is_mispredict_update = REG_10; // @[fetch-target-queue.scala 278:80 fetch-target-queue.scala 285:44]
   assign io_bpdupdate_bits_is_repair_update = REG_11; // @[fetch-target-queue.scala 278:80 fetch-target-queue.scala 286:44]
@@ -9202,7 +8272,7 @@ module FetchTargetQueue(
       ram_31_start_bank <= _GEN_489;
     end
     if (reset) begin // @[fetch-target-queue.scala 155:27]
-      prev_ghist_old_history <= 16'h0; // @[fetch-target-queue.scala 155:27]
+      prev_ghist_old_history <= 64'h0; // @[fetch-target-queue.scala 155:27]
     end else if (io_redirect_valid) begin // @[fetch-target-queue.scala 314:28]
       prev_ghist_old_history <= _GEN_859;
     end else if (REG_13) begin // @[fetch-target-queue.scala 332:44]
@@ -9963,359 +9033,27 @@ module FetchTargetQueue(
     end else begin
       REG_26 <= _GEN_3420;
     end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_valid <= ram_31_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_valid <= ram_30_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_valid <= ram_29_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_valid <= ram_28_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_idx_valid <= _GEN_4318;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_bits <= ram_31_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_bits <= ram_30_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_bits <= ram_29_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_idx_bits <= ram_28_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_idx_bits <= _GEN_4286;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_taken <= ram_31_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_taken <= ram_30_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_taken <= ram_29_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_taken <= ram_28_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_taken <= _GEN_4254;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_mispredicted <= ram_31_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_mispredicted <= ram_30_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_mispredicted <= ram_29_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_mispredicted <= ram_28_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_mispredicted <= _GEN_4222;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_type <= ram_31_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_type <= ram_30_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_type <= ram_29_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_type <= ram_28_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_type <= _GEN_4190;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_br_mask <= ram_31_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_br_mask <= ram_30_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_br_mask <= ram_29_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_br_mask <= ram_28_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_br_mask <= _GEN_4158;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_call <= ram_31_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_call <= ram_30_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_call <= ram_29_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_call <= ram_28_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_is_call <= _GEN_4126;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_ret <= ram_31_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_ret <= ram_30_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_ret <= ram_29_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_is_ret <= ram_28_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_is_ret <= _GEN_4094;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_npc_plus4 <= ram_31_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_npc_plus4 <= ram_30_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_npc_plus4 <= ram_29_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_cfi_npc_plus4 <= ram_28_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_cfi_npc_plus4 <= _GEN_4062;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_top <= ram_31_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_top <= ram_30_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_top <= ram_29_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_top <= ram_28_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_ras_top <= _GEN_4030;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_idx <= ram_31_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_idx <= ram_30_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_idx <= ram_29_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_ras_idx <= ram_28_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_ras_idx <= _GEN_3998;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_start_bank <= ram_31_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_start_bank <= ram_30_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_start_bank <= ram_29_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_27_start_bank <= ram_28_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_27_start_bank <= _GEN_3966;
-    end
-    if (5'h1f == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_28 <= pcs_31; // @[fetch-target-queue.scala 356:42]
-    end else if (5'h1e == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_28 <= pcs_30; // @[fetch-target-queue.scala 356:42]
-    end else if (5'h1d == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_28 <= pcs_29; // @[fetch-target-queue.scala 356:42]
-    end else if (5'h1c == io_get_ftq_pc_2_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_28 <= pcs_28; // @[fetch-target-queue.scala 356:42]
-    end else begin
-      REG_28 <= _GEN_4350;
-    end
-    if (_T_165) begin // @[fetch-target-queue.scala 348:22]
-      REG_29 <= io_enq_bits_pc;
-    end else if (5'h1f == _T_161) begin // @[fetch-target-queue.scala 348:22]
-      REG_29 <= pcs_31; // @[fetch-target-queue.scala 348:22]
-    end else if (5'h1e == _T_161) begin // @[fetch-target-queue.scala 348:22]
-      REG_29 <= pcs_30; // @[fetch-target-queue.scala 348:22]
-    end else if (5'h1d == _T_161) begin // @[fetch-target-queue.scala 348:22]
-      REG_29 <= pcs_29; // @[fetch-target-queue.scala 348:22]
-    end else begin
-      REG_29 <= _GEN_3935;
-    end
-    REG_30 <= _T_161 != enq_ptr | _T_165; // @[fetch-target-queue.scala 358:64]
-    if (5'h1f == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_31 <= pcs_31; // @[fetch-target-queue.scala 359:42]
-    end else if (5'h1e == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_31 <= pcs_30; // @[fetch-target-queue.scala 359:42]
-    end else if (5'h1d == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_31 <= pcs_29; // @[fetch-target-queue.scala 359:42]
-    end else if (5'h1c == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_31 <= pcs_28; // @[fetch-target-queue.scala 359:42]
-    end else begin
-      REG_31 <= _GEN_3420;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_valid <= ram_31_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_valid <= ram_30_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_valid <= ram_29_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_valid <= ram_28_cfi_idx_valid; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_idx_valid <= _GEN_4798;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_bits <= ram_31_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_bits <= ram_30_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_bits <= ram_29_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_idx_bits <= ram_28_cfi_idx_bits; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_idx_bits <= _GEN_4766;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_taken <= ram_31_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_taken <= ram_30_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_taken <= ram_29_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_taken <= ram_28_cfi_taken; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_taken <= _GEN_4734;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_mispredicted <= ram_31_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_mispredicted <= ram_30_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_mispredicted <= ram_29_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_mispredicted <= ram_28_cfi_mispredicted; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_mispredicted <= _GEN_4702;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_type <= ram_31_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_type <= ram_30_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_type <= ram_29_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_type <= ram_28_cfi_type; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_type <= _GEN_4670;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_br_mask <= ram_31_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_br_mask <= ram_30_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_br_mask <= ram_29_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_br_mask <= ram_28_br_mask; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_br_mask <= _GEN_4638;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_call <= ram_31_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_call <= ram_30_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_call <= ram_29_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_call <= ram_28_cfi_is_call; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_is_call <= _GEN_4606;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_ret <= ram_31_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_ret <= ram_30_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_ret <= ram_29_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_is_ret <= ram_28_cfi_is_ret; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_is_ret <= _GEN_4574;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_npc_plus4 <= ram_31_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_npc_plus4 <= ram_30_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_npc_plus4 <= ram_29_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_cfi_npc_plus4 <= ram_28_cfi_npc_plus4; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_cfi_npc_plus4 <= _GEN_4542;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_top <= ram_31_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_top <= ram_30_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_top <= ram_29_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_top <= ram_28_ras_top; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_ras_top <= _GEN_4510;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_idx <= ram_31_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_idx <= ram_30_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_idx <= ram_29_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_ras_idx <= ram_28_ras_idx; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_ras_idx <= _GEN_4478;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_start_bank <= ram_31_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_start_bank <= ram_30_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_start_bank <= ram_29_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 351:42]
-      REG_32_start_bank <= ram_28_start_bank; // @[fetch-target-queue.scala 351:42]
-    end else begin
-      REG_32_start_bank <= _GEN_4446;
-    end
-    if (5'h1f == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_33 <= pcs_31; // @[fetch-target-queue.scala 356:42]
-    end else if (5'h1e == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_33 <= pcs_30; // @[fetch-target-queue.scala 356:42]
-    end else if (5'h1d == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_33 <= pcs_29; // @[fetch-target-queue.scala 356:42]
-    end else if (5'h1c == io_get_ftq_pc_3_ftq_idx) begin // @[fetch-target-queue.scala 356:42]
-      REG_33 <= pcs_28; // @[fetch-target-queue.scala 356:42]
-    end else begin
-      REG_33 <= _GEN_4830;
-    end
-    if (_T_175) begin // @[fetch-target-queue.scala 348:22]
-      REG_34 <= io_enq_bits_pc;
-    end else if (5'h1f == _T_171) begin // @[fetch-target-queue.scala 348:22]
-      REG_34 <= pcs_31; // @[fetch-target-queue.scala 348:22]
-    end else if (5'h1e == _T_171) begin // @[fetch-target-queue.scala 348:22]
-      REG_34 <= pcs_30; // @[fetch-target-queue.scala 348:22]
-    end else if (5'h1d == _T_171) begin // @[fetch-target-queue.scala 348:22]
-      REG_34 <= pcs_29; // @[fetch-target-queue.scala 348:22]
-    end else begin
-      REG_34 <= _GEN_4415;
-    end
-    REG_35 <= _T_171 != enq_ptr | _T_175; // @[fetch-target-queue.scala 358:64]
-    if (5'h1f == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_36 <= pcs_31; // @[fetch-target-queue.scala 359:42]
-    end else if (5'h1e == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_36 <= pcs_30; // @[fetch-target-queue.scala 359:42]
-    end else if (5'h1d == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_36 <= pcs_29; // @[fetch-target-queue.scala 359:42]
-    end else if (5'h1c == _GEN_861) begin // @[fetch-target-queue.scala 359:42]
-      REG_36 <= pcs_28; // @[fetch-target-queue.scala 359:42]
-    end else begin
-      REG_36 <= _GEN_3420;
-    end
     if (5'h1f == io_debug_ftq_idx_0) begin // @[fetch-target-queue.scala 363:36]
-      REG_37 <= pcs_31; // @[fetch-target-queue.scala 363:36]
+      REG_27 <= pcs_31; // @[fetch-target-queue.scala 363:36]
     end else if (5'h1e == io_debug_ftq_idx_0) begin // @[fetch-target-queue.scala 363:36]
-      REG_37 <= pcs_30; // @[fetch-target-queue.scala 363:36]
+      REG_27 <= pcs_30; // @[fetch-target-queue.scala 363:36]
     end else if (5'h1d == io_debug_ftq_idx_0) begin // @[fetch-target-queue.scala 363:36]
-      REG_37 <= pcs_29; // @[fetch-target-queue.scala 363:36]
+      REG_27 <= pcs_29; // @[fetch-target-queue.scala 363:36]
     end else if (5'h1c == io_debug_ftq_idx_0) begin // @[fetch-target-queue.scala 363:36]
-      REG_37 <= pcs_28; // @[fetch-target-queue.scala 363:36]
+      REG_27 <= pcs_28; // @[fetch-target-queue.scala 363:36]
     end else begin
-      REG_37 <= _GEN_4894;
+      REG_27 <= _GEN_3934;
     end
     if (5'h1f == io_debug_ftq_idx_1) begin // @[fetch-target-queue.scala 363:36]
-      REG_38 <= pcs_31; // @[fetch-target-queue.scala 363:36]
+      REG_28 <= pcs_31; // @[fetch-target-queue.scala 363:36]
     end else if (5'h1e == io_debug_ftq_idx_1) begin // @[fetch-target-queue.scala 363:36]
-      REG_38 <= pcs_30; // @[fetch-target-queue.scala 363:36]
+      REG_28 <= pcs_30; // @[fetch-target-queue.scala 363:36]
     end else if (5'h1d == io_debug_ftq_idx_1) begin // @[fetch-target-queue.scala 363:36]
-      REG_38 <= pcs_29; // @[fetch-target-queue.scala 363:36]
+      REG_28 <= pcs_29; // @[fetch-target-queue.scala 363:36]
     end else if (5'h1c == io_debug_ftq_idx_1) begin // @[fetch-target-queue.scala 363:36]
-      REG_38 <= pcs_28; // @[fetch-target-queue.scala 363:36]
+      REG_28 <= pcs_28; // @[fetch-target-queue.scala 363:36]
     end else begin
-      REG_38 <= _GEN_4926;
+      REG_28 <= _GEN_3966;
     end
   end
 // Register and memory initialization
@@ -10354,12 +9092,12 @@ initial begin
       `endif
     `endif
 `ifdef RANDOMIZE_MEM_INIT
-  _RAND_0 = {2{`RANDOM}};
+  _RAND_0 = {4{`RANDOM}};
   for (initvar = 0; initvar < 32; initvar = initvar+1)
-    meta_0[initvar] = _RAND_0[44:0];
-  _RAND_2 = {1{`RANDOM}};
+    meta_0[initvar] = _RAND_0[119:0];
+  _RAND_2 = {2{`RANDOM}};
   for (initvar = 0; initvar < 32; initvar = initvar+1)
-    ghist_0_old_history[initvar] = _RAND_2[15:0];
+    ghist_0_old_history[initvar] = _RAND_2[63:0];
   _RAND_4 = {1{`RANDOM}};
   for (initvar = 0; initvar < 32; initvar = initvar+1)
     ghist_0_current_saw_branch_not_taken[initvar] = _RAND_4[0:0];
@@ -10372,9 +9110,9 @@ initial begin
   _RAND_10 = {1{`RANDOM}};
   for (initvar = 0; initvar < 32; initvar = initvar+1)
     ghist_0_ras_idx[initvar] = _RAND_10[4:0];
-  _RAND_12 = {1{`RANDOM}};
+  _RAND_12 = {2{`RANDOM}};
   for (initvar = 0; initvar < 32; initvar = initvar+1)
-    ghist_1_old_history[initvar] = _RAND_12[15:0];
+    ghist_1_old_history[initvar] = _RAND_12[63:0];
   _RAND_14 = {1{`RANDOM}};
   for (initvar = 0; initvar < 32; initvar = initvar+1)
     ghist_1_current_saw_branch_not_taken[initvar] = _RAND_14[0:0];
@@ -11249,8 +9987,8 @@ initial begin
   ram_31_ras_idx = _RAND_439[4:0];
   _RAND_440 = {1{`RANDOM}};
   ram_31_start_bank = _RAND_440[0:0];
-  _RAND_441 = {1{`RANDOM}};
-  prev_ghist_old_history = _RAND_441[15:0];
+  _RAND_441 = {2{`RANDOM}};
+  prev_ghist_old_history = _RAND_441[63:0];
   _RAND_442 = {1{`RANDOM}};
   prev_ghist_current_saw_branch_not_taken = _RAND_442[0:0];
   _RAND_443 = {1{`RANDOM}};
@@ -11425,74 +10163,10 @@ initial begin
   REG_25 = _RAND_527[0:0];
   _RAND_528 = {2{`RANDOM}};
   REG_26 = _RAND_528[39:0];
-  _RAND_529 = {1{`RANDOM}};
-  REG_27_cfi_idx_valid = _RAND_529[0:0];
-  _RAND_530 = {1{`RANDOM}};
-  REG_27_cfi_idx_bits = _RAND_530[1:0];
-  _RAND_531 = {1{`RANDOM}};
-  REG_27_cfi_taken = _RAND_531[0:0];
-  _RAND_532 = {1{`RANDOM}};
-  REG_27_cfi_mispredicted = _RAND_532[0:0];
-  _RAND_533 = {1{`RANDOM}};
-  REG_27_cfi_type = _RAND_533[2:0];
-  _RAND_534 = {1{`RANDOM}};
-  REG_27_br_mask = _RAND_534[3:0];
-  _RAND_535 = {1{`RANDOM}};
-  REG_27_cfi_is_call = _RAND_535[0:0];
-  _RAND_536 = {1{`RANDOM}};
-  REG_27_cfi_is_ret = _RAND_536[0:0];
-  _RAND_537 = {1{`RANDOM}};
-  REG_27_cfi_npc_plus4 = _RAND_537[0:0];
-  _RAND_538 = {2{`RANDOM}};
-  REG_27_ras_top = _RAND_538[39:0];
-  _RAND_539 = {1{`RANDOM}};
-  REG_27_ras_idx = _RAND_539[4:0];
-  _RAND_540 = {1{`RANDOM}};
-  REG_27_start_bank = _RAND_540[0:0];
-  _RAND_541 = {2{`RANDOM}};
-  REG_28 = _RAND_541[39:0];
-  _RAND_542 = {2{`RANDOM}};
-  REG_29 = _RAND_542[39:0];
-  _RAND_543 = {1{`RANDOM}};
-  REG_30 = _RAND_543[0:0];
-  _RAND_544 = {2{`RANDOM}};
-  REG_31 = _RAND_544[39:0];
-  _RAND_545 = {1{`RANDOM}};
-  REG_32_cfi_idx_valid = _RAND_545[0:0];
-  _RAND_546 = {1{`RANDOM}};
-  REG_32_cfi_idx_bits = _RAND_546[1:0];
-  _RAND_547 = {1{`RANDOM}};
-  REG_32_cfi_taken = _RAND_547[0:0];
-  _RAND_548 = {1{`RANDOM}};
-  REG_32_cfi_mispredicted = _RAND_548[0:0];
-  _RAND_549 = {1{`RANDOM}};
-  REG_32_cfi_type = _RAND_549[2:0];
-  _RAND_550 = {1{`RANDOM}};
-  REG_32_br_mask = _RAND_550[3:0];
-  _RAND_551 = {1{`RANDOM}};
-  REG_32_cfi_is_call = _RAND_551[0:0];
-  _RAND_552 = {1{`RANDOM}};
-  REG_32_cfi_is_ret = _RAND_552[0:0];
-  _RAND_553 = {1{`RANDOM}};
-  REG_32_cfi_npc_plus4 = _RAND_553[0:0];
-  _RAND_554 = {2{`RANDOM}};
-  REG_32_ras_top = _RAND_554[39:0];
-  _RAND_555 = {1{`RANDOM}};
-  REG_32_ras_idx = _RAND_555[4:0];
-  _RAND_556 = {1{`RANDOM}};
-  REG_32_start_bank = _RAND_556[0:0];
-  _RAND_557 = {2{`RANDOM}};
-  REG_33 = _RAND_557[39:0];
-  _RAND_558 = {2{`RANDOM}};
-  REG_34 = _RAND_558[39:0];
-  _RAND_559 = {1{`RANDOM}};
-  REG_35 = _RAND_559[0:0];
-  _RAND_560 = {2{`RANDOM}};
-  REG_36 = _RAND_560[39:0];
-  _RAND_561 = {2{`RANDOM}};
-  REG_37 = _RAND_561[39:0];
-  _RAND_562 = {2{`RANDOM}};
-  REG_38 = _RAND_562[39:0];
+  _RAND_529 = {2{`RANDOM}};
+  REG_27 = _RAND_529[39:0];
+  _RAND_530 = {2{`RANDOM}};
+  REG_28 = _RAND_530[39:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

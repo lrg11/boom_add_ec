@@ -7,23 +7,6 @@ module NullPrefetcher(
   input  [1:0]  io_req_coh_state,
   input         io_prefetch_ready,
   output        io_prefetch_valid,
-  output        io_prefetch_bits_uop_switch,
-  output        io_prefetch_bits_uop_switch_off,
-  output        io_prefetch_bits_uop_is_unicore,
-  output [2:0]  io_prefetch_bits_uop_shift,
-  output [1:0]  io_prefetch_bits_uop_lrs3_rtype,
-  output        io_prefetch_bits_uop_rflag,
-  output        io_prefetch_bits_uop_wflag,
-  output [3:0]  io_prefetch_bits_uop_prflag,
-  output [3:0]  io_prefetch_bits_uop_pwflag,
-  output        io_prefetch_bits_uop_pflag_busy,
-  output [3:0]  io_prefetch_bits_uop_stale_pflag,
-  output [3:0]  io_prefetch_bits_uop_op1_sel,
-  output [3:0]  io_prefetch_bits_uop_op2_sel,
-  output [5:0]  io_prefetch_bits_uop_split_num,
-  output [5:0]  io_prefetch_bits_uop_self_index,
-  output [5:0]  io_prefetch_bits_uop_rob_inst_idx,
-  output [5:0]  io_prefetch_bits_uop_address_num,
   output [6:0]  io_prefetch_bits_uop_uopc,
   output [31:0] io_prefetch_bits_uop_inst,
   output [31:0] io_prefetch_bits_uop_debug_inst,
@@ -41,7 +24,6 @@ module NullPrefetcher(
   output        io_prefetch_bits_uop_ctrl_is_load,
   output        io_prefetch_bits_uop_ctrl_is_sta,
   output        io_prefetch_bits_uop_ctrl_is_std,
-  output [1:0]  io_prefetch_bits_uop_ctrl_op3_sel,
   output [1:0]  io_prefetch_bits_uop_iw_state,
   output        io_prefetch_bits_uop_iw_p1_poisoned,
   output        io_prefetch_bits_uop_iw_p2_poisoned,
@@ -58,19 +40,19 @@ module NullPrefetcher(
   output [19:0] io_prefetch_bits_uop_imm_packed,
   output [11:0] io_prefetch_bits_uop_csr_addr,
   output [5:0]  io_prefetch_bits_uop_rob_idx,
-  output [4:0]  io_prefetch_bits_uop_ldq_idx,
-  output [4:0]  io_prefetch_bits_uop_stq_idx,
+  output [3:0]  io_prefetch_bits_uop_ldq_idx,
+  output [3:0]  io_prefetch_bits_uop_stq_idx,
   output [1:0]  io_prefetch_bits_uop_rxq_idx,
-  output [6:0]  io_prefetch_bits_uop_pdst,
-  output [6:0]  io_prefetch_bits_uop_prs1,
-  output [6:0]  io_prefetch_bits_uop_prs2,
-  output [6:0]  io_prefetch_bits_uop_prs3,
+  output [5:0]  io_prefetch_bits_uop_pdst,
+  output [5:0]  io_prefetch_bits_uop_prs1,
+  output [5:0]  io_prefetch_bits_uop_prs2,
+  output [5:0]  io_prefetch_bits_uop_prs3,
   output [4:0]  io_prefetch_bits_uop_ppred,
   output        io_prefetch_bits_uop_prs1_busy,
   output        io_prefetch_bits_uop_prs2_busy,
   output        io_prefetch_bits_uop_prs3_busy,
   output        io_prefetch_bits_uop_ppred_busy,
-  output [6:0]  io_prefetch_bits_uop_stale_pdst,
+  output [5:0]  io_prefetch_bits_uop_stale_pdst,
   output        io_prefetch_bits_uop_exception,
   output [63:0] io_prefetch_bits_uop_exc_cause,
   output        io_prefetch_bits_uop_bypassable,
@@ -109,23 +91,6 @@ module NullPrefetcher(
   output        io_prefetch_bits_is_hella
 );
   assign io_prefetch_valid = 1'h0; // @[prefetcher.scala 41:21]
-  assign io_prefetch_bits_uop_switch = 1'h0;
-  assign io_prefetch_bits_uop_switch_off = 1'h0;
-  assign io_prefetch_bits_uop_is_unicore = 1'h0;
-  assign io_prefetch_bits_uop_shift = 3'h0;
-  assign io_prefetch_bits_uop_lrs3_rtype = 2'h0;
-  assign io_prefetch_bits_uop_rflag = 1'h0;
-  assign io_prefetch_bits_uop_wflag = 1'h0;
-  assign io_prefetch_bits_uop_prflag = 4'h0;
-  assign io_prefetch_bits_uop_pwflag = 4'h0;
-  assign io_prefetch_bits_uop_pflag_busy = 1'h0;
-  assign io_prefetch_bits_uop_stale_pflag = 4'h0;
-  assign io_prefetch_bits_uop_op1_sel = 4'h0;
-  assign io_prefetch_bits_uop_op2_sel = 4'h0;
-  assign io_prefetch_bits_uop_split_num = 6'h0;
-  assign io_prefetch_bits_uop_self_index = 6'h0;
-  assign io_prefetch_bits_uop_rob_inst_idx = 6'h0;
-  assign io_prefetch_bits_uop_address_num = 6'h0;
   assign io_prefetch_bits_uop_uopc = 7'h0;
   assign io_prefetch_bits_uop_inst = 32'h0;
   assign io_prefetch_bits_uop_debug_inst = 32'h0;
@@ -143,7 +108,6 @@ module NullPrefetcher(
   assign io_prefetch_bits_uop_ctrl_is_load = 1'h0;
   assign io_prefetch_bits_uop_ctrl_is_sta = 1'h0;
   assign io_prefetch_bits_uop_ctrl_is_std = 1'h0;
-  assign io_prefetch_bits_uop_ctrl_op3_sel = 2'h0;
   assign io_prefetch_bits_uop_iw_state = 2'h0;
   assign io_prefetch_bits_uop_iw_p1_poisoned = 1'h0;
   assign io_prefetch_bits_uop_iw_p2_poisoned = 1'h0;
@@ -160,19 +124,19 @@ module NullPrefetcher(
   assign io_prefetch_bits_uop_imm_packed = 20'h0;
   assign io_prefetch_bits_uop_csr_addr = 12'h0;
   assign io_prefetch_bits_uop_rob_idx = 6'h0;
-  assign io_prefetch_bits_uop_ldq_idx = 5'h0;
-  assign io_prefetch_bits_uop_stq_idx = 5'h0;
+  assign io_prefetch_bits_uop_ldq_idx = 4'h0;
+  assign io_prefetch_bits_uop_stq_idx = 4'h0;
   assign io_prefetch_bits_uop_rxq_idx = 2'h0;
-  assign io_prefetch_bits_uop_pdst = 7'h0;
-  assign io_prefetch_bits_uop_prs1 = 7'h0;
-  assign io_prefetch_bits_uop_prs2 = 7'h0;
-  assign io_prefetch_bits_uop_prs3 = 7'h0;
+  assign io_prefetch_bits_uop_pdst = 6'h0;
+  assign io_prefetch_bits_uop_prs1 = 6'h0;
+  assign io_prefetch_bits_uop_prs2 = 6'h0;
+  assign io_prefetch_bits_uop_prs3 = 6'h0;
   assign io_prefetch_bits_uop_ppred = 5'h0;
   assign io_prefetch_bits_uop_prs1_busy = 1'h0;
   assign io_prefetch_bits_uop_prs2_busy = 1'h0;
   assign io_prefetch_bits_uop_prs3_busy = 1'h0;
   assign io_prefetch_bits_uop_ppred_busy = 1'h0;
-  assign io_prefetch_bits_uop_stale_pdst = 7'h0;
+  assign io_prefetch_bits_uop_stale_pdst = 6'h0;
   assign io_prefetch_bits_uop_exception = 1'h0;
   assign io_prefetch_bits_uop_exc_cause = 64'h0;
   assign io_prefetch_bits_uop_bypassable = 1'h0;

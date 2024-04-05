@@ -17,23 +17,6 @@ module RenameFreeList_1(
   input  [3:0]  io_ren_br_tags_1_bits,
   input  [11:0] io_brupdate_b1_resolve_mask,
   input  [11:0] io_brupdate_b1_mispredict_mask,
-  input         io_brupdate_b2_uop_switch,
-  input         io_brupdate_b2_uop_switch_off,
-  input         io_brupdate_b2_uop_is_unicore,
-  input  [2:0]  io_brupdate_b2_uop_shift,
-  input  [1:0]  io_brupdate_b2_uop_lrs3_rtype,
-  input         io_brupdate_b2_uop_rflag,
-  input         io_brupdate_b2_uop_wflag,
-  input  [3:0]  io_brupdate_b2_uop_prflag,
-  input  [3:0]  io_brupdate_b2_uop_pwflag,
-  input         io_brupdate_b2_uop_pflag_busy,
-  input  [3:0]  io_brupdate_b2_uop_stale_pflag,
-  input  [3:0]  io_brupdate_b2_uop_op1_sel,
-  input  [3:0]  io_brupdate_b2_uop_op2_sel,
-  input  [5:0]  io_brupdate_b2_uop_split_num,
-  input  [5:0]  io_brupdate_b2_uop_self_index,
-  input  [5:0]  io_brupdate_b2_uop_rob_inst_idx,
-  input  [5:0]  io_brupdate_b2_uop_address_num,
   input  [6:0]  io_brupdate_b2_uop_uopc,
   input  [31:0] io_brupdate_b2_uop_inst,
   input  [31:0] io_brupdate_b2_uop_debug_inst,
@@ -51,7 +34,6 @@ module RenameFreeList_1(
   input         io_brupdate_b2_uop_ctrl_is_load,
   input         io_brupdate_b2_uop_ctrl_is_sta,
   input         io_brupdate_b2_uop_ctrl_is_std,
-  input  [1:0]  io_brupdate_b2_uop_ctrl_op3_sel,
   input  [1:0]  io_brupdate_b2_uop_iw_state,
   input         io_brupdate_b2_uop_iw_p1_poisoned,
   input         io_brupdate_b2_uop_iw_p2_poisoned,
@@ -68,19 +50,19 @@ module RenameFreeList_1(
   input  [19:0] io_brupdate_b2_uop_imm_packed,
   input  [11:0] io_brupdate_b2_uop_csr_addr,
   input  [5:0]  io_brupdate_b2_uop_rob_idx,
-  input  [4:0]  io_brupdate_b2_uop_ldq_idx,
-  input  [4:0]  io_brupdate_b2_uop_stq_idx,
+  input  [3:0]  io_brupdate_b2_uop_ldq_idx,
+  input  [3:0]  io_brupdate_b2_uop_stq_idx,
   input  [1:0]  io_brupdate_b2_uop_rxq_idx,
-  input  [6:0]  io_brupdate_b2_uop_pdst,
-  input  [6:0]  io_brupdate_b2_uop_prs1,
-  input  [6:0]  io_brupdate_b2_uop_prs2,
-  input  [6:0]  io_brupdate_b2_uop_prs3,
+  input  [5:0]  io_brupdate_b2_uop_pdst,
+  input  [5:0]  io_brupdate_b2_uop_prs1,
+  input  [5:0]  io_brupdate_b2_uop_prs2,
+  input  [5:0]  io_brupdate_b2_uop_prs3,
   input  [4:0]  io_brupdate_b2_uop_ppred,
   input         io_brupdate_b2_uop_prs1_busy,
   input         io_brupdate_b2_uop_prs2_busy,
   input         io_brupdate_b2_uop_prs3_busy,
   input         io_brupdate_b2_uop_ppred_busy,
-  input  [6:0]  io_brupdate_b2_uop_stale_pdst,
+  input  [5:0]  io_brupdate_b2_uop_stale_pdst,
   input         io_brupdate_b2_uop_exception,
   input  [63:0] io_brupdate_b2_uop_exc_cause,
   input         io_brupdate_b2_uop_bypassable,
@@ -120,11 +102,12 @@ module RenameFreeList_1(
   input  [2:0]  io_brupdate_b2_cfi_type,
   input  [1:0]  io_brupdate_b2_pc_sel,
   input  [39:0] io_brupdate_b2_jalr_target,
-  input  [31:0] io_brupdate_b2_target_offset,
-  input         io_is_print,
+  input  [20:0] io_brupdate_b2_target_offset,
   input         io_debug_pipeline_empty,
   output [63:0] io_debug_freelist,
-  output [63:0] io_debug_isprlist
+  output [63:0] io_debug_isprlist,
+  input         io_flush,
+  input  [63:0] io_commit_bits
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [63:0] _RAND_0;
@@ -222,8 +205,8 @@ module RenameFreeList_1(
   wire [63:0] _T_126 = free_list[2] ? 64'h4 : _T_125; // @[Mux.scala 47:69]
   wire [63:0] _T_127 = free_list[1] ? 64'h2 : _T_126; // @[Mux.scala 47:69]
   wire [63:0] sels_0 = free_list[0] ? 64'h1 : _T_127; // @[Mux.scala 47:69]
-  wire [63:0] _T_129 = ~sels_0; // @[util.scala 481:21]
-  wire [63:0] _T_130 = free_list & _T_129; // @[util.scala 481:19]
+  wire [63:0] _T_129 = ~sels_0; // @[util.scala 410:21]
+  wire [63:0] _T_130 = free_list & _T_129; // @[util.scala 410:19]
   wire [63:0] _T_195 = _T_130[63] ? 64'h8000000000000000 : 64'h0; // @[Mux.scala 47:69]
   wire [63:0] _T_196 = _T_130[62] ? 64'h4000000000000000 : _T_195; // @[Mux.scala 47:69]
   wire [63:0] _T_197 = _T_130[61] ? 64'h2000000000000000 : _T_196; // @[Mux.scala 47:69]
@@ -295,14 +278,14 @@ module RenameFreeList_1(
   wire [63:0] _T_265 = io_reqs_0 ? 64'hffffffffffffffff : 64'h0; // @[Bitwise.scala 72:12]
   wire [63:0] _T_266 = allocs_0 & _T_265; // @[rename-freelist.scala 62:88]
   wire [63:0] alloc_masks_0 = alloc_masks_1 | _T_266; // @[rename-freelist.scala 62:84]
-  reg  REG; // @[rename-freelist.scala 84:26]
-  wire  _T_483 = |sels_0; // @[rename-freelist.scala 83:27]
-  wire  sel_fire_0 = (~REG | io_reqs_0) & _T_483; // @[rename-freelist.scala 88:45]
+  reg  REG; // @[rename-freelist.scala 99:26]
+  wire  _T_486 = |sels_0; // @[rename-freelist.scala 98:27]
+  wire  sel_fire_0 = (~REG | io_reqs_0) & _T_486; // @[rename-freelist.scala 103:45]
   wire [63:0] _T_268 = sel_fire_0 ? 64'hffffffffffffffff : 64'h0; // @[Bitwise.scala 72:12]
   wire [63:0] _T_269 = sels_0 & _T_268; // @[rename-freelist.scala 65:60]
-  reg  REG_1; // @[rename-freelist.scala 84:26]
-  wire  _T_496 = |sels_1; // @[rename-freelist.scala 83:27]
-  wire  sel_fire_1 = (~REG_1 | io_reqs_1) & _T_496; // @[rename-freelist.scala 88:45]
+  reg  REG_1; // @[rename-freelist.scala 99:26]
+  wire  _T_501 = |sels_1; // @[rename-freelist.scala 98:27]
+  wire  sel_fire_1 = (~REG_1 | io_reqs_1) & _T_501; // @[rename-freelist.scala 103:45]
   wire [63:0] _T_271 = sel_fire_1 ? 64'hffffffffffffffff : 64'h0; // @[Bitwise.scala 72:12]
   wire [63:0] _T_272 = sels_1 & _T_271; // @[rename-freelist.scala 65:60]
   wire [63:0] sel_mask = _T_269 | _T_272; // @[rename-freelist.scala 65:82]
@@ -395,130 +378,134 @@ module RenameFreeList_1(
   wire [63:0] _T_479 = free_list & _T_478; // @[rename-freelist.scala 79:27]
   wire [63:0] _T_480 = _T_479 | dealloc_mask; // @[rename-freelist.scala 79:39]
   wire [63:0] _T_482 = _T_480 & 64'hfffffffffffffffe; // @[rename-freelist.scala 79:55]
+  wire [63:0] _T_483 = ~io_commit_bits; // @[rename-freelist.scala 88:19]
+  wire [63:0] _T_485 = _T_483 & 64'hfffffffffffffffe; // @[rename-freelist.scala 88:36]
   wire [31:0] hi = sels_0[63:32]; // @[OneHot.scala 30:18]
   wire [31:0] lo = sels_0[31:0]; // @[OneHot.scala 31:18]
   wire  hi_1 = |hi; // @[OneHot.scala 32:14]
-  wire [31:0] _T_484 = hi | lo; // @[OneHot.scala 32:28]
-  wire [15:0] hi_2 = _T_484[31:16]; // @[OneHot.scala 30:18]
-  wire [15:0] lo_1 = _T_484[15:0]; // @[OneHot.scala 31:18]
+  wire [31:0] _T_487 = hi | lo; // @[OneHot.scala 32:28]
+  wire [15:0] hi_2 = _T_487[31:16]; // @[OneHot.scala 30:18]
+  wire [15:0] lo_1 = _T_487[15:0]; // @[OneHot.scala 31:18]
   wire  hi_3 = |hi_2; // @[OneHot.scala 32:14]
-  wire [15:0] _T_485 = hi_2 | lo_1; // @[OneHot.scala 32:28]
-  wire [7:0] hi_4 = _T_485[15:8]; // @[OneHot.scala 30:18]
-  wire [7:0] lo_2 = _T_485[7:0]; // @[OneHot.scala 31:18]
+  wire [15:0] _T_488 = hi_2 | lo_1; // @[OneHot.scala 32:28]
+  wire [7:0] hi_4 = _T_488[15:8]; // @[OneHot.scala 30:18]
+  wire [7:0] lo_2 = _T_488[7:0]; // @[OneHot.scala 31:18]
   wire  hi_5 = |hi_4; // @[OneHot.scala 32:14]
-  wire [7:0] _T_486 = hi_4 | lo_2; // @[OneHot.scala 32:28]
-  wire [3:0] hi_6 = _T_486[7:4]; // @[OneHot.scala 30:18]
-  wire [3:0] lo_3 = _T_486[3:0]; // @[OneHot.scala 31:18]
+  wire [7:0] _T_489 = hi_4 | lo_2; // @[OneHot.scala 32:28]
+  wire [3:0] hi_6 = _T_489[7:4]; // @[OneHot.scala 30:18]
+  wire [3:0] lo_3 = _T_489[3:0]; // @[OneHot.scala 31:18]
   wire  hi_7 = |hi_6; // @[OneHot.scala 32:14]
-  wire [3:0] _T_487 = hi_6 | lo_3; // @[OneHot.scala 32:28]
-  wire [1:0] hi_8 = _T_487[3:2]; // @[OneHot.scala 30:18]
-  wire [1:0] lo_4 = _T_487[1:0]; // @[OneHot.scala 31:18]
+  wire [3:0] _T_490 = hi_6 | lo_3; // @[OneHot.scala 32:28]
+  wire [1:0] hi_8 = _T_490[3:2]; // @[OneHot.scala 30:18]
+  wire [1:0] lo_4 = _T_490[1:0]; // @[OneHot.scala 31:18]
   wire  hi_9 = |hi_8; // @[OneHot.scala 32:14]
-  wire [1:0] _T_488 = hi_8 | lo_4; // @[OneHot.scala 32:28]
-  wire  lo_5 = _T_488[1]; // @[CircuitMath.scala 30:8]
-  wire [5:0] _T_489 = {hi_1,hi_3,hi_5,hi_7,hi_9,lo_5}; // @[Cat.scala 30:58]
+  wire [1:0] _T_491 = hi_8 | lo_4; // @[OneHot.scala 32:28]
+  wire  lo_5 = _T_491[1]; // @[CircuitMath.scala 30:8]
+  wire [5:0] _T_492 = {hi_1,hi_3,hi_5,hi_7,hi_9,lo_5}; // @[Cat.scala 30:58]
   reg [5:0] r; // @[Reg.scala 15:16]
   wire [31:0] hi_10 = sels_1[63:32]; // @[OneHot.scala 30:18]
   wire [31:0] lo_10 = sels_1[31:0]; // @[OneHot.scala 31:18]
   wire  hi_11 = |hi_10; // @[OneHot.scala 32:14]
-  wire [31:0] _T_497 = hi_10 | lo_10; // @[OneHot.scala 32:28]
-  wire [15:0] hi_12 = _T_497[31:16]; // @[OneHot.scala 30:18]
-  wire [15:0] lo_11 = _T_497[15:0]; // @[OneHot.scala 31:18]
+  wire [31:0] _T_502 = hi_10 | lo_10; // @[OneHot.scala 32:28]
+  wire [15:0] hi_12 = _T_502[31:16]; // @[OneHot.scala 30:18]
+  wire [15:0] lo_11 = _T_502[15:0]; // @[OneHot.scala 31:18]
   wire  hi_13 = |hi_12; // @[OneHot.scala 32:14]
-  wire [15:0] _T_498 = hi_12 | lo_11; // @[OneHot.scala 32:28]
-  wire [7:0] hi_14 = _T_498[15:8]; // @[OneHot.scala 30:18]
-  wire [7:0] lo_12 = _T_498[7:0]; // @[OneHot.scala 31:18]
+  wire [15:0] _T_503 = hi_12 | lo_11; // @[OneHot.scala 32:28]
+  wire [7:0] hi_14 = _T_503[15:8]; // @[OneHot.scala 30:18]
+  wire [7:0] lo_12 = _T_503[7:0]; // @[OneHot.scala 31:18]
   wire  hi_15 = |hi_14; // @[OneHot.scala 32:14]
-  wire [7:0] _T_499 = hi_14 | lo_12; // @[OneHot.scala 32:28]
-  wire [3:0] hi_16 = _T_499[7:4]; // @[OneHot.scala 30:18]
-  wire [3:0] lo_13 = _T_499[3:0]; // @[OneHot.scala 31:18]
+  wire [7:0] _T_504 = hi_14 | lo_12; // @[OneHot.scala 32:28]
+  wire [3:0] hi_16 = _T_504[7:4]; // @[OneHot.scala 30:18]
+  wire [3:0] lo_13 = _T_504[3:0]; // @[OneHot.scala 31:18]
   wire  hi_17 = |hi_16; // @[OneHot.scala 32:14]
-  wire [3:0] _T_500 = hi_16 | lo_13; // @[OneHot.scala 32:28]
-  wire [1:0] hi_18 = _T_500[3:2]; // @[OneHot.scala 30:18]
-  wire [1:0] lo_14 = _T_500[1:0]; // @[OneHot.scala 31:18]
+  wire [3:0] _T_505 = hi_16 | lo_13; // @[OneHot.scala 32:28]
+  wire [1:0] hi_18 = _T_505[3:2]; // @[OneHot.scala 30:18]
+  wire [1:0] lo_14 = _T_505[1:0]; // @[OneHot.scala 31:18]
   wire  hi_19 = |hi_18; // @[OneHot.scala 32:14]
-  wire [1:0] _T_501 = hi_18 | lo_14; // @[OneHot.scala 32:28]
-  wire  lo_15 = _T_501[1]; // @[CircuitMath.scala 30:8]
-  wire [5:0] _T_502 = {hi_11,hi_13,hi_15,hi_17,hi_19,lo_15}; // @[Cat.scala 30:58]
+  wire [1:0] _T_506 = hi_18 | lo_14; // @[OneHot.scala 32:28]
+  wire  lo_15 = _T_506[1]; // @[CircuitMath.scala 30:8]
+  wire [5:0] _T_507 = {hi_11,hi_13,hi_15,hi_17,hi_19,lo_15}; // @[Cat.scala 30:58]
   reg [5:0] r_1; // @[Reg.scala 15:16]
-  wire [63:0] _T_511 = io_alloc_pregs_0_valid ? 64'hffffffffffffffff : 64'h0; // @[Bitwise.scala 72:12]
-  wire [63:0] _T_512 = allocs_0 & _T_511; // @[rename-freelist.scala 94:77]
-  wire [63:0] _T_515 = io_alloc_pregs_1_valid ? 64'hffffffffffffffff : 64'h0; // @[Bitwise.scala 72:12]
-  wire [63:0] _T_516 = allocs_1 & _T_515; // @[rename-freelist.scala 94:77]
-  wire [63:0] _T_517 = _T_512 | _T_516; // @[rename-freelist.scala 94:104]
-  wire [63:0] _T_519 = io_debug_freelist & dealloc_mask; // @[rename-freelist.scala 97:31]
-  wire [1:0] _T_590 = io_debug_freelist[0] + io_debug_freelist[1]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_592 = io_debug_freelist[2] + io_debug_freelist[3]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_594 = _T_590 + _T_592; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_596 = io_debug_freelist[4] + io_debug_freelist[5]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_598 = io_debug_freelist[6] + io_debug_freelist[7]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_600 = _T_596 + _T_598; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_602 = _T_594 + _T_600; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_604 = io_debug_freelist[8] + io_debug_freelist[9]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_606 = io_debug_freelist[10] + io_debug_freelist[11]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_608 = _T_604 + _T_606; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_610 = io_debug_freelist[12] + io_debug_freelist[13]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_612 = io_debug_freelist[14] + io_debug_freelist[15]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_614 = _T_610 + _T_612; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_616 = _T_608 + _T_614; // @[Bitwise.scala 47:55]
-  wire [4:0] _T_618 = _T_602 + _T_616; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_620 = io_debug_freelist[16] + io_debug_freelist[17]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_622 = io_debug_freelist[18] + io_debug_freelist[19]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_624 = _T_620 + _T_622; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_626 = io_debug_freelist[20] + io_debug_freelist[21]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_628 = io_debug_freelist[22] + io_debug_freelist[23]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_630 = _T_626 + _T_628; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_632 = _T_624 + _T_630; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_634 = io_debug_freelist[24] + io_debug_freelist[25]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_636 = io_debug_freelist[26] + io_debug_freelist[27]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_638 = _T_634 + _T_636; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_640 = io_debug_freelist[28] + io_debug_freelist[29]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_642 = io_debug_freelist[30] + io_debug_freelist[31]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_644 = _T_640 + _T_642; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_646 = _T_638 + _T_644; // @[Bitwise.scala 47:55]
-  wire [4:0] _T_648 = _T_632 + _T_646; // @[Bitwise.scala 47:55]
-  wire [5:0] _T_650 = _T_618 + _T_648; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_652 = io_debug_freelist[32] + io_debug_freelist[33]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_654 = io_debug_freelist[34] + io_debug_freelist[35]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_656 = _T_652 + _T_654; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_658 = io_debug_freelist[36] + io_debug_freelist[37]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_660 = io_debug_freelist[38] + io_debug_freelist[39]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_662 = _T_658 + _T_660; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_664 = _T_656 + _T_662; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_666 = io_debug_freelist[40] + io_debug_freelist[41]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_668 = io_debug_freelist[42] + io_debug_freelist[43]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_670 = _T_666 + _T_668; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_672 = io_debug_freelist[44] + io_debug_freelist[45]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_674 = io_debug_freelist[46] + io_debug_freelist[47]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_676 = _T_672 + _T_674; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_678 = _T_670 + _T_676; // @[Bitwise.scala 47:55]
-  wire [4:0] _T_680 = _T_664 + _T_678; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_682 = io_debug_freelist[48] + io_debug_freelist[49]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_684 = io_debug_freelist[50] + io_debug_freelist[51]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_686 = _T_682 + _T_684; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_688 = io_debug_freelist[52] + io_debug_freelist[53]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_690 = io_debug_freelist[54] + io_debug_freelist[55]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_692 = _T_688 + _T_690; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_694 = _T_686 + _T_692; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_696 = io_debug_freelist[56] + io_debug_freelist[57]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_698 = io_debug_freelist[58] + io_debug_freelist[59]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_700 = _T_696 + _T_698; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_702 = io_debug_freelist[60] + io_debug_freelist[61]; // @[Bitwise.scala 47:55]
-  wire [1:0] _T_704 = io_debug_freelist[62] + io_debug_freelist[63]; // @[Bitwise.scala 47:55]
-  wire [2:0] _T_706 = _T_702 + _T_704; // @[Bitwise.scala 47:55]
-  wire [3:0] _T_708 = _T_700 + _T_706; // @[Bitwise.scala 47:55]
-  wire [4:0] _T_710 = _T_694 + _T_708; // @[Bitwise.scala 47:55]
-  wire [5:0] _T_712 = _T_680 + _T_710; // @[Bitwise.scala 47:55]
-  wire [6:0] _T_714 = _T_650 + _T_712; // @[Bitwise.scala 47:55]
-  assign io_alloc_pregs_0_valid = REG; // @[rename-freelist.scala 91:29]
-  assign io_alloc_pregs_0_bits = r; // @[rename-freelist.scala 90:29]
-  assign io_alloc_pregs_1_valid = REG_1; // @[rename-freelist.scala 91:29]
-  assign io_alloc_pregs_1_bits = r_1; // @[rename-freelist.scala 90:29]
-  assign io_debug_freelist = free_list | _T_517; // @[rename-freelist.scala 94:34]
-  assign io_debug_isprlist = 64'h0; // @[rename-freelist.scala 95:21]
+  wire [63:0] _T_518 = io_alloc_pregs_0_valid ? 64'hffffffffffffffff : 64'h0; // @[Bitwise.scala 72:12]
+  wire [63:0] _T_519 = allocs_0 & _T_518; // @[rename-freelist.scala 109:77]
+  wire [63:0] _T_522 = io_alloc_pregs_1_valid ? 64'hffffffffffffffff : 64'h0; // @[Bitwise.scala 72:12]
+  wire [63:0] _T_523 = allocs_1 & _T_522; // @[rename-freelist.scala 109:77]
+  wire [63:0] _T_524 = _T_519 | _T_523; // @[rename-freelist.scala 109:104]
+  wire [63:0] _T_526 = io_debug_freelist & dealloc_mask; // @[rename-freelist.scala 130:31]
+  wire [1:0] _T_597 = io_debug_freelist[0] + io_debug_freelist[1]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_599 = io_debug_freelist[2] + io_debug_freelist[3]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_601 = _T_597 + _T_599; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_603 = io_debug_freelist[4] + io_debug_freelist[5]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_605 = io_debug_freelist[6] + io_debug_freelist[7]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_607 = _T_603 + _T_605; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_609 = _T_601 + _T_607; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_611 = io_debug_freelist[8] + io_debug_freelist[9]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_613 = io_debug_freelist[10] + io_debug_freelist[11]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_615 = _T_611 + _T_613; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_617 = io_debug_freelist[12] + io_debug_freelist[13]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_619 = io_debug_freelist[14] + io_debug_freelist[15]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_621 = _T_617 + _T_619; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_623 = _T_615 + _T_621; // @[Bitwise.scala 47:55]
+  wire [4:0] _T_625 = _T_609 + _T_623; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_627 = io_debug_freelist[16] + io_debug_freelist[17]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_629 = io_debug_freelist[18] + io_debug_freelist[19]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_631 = _T_627 + _T_629; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_633 = io_debug_freelist[20] + io_debug_freelist[21]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_635 = io_debug_freelist[22] + io_debug_freelist[23]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_637 = _T_633 + _T_635; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_639 = _T_631 + _T_637; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_641 = io_debug_freelist[24] + io_debug_freelist[25]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_643 = io_debug_freelist[26] + io_debug_freelist[27]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_645 = _T_641 + _T_643; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_647 = io_debug_freelist[28] + io_debug_freelist[29]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_649 = io_debug_freelist[30] + io_debug_freelist[31]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_651 = _T_647 + _T_649; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_653 = _T_645 + _T_651; // @[Bitwise.scala 47:55]
+  wire [4:0] _T_655 = _T_639 + _T_653; // @[Bitwise.scala 47:55]
+  wire [5:0] _T_657 = _T_625 + _T_655; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_659 = io_debug_freelist[32] + io_debug_freelist[33]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_661 = io_debug_freelist[34] + io_debug_freelist[35]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_663 = _T_659 + _T_661; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_665 = io_debug_freelist[36] + io_debug_freelist[37]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_667 = io_debug_freelist[38] + io_debug_freelist[39]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_669 = _T_665 + _T_667; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_671 = _T_663 + _T_669; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_673 = io_debug_freelist[40] + io_debug_freelist[41]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_675 = io_debug_freelist[42] + io_debug_freelist[43]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_677 = _T_673 + _T_675; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_679 = io_debug_freelist[44] + io_debug_freelist[45]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_681 = io_debug_freelist[46] + io_debug_freelist[47]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_683 = _T_679 + _T_681; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_685 = _T_677 + _T_683; // @[Bitwise.scala 47:55]
+  wire [4:0] _T_687 = _T_671 + _T_685; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_689 = io_debug_freelist[48] + io_debug_freelist[49]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_691 = io_debug_freelist[50] + io_debug_freelist[51]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_693 = _T_689 + _T_691; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_695 = io_debug_freelist[52] + io_debug_freelist[53]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_697 = io_debug_freelist[54] + io_debug_freelist[55]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_699 = _T_695 + _T_697; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_701 = _T_693 + _T_699; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_703 = io_debug_freelist[56] + io_debug_freelist[57]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_705 = io_debug_freelist[58] + io_debug_freelist[59]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_707 = _T_703 + _T_705; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_709 = io_debug_freelist[60] + io_debug_freelist[61]; // @[Bitwise.scala 47:55]
+  wire [1:0] _T_711 = io_debug_freelist[62] + io_debug_freelist[63]; // @[Bitwise.scala 47:55]
+  wire [2:0] _T_713 = _T_709 + _T_711; // @[Bitwise.scala 47:55]
+  wire [3:0] _T_715 = _T_707 + _T_713; // @[Bitwise.scala 47:55]
+  wire [4:0] _T_717 = _T_701 + _T_715; // @[Bitwise.scala 47:55]
+  wire [5:0] _T_719 = _T_687 + _T_717; // @[Bitwise.scala 47:55]
+  wire [6:0] _T_721 = _T_657 + _T_719; // @[Bitwise.scala 47:55]
+  assign io_alloc_pregs_0_valid = REG; // @[rename-freelist.scala 106:29]
+  assign io_alloc_pregs_0_bits = r; // @[rename-freelist.scala 105:29]
+  assign io_alloc_pregs_1_valid = REG_1; // @[rename-freelist.scala 106:29]
+  assign io_alloc_pregs_1_bits = r_1; // @[rename-freelist.scala 105:29]
+  assign io_debug_freelist = free_list | _T_524; // @[rename-freelist.scala 109:34]
+  assign io_debug_isprlist = 64'h0; // @[rename-freelist.scala 110:21]
   always @(posedge clock) begin
     if (reset) begin // @[rename-freelist.scala 53:26]
       free_list <= 64'hfffffffffffffffe; // @[rename-freelist.scala 53:26]
+    end else if (io_flush) begin // @[rename-freelist.scala 87:18]
+      free_list <= _T_485; // @[rename-freelist.scala 88:15]
     end else begin
       free_list <= _T_482; // @[rename-freelist.scala 79:13]
     end
@@ -630,30 +617,30 @@ module RenameFreeList_1(
     end else begin
       br_alloc_lists_11 <= _T_476;
     end
-    if (reset) begin // @[rename-freelist.scala 84:26]
-      REG <= 1'h0; // @[rename-freelist.scala 84:26]
+    if (reset) begin // @[rename-freelist.scala 99:26]
+      REG <= 1'h0; // @[rename-freelist.scala 99:26]
     end else begin
-      REG <= REG & ~io_reqs_0 | _T_483; // @[rename-freelist.scala 87:13]
+      REG <= ~io_flush & (REG & ~io_reqs_0 | _T_486); // @[rename-freelist.scala 102:13]
     end
-    if (reset) begin // @[rename-freelist.scala 84:26]
-      REG_1 <= 1'h0; // @[rename-freelist.scala 84:26]
+    if (reset) begin // @[rename-freelist.scala 99:26]
+      REG_1 <= 1'h0; // @[rename-freelist.scala 99:26]
     end else begin
-      REG_1 <= REG_1 & ~io_reqs_1 | _T_496; // @[rename-freelist.scala 87:13]
+      REG_1 <= ~io_flush & (REG_1 & ~io_reqs_1 | _T_501); // @[rename-freelist.scala 102:13]
     end
     if (sel_fire_0) begin // @[Reg.scala 16:19]
-      r <= _T_489; // @[Reg.scala 16:23]
+      r <= _T_492; // @[Reg.scala 16:23]
     end
     if (sel_fire_1) begin // @[Reg.scala 16:19]
-      r_1 <= _T_502; // @[Reg.scala 16:23]
+      r_1 <= _T_507; // @[Reg.scala 16:23]
     end
     `ifndef SYNTHESIS
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (~(~(|_T_519) | reset)) begin
+        if (~(~(|_T_526) | reset)) begin
           $fwrite(32'h80000002,
-            "Assertion failed: [freelist] Returning a free physical register.\n    at rename-freelist.scala:97 assert (!(io.debug.freelist & dealloc_mask).orR, \"[freelist] Returning a free physical register.\")\n"
-            ); // @[rename-freelist.scala 97:10]
+            "Assertion failed: [freelist] Returning a free physical register.\n    at rename-freelist.scala:130 assert (!(io.debug.freelist & dealloc_mask).orR, \"[freelist] Returning a free physical register.\")\n"
+            ); // @[rename-freelist.scala 130:10]
         end
     `ifdef PRINTF_COND
       end
@@ -663,8 +650,8 @@ module RenameFreeList_1(
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (~(~(|_T_519) | reset)) begin
-          $fatal; // @[rename-freelist.scala 97:10]
+        if (~(~(|_T_526) | reset)) begin
+          $fatal; // @[rename-freelist.scala 130:10]
         end
     `ifdef STOP_COND
       end
@@ -674,10 +661,10 @@ module RenameFreeList_1(
     `ifdef PRINTF_COND
       if (`PRINTF_COND) begin
     `endif
-        if (~(~io_debug_pipeline_empty | _T_714 >= 7'h1b | reset)) begin
+        if (~(~io_debug_pipeline_empty | _T_721 >= 7'h1f | reset)) begin
           $fwrite(32'h80000002,
-            "Assertion failed: [freelist] Leaking physical registers.\n    at rename-freelist.scala:98 assert (!io.debug.pipeline_empty || PopCount(io.debug.freelist) >= (numPregs - numLregs - 1).U,\n"
-            ); // @[rename-freelist.scala 98:10]
+            "Assertion failed: [freelist] Leaking physical registers.\n    at rename-freelist.scala:131 assert (!io.debug.pipeline_empty || PopCount(io.debug.freelist) >= (numPregs - numLregs - 1).U,\n"
+            ); // @[rename-freelist.scala 131:10]
         end
     `ifdef PRINTF_COND
       end
@@ -687,8 +674,8 @@ module RenameFreeList_1(
     `ifdef STOP_COND
       if (`STOP_COND) begin
     `endif
-        if (~(~io_debug_pipeline_empty | _T_714 >= 7'h1b | reset)) begin
-          $fatal; // @[rename-freelist.scala 98:10]
+        if (~(~io_debug_pipeline_empty | _T_721 >= 7'h1f | reset)) begin
+          $fatal; // @[rename-freelist.scala 131:10]
         end
     `ifdef STOP_COND
       end

@@ -1,150 +1,150 @@
 module BIMBranchPredictorBank(
-  input         clock,
-  input         reset,
-  input         io_f0_valid,
-  input  [39:0] io_f0_pc,
-  input  [3:0]  io_f0_mask,
-  input  [15:0] io_f1_ghist,
-  input         io_f1_lhist,
-  input         io_resp_in_0_f1_0_taken,
-  input         io_resp_in_0_f1_0_is_br,
-  input         io_resp_in_0_f1_0_is_jal,
-  input         io_resp_in_0_f1_0_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_0_predicted_pc_bits,
-  input         io_resp_in_0_f1_1_taken,
-  input         io_resp_in_0_f1_1_is_br,
-  input         io_resp_in_0_f1_1_is_jal,
-  input         io_resp_in_0_f1_1_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_1_predicted_pc_bits,
-  input         io_resp_in_0_f1_2_taken,
-  input         io_resp_in_0_f1_2_is_br,
-  input         io_resp_in_0_f1_2_is_jal,
-  input         io_resp_in_0_f1_2_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_2_predicted_pc_bits,
-  input         io_resp_in_0_f1_3_taken,
-  input         io_resp_in_0_f1_3_is_br,
-  input         io_resp_in_0_f1_3_is_jal,
-  input         io_resp_in_0_f1_3_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f1_3_predicted_pc_bits,
-  input         io_resp_in_0_f2_0_taken,
-  input         io_resp_in_0_f2_0_is_br,
-  input         io_resp_in_0_f2_0_is_jal,
-  input         io_resp_in_0_f2_0_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_0_predicted_pc_bits,
-  input         io_resp_in_0_f2_1_taken,
-  input         io_resp_in_0_f2_1_is_br,
-  input         io_resp_in_0_f2_1_is_jal,
-  input         io_resp_in_0_f2_1_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_1_predicted_pc_bits,
-  input         io_resp_in_0_f2_2_taken,
-  input         io_resp_in_0_f2_2_is_br,
-  input         io_resp_in_0_f2_2_is_jal,
-  input         io_resp_in_0_f2_2_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_2_predicted_pc_bits,
-  input         io_resp_in_0_f2_3_taken,
-  input         io_resp_in_0_f2_3_is_br,
-  input         io_resp_in_0_f2_3_is_jal,
-  input         io_resp_in_0_f2_3_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f2_3_predicted_pc_bits,
-  input         io_resp_in_0_f3_0_taken,
-  input         io_resp_in_0_f3_0_is_br,
-  input         io_resp_in_0_f3_0_is_jal,
-  input         io_resp_in_0_f3_0_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_0_predicted_pc_bits,
-  input         io_resp_in_0_f3_1_taken,
-  input         io_resp_in_0_f3_1_is_br,
-  input         io_resp_in_0_f3_1_is_jal,
-  input         io_resp_in_0_f3_1_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_1_predicted_pc_bits,
-  input         io_resp_in_0_f3_2_taken,
-  input         io_resp_in_0_f3_2_is_br,
-  input         io_resp_in_0_f3_2_is_jal,
-  input         io_resp_in_0_f3_2_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_2_predicted_pc_bits,
-  input         io_resp_in_0_f3_3_taken,
-  input         io_resp_in_0_f3_3_is_br,
-  input         io_resp_in_0_f3_3_is_jal,
-  input         io_resp_in_0_f3_3_predicted_pc_valid,
-  input  [39:0] io_resp_in_0_f3_3_predicted_pc_bits,
-  output        io_resp_f1_0_taken,
-  output        io_resp_f1_0_is_br,
-  output        io_resp_f1_0_is_jal,
-  output        io_resp_f1_0_predicted_pc_valid,
-  output [39:0] io_resp_f1_0_predicted_pc_bits,
-  output        io_resp_f1_1_taken,
-  output        io_resp_f1_1_is_br,
-  output        io_resp_f1_1_is_jal,
-  output        io_resp_f1_1_predicted_pc_valid,
-  output [39:0] io_resp_f1_1_predicted_pc_bits,
-  output        io_resp_f1_2_taken,
-  output        io_resp_f1_2_is_br,
-  output        io_resp_f1_2_is_jal,
-  output        io_resp_f1_2_predicted_pc_valid,
-  output [39:0] io_resp_f1_2_predicted_pc_bits,
-  output        io_resp_f1_3_taken,
-  output        io_resp_f1_3_is_br,
-  output        io_resp_f1_3_is_jal,
-  output        io_resp_f1_3_predicted_pc_valid,
-  output [39:0] io_resp_f1_3_predicted_pc_bits,
-  output        io_resp_f2_0_taken,
-  output        io_resp_f2_0_is_br,
-  output        io_resp_f2_0_is_jal,
-  output        io_resp_f2_0_predicted_pc_valid,
-  output [39:0] io_resp_f2_0_predicted_pc_bits,
-  output        io_resp_f2_1_taken,
-  output        io_resp_f2_1_is_br,
-  output        io_resp_f2_1_is_jal,
-  output        io_resp_f2_1_predicted_pc_valid,
-  output [39:0] io_resp_f2_1_predicted_pc_bits,
-  output        io_resp_f2_2_taken,
-  output        io_resp_f2_2_is_br,
-  output        io_resp_f2_2_is_jal,
-  output        io_resp_f2_2_predicted_pc_valid,
-  output [39:0] io_resp_f2_2_predicted_pc_bits,
-  output        io_resp_f2_3_taken,
-  output        io_resp_f2_3_is_br,
-  output        io_resp_f2_3_is_jal,
-  output        io_resp_f2_3_predicted_pc_valid,
-  output [39:0] io_resp_f2_3_predicted_pc_bits,
-  output        io_resp_f3_0_taken,
-  output        io_resp_f3_0_is_br,
-  output        io_resp_f3_0_is_jal,
-  output        io_resp_f3_0_predicted_pc_valid,
-  output [39:0] io_resp_f3_0_predicted_pc_bits,
-  output        io_resp_f3_1_taken,
-  output        io_resp_f3_1_is_br,
-  output        io_resp_f3_1_is_jal,
-  output        io_resp_f3_1_predicted_pc_valid,
-  output [39:0] io_resp_f3_1_predicted_pc_bits,
-  output        io_resp_f3_2_taken,
-  output        io_resp_f3_2_is_br,
-  output        io_resp_f3_2_is_jal,
-  output        io_resp_f3_2_predicted_pc_valid,
-  output [39:0] io_resp_f3_2_predicted_pc_bits,
-  output        io_resp_f3_3_taken,
-  output        io_resp_f3_3_is_br,
-  output        io_resp_f3_3_is_jal,
-  output        io_resp_f3_3_predicted_pc_valid,
-  output [39:0] io_resp_f3_3_predicted_pc_bits,
-  output [44:0] io_f3_meta,
-  input         io_f3_fire,
-  input         io_update_valid,
-  input         io_update_bits_is_mispredict_update,
-  input         io_update_bits_is_repair_update,
-  input  [3:0]  io_update_bits_btb_mispredicts,
-  input  [39:0] io_update_bits_pc,
-  input  [3:0]  io_update_bits_br_mask,
-  input         io_update_bits_cfi_idx_valid,
-  input  [1:0]  io_update_bits_cfi_idx_bits,
-  input         io_update_bits_cfi_taken,
-  input         io_update_bits_cfi_mispredicted,
-  input         io_update_bits_cfi_is_br,
-  input         io_update_bits_cfi_is_jal,
-  input         io_update_bits_cfi_is_jalr,
-  input  [15:0] io_update_bits_ghist,
-  input         io_update_bits_lhist,
-  input  [39:0] io_update_bits_target,
-  input  [44:0] io_update_bits_meta
+  input          clock,
+  input          reset,
+  input          io_f0_valid,
+  input  [39:0]  io_f0_pc,
+  input  [3:0]   io_f0_mask,
+  input  [63:0]  io_f1_ghist,
+  input          io_f1_lhist,
+  input          io_resp_in_0_f1_0_taken,
+  input          io_resp_in_0_f1_0_is_br,
+  input          io_resp_in_0_f1_0_is_jal,
+  input          io_resp_in_0_f1_0_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_0_predicted_pc_bits,
+  input          io_resp_in_0_f1_1_taken,
+  input          io_resp_in_0_f1_1_is_br,
+  input          io_resp_in_0_f1_1_is_jal,
+  input          io_resp_in_0_f1_1_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_1_predicted_pc_bits,
+  input          io_resp_in_0_f1_2_taken,
+  input          io_resp_in_0_f1_2_is_br,
+  input          io_resp_in_0_f1_2_is_jal,
+  input          io_resp_in_0_f1_2_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_2_predicted_pc_bits,
+  input          io_resp_in_0_f1_3_taken,
+  input          io_resp_in_0_f1_3_is_br,
+  input          io_resp_in_0_f1_3_is_jal,
+  input          io_resp_in_0_f1_3_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f1_3_predicted_pc_bits,
+  input          io_resp_in_0_f2_0_taken,
+  input          io_resp_in_0_f2_0_is_br,
+  input          io_resp_in_0_f2_0_is_jal,
+  input          io_resp_in_0_f2_0_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_0_predicted_pc_bits,
+  input          io_resp_in_0_f2_1_taken,
+  input          io_resp_in_0_f2_1_is_br,
+  input          io_resp_in_0_f2_1_is_jal,
+  input          io_resp_in_0_f2_1_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_1_predicted_pc_bits,
+  input          io_resp_in_0_f2_2_taken,
+  input          io_resp_in_0_f2_2_is_br,
+  input          io_resp_in_0_f2_2_is_jal,
+  input          io_resp_in_0_f2_2_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_2_predicted_pc_bits,
+  input          io_resp_in_0_f2_3_taken,
+  input          io_resp_in_0_f2_3_is_br,
+  input          io_resp_in_0_f2_3_is_jal,
+  input          io_resp_in_0_f2_3_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f2_3_predicted_pc_bits,
+  input          io_resp_in_0_f3_0_taken,
+  input          io_resp_in_0_f3_0_is_br,
+  input          io_resp_in_0_f3_0_is_jal,
+  input          io_resp_in_0_f3_0_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_0_predicted_pc_bits,
+  input          io_resp_in_0_f3_1_taken,
+  input          io_resp_in_0_f3_1_is_br,
+  input          io_resp_in_0_f3_1_is_jal,
+  input          io_resp_in_0_f3_1_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_1_predicted_pc_bits,
+  input          io_resp_in_0_f3_2_taken,
+  input          io_resp_in_0_f3_2_is_br,
+  input          io_resp_in_0_f3_2_is_jal,
+  input          io_resp_in_0_f3_2_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_2_predicted_pc_bits,
+  input          io_resp_in_0_f3_3_taken,
+  input          io_resp_in_0_f3_3_is_br,
+  input          io_resp_in_0_f3_3_is_jal,
+  input          io_resp_in_0_f3_3_predicted_pc_valid,
+  input  [39:0]  io_resp_in_0_f3_3_predicted_pc_bits,
+  output         io_resp_f1_0_taken,
+  output         io_resp_f1_0_is_br,
+  output         io_resp_f1_0_is_jal,
+  output         io_resp_f1_0_predicted_pc_valid,
+  output [39:0]  io_resp_f1_0_predicted_pc_bits,
+  output         io_resp_f1_1_taken,
+  output         io_resp_f1_1_is_br,
+  output         io_resp_f1_1_is_jal,
+  output         io_resp_f1_1_predicted_pc_valid,
+  output [39:0]  io_resp_f1_1_predicted_pc_bits,
+  output         io_resp_f1_2_taken,
+  output         io_resp_f1_2_is_br,
+  output         io_resp_f1_2_is_jal,
+  output         io_resp_f1_2_predicted_pc_valid,
+  output [39:0]  io_resp_f1_2_predicted_pc_bits,
+  output         io_resp_f1_3_taken,
+  output         io_resp_f1_3_is_br,
+  output         io_resp_f1_3_is_jal,
+  output         io_resp_f1_3_predicted_pc_valid,
+  output [39:0]  io_resp_f1_3_predicted_pc_bits,
+  output         io_resp_f2_0_taken,
+  output         io_resp_f2_0_is_br,
+  output         io_resp_f2_0_is_jal,
+  output         io_resp_f2_0_predicted_pc_valid,
+  output [39:0]  io_resp_f2_0_predicted_pc_bits,
+  output         io_resp_f2_1_taken,
+  output         io_resp_f2_1_is_br,
+  output         io_resp_f2_1_is_jal,
+  output         io_resp_f2_1_predicted_pc_valid,
+  output [39:0]  io_resp_f2_1_predicted_pc_bits,
+  output         io_resp_f2_2_taken,
+  output         io_resp_f2_2_is_br,
+  output         io_resp_f2_2_is_jal,
+  output         io_resp_f2_2_predicted_pc_valid,
+  output [39:0]  io_resp_f2_2_predicted_pc_bits,
+  output         io_resp_f2_3_taken,
+  output         io_resp_f2_3_is_br,
+  output         io_resp_f2_3_is_jal,
+  output         io_resp_f2_3_predicted_pc_valid,
+  output [39:0]  io_resp_f2_3_predicted_pc_bits,
+  output         io_resp_f3_0_taken,
+  output         io_resp_f3_0_is_br,
+  output         io_resp_f3_0_is_jal,
+  output         io_resp_f3_0_predicted_pc_valid,
+  output [39:0]  io_resp_f3_0_predicted_pc_bits,
+  output         io_resp_f3_1_taken,
+  output         io_resp_f3_1_is_br,
+  output         io_resp_f3_1_is_jal,
+  output         io_resp_f3_1_predicted_pc_valid,
+  output [39:0]  io_resp_f3_1_predicted_pc_bits,
+  output         io_resp_f3_2_taken,
+  output         io_resp_f3_2_is_br,
+  output         io_resp_f3_2_is_jal,
+  output         io_resp_f3_2_predicted_pc_valid,
+  output [39:0]  io_resp_f3_2_predicted_pc_bits,
+  output         io_resp_f3_3_taken,
+  output         io_resp_f3_3_is_br,
+  output         io_resp_f3_3_is_jal,
+  output         io_resp_f3_3_predicted_pc_valid,
+  output [39:0]  io_resp_f3_3_predicted_pc_bits,
+  output [119:0] io_f3_meta,
+  input          io_f3_fire,
+  input          io_update_valid,
+  input          io_update_bits_is_mispredict_update,
+  input          io_update_bits_is_repair_update,
+  input  [3:0]   io_update_bits_btb_mispredicts,
+  input  [39:0]  io_update_bits_pc,
+  input  [3:0]   io_update_bits_br_mask,
+  input          io_update_bits_cfi_idx_valid,
+  input  [1:0]   io_update_bits_cfi_idx_bits,
+  input          io_update_bits_cfi_taken,
+  input          io_update_bits_cfi_mispredicted,
+  input          io_update_bits_cfi_is_br,
+  input          io_update_bits_cfi_is_jal,
+  input          io_update_bits_cfi_is_jalr,
+  input  [63:0]  io_update_bits_ghist,
+  input          io_update_bits_lhist,
+  input  [39:0]  io_update_bits_target,
+  input  [119:0] io_update_bits_meta
 );
 `ifdef RANDOMIZE_MEM_INIT
   reg [31:0] _RAND_0;
@@ -173,7 +173,7 @@ module BIMBranchPredictorBank(
   reg [31:0] _RAND_21;
   reg [31:0] _RAND_22;
   reg [31:0] _RAND_23;
-  reg [63:0] _RAND_24;
+  reg [127:0] _RAND_24;
   reg [63:0] _RAND_25;
   reg [31:0] _RAND_26;
   reg [31:0] _RAND_27;
@@ -198,42 +198,42 @@ module BIMBranchPredictorBank(
   reg [31:0] _RAND_46;
   reg [31:0] _RAND_47;
 `endif // RANDOMIZE_REG_INIT
-  reg [1:0] data_0 [0:1023]; // @[bim.scala 50:26]
+  reg [1:0] data_0 [0:2047]; // @[bim.scala 50:26]
   wire [1:0] data_0_MPORT_data; // @[bim.scala 50:26]
-  wire [9:0] data_0_MPORT_addr; // @[bim.scala 50:26]
+  wire [10:0] data_0_MPORT_addr; // @[bim.scala 50:26]
   wire [1:0] data_0_MPORT_1_data; // @[bim.scala 50:26]
-  wire [9:0] data_0_MPORT_1_addr; // @[bim.scala 50:26]
+  wire [10:0] data_0_MPORT_1_addr; // @[bim.scala 50:26]
   wire  data_0_MPORT_1_mask; // @[bim.scala 50:26]
   wire  data_0_MPORT_1_en; // @[bim.scala 50:26]
   reg  data_0_MPORT_en_pipe_0;
-  reg [9:0] data_0_MPORT_addr_pipe_0;
-  reg [1:0] data_1 [0:1023]; // @[bim.scala 50:26]
+  reg [10:0] data_0_MPORT_addr_pipe_0;
+  reg [1:0] data_1 [0:2047]; // @[bim.scala 50:26]
   wire [1:0] data_1_MPORT_data; // @[bim.scala 50:26]
-  wire [9:0] data_1_MPORT_addr; // @[bim.scala 50:26]
+  wire [10:0] data_1_MPORT_addr; // @[bim.scala 50:26]
   wire [1:0] data_1_MPORT_1_data; // @[bim.scala 50:26]
-  wire [9:0] data_1_MPORT_1_addr; // @[bim.scala 50:26]
+  wire [10:0] data_1_MPORT_1_addr; // @[bim.scala 50:26]
   wire  data_1_MPORT_1_mask; // @[bim.scala 50:26]
   wire  data_1_MPORT_1_en; // @[bim.scala 50:26]
   reg  data_1_MPORT_en_pipe_0;
-  reg [9:0] data_1_MPORT_addr_pipe_0;
-  reg [1:0] data_2 [0:1023]; // @[bim.scala 50:26]
+  reg [10:0] data_1_MPORT_addr_pipe_0;
+  reg [1:0] data_2 [0:2047]; // @[bim.scala 50:26]
   wire [1:0] data_2_MPORT_data; // @[bim.scala 50:26]
-  wire [9:0] data_2_MPORT_addr; // @[bim.scala 50:26]
+  wire [10:0] data_2_MPORT_addr; // @[bim.scala 50:26]
   wire [1:0] data_2_MPORT_1_data; // @[bim.scala 50:26]
-  wire [9:0] data_2_MPORT_1_addr; // @[bim.scala 50:26]
+  wire [10:0] data_2_MPORT_1_addr; // @[bim.scala 50:26]
   wire  data_2_MPORT_1_mask; // @[bim.scala 50:26]
   wire  data_2_MPORT_1_en; // @[bim.scala 50:26]
   reg  data_2_MPORT_en_pipe_0;
-  reg [9:0] data_2_MPORT_addr_pipe_0;
-  reg [1:0] data_3 [0:1023]; // @[bim.scala 50:26]
+  reg [10:0] data_2_MPORT_addr_pipe_0;
+  reg [1:0] data_3 [0:2047]; // @[bim.scala 50:26]
   wire [1:0] data_3_MPORT_data; // @[bim.scala 50:26]
-  wire [9:0] data_3_MPORT_addr; // @[bim.scala 50:26]
+  wire [10:0] data_3_MPORT_addr; // @[bim.scala 50:26]
   wire [1:0] data_3_MPORT_1_data; // @[bim.scala 50:26]
-  wire [9:0] data_3_MPORT_1_addr; // @[bim.scala 50:26]
+  wire [10:0] data_3_MPORT_1_addr; // @[bim.scala 50:26]
   wire  data_3_MPORT_1_mask; // @[bim.scala 50:26]
   wire  data_3_MPORT_1_en; // @[bim.scala 50:26]
   reg  data_3_MPORT_en_pipe_0;
-  reg [9:0] data_3_MPORT_addr_pipe_0;
+  reg [10:0] data_3_MPORT_addr_pipe_0;
   wire [36:0] s0_idx = io_f0_pc[39:3]; // @[frontend.scala 163:35]
   reg  s1_valid; // @[predictor.scala 168:25]
   reg  s2_valid; // @[predictor.scala 169:25]
@@ -247,7 +247,7 @@ module BIMBranchPredictorBank(
   reg  s1_update__bits_cfi_taken; // @[predictor.scala 184:30]
   reg  s1_update__bits_cfi_is_br; // @[predictor.scala 184:30]
   reg  s1_update__bits_cfi_is_jal; // @[predictor.scala 184:30]
-  reg [44:0] s1_update__bits_meta; // @[predictor.scala 184:30]
+  reg [119:0] s1_update__bits_meta; // @[predictor.scala 184:30]
   reg [36:0] s1_update_idx; // @[predictor.scala 185:30]
   reg [1:0] s2_req_rdata_1; // @[bim.scala 54:32]
   reg [1:0] s2_req_rdata_0; // @[bim.scala 54:32]
@@ -256,17 +256,17 @@ module BIMBranchPredictorBank(
   reg [1:0] s2_req_rdata_2; // @[bim.scala 54:32]
   wire [3:0] hi = {s2_req_rdata_3,s2_req_rdata_2}; // @[bim.scala 42:35]
   reg  doing_reset; // @[bim.scala 44:28]
-  reg [9:0] reset_idx; // @[bim.scala 45:26]
-  wire [9:0] _GEN_80 = {{9'd0}, doing_reset}; // @[bim.scala 46:26]
-  wire [9:0] _T_2 = reset_idx + _GEN_80; // @[bim.scala 46:26]
-  wire  _GEN_0 = reset_idx == 10'h3ff ? 1'h0 : doing_reset; // @[bim.scala 47:36 bim.scala 47:50 bim.scala 44:28]
+  reg [10:0] reset_idx; // @[bim.scala 45:26]
+  wire [10:0] _GEN_80 = {{10'd0}, doing_reset}; // @[bim.scala 46:26]
+  wire [10:0] _T_2 = reset_idx + _GEN_80; // @[bim.scala 46:26]
+  wire  _GEN_0 = reset_idx == 11'h7ff ? 1'h0 : doing_reset; // @[bim.scala 47:36 bim.scala 47:50 bim.scala 44:28]
   wire  _T_8 = ~doing_reset; // @[bim.scala 60:60]
   wire [1:0] s1_update_meta_bims_0 = s1_update__bits_meta[1:0]; // @[bim.scala 67:55]
   wire [1:0] s1_update_meta_bims_1 = s1_update__bits_meta[3:2]; // @[bim.scala 67:55]
   wire [1:0] s1_update_meta_bims_2 = s1_update__bits_meta[5:4]; // @[bim.scala 67:55]
   wire [1:0] s1_update_meta_bims_3 = s1_update__bits_meta[7:6]; // @[bim.scala 67:55]
-  reg [9:0] wrbypass_idxs_0; // @[bim.scala 70:26]
-  reg [9:0] wrbypass_idxs_1; // @[bim.scala 70:26]
+  reg [10:0] wrbypass_idxs_0; // @[bim.scala 70:26]
+  reg [10:0] wrbypass_idxs_1; // @[bim.scala 70:26]
   reg [1:0] wrbypass_0_0; // @[bim.scala 71:26]
   reg [1:0] wrbypass_0_1; // @[bim.scala 71:26]
   reg [1:0] wrbypass_0_2; // @[bim.scala 71:26]
@@ -276,9 +276,9 @@ module BIMBranchPredictorBank(
   reg [1:0] wrbypass_1_2; // @[bim.scala 71:26]
   reg [1:0] wrbypass_1_3; // @[bim.scala 71:26]
   reg  wrbypass_enq_idx; // @[bim.scala 72:33]
-  wire  _T_28 = wrbypass_idxs_0 == s1_update_idx[9:0]; // @[bim.scala 76:22]
+  wire  _T_28 = wrbypass_idxs_0 == s1_update_idx[10:0]; // @[bim.scala 76:22]
   wire  wrbypass_hits_0 = _T_8 & _T_28; // @[bim.scala 75:18]
-  wire  _T_32 = wrbypass_idxs_1 == s1_update_idx[9:0]; // @[bim.scala 76:22]
+  wire  _T_32 = wrbypass_idxs_1 == s1_update_idx[10:0]; // @[bim.scala 76:22]
   wire  wrbypass_hits_1 = _T_8 & _T_32; // @[bim.scala 75:18]
   wire  wrbypass_hit = wrbypass_hits_0 | wrbypass_hits_1; // @[bim.scala 78:44]
   wire  wrbypass_hit_idx = wrbypass_hits_0 ? 1'h0 : 1'h1; // @[Mux.scala 47:69]
@@ -341,10 +341,10 @@ module BIMBranchPredictorBank(
   wire  _T_139 = s1_update__bits_btb_mispredicts != 4'h0; // @[predictor.scala 94:50]
   wire  _T_141 = ~(s1_update__bits_is_mispredict_update | s1_update__bits_is_repair_update | _T_139); // @[predictor.scala 96:26]
   wire  _T_142 = s1_update__valid & _T_141; // @[bim.scala 109:41]
-  wire [36:0] _T_144 = doing_reset ? {{27'd0}, reset_idx} : s1_update_idx; // @[bim.scala 111:10]
+  wire [36:0] _T_144 = doing_reset ? {{26'd0}, reset_idx} : s1_update_idx; // @[bim.scala 111:10]
   wire [3:0] _T_147 = {s1_update_wmask_3,s1_update_wmask_2,s1_update_wmask_1,s1_update_wmask_0}; // @[bim.scala 113:63]
   wire [3:0] _T_148 = doing_reset ? 4'hf : _T_147; // @[bim.scala 113:10]
-  wire  _T_165 = wrbypass_enq_idx + 1'h1; // @[util.scala 260:14]
+  wire  _T_165 = wrbypass_enq_idx + 1'h1; // @[util.scala 203:14]
   reg  REG; // @[bim.scala 128:35]
   reg  REG_1; // @[bim.scala 128:35]
   reg  REG_2; // @[bim.scala 128:35]
@@ -353,25 +353,25 @@ module BIMBranchPredictorBank(
   assign data_0_MPORT_addr = data_0_MPORT_addr_pipe_0;
   assign data_0_MPORT_data = data_0[data_0_MPORT_addr]; // @[bim.scala 50:26]
   assign data_0_MPORT_1_data = doing_reset ? 2'h2 : s1_update_wdata_0;
-  assign data_0_MPORT_1_addr = _T_144[9:0];
+  assign data_0_MPORT_1_addr = _T_144[10:0];
   assign data_0_MPORT_1_mask = _T_148[0];
   assign data_0_MPORT_1_en = doing_reset | _T_142;
   assign data_1_MPORT_addr = data_1_MPORT_addr_pipe_0;
   assign data_1_MPORT_data = data_1[data_1_MPORT_addr]; // @[bim.scala 50:26]
   assign data_1_MPORT_1_data = doing_reset ? 2'h2 : s1_update_wdata_1;
-  assign data_1_MPORT_1_addr = _T_144[9:0];
+  assign data_1_MPORT_1_addr = _T_144[10:0];
   assign data_1_MPORT_1_mask = _T_148[1];
   assign data_1_MPORT_1_en = doing_reset | _T_142;
   assign data_2_MPORT_addr = data_2_MPORT_addr_pipe_0;
   assign data_2_MPORT_data = data_2[data_2_MPORT_addr]; // @[bim.scala 50:26]
   assign data_2_MPORT_1_data = doing_reset ? 2'h2 : s1_update_wdata_2;
-  assign data_2_MPORT_1_addr = _T_144[9:0];
+  assign data_2_MPORT_1_addr = _T_144[10:0];
   assign data_2_MPORT_1_mask = _T_148[2];
   assign data_2_MPORT_1_en = doing_reset | _T_142;
   assign data_3_MPORT_addr = data_3_MPORT_addr_pipe_0;
   assign data_3_MPORT_data = data_3[data_3_MPORT_addr]; // @[bim.scala 50:26]
   assign data_3_MPORT_1_data = doing_reset ? 2'h2 : s1_update_wdata_3;
-  assign data_3_MPORT_1_addr = _T_144[9:0];
+  assign data_3_MPORT_1_addr = _T_144[10:0];
   assign data_3_MPORT_1_mask = _T_148[3];
   assign data_3_MPORT_1_en = doing_reset | _T_142;
   assign io_resp_f1_0_taken = io_resp_in_0_f1_0_taken; // @[predictor.scala 158:11]
@@ -434,35 +434,35 @@ module BIMBranchPredictorBank(
   assign io_resp_f3_3_is_jal = io_resp_in_0_f3_3_is_jal; // @[predictor.scala 158:11]
   assign io_resp_f3_3_predicted_pc_valid = io_resp_in_0_f3_3_predicted_pc_valid; // @[predictor.scala 158:11]
   assign io_resp_f3_3_predicted_pc_bits = io_resp_in_0_f3_3_predicted_pc_bits; // @[predictor.scala 158:11]
-  assign io_f3_meta = {{37'd0}, REG_4}; // @[bim.scala 130:14]
+  assign io_f3_meta = {{112'd0}, REG_4}; // @[bim.scala 130:14]
   always @(posedge clock) begin
     if(data_0_MPORT_1_en & data_0_MPORT_1_mask) begin
       data_0[data_0_MPORT_1_addr] <= data_0_MPORT_1_data; // @[bim.scala 50:26]
     end
     data_0_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      data_0_MPORT_addr_pipe_0 <= s0_idx[9:0];
+      data_0_MPORT_addr_pipe_0 <= s0_idx[10:0];
     end
     if(data_1_MPORT_1_en & data_1_MPORT_1_mask) begin
       data_1[data_1_MPORT_1_addr] <= data_1_MPORT_1_data; // @[bim.scala 50:26]
     end
     data_1_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      data_1_MPORT_addr_pipe_0 <= s0_idx[9:0];
+      data_1_MPORT_addr_pipe_0 <= s0_idx[10:0];
     end
     if(data_2_MPORT_1_en & data_2_MPORT_1_mask) begin
       data_2[data_2_MPORT_1_addr] <= data_2_MPORT_1_data; // @[bim.scala 50:26]
     end
     data_2_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      data_2_MPORT_addr_pipe_0 <= s0_idx[9:0];
+      data_2_MPORT_addr_pipe_0 <= s0_idx[10:0];
     end
     if(data_3_MPORT_1_en & data_3_MPORT_1_mask) begin
       data_3[data_3_MPORT_1_addr] <= data_3_MPORT_1_data; // @[bim.scala 50:26]
     end
     data_3_MPORT_en_pipe_0 <= io_f0_valid;
     if (io_f0_valid) begin
-      data_3_MPORT_addr_pipe_0 <= s0_idx[9:0];
+      data_3_MPORT_addr_pipe_0 <= s0_idx[10:0];
     end
     s1_valid <= io_f0_valid; // @[predictor.scala 168:25]
     s2_valid <= s1_valid; // @[predictor.scala 169:25]
@@ -484,7 +484,7 @@ module BIMBranchPredictorBank(
     s2_req_rdata_2 <= data_2_MPORT_data; // @[bim.scala 54:32]
     doing_reset <= reset | _GEN_0; // @[bim.scala 44:28 bim.scala 44:28]
     if (reset) begin // @[bim.scala 45:26]
-      reset_idx <= 10'h0; // @[bim.scala 45:26]
+      reset_idx <= 11'h0; // @[bim.scala 45:26]
     end else begin
       reset_idx <= _T_2; // @[bim.scala 46:13]
     end
@@ -492,7 +492,7 @@ module BIMBranchPredictorBank(
       ) begin // @[bim.scala 116:93]
       if (!(wrbypass_hit)) begin // @[bim.scala 117:25]
         if (~wrbypass_enq_idx) begin // @[bim.scala 121:39]
-          wrbypass_idxs_0 <= s1_update_idx[9:0]; // @[bim.scala 121:39]
+          wrbypass_idxs_0 <= s1_update_idx[10:0]; // @[bim.scala 121:39]
         end
       end
     end
@@ -500,7 +500,7 @@ module BIMBranchPredictorBank(
       ) begin // @[bim.scala 116:93]
       if (!(wrbypass_hit)) begin // @[bim.scala 117:25]
         if (wrbypass_enq_idx) begin // @[bim.scala 121:39]
-          wrbypass_idxs_1 <= s1_update_idx[9:0]; // @[bim.scala 121:39]
+          wrbypass_idxs_1 <= s1_update_idx[10:0]; // @[bim.scala 121:39]
         end
       end
     end
@@ -635,35 +635,35 @@ initial begin
     `endif
 `ifdef RANDOMIZE_MEM_INIT
   _RAND_0 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 1024; initvar = initvar+1)
+  for (initvar = 0; initvar < 2048; initvar = initvar+1)
     data_0[initvar] = _RAND_0[1:0];
   _RAND_3 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 1024; initvar = initvar+1)
+  for (initvar = 0; initvar < 2048; initvar = initvar+1)
     data_1[initvar] = _RAND_3[1:0];
   _RAND_6 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 1024; initvar = initvar+1)
+  for (initvar = 0; initvar < 2048; initvar = initvar+1)
     data_2[initvar] = _RAND_6[1:0];
   _RAND_9 = {1{`RANDOM}};
-  for (initvar = 0; initvar < 1024; initvar = initvar+1)
+  for (initvar = 0; initvar < 2048; initvar = initvar+1)
     data_3[initvar] = _RAND_9[1:0];
 `endif // RANDOMIZE_MEM_INIT
 `ifdef RANDOMIZE_REG_INIT
   _RAND_1 = {1{`RANDOM}};
   data_0_MPORT_en_pipe_0 = _RAND_1[0:0];
   _RAND_2 = {1{`RANDOM}};
-  data_0_MPORT_addr_pipe_0 = _RAND_2[9:0];
+  data_0_MPORT_addr_pipe_0 = _RAND_2[10:0];
   _RAND_4 = {1{`RANDOM}};
   data_1_MPORT_en_pipe_0 = _RAND_4[0:0];
   _RAND_5 = {1{`RANDOM}};
-  data_1_MPORT_addr_pipe_0 = _RAND_5[9:0];
+  data_1_MPORT_addr_pipe_0 = _RAND_5[10:0];
   _RAND_7 = {1{`RANDOM}};
   data_2_MPORT_en_pipe_0 = _RAND_7[0:0];
   _RAND_8 = {1{`RANDOM}};
-  data_2_MPORT_addr_pipe_0 = _RAND_8[9:0];
+  data_2_MPORT_addr_pipe_0 = _RAND_8[10:0];
   _RAND_10 = {1{`RANDOM}};
   data_3_MPORT_en_pipe_0 = _RAND_10[0:0];
   _RAND_11 = {1{`RANDOM}};
-  data_3_MPORT_addr_pipe_0 = _RAND_11[9:0];
+  data_3_MPORT_addr_pipe_0 = _RAND_11[10:0];
   _RAND_12 = {1{`RANDOM}};
   s1_valid = _RAND_12[0:0];
   _RAND_13 = {1{`RANDOM}};
@@ -688,8 +688,8 @@ initial begin
   s1_update__bits_cfi_is_br = _RAND_22[0:0];
   _RAND_23 = {1{`RANDOM}};
   s1_update__bits_cfi_is_jal = _RAND_23[0:0];
-  _RAND_24 = {2{`RANDOM}};
-  s1_update__bits_meta = _RAND_24[44:0];
+  _RAND_24 = {4{`RANDOM}};
+  s1_update__bits_meta = _RAND_24[119:0];
   _RAND_25 = {2{`RANDOM}};
   s1_update_idx = _RAND_25[36:0];
   _RAND_26 = {1{`RANDOM}};
@@ -703,11 +703,11 @@ initial begin
   _RAND_30 = {1{`RANDOM}};
   doing_reset = _RAND_30[0:0];
   _RAND_31 = {1{`RANDOM}};
-  reset_idx = _RAND_31[9:0];
+  reset_idx = _RAND_31[10:0];
   _RAND_32 = {1{`RANDOM}};
-  wrbypass_idxs_0 = _RAND_32[9:0];
+  wrbypass_idxs_0 = _RAND_32[10:0];
   _RAND_33 = {1{`RANDOM}};
-  wrbypass_idxs_1 = _RAND_33[9:0];
+  wrbypass_idxs_1 = _RAND_33[10:0];
   _RAND_34 = {1{`RANDOM}};
   wrbypass_0_0 = _RAND_34[1:0];
   _RAND_35 = {1{`RANDOM}};

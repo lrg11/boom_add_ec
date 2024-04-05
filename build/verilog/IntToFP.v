@@ -21,16 +21,9 @@ module IntToFP(
   input  [2:0]  io_in_bits_rm,
   input  [1:0]  io_in_bits_typ,
   input  [63:0] io_in_bits_in1,
-  input  [1:0]  io_in_bits_fmt,
-  input         io_in_bits_is_unicore,
-  input  [6:0]  io_in_bits_exc_enabled,
-  input         io_in_bits_c,
   output        io_out_valid,
   output [64:0] io_out_bits_data,
-  output [4:0]  io_out_bits_exc,
-  output [6:0]  io_out_bits_u_exception,
-  output [9:0]  io_out_bits_u_flag,
-  output        io_out_bits_u_c
+  output [4:0]  io_out_bits_exc
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
@@ -40,34 +33,30 @@ module IntToFP(
   reg [31:0] _RAND_4;
   reg [63:0] _RAND_5;
   reg [31:0] _RAND_6;
-  reg [31:0] _RAND_7;
-  reg [95:0] _RAND_8;
-  reg [31:0] _RAND_9;
-  reg [31:0] _RAND_10;
-  reg [31:0] _RAND_11;
+  reg [95:0] _RAND_7;
+  reg [31:0] _RAND_8;
 `endif // RANDOMIZE_REG_INIT
-  wire  i2f_io_signedIn; // @[FPU.scala 652:23]
-  wire [63:0] i2f_io_in; // @[FPU.scala 652:23]
-  wire [2:0] i2f_io_roundingMode; // @[FPU.scala 652:23]
-  wire  i2f_io_detectTininess; // @[FPU.scala 652:23]
-  wire [32:0] i2f_io_out; // @[FPU.scala 652:23]
-  wire [4:0] i2f_io_exceptionFlags; // @[FPU.scala 652:23]
-  wire  i2f_1_io_signedIn; // @[FPU.scala 652:23]
-  wire [63:0] i2f_1_io_in; // @[FPU.scala 652:23]
-  wire [2:0] i2f_1_io_roundingMode; // @[FPU.scala 652:23]
-  wire  i2f_1_io_detectTininess; // @[FPU.scala 652:23]
-  wire [64:0] i2f_1_io_out; // @[FPU.scala 652:23]
-  wire [4:0] i2f_1_io_exceptionFlags; // @[FPU.scala 652:23]
+  wire  i2f_io_signedIn; // @[FPU.scala 551:23]
+  wire [63:0] i2f_io_in; // @[FPU.scala 551:23]
+  wire [2:0] i2f_io_roundingMode; // @[FPU.scala 551:23]
+  wire  i2f_io_detectTininess; // @[FPU.scala 551:23]
+  wire [32:0] i2f_io_out; // @[FPU.scala 551:23]
+  wire [4:0] i2f_io_exceptionFlags; // @[FPU.scala 551:23]
+  wire  i2f_1_io_signedIn; // @[FPU.scala 551:23]
+  wire [63:0] i2f_1_io_in; // @[FPU.scala 551:23]
+  wire [2:0] i2f_1_io_roundingMode; // @[FPU.scala 551:23]
+  wire  i2f_1_io_detectTininess; // @[FPU.scala 551:23]
+  wire [64:0] i2f_1_io_out; // @[FPU.scala 551:23]
+  wire [4:0] i2f_1_io_exceptionFlags; // @[FPU.scala 551:23]
   reg  inPipe_valid; // @[Valid.scala 117:22]
   reg [1:0] inPipe_bits_typeTagIn; // @[Reg.scala 15:16]
   reg  inPipe_bits_wflags; // @[Reg.scala 15:16]
   reg [2:0] inPipe_bits_rm; // @[Reg.scala 15:16]
   reg [1:0] inPipe_bits_typ; // @[Reg.scala 15:16]
   reg [63:0] inPipe_bits_in1; // @[Reg.scala 15:16]
-  reg [6:0] inPipe_bits_exc_enabled; // @[Reg.scala 15:16]
   wire  mux_data_truncIdx = inPipe_bits_typeTagIn[0]; // @[package.scala 31:49]
   wire [63:0] _mux_data_T_1 = mux_data_truncIdx ? 64'h0 : 64'hffffffff00000000; // @[package.scala 32:76]
-  wire [63:0] _mux_data_T_2 = _mux_data_T_1 | inPipe_bits_in1; // @[FPU.scala 438:23]
+  wire [63:0] _mux_data_T_2 = _mux_data_T_1 | inPipe_bits_in1; // @[FPU.scala 426:23]
   wire  mux_data_rawIn_sign = _mux_data_T_2[63]; // @[rawFloatFromFN.scala 46:22]
   wire [10:0] mux_data_rawIn_expIn = _mux_data_T_2[62:52]; // @[rawFloatFromFN.scala 47:23]
   wire [51:0] mux_data_rawIn_fractIn = _mux_data_T_2[51:0]; // @[rawFloatFromFN.scala 48:25]
@@ -124,18 +113,18 @@ module IntToFP(
   wire [5:0] _mux_data_rawIn_normDist_T_100 = mux_data_rawIn_fractIn[49] ? 6'h2 : _mux_data_rawIn_normDist_T_99; // @[Mux.scala 47:69]
   wire [5:0] _mux_data_rawIn_normDist_T_101 = mux_data_rawIn_fractIn[50] ? 6'h1 : _mux_data_rawIn_normDist_T_100; // @[Mux.scala 47:69]
   wire [5:0] mux_data_rawIn_normDist = mux_data_rawIn_fractIn[51] ? 6'h0 : _mux_data_rawIn_normDist_T_101; // @[Mux.scala 47:69]
-  wire [114:0] _GEN_37 = {{63'd0}, mux_data_rawIn_fractIn}; // @[rawFloatFromFN.scala 54:36]
-  wire [114:0] _mux_data_rawIn_subnormFract_T = _GEN_37 << mux_data_rawIn_normDist; // @[rawFloatFromFN.scala 54:36]
+  wire [114:0] _GEN_24 = {{63'd0}, mux_data_rawIn_fractIn}; // @[rawFloatFromFN.scala 54:36]
+  wire [114:0] _mux_data_rawIn_subnormFract_T = _GEN_24 << mux_data_rawIn_normDist; // @[rawFloatFromFN.scala 54:36]
   wire [51:0] mux_data_rawIn_subnormFract = {_mux_data_rawIn_subnormFract_T[50:0], 1'h0}; // @[rawFloatFromFN.scala 54:64]
-  wire [11:0] _GEN_38 = {{6'd0}, mux_data_rawIn_normDist}; // @[rawFloatFromFN.scala 57:26]
-  wire [11:0] _mux_data_rawIn_adjustedExp_T = _GEN_38 ^ 12'hfff; // @[rawFloatFromFN.scala 57:26]
+  wire [11:0] _GEN_25 = {{6'd0}, mux_data_rawIn_normDist}; // @[rawFloatFromFN.scala 57:26]
+  wire [11:0] _mux_data_rawIn_adjustedExp_T = _GEN_25 ^ 12'hfff; // @[rawFloatFromFN.scala 57:26]
   wire [11:0] _mux_data_rawIn_adjustedExp_T_1 = mux_data_rawIn_isZeroExpIn ? _mux_data_rawIn_adjustedExp_T : {{1'd0},
     mux_data_rawIn_expIn}; // @[rawFloatFromFN.scala 56:16]
   wire [1:0] _mux_data_rawIn_adjustedExp_T_2 = mux_data_rawIn_isZeroExpIn ? 2'h2 : 2'h1; // @[rawFloatFromFN.scala 60:27]
-  wire [10:0] _GEN_39 = {{9'd0}, _mux_data_rawIn_adjustedExp_T_2}; // @[rawFloatFromFN.scala 60:22]
-  wire [10:0] _mux_data_rawIn_adjustedExp_T_3 = 11'h400 | _GEN_39; // @[rawFloatFromFN.scala 60:22]
-  wire [11:0] _GEN_40 = {{1'd0}, _mux_data_rawIn_adjustedExp_T_3}; // @[rawFloatFromFN.scala 59:15]
-  wire [11:0] mux_data_rawIn_adjustedExp = _mux_data_rawIn_adjustedExp_T_1 + _GEN_40; // @[rawFloatFromFN.scala 59:15]
+  wire [10:0] _GEN_26 = {{9'd0}, _mux_data_rawIn_adjustedExp_T_2}; // @[rawFloatFromFN.scala 60:22]
+  wire [10:0] _mux_data_rawIn_adjustedExp_T_3 = 11'h400 | _GEN_26; // @[rawFloatFromFN.scala 60:22]
+  wire [11:0] _GEN_27 = {{1'd0}, _mux_data_rawIn_adjustedExp_T_3}; // @[rawFloatFromFN.scala 59:15]
+  wire [11:0] mux_data_rawIn_adjustedExp = _mux_data_rawIn_adjustedExp_T_1 + _GEN_27; // @[rawFloatFromFN.scala 59:15]
   wire  mux_data_rawIn_isZero = mux_data_rawIn_isZeroExpIn & mux_data_rawIn_isZeroFractIn; // @[rawFloatFromFN.scala 62:34]
   wire  mux_data_rawIn_isSpecial = mux_data_rawIn_adjustedExp[11:10] == 2'h3; // @[rawFloatFromFN.scala 63:62]
   wire  mux_data_rawIn__isNaN = mux_data_rawIn_isSpecial & ~mux_data_rawIn_isZeroFractIn; // @[rawFloatFromFN.scala 66:33]
@@ -145,8 +134,8 @@ module IntToFP(
     mux_data_rawIn_fractIn; // @[rawFloatFromFN.scala 72:42]
   wire [53:0] mux_data_rawIn__sig = {1'h0,mux_data_rawIn_out_sig_hi_lo,mux_data_rawIn_out_sig_lo}; // @[Cat.scala 30:58]
   wire [2:0] _mux_data_T_4 = mux_data_rawIn_isZero ? 3'h0 : mux_data_rawIn__sExp[11:9]; // @[recFNFromFN.scala 48:16]
-  wire [2:0] _GEN_41 = {{2'd0}, mux_data_rawIn__isNaN}; // @[recFNFromFN.scala 48:79]
-  wire [2:0] mux_data_hi_lo = _mux_data_T_4 | _GEN_41; // @[recFNFromFN.scala 48:79]
+  wire [2:0] _GEN_28 = {{2'd0}, mux_data_rawIn__isNaN}; // @[recFNFromFN.scala 48:79]
+  wire [2:0] mux_data_hi_lo = _mux_data_T_4 | _GEN_28; // @[recFNFromFN.scala 48:79]
   wire [8:0] mux_data_lo_hi = mux_data_rawIn__sExp[8:0]; // @[recFNFromFN.scala 50:23]
   wire [51:0] mux_data_lo_lo = mux_data_rawIn__sig[51:0]; // @[recFNFromFN.scala 51:22]
   wire [64:0] _mux_data_T_6 = {mux_data_rawIn_sign,mux_data_hi_lo,mux_data_lo_hi,mux_data_lo_lo}; // @[Cat.scala 30:58]
@@ -177,18 +166,18 @@ module IntToFP(
   wire [4:0] _mux_data_rawIn_normDist_T_144 = mux_data_rawIn_fractIn_1[20] ? 5'h2 : _mux_data_rawIn_normDist_T_143; // @[Mux.scala 47:69]
   wire [4:0] _mux_data_rawIn_normDist_T_145 = mux_data_rawIn_fractIn_1[21] ? 5'h1 : _mux_data_rawIn_normDist_T_144; // @[Mux.scala 47:69]
   wire [4:0] mux_data_rawIn_normDist_1 = mux_data_rawIn_fractIn_1[22] ? 5'h0 : _mux_data_rawIn_normDist_T_145; // @[Mux.scala 47:69]
-  wire [53:0] _GEN_42 = {{31'd0}, mux_data_rawIn_fractIn_1}; // @[rawFloatFromFN.scala 54:36]
-  wire [53:0] _mux_data_rawIn_subnormFract_T_2 = _GEN_42 << mux_data_rawIn_normDist_1; // @[rawFloatFromFN.scala 54:36]
+  wire [53:0] _GEN_29 = {{31'd0}, mux_data_rawIn_fractIn_1}; // @[rawFloatFromFN.scala 54:36]
+  wire [53:0] _mux_data_rawIn_subnormFract_T_2 = _GEN_29 << mux_data_rawIn_normDist_1; // @[rawFloatFromFN.scala 54:36]
   wire [22:0] mux_data_rawIn_subnormFract_1 = {_mux_data_rawIn_subnormFract_T_2[21:0], 1'h0}; // @[rawFloatFromFN.scala 54:64]
-  wire [8:0] _GEN_43 = {{4'd0}, mux_data_rawIn_normDist_1}; // @[rawFloatFromFN.scala 57:26]
-  wire [8:0] _mux_data_rawIn_adjustedExp_T_5 = _GEN_43 ^ 9'h1ff; // @[rawFloatFromFN.scala 57:26]
+  wire [8:0] _GEN_30 = {{4'd0}, mux_data_rawIn_normDist_1}; // @[rawFloatFromFN.scala 57:26]
+  wire [8:0] _mux_data_rawIn_adjustedExp_T_5 = _GEN_30 ^ 9'h1ff; // @[rawFloatFromFN.scala 57:26]
   wire [8:0] _mux_data_rawIn_adjustedExp_T_6 = mux_data_rawIn_isZeroExpIn_1 ? _mux_data_rawIn_adjustedExp_T_5 : {{1
     'd0}, mux_data_rawIn_expIn_1}; // @[rawFloatFromFN.scala 56:16]
   wire [1:0] _mux_data_rawIn_adjustedExp_T_7 = mux_data_rawIn_isZeroExpIn_1 ? 2'h2 : 2'h1; // @[rawFloatFromFN.scala 60:27]
-  wire [7:0] _GEN_44 = {{6'd0}, _mux_data_rawIn_adjustedExp_T_7}; // @[rawFloatFromFN.scala 60:22]
-  wire [7:0] _mux_data_rawIn_adjustedExp_T_8 = 8'h80 | _GEN_44; // @[rawFloatFromFN.scala 60:22]
-  wire [8:0] _GEN_45 = {{1'd0}, _mux_data_rawIn_adjustedExp_T_8}; // @[rawFloatFromFN.scala 59:15]
-  wire [8:0] mux_data_rawIn_adjustedExp_1 = _mux_data_rawIn_adjustedExp_T_6 + _GEN_45; // @[rawFloatFromFN.scala 59:15]
+  wire [7:0] _GEN_31 = {{6'd0}, _mux_data_rawIn_adjustedExp_T_7}; // @[rawFloatFromFN.scala 60:22]
+  wire [7:0] _mux_data_rawIn_adjustedExp_T_8 = 8'h80 | _GEN_31; // @[rawFloatFromFN.scala 60:22]
+  wire [8:0] _GEN_32 = {{1'd0}, _mux_data_rawIn_adjustedExp_T_8}; // @[rawFloatFromFN.scala 59:15]
+  wire [8:0] mux_data_rawIn_adjustedExp_1 = _mux_data_rawIn_adjustedExp_T_6 + _GEN_32; // @[rawFloatFromFN.scala 59:15]
   wire  mux_data_rawIn_isZero_1 = mux_data_rawIn_isZeroExpIn_1 & mux_data_rawIn_isZeroFractIn_1; // @[rawFloatFromFN.scala 62:34]
   wire  mux_data_rawIn_isSpecial_1 = mux_data_rawIn_adjustedExp_1[8:7] == 2'h3; // @[rawFloatFromFN.scala 63:62]
   wire  mux_data_rawIn_1_isNaN = mux_data_rawIn_isSpecial_1 & ~mux_data_rawIn_isZeroFractIn_1; // @[rawFloatFromFN.scala 66:33]
@@ -198,50 +187,35 @@ module IntToFP(
     mux_data_rawIn_fractIn_1; // @[rawFloatFromFN.scala 72:42]
   wire [24:0] mux_data_rawIn_1_sig = {1'h0,mux_data_rawIn_out_sig_hi_lo_1,mux_data_rawIn_out_sig_lo_1}; // @[Cat.scala 30:58]
   wire [2:0] _mux_data_T_8 = mux_data_rawIn_isZero_1 ? 3'h0 : mux_data_rawIn_1_sExp[8:6]; // @[recFNFromFN.scala 48:16]
-  wire [2:0] _GEN_46 = {{2'd0}, mux_data_rawIn_1_isNaN}; // @[recFNFromFN.scala 48:79]
-  wire [2:0] mux_data_hi_lo_1 = _mux_data_T_8 | _GEN_46; // @[recFNFromFN.scala 48:79]
+  wire [2:0] _GEN_33 = {{2'd0}, mux_data_rawIn_1_isNaN}; // @[recFNFromFN.scala 48:79]
+  wire [2:0] mux_data_hi_lo_1 = _mux_data_T_8 | _GEN_33; // @[recFNFromFN.scala 48:79]
   wire [5:0] mux_data_lo_hi_1 = mux_data_rawIn_1_sExp[5:0]; // @[recFNFromFN.scala 50:23]
   wire [22:0] mux_data_lo_lo_1 = mux_data_rawIn_1_sig[22:0]; // @[recFNFromFN.scala 51:22]
   wire [32:0] _mux_data_T_10 = {mux_data_rawIn_sign_1,mux_data_hi_lo_1,mux_data_lo_hi_1,mux_data_lo_lo_1}; // @[Cat.scala 30:58]
-  wire [3:0] mux_data_swizzledNaN_hi_hi_hi = _mux_data_T_6[64:61]; // @[FPU.scala 344:8]
-  wire  mux_data_swizzledNaN_hi_hi_lo = &_mux_data_T_6[51:32]; // @[FPU.scala 345:42]
-  wire [6:0] mux_data_swizzledNaN_hi_lo_hi = _mux_data_T_6[59:53]; // @[FPU.scala 346:8]
-  wire  mux_data_swizzledNaN_hi_lo_lo = _mux_data_T_10[31]; // @[FPU.scala 347:8]
-  wire  mux_data_swizzledNaN_lo_hi_lo = _mux_data_T_10[32]; // @[FPU.scala 349:8]
-  wire [30:0] mux_data_swizzledNaN_lo_lo = _mux_data_T_10[30:0]; // @[FPU.scala 350:8]
+  wire [3:0] mux_data_swizzledNaN_hi_hi_hi = _mux_data_T_6[64:61]; // @[FPU.scala 332:8]
+  wire  mux_data_swizzledNaN_hi_hi_lo = &_mux_data_T_6[51:32]; // @[FPU.scala 333:42]
+  wire [6:0] mux_data_swizzledNaN_hi_lo_hi = _mux_data_T_6[59:53]; // @[FPU.scala 334:8]
+  wire  mux_data_swizzledNaN_hi_lo_lo = _mux_data_T_10[31]; // @[FPU.scala 335:8]
+  wire  mux_data_swizzledNaN_lo_hi_lo = _mux_data_T_10[32]; // @[FPU.scala 337:8]
+  wire [30:0] mux_data_swizzledNaN_lo_lo = _mux_data_T_10[30:0]; // @[FPU.scala 338:8]
   wire [64:0] mux_data_swizzledNaN = {mux_data_swizzledNaN_hi_hi_hi,mux_data_swizzledNaN_hi_hi_lo,
     mux_data_swizzledNaN_hi_lo_hi,mux_data_swizzledNaN_hi_lo_lo,_mux_data_T_6[51:32],mux_data_swizzledNaN_lo_hi_lo,
     mux_data_swizzledNaN_lo_lo}; // @[Cat.scala 30:58]
-  wire  _mux_data_T_12 = &_mux_data_T_6[63:61]; // @[FPU.scala 255:56]
-  wire [31:0] intValue_smallInt = inPipe_bits_in1[31:0]; // @[FPU.scala 640:33]
-  wire [32:0] _intValue_res_T_1 = {1'b0,$signed(intValue_smallInt)}; // @[FPU.scala 642:45]
-  wire [31:0] _intValue_res_T_2 = inPipe_bits_in1[31:0]; // @[FPU.scala 642:60]
+  wire  _mux_data_T_12 = &_mux_data_T_6[63:61]; // @[FPU.scala 243:56]
+  wire [31:0] intValue_smallInt = inPipe_bits_in1[31:0]; // @[FPU.scala 539:33]
+  wire [32:0] _intValue_res_T_1 = {1'b0,$signed(intValue_smallInt)}; // @[FPU.scala 541:45]
+  wire [31:0] _intValue_res_T_2 = inPipe_bits_in1[31:0]; // @[FPU.scala 541:60]
   wire [32:0] _intValue_res_T_3 = inPipe_bits_typ[0] ? $signed(_intValue_res_T_1) : $signed({{1{_intValue_res_T_2[31]}},
-    _intValue_res_T_2}); // @[FPU.scala 642:19]
-  wire [63:0] intValue = ~inPipe_bits_typ[1] ? $signed({{31{_intValue_res_T_3[32]}},_intValue_res_T_3}) : $signed(
-    inPipe_bits_in1); // @[FPU.scala 645:9]
-  wire [64:0] maskedNaN = i2f_1_io_out & 65'h1efefffffffffffff; // @[FPU.scala 420:25]
-  wire  _T_1 = &i2f_1_io_out[63:61]; // @[FPU.scala 255:56]
-  wire [64:0] _T_2 = _T_1 ? maskedNaN : i2f_1_io_out; // @[FPU.scala 421:10]
-  wire [31:0] dataPadded_hi = _T_2[64:33]; // @[FPU.scala 661:55]
+    _intValue_res_T_2}); // @[FPU.scala 541:19]
+  wire [64:0] maskedNaN = i2f_1_io_out & 65'h1efefffffffffffff; // @[FPU.scala 408:25]
+  wire  _T_1 = &i2f_1_io_out[63:61]; // @[FPU.scala 243:56]
+  wire [64:0] _T_2 = _T_1 ? maskedNaN : i2f_1_io_out; // @[FPU.scala 409:10]
+  wire [31:0] dataPadded_hi = _T_2[64:33]; // @[FPU.scala 560:55]
   wire [64:0] dataPadded_0 = {dataPadded_hi,i2f_io_out}; // @[Cat.scala 30:58]
-  wire [4:0] _mux_exc_T_1 = mux_data_truncIdx ? i2f_1_io_exceptionFlags : i2f_io_exceptionFlags; // @[package.scala 32:76]
-  wire  mux_u_flag_lo_lo_lo = intValue == 64'h0; // @[FPU.scala 676:30]
-  wire [6:0] _mux_u_exception_T_1 = {_mux_exc_T_1,1'h0,1'h0}; // @[Cat.scala 30:58]
-  wire [6:0] mux_u_exception = _mux_u_exception_T_1 & inPipe_bits_exc_enabled; // @[FPU.scala 679:65]
-  wire  mux_u_flag_hi_hi_hi_hi = _mux_exc_T_1[3]; // @[FPU.scala 680:33]
-  wire  mux_u_flag_hi_lo_lo = _mux_exc_T_1[0]; // @[FPU.scala 680:81]
-  wire  mux_u_flag_lo_hi_hi_hi = _mux_exc_T_1[2]; // @[FPU.scala 680:94]
-  wire  mux_u_flag_lo_hi_hi_lo = _mux_exc_T_1[1]; // @[FPU.scala 680:107]
-  wire  mux_u_flag_lo_hi_lo = _mux_exc_T_1[4]; // @[FPU.scala 680:120]
-  wire [9:0] mux_u_flag = {mux_u_flag_hi_hi_hi_hi,1'h0,1'h0,1'h0,mux_u_flag_hi_lo_lo,mux_u_flag_lo_hi_hi_hi,
-    mux_u_flag_lo_hi_hi_lo,mux_u_flag_lo_hi_lo,1'h0,mux_u_flag_lo_lo_lo}; // @[Cat.scala 30:58]
   reg  io_out_v; // @[Valid.scala 117:22]
   reg [64:0] io_out_b_data; // @[Reg.scala 15:16]
   reg [4:0] io_out_b_exc; // @[Reg.scala 15:16]
-  reg [6:0] io_out_b_u_exception; // @[Reg.scala 15:16]
-  reg [9:0] io_out_b_u_flag; // @[Reg.scala 15:16]
-  INToRecFN i2f ( // @[FPU.scala 652:23]
+  INToRecFN i2f ( // @[FPU.scala 551:23]
     .io_signedIn(i2f_io_signedIn),
     .io_in(i2f_io_in),
     .io_roundingMode(i2f_io_roundingMode),
@@ -249,7 +223,7 @@ module IntToFP(
     .io_out(i2f_io_out),
     .io_exceptionFlags(i2f_io_exceptionFlags)
   );
-  INToRecFN_1 i2f_1 ( // @[FPU.scala 652:23]
+  INToRecFN_1 i2f_1 ( // @[FPU.scala 551:23]
     .io_signedIn(i2f_1_io_signedIn),
     .io_in(i2f_1_io_in),
     .io_roundingMode(i2f_1_io_roundingMode),
@@ -260,19 +234,16 @@ module IntToFP(
   assign io_out_valid = io_out_v; // @[Valid.scala 112:21 Valid.scala 113:17]
   assign io_out_bits_data = io_out_b_data; // @[Valid.scala 112:21 Valid.scala 114:16]
   assign io_out_bits_exc = io_out_b_exc; // @[Valid.scala 112:21 Valid.scala 114:16]
-  assign io_out_bits_u_exception = io_out_b_u_exception; // @[Valid.scala 112:21 Valid.scala 114:16]
-  assign io_out_bits_u_flag = io_out_b_u_flag; // @[Valid.scala 112:21 Valid.scala 114:16]
-  assign io_out_bits_u_c = 1'h0; // @[Valid.scala 112:21 Valid.scala 114:16]
-  assign i2f_io_signedIn = ~inPipe_bits_typ[0]; // @[FPU.scala 653:26]
+  assign i2f_io_signedIn = ~inPipe_bits_typ[0]; // @[FPU.scala 552:26]
   assign i2f_io_in = ~inPipe_bits_typ[1] ? $signed({{31{_intValue_res_T_3[32]}},_intValue_res_T_3}) : $signed(
-    inPipe_bits_in1); // @[FPU.scala 645:9]
+    inPipe_bits_in1); // @[FPU.scala 544:9]
   assign i2f_io_roundingMode = inPipe_bits_rm; // @[Valid.scala 112:21 Valid.scala 114:16]
-  assign i2f_io_detectTininess = 1'h1; // @[FPU.scala 656:29]
-  assign i2f_1_io_signedIn = ~inPipe_bits_typ[0]; // @[FPU.scala 653:26]
+  assign i2f_io_detectTininess = 1'h1; // @[FPU.scala 555:29]
+  assign i2f_1_io_signedIn = ~inPipe_bits_typ[0]; // @[FPU.scala 552:26]
   assign i2f_1_io_in = ~inPipe_bits_typ[1] ? $signed({{31{_intValue_res_T_3[32]}},_intValue_res_T_3}) : $signed(
-    inPipe_bits_in1); // @[FPU.scala 645:9]
+    inPipe_bits_in1); // @[FPU.scala 544:9]
   assign i2f_1_io_roundingMode = inPipe_bits_rm; // @[Valid.scala 112:21 Valid.scala 114:16]
-  assign i2f_1_io_detectTininess = 1'h1; // @[FPU.scala 656:29]
+  assign i2f_1_io_detectTininess = 1'h1; // @[FPU.scala 555:29]
   always @(posedge clock) begin
     if (reset) begin // @[Valid.scala 117:22]
       inPipe_valid <= 1'h0; // @[Valid.scala 117:22]
@@ -294,18 +265,15 @@ module IntToFP(
     if (io_in_valid) begin // @[Reg.scala 16:19]
       inPipe_bits_in1 <= io_in_bits_in1; // @[Reg.scala 16:23]
     end
-    if (io_in_valid) begin // @[Reg.scala 16:19]
-      inPipe_bits_exc_enabled <= io_in_bits_exc_enabled; // @[Reg.scala 16:23]
-    end
     if (reset) begin // @[Valid.scala 117:22]
       io_out_v <= 1'h0; // @[Valid.scala 117:22]
     end else begin
       io_out_v <= inPipe_valid; // @[Valid.scala 117:22]
     end
     if (inPipe_valid) begin // @[Reg.scala 16:19]
-      if (inPipe_bits_wflags) begin // @[FPU.scala 648:25]
+      if (inPipe_bits_wflags) begin // @[FPU.scala 547:25]
         if (mux_data_truncIdx) begin // @[package.scala 32:76]
-          if (_T_1) begin // @[FPU.scala 421:10]
+          if (_T_1) begin // @[FPU.scala 409:10]
             io_out_b_data <= maskedNaN;
           end else begin
             io_out_b_data <= i2f_1_io_out;
@@ -313,28 +281,22 @@ module IntToFP(
         end else begin
           io_out_b_data <= dataPadded_0;
         end
-      end else if (_mux_data_T_12) begin // @[FPU.scala 351:8]
+      end else if (_mux_data_T_12) begin // @[FPU.scala 339:8]
         io_out_b_data <= mux_data_swizzledNaN;
       end else begin
         io_out_b_data <= _mux_data_T_6;
       end
     end
     if (inPipe_valid) begin // @[Reg.scala 16:19]
-      if (inPipe_bits_wflags) begin // @[FPU.scala 648:25]
+      if (inPipe_bits_wflags) begin // @[FPU.scala 547:25]
         if (mux_data_truncIdx) begin // @[package.scala 32:76]
           io_out_b_exc <= i2f_1_io_exceptionFlags;
         end else begin
           io_out_b_exc <= i2f_io_exceptionFlags;
         end
       end else begin
-        io_out_b_exc <= 5'h0; // @[FPU.scala 634:11]
+        io_out_b_exc <= 5'h0; // @[FPU.scala 533:11]
       end
-    end
-    if (inPipe_valid) begin // @[Reg.scala 16:19]
-      io_out_b_u_exception <= mux_u_exception; // @[Reg.scala 16:23]
-    end
-    if (inPipe_valid) begin // @[Reg.scala 16:19]
-      io_out_b_u_flag <= mux_u_flag; // @[Reg.scala 16:23]
     end
   end
 // Register and memory initialization
@@ -386,17 +348,11 @@ initial begin
   _RAND_5 = {2{`RANDOM}};
   inPipe_bits_in1 = _RAND_5[63:0];
   _RAND_6 = {1{`RANDOM}};
-  inPipe_bits_exc_enabled = _RAND_6[6:0];
-  _RAND_7 = {1{`RANDOM}};
-  io_out_v = _RAND_7[0:0];
-  _RAND_8 = {3{`RANDOM}};
-  io_out_b_data = _RAND_8[64:0];
-  _RAND_9 = {1{`RANDOM}};
-  io_out_b_exc = _RAND_9[4:0];
-  _RAND_10 = {1{`RANDOM}};
-  io_out_b_u_exception = _RAND_10[6:0];
-  _RAND_11 = {1{`RANDOM}};
-  io_out_b_u_flag = _RAND_11[9:0];
+  io_out_v = _RAND_6[0:0];
+  _RAND_7 = {3{`RANDOM}};
+  io_out_b_data = _RAND_7[64:0];
+  _RAND_8 = {1{`RANDOM}};
+  io_out_b_exc = _RAND_8[4:0];
 `endif // RANDOMIZE_REG_INIT
   `endif // RANDOMIZE
 end // initial

@@ -3,7 +3,7 @@ module TageTable(
   input         reset,
   input         io_f1_req_valid,
   input  [39:0] io_f1_req_pc,
-  input  [15:0] io_f1_req_ghist,
+  input  [63:0] io_f1_req_ghist,
   output        io_f3_resp_0_valid,
   output [2:0]  io_f3_resp_0_bits_ctr,
   output [1:0]  io_f3_resp_0_bits_u,
@@ -33,7 +33,7 @@ module TageTable(
   input  [2:0]  io_update_old_ctr_2,
   input  [2:0]  io_update_old_ctr_3,
   input  [39:0] io_update_pc,
-  input  [15:0] io_update_hist,
+  input  [63:0] io_update_hist,
   input         io_update_u_mask_0,
   input         io_update_u_mask_1,
   input         io_update_u_mask_2,
@@ -225,13 +225,10 @@ module TageTable(
   wire [6:0] _GEN_86 = {{6'd0}, doing_reset}; // @[tage.scala 74:26]
   wire [6:0] _T_1 = reset_idx + _GEN_86; // @[tage.scala 74:26]
   wire  _GEN_0 = reset_idx == 7'h7f ? 1'h0 : doing_reset; // @[tage.scala 75:36 tage.scala 75:50 tage.scala 72:28]
-  wire [6:0] _T_7 = io_f1_req_ghist[6:0] ^ io_f1_req_ghist[13:7]; // @[tage.scala 55:25]
-  wire [6:0] _GEN_87 = {{5'd0}, io_f1_req_ghist[15:14]}; // @[tage.scala 55:25]
-  wire [6:0] _T_8 = _T_7 ^ _GEN_87; // @[tage.scala 55:25]
-  wire [36:0] _GEN_88 = {{30'd0}, _T_8}; // @[tage.scala 60:29]
-  wire [36:0] _T_9 = io_f1_req_pc[39:3] ^ _GEN_88; // @[tage.scala 60:29]
-  wire [29:0] _GEN_90 = {{23'd0}, _T_8}; // @[tage.scala 62:50]
-  wire [29:0] _T_16 = io_f1_req_pc[39:10] ^ _GEN_90; // @[tage.scala 62:50]
+  wire [36:0] _GEN_87 = {{35'd0}, io_f1_req_ghist[1:0]}; // @[tage.scala 60:29]
+  wire [36:0] _T_5 = io_f1_req_pc[39:3] ^ _GEN_87; // @[tage.scala 60:29]
+  wire [29:0] _GEN_88 = {{28'd0}, io_f1_req_ghist[1:0]}; // @[tage.scala 62:50]
+  wire [29:0] _T_8 = io_f1_req_pc[39:10] ^ _GEN_88; // @[tage.scala 62:50]
   reg [6:0] s2_tag; // @[tage.scala 95:29]
   wire [10:0] _WIRE_2 = table_0_MPORT_data;
   wire [6:0] s2_req_rtage_0_tag = _WIRE_2[9:3]; // @[tage.scala 97:87]
@@ -245,7 +242,7 @@ module TageTable(
   wire [10:0] _WIRE_8 = table_3_MPORT_data;
   wire [6:0] s2_req_rtage_3_tag = _WIRE_8[9:3]; // @[tage.scala 97:87]
   wire  s2_req_rtage_3_valid = _WIRE_8[10]; // @[tage.scala 97:87]
-  wire  _T_37 = ~doing_reset; // @[tage.scala 100:83]
+  wire  _T_29 = ~doing_reset; // @[tage.scala 100:83]
   reg  REG; // @[tage.scala 104:38]
   reg [1:0] REG_1; // @[tage.scala 105:38]
   reg [2:0] REG_2; // @[tage.scala 106:38]
@@ -259,194 +256,191 @@ module TageTable(
   reg [1:0] REG_10; // @[tage.scala 105:38]
   reg [2:0] REG_11; // @[tage.scala 106:38]
   reg [18:0] clear_u_ctr; // @[tage.scala 109:28]
-  wire [18:0] _T_56 = clear_u_ctr + 19'h1; // @[tage.scala 110:85]
+  wire [18:0] _T_48 = clear_u_ctr + 19'h1; // @[tage.scala 110:85]
   wire  doing_clear_u = clear_u_ctr[10:0] == 11'h0; // @[tage.scala 112:61]
   wire  doing_clear_u_hi = doing_clear_u & clear_u_ctr[18]; // @[tage.scala 113:40]
   wire  doing_clear_u_lo = doing_clear_u & ~clear_u_ctr[18]; // @[tage.scala 114:40]
   wire [7:0] clear_u_idx = clear_u_ctr[18:11]; // @[tage.scala 115:33]
-  wire [6:0] _T_66 = io_update_hist[6:0] ^ io_update_hist[13:7]; // @[tage.scala 55:25]
-  wire [6:0] _GEN_91 = {{5'd0}, io_update_hist[15:14]}; // @[tage.scala 55:25]
-  wire [6:0] _T_67 = _T_66 ^ _GEN_91; // @[tage.scala 55:25]
-  wire [36:0] _GEN_92 = {{30'd0}, _T_67}; // @[tage.scala 60:29]
-  wire [36:0] _T_68 = io_update_pc[39:3] ^ _GEN_92; // @[tage.scala 60:29]
-  wire [6:0] update_idx = _T_68[6:0]; // @[tage.scala 60:43]
-  wire [29:0] _GEN_94 = {{23'd0}, _T_67}; // @[tage.scala 62:50]
-  wire [29:0] _T_75 = io_update_pc[39:10] ^ _GEN_94; // @[tage.scala 62:50]
-  wire [6:0] update_tag = _T_75[6:0]; // @[tage.scala 62:64]
-  wire [2:0] _T_125 = io_update_taken_0 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
+  wire [36:0] _GEN_89 = {{35'd0}, io_update_hist[1:0]}; // @[tage.scala 60:29]
+  wire [36:0] _T_56 = io_update_pc[39:3] ^ _GEN_89; // @[tage.scala 60:29]
+  wire [6:0] update_idx = _T_56[6:0]; // @[tage.scala 60:43]
+  wire [29:0] _GEN_90 = {{28'd0}, io_update_hist[1:0]}; // @[tage.scala 62:50]
+  wire [29:0] _T_59 = io_update_pc[39:10] ^ _GEN_90; // @[tage.scala 62:50]
+  wire [6:0] update_tag = _T_59[6:0]; // @[tage.scala 62:64]
+  wire [2:0] _T_109 = io_update_taken_0 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
   reg [6:0] wrbypass_tags_0; // @[tage.scala 141:29]
-  wire  _T_116 = wrbypass_tags_0 == update_tag; // @[tage.scala 148:22]
-  wire  _T_117 = _T_37 & _T_116; // @[tage.scala 147:18]
+  wire  _T_100 = wrbypass_tags_0 == update_tag; // @[tage.scala 148:22]
+  wire  _T_101 = _T_29 & _T_100; // @[tage.scala 147:18]
   reg [6:0] wrbypass_idxs_0; // @[tage.scala 142:29]
-  wire  _T_118 = wrbypass_idxs_0 == update_idx; // @[tage.scala 149:22]
-  wire  wrbypass_hits_0 = _T_117 & _T_118; // @[tage.scala 148:37]
+  wire  _T_102 = wrbypass_idxs_0 == update_idx; // @[tage.scala 149:22]
+  wire  wrbypass_hits_0 = _T_101 & _T_102; // @[tage.scala 148:37]
   reg [6:0] wrbypass_tags_1; // @[tage.scala 141:29]
-  wire  _T_121 = wrbypass_tags_1 == update_tag; // @[tage.scala 148:22]
-  wire  _T_122 = _T_37 & _T_121; // @[tage.scala 147:18]
+  wire  _T_105 = wrbypass_tags_1 == update_tag; // @[tage.scala 148:22]
+  wire  _T_106 = _T_29 & _T_105; // @[tage.scala 147:18]
   reg [6:0] wrbypass_idxs_1; // @[tage.scala 142:29]
-  wire  _T_123 = wrbypass_idxs_1 == update_idx; // @[tage.scala 149:22]
-  wire  wrbypass_hits_1 = _T_122 & _T_123; // @[tage.scala 148:37]
+  wire  _T_107 = wrbypass_idxs_1 == update_idx; // @[tage.scala 149:22]
+  wire  wrbypass_hits_1 = _T_106 & _T_107; // @[tage.scala 148:37]
   wire  wrbypass_hit = wrbypass_hits_0 | wrbypass_hits_1; // @[tage.scala 151:48]
   wire  wrbypass_hit_idx = wrbypass_hits_0 ? 1'h0 : 1'h1; // @[Mux.scala 47:69]
   reg [2:0] wrbypass_1_0; // @[tage.scala 143:29]
   reg [2:0] wrbypass_0_0; // @[tage.scala 143:29]
   wire [2:0] _GEN_33 = wrbypass_hit_idx ? wrbypass_1_0 : wrbypass_0_0; // @[tage.scala 67:25 tage.scala 67:25]
-  wire [2:0] _T_129 = _GEN_33 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_130 = _GEN_33 == 3'h0 ? 3'h0 : _T_129; // @[tage.scala 67:20]
-  wire [2:0] _T_133 = _GEN_33 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_134 = _GEN_33 == 3'h7 ? 3'h7 : _T_133; // @[tage.scala 68:20]
-  wire [2:0] _T_135 = ~io_update_taken_0 ? _T_130 : _T_134; // @[tage.scala 67:8]
-  wire [2:0] _T_139 = io_update_old_ctr_0 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_140 = io_update_old_ctr_0 == 3'h0 ? 3'h0 : _T_139; // @[tage.scala 67:20]
-  wire [2:0] _T_143 = io_update_old_ctr_0 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_144 = io_update_old_ctr_0 == 3'h7 ? 3'h7 : _T_143; // @[tage.scala 68:20]
-  wire [2:0] _T_145 = ~io_update_taken_0 ? _T_140 : _T_144; // @[tage.scala 67:8]
-  wire [2:0] _T_146 = wrbypass_hit ? _T_135 : _T_145; // @[tage.scala 159:10]
-  wire [2:0] update_wdata_0_ctr = io_update_alloc_0 ? _T_125 : _T_146; // @[tage.scala 155:33]
-  wire [10:0] _T_77 = {1'h1,update_tag,update_wdata_0_ctr}; // @[tage.scala 123:102]
-  wire [2:0] _T_150 = io_update_taken_1 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
+  wire [2:0] _T_113 = _GEN_33 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_114 = _GEN_33 == 3'h0 ? 3'h0 : _T_113; // @[tage.scala 67:20]
+  wire [2:0] _T_117 = _GEN_33 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_118 = _GEN_33 == 3'h7 ? 3'h7 : _T_117; // @[tage.scala 68:20]
+  wire [2:0] _T_119 = ~io_update_taken_0 ? _T_114 : _T_118; // @[tage.scala 67:8]
+  wire [2:0] _T_123 = io_update_old_ctr_0 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_124 = io_update_old_ctr_0 == 3'h0 ? 3'h0 : _T_123; // @[tage.scala 67:20]
+  wire [2:0] _T_127 = io_update_old_ctr_0 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_128 = io_update_old_ctr_0 == 3'h7 ? 3'h7 : _T_127; // @[tage.scala 68:20]
+  wire [2:0] _T_129 = ~io_update_taken_0 ? _T_124 : _T_128; // @[tage.scala 67:8]
+  wire [2:0] _T_130 = wrbypass_hit ? _T_119 : _T_129; // @[tage.scala 159:10]
+  wire [2:0] update_wdata_0_ctr = io_update_alloc_0 ? _T_109 : _T_130; // @[tage.scala 155:33]
+  wire [10:0] _T_61 = {1'h1,update_tag,update_wdata_0_ctr}; // @[tage.scala 123:102]
+  wire [2:0] _T_134 = io_update_taken_1 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
   reg [2:0] wrbypass_1_1; // @[tage.scala 143:29]
   reg [2:0] wrbypass_0_1; // @[tage.scala 143:29]
   wire [2:0] _GEN_35 = wrbypass_hit_idx ? wrbypass_1_1 : wrbypass_0_1; // @[tage.scala 67:25 tage.scala 67:25]
-  wire [2:0] _T_154 = _GEN_35 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_155 = _GEN_35 == 3'h0 ? 3'h0 : _T_154; // @[tage.scala 67:20]
-  wire [2:0] _T_158 = _GEN_35 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_159 = _GEN_35 == 3'h7 ? 3'h7 : _T_158; // @[tage.scala 68:20]
-  wire [2:0] _T_160 = ~io_update_taken_1 ? _T_155 : _T_159; // @[tage.scala 67:8]
-  wire [2:0] _T_164 = io_update_old_ctr_1 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_165 = io_update_old_ctr_1 == 3'h0 ? 3'h0 : _T_164; // @[tage.scala 67:20]
-  wire [2:0] _T_168 = io_update_old_ctr_1 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_169 = io_update_old_ctr_1 == 3'h7 ? 3'h7 : _T_168; // @[tage.scala 68:20]
-  wire [2:0] _T_170 = ~io_update_taken_1 ? _T_165 : _T_169; // @[tage.scala 67:8]
-  wire [2:0] _T_171 = wrbypass_hit ? _T_160 : _T_170; // @[tage.scala 159:10]
-  wire [2:0] update_wdata_1_ctr = io_update_alloc_1 ? _T_150 : _T_171; // @[tage.scala 155:33]
-  wire [10:0] _T_78 = {1'h1,update_tag,update_wdata_1_ctr}; // @[tage.scala 123:102]
-  wire [2:0] _T_175 = io_update_taken_2 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
+  wire [2:0] _T_138 = _GEN_35 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_139 = _GEN_35 == 3'h0 ? 3'h0 : _T_138; // @[tage.scala 67:20]
+  wire [2:0] _T_142 = _GEN_35 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_143 = _GEN_35 == 3'h7 ? 3'h7 : _T_142; // @[tage.scala 68:20]
+  wire [2:0] _T_144 = ~io_update_taken_1 ? _T_139 : _T_143; // @[tage.scala 67:8]
+  wire [2:0] _T_148 = io_update_old_ctr_1 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_149 = io_update_old_ctr_1 == 3'h0 ? 3'h0 : _T_148; // @[tage.scala 67:20]
+  wire [2:0] _T_152 = io_update_old_ctr_1 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_153 = io_update_old_ctr_1 == 3'h7 ? 3'h7 : _T_152; // @[tage.scala 68:20]
+  wire [2:0] _T_154 = ~io_update_taken_1 ? _T_149 : _T_153; // @[tage.scala 67:8]
+  wire [2:0] _T_155 = wrbypass_hit ? _T_144 : _T_154; // @[tage.scala 159:10]
+  wire [2:0] update_wdata_1_ctr = io_update_alloc_1 ? _T_134 : _T_155; // @[tage.scala 155:33]
+  wire [10:0] _T_62 = {1'h1,update_tag,update_wdata_1_ctr}; // @[tage.scala 123:102]
+  wire [2:0] _T_159 = io_update_taken_2 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
   reg [2:0] wrbypass_1_2; // @[tage.scala 143:29]
   reg [2:0] wrbypass_0_2; // @[tage.scala 143:29]
   wire [2:0] _GEN_37 = wrbypass_hit_idx ? wrbypass_1_2 : wrbypass_0_2; // @[tage.scala 67:25 tage.scala 67:25]
-  wire [2:0] _T_179 = _GEN_37 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_180 = _GEN_37 == 3'h0 ? 3'h0 : _T_179; // @[tage.scala 67:20]
-  wire [2:0] _T_183 = _GEN_37 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_184 = _GEN_37 == 3'h7 ? 3'h7 : _T_183; // @[tage.scala 68:20]
-  wire [2:0] _T_185 = ~io_update_taken_2 ? _T_180 : _T_184; // @[tage.scala 67:8]
-  wire [2:0] _T_189 = io_update_old_ctr_2 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_190 = io_update_old_ctr_2 == 3'h0 ? 3'h0 : _T_189; // @[tage.scala 67:20]
-  wire [2:0] _T_193 = io_update_old_ctr_2 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_194 = io_update_old_ctr_2 == 3'h7 ? 3'h7 : _T_193; // @[tage.scala 68:20]
-  wire [2:0] _T_195 = ~io_update_taken_2 ? _T_190 : _T_194; // @[tage.scala 67:8]
-  wire [2:0] _T_196 = wrbypass_hit ? _T_185 : _T_195; // @[tage.scala 159:10]
-  wire [2:0] update_wdata_2_ctr = io_update_alloc_2 ? _T_175 : _T_196; // @[tage.scala 155:33]
-  wire [10:0] _T_79 = {1'h1,update_tag,update_wdata_2_ctr}; // @[tage.scala 123:102]
-  wire [2:0] _T_200 = io_update_taken_3 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
+  wire [2:0] _T_163 = _GEN_37 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_164 = _GEN_37 == 3'h0 ? 3'h0 : _T_163; // @[tage.scala 67:20]
+  wire [2:0] _T_167 = _GEN_37 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_168 = _GEN_37 == 3'h7 ? 3'h7 : _T_167; // @[tage.scala 68:20]
+  wire [2:0] _T_169 = ~io_update_taken_2 ? _T_164 : _T_168; // @[tage.scala 67:8]
+  wire [2:0] _T_173 = io_update_old_ctr_2 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_174 = io_update_old_ctr_2 == 3'h0 ? 3'h0 : _T_173; // @[tage.scala 67:20]
+  wire [2:0] _T_177 = io_update_old_ctr_2 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_178 = io_update_old_ctr_2 == 3'h7 ? 3'h7 : _T_177; // @[tage.scala 68:20]
+  wire [2:0] _T_179 = ~io_update_taken_2 ? _T_174 : _T_178; // @[tage.scala 67:8]
+  wire [2:0] _T_180 = wrbypass_hit ? _T_169 : _T_179; // @[tage.scala 159:10]
+  wire [2:0] update_wdata_2_ctr = io_update_alloc_2 ? _T_159 : _T_180; // @[tage.scala 155:33]
+  wire [10:0] _T_63 = {1'h1,update_tag,update_wdata_2_ctr}; // @[tage.scala 123:102]
+  wire [2:0] _T_184 = io_update_taken_3 ? 3'h4 : 3'h3; // @[tage.scala 156:10]
   reg [2:0] wrbypass_1_3; // @[tage.scala 143:29]
   reg [2:0] wrbypass_0_3; // @[tage.scala 143:29]
   wire [2:0] _GEN_39 = wrbypass_hit_idx ? wrbypass_1_3 : wrbypass_0_3; // @[tage.scala 67:25 tage.scala 67:25]
-  wire [2:0] _T_204 = _GEN_39 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_205 = _GEN_39 == 3'h0 ? 3'h0 : _T_204; // @[tage.scala 67:20]
-  wire [2:0] _T_208 = _GEN_39 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_209 = _GEN_39 == 3'h7 ? 3'h7 : _T_208; // @[tage.scala 68:20]
-  wire [2:0] _T_210 = ~io_update_taken_3 ? _T_205 : _T_209; // @[tage.scala 67:8]
-  wire [2:0] _T_214 = io_update_old_ctr_3 - 3'h1; // @[tage.scala 67:43]
-  wire [2:0] _T_215 = io_update_old_ctr_3 == 3'h0 ? 3'h0 : _T_214; // @[tage.scala 67:20]
-  wire [2:0] _T_218 = io_update_old_ctr_3 + 3'h1; // @[tage.scala 68:43]
-  wire [2:0] _T_219 = io_update_old_ctr_3 == 3'h7 ? 3'h7 : _T_218; // @[tage.scala 68:20]
-  wire [2:0] _T_220 = ~io_update_taken_3 ? _T_215 : _T_219; // @[tage.scala 67:8]
-  wire [2:0] _T_221 = wrbypass_hit ? _T_210 : _T_220; // @[tage.scala 159:10]
-  wire [2:0] update_wdata_3_ctr = io_update_alloc_3 ? _T_200 : _T_221; // @[tage.scala 155:33]
-  wire [10:0] _T_80 = {1'h1,update_tag,update_wdata_3_ctr}; // @[tage.scala 123:102]
-  wire [3:0] _T_83 = {io_update_mask_3,io_update_mask_2,io_update_mask_1,io_update_mask_0}; // @[tage.scala 124:90]
-  wire [3:0] _T_84 = doing_reset ? 4'hf : _T_83; // @[tage.scala 124:8]
-  wire [7:0] _T_89 = doing_clear_u_hi ? clear_u_idx : {{1'd0}, update_idx}; // @[tage.scala 129:36]
-  wire [7:0] _T_90 = doing_reset ? {{1'd0}, reset_idx} : _T_89; // @[tage.scala 129:8]
-  wire  _T_91 = doing_reset | doing_clear_u_hi; // @[tage.scala 130:21]
+  wire [2:0] _T_188 = _GEN_39 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_189 = _GEN_39 == 3'h0 ? 3'h0 : _T_188; // @[tage.scala 67:20]
+  wire [2:0] _T_192 = _GEN_39 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_193 = _GEN_39 == 3'h7 ? 3'h7 : _T_192; // @[tage.scala 68:20]
+  wire [2:0] _T_194 = ~io_update_taken_3 ? _T_189 : _T_193; // @[tage.scala 67:8]
+  wire [2:0] _T_198 = io_update_old_ctr_3 - 3'h1; // @[tage.scala 67:43]
+  wire [2:0] _T_199 = io_update_old_ctr_3 == 3'h0 ? 3'h0 : _T_198; // @[tage.scala 67:20]
+  wire [2:0] _T_202 = io_update_old_ctr_3 + 3'h1; // @[tage.scala 68:43]
+  wire [2:0] _T_203 = io_update_old_ctr_3 == 3'h7 ? 3'h7 : _T_202; // @[tage.scala 68:20]
+  wire [2:0] _T_204 = ~io_update_taken_3 ? _T_199 : _T_203; // @[tage.scala 67:8]
+  wire [2:0] _T_205 = wrbypass_hit ? _T_194 : _T_204; // @[tage.scala 159:10]
+  wire [2:0] update_wdata_3_ctr = io_update_alloc_3 ? _T_184 : _T_205; // @[tage.scala 155:33]
+  wire [10:0] _T_64 = {1'h1,update_tag,update_wdata_3_ctr}; // @[tage.scala 123:102]
+  wire [3:0] _T_67 = {io_update_mask_3,io_update_mask_2,io_update_mask_1,io_update_mask_0}; // @[tage.scala 124:90]
+  wire [3:0] _T_68 = doing_reset ? 4'hf : _T_67; // @[tage.scala 124:8]
+  wire [7:0] _T_73 = doing_clear_u_hi ? clear_u_idx : {{1'd0}, update_idx}; // @[tage.scala 129:36]
+  wire [7:0] _T_74 = doing_reset ? {{1'd0}, reset_idx} : _T_73; // @[tage.scala 129:8]
+  wire  _T_75 = doing_reset | doing_clear_u_hi; // @[tage.scala 130:21]
   wire  update_hi_wdata_0 = io_update_u_0[1]; // @[tage.scala 166:44]
   wire  update_hi_wdata_1 = io_update_u_1[1]; // @[tage.scala 166:44]
   wire  update_hi_wdata_2 = io_update_u_2[1]; // @[tage.scala 166:44]
   wire  update_hi_wdata_3 = io_update_u_3[1]; // @[tage.scala 166:44]
-  wire [3:0] _T_95 = {io_update_u_mask_3,io_update_u_mask_2,io_update_u_mask_1,io_update_u_mask_0}; // @[tage.scala 131:80]
-  wire [3:0] _T_96 = _T_91 ? 4'hf : _T_95; // @[tage.scala 131:8]
-  wire [7:0] _T_102 = doing_clear_u_lo ? clear_u_idx : {{1'd0}, update_idx}; // @[tage.scala 136:36]
-  wire [7:0] _T_103 = doing_reset ? {{1'd0}, reset_idx} : _T_102; // @[tage.scala 136:8]
-  wire  _T_104 = doing_reset | doing_clear_u_lo; // @[tage.scala 137:21]
+  wire [3:0] _T_79 = {io_update_u_mask_3,io_update_u_mask_2,io_update_u_mask_1,io_update_u_mask_0}; // @[tage.scala 131:80]
+  wire [3:0] _T_80 = _T_75 ? 4'hf : _T_79; // @[tage.scala 131:8]
+  wire [7:0] _T_86 = doing_clear_u_lo ? clear_u_idx : {{1'd0}, update_idx}; // @[tage.scala 136:36]
+  wire [7:0] _T_87 = doing_reset ? {{1'd0}, reset_idx} : _T_86; // @[tage.scala 136:8]
+  wire  _T_88 = doing_reset | doing_clear_u_lo; // @[tage.scala 137:21]
   wire  update_lo_wdata_0 = io_update_u_0[0]; // @[tage.scala 167:44]
   wire  update_lo_wdata_1 = io_update_u_1[0]; // @[tage.scala 167:44]
   wire  update_lo_wdata_2 = io_update_u_2[0]; // @[tage.scala 167:44]
   wire  update_lo_wdata_3 = io_update_u_3[0]; // @[tage.scala 167:44]
-  wire [3:0] _T_109 = _T_104 ? 4'hf : _T_95; // @[tage.scala 138:8]
+  wire [3:0] _T_93 = _T_88 ? 4'hf : _T_79; // @[tage.scala 138:8]
   reg  wrbypass_enq_idx; // @[tage.scala 144:33]
-  wire  _T_230 = wrbypass_enq_idx + 1'h1; // @[util.scala 260:14]
+  wire  _T_214 = wrbypass_enq_idx + 1'h1; // @[util.scala 203:14]
   assign hi_us_0_s2_req_rhius_addr = hi_us_0_s2_req_rhius_addr_pipe_0;
   assign hi_us_0_s2_req_rhius_data = hi_us_0[hi_us_0_s2_req_rhius_addr]; // @[tage.scala 89:27]
-  assign hi_us_0_MPORT_2_data = _T_91 ? 1'h0 : update_hi_wdata_0;
-  assign hi_us_0_MPORT_2_addr = _T_90[6:0];
-  assign hi_us_0_MPORT_2_mask = _T_96[0];
+  assign hi_us_0_MPORT_2_data = _T_75 ? 1'h0 : update_hi_wdata_0;
+  assign hi_us_0_MPORT_2_addr = _T_74[6:0];
+  assign hi_us_0_MPORT_2_mask = _T_80[0];
   assign hi_us_0_MPORT_2_en = 1'h1;
   assign hi_us_1_s2_req_rhius_addr = hi_us_1_s2_req_rhius_addr_pipe_0;
   assign hi_us_1_s2_req_rhius_data = hi_us_1[hi_us_1_s2_req_rhius_addr]; // @[tage.scala 89:27]
-  assign hi_us_1_MPORT_2_data = _T_91 ? 1'h0 : update_hi_wdata_1;
-  assign hi_us_1_MPORT_2_addr = _T_90[6:0];
-  assign hi_us_1_MPORT_2_mask = _T_96[1];
+  assign hi_us_1_MPORT_2_data = _T_75 ? 1'h0 : update_hi_wdata_1;
+  assign hi_us_1_MPORT_2_addr = _T_74[6:0];
+  assign hi_us_1_MPORT_2_mask = _T_80[1];
   assign hi_us_1_MPORT_2_en = 1'h1;
   assign hi_us_2_s2_req_rhius_addr = hi_us_2_s2_req_rhius_addr_pipe_0;
   assign hi_us_2_s2_req_rhius_data = hi_us_2[hi_us_2_s2_req_rhius_addr]; // @[tage.scala 89:27]
-  assign hi_us_2_MPORT_2_data = _T_91 ? 1'h0 : update_hi_wdata_2;
-  assign hi_us_2_MPORT_2_addr = _T_90[6:0];
-  assign hi_us_2_MPORT_2_mask = _T_96[2];
+  assign hi_us_2_MPORT_2_data = _T_75 ? 1'h0 : update_hi_wdata_2;
+  assign hi_us_2_MPORT_2_addr = _T_74[6:0];
+  assign hi_us_2_MPORT_2_mask = _T_80[2];
   assign hi_us_2_MPORT_2_en = 1'h1;
   assign hi_us_3_s2_req_rhius_addr = hi_us_3_s2_req_rhius_addr_pipe_0;
   assign hi_us_3_s2_req_rhius_data = hi_us_3[hi_us_3_s2_req_rhius_addr]; // @[tage.scala 89:27]
-  assign hi_us_3_MPORT_2_data = _T_91 ? 1'h0 : update_hi_wdata_3;
-  assign hi_us_3_MPORT_2_addr = _T_90[6:0];
-  assign hi_us_3_MPORT_2_mask = _T_96[3];
+  assign hi_us_3_MPORT_2_data = _T_75 ? 1'h0 : update_hi_wdata_3;
+  assign hi_us_3_MPORT_2_addr = _T_74[6:0];
+  assign hi_us_3_MPORT_2_mask = _T_80[3];
   assign hi_us_3_MPORT_2_en = 1'h1;
   assign lo_us_0_s2_req_rlous_addr = lo_us_0_s2_req_rlous_addr_pipe_0;
   assign lo_us_0_s2_req_rlous_data = lo_us_0[lo_us_0_s2_req_rlous_addr]; // @[tage.scala 90:27]
-  assign lo_us_0_MPORT_3_data = _T_104 ? 1'h0 : update_lo_wdata_0;
-  assign lo_us_0_MPORT_3_addr = _T_103[6:0];
-  assign lo_us_0_MPORT_3_mask = _T_109[0];
+  assign lo_us_0_MPORT_3_data = _T_88 ? 1'h0 : update_lo_wdata_0;
+  assign lo_us_0_MPORT_3_addr = _T_87[6:0];
+  assign lo_us_0_MPORT_3_mask = _T_93[0];
   assign lo_us_0_MPORT_3_en = 1'h1;
   assign lo_us_1_s2_req_rlous_addr = lo_us_1_s2_req_rlous_addr_pipe_0;
   assign lo_us_1_s2_req_rlous_data = lo_us_1[lo_us_1_s2_req_rlous_addr]; // @[tage.scala 90:27]
-  assign lo_us_1_MPORT_3_data = _T_104 ? 1'h0 : update_lo_wdata_1;
-  assign lo_us_1_MPORT_3_addr = _T_103[6:0];
-  assign lo_us_1_MPORT_3_mask = _T_109[1];
+  assign lo_us_1_MPORT_3_data = _T_88 ? 1'h0 : update_lo_wdata_1;
+  assign lo_us_1_MPORT_3_addr = _T_87[6:0];
+  assign lo_us_1_MPORT_3_mask = _T_93[1];
   assign lo_us_1_MPORT_3_en = 1'h1;
   assign lo_us_2_s2_req_rlous_addr = lo_us_2_s2_req_rlous_addr_pipe_0;
   assign lo_us_2_s2_req_rlous_data = lo_us_2[lo_us_2_s2_req_rlous_addr]; // @[tage.scala 90:27]
-  assign lo_us_2_MPORT_3_data = _T_104 ? 1'h0 : update_lo_wdata_2;
-  assign lo_us_2_MPORT_3_addr = _T_103[6:0];
-  assign lo_us_2_MPORT_3_mask = _T_109[2];
+  assign lo_us_2_MPORT_3_data = _T_88 ? 1'h0 : update_lo_wdata_2;
+  assign lo_us_2_MPORT_3_addr = _T_87[6:0];
+  assign lo_us_2_MPORT_3_mask = _T_93[2];
   assign lo_us_2_MPORT_3_en = 1'h1;
   assign lo_us_3_s2_req_rlous_addr = lo_us_3_s2_req_rlous_addr_pipe_0;
   assign lo_us_3_s2_req_rlous_data = lo_us_3[lo_us_3_s2_req_rlous_addr]; // @[tage.scala 90:27]
-  assign lo_us_3_MPORT_3_data = _T_104 ? 1'h0 : update_lo_wdata_3;
-  assign lo_us_3_MPORT_3_addr = _T_103[6:0];
-  assign lo_us_3_MPORT_3_mask = _T_109[3];
+  assign lo_us_3_MPORT_3_data = _T_88 ? 1'h0 : update_lo_wdata_3;
+  assign lo_us_3_MPORT_3_addr = _T_87[6:0];
+  assign lo_us_3_MPORT_3_mask = _T_93[3];
   assign lo_us_3_MPORT_3_en = 1'h1;
   assign table_0_MPORT_addr = table_0_MPORT_addr_pipe_0;
   assign table_0_MPORT_data = table_0[table_0_MPORT_addr]; // @[tage.scala 91:27]
-  assign table_0_MPORT_1_data = doing_reset ? 11'h0 : _T_77;
+  assign table_0_MPORT_1_data = doing_reset ? 11'h0 : _T_61;
   assign table_0_MPORT_1_addr = doing_reset ? reset_idx : update_idx;
-  assign table_0_MPORT_1_mask = _T_84[0];
+  assign table_0_MPORT_1_mask = _T_68[0];
   assign table_0_MPORT_1_en = 1'h1;
   assign table_1_MPORT_addr = table_1_MPORT_addr_pipe_0;
   assign table_1_MPORT_data = table_1[table_1_MPORT_addr]; // @[tage.scala 91:27]
-  assign table_1_MPORT_1_data = doing_reset ? 11'h0 : _T_78;
+  assign table_1_MPORT_1_data = doing_reset ? 11'h0 : _T_62;
   assign table_1_MPORT_1_addr = doing_reset ? reset_idx : update_idx;
-  assign table_1_MPORT_1_mask = _T_84[1];
+  assign table_1_MPORT_1_mask = _T_68[1];
   assign table_1_MPORT_1_en = 1'h1;
   assign table_2_MPORT_addr = table_2_MPORT_addr_pipe_0;
   assign table_2_MPORT_data = table_2[table_2_MPORT_addr]; // @[tage.scala 91:27]
-  assign table_2_MPORT_1_data = doing_reset ? 11'h0 : _T_79;
+  assign table_2_MPORT_1_data = doing_reset ? 11'h0 : _T_63;
   assign table_2_MPORT_1_addr = doing_reset ? reset_idx : update_idx;
-  assign table_2_MPORT_1_mask = _T_84[2];
+  assign table_2_MPORT_1_mask = _T_68[2];
   assign table_2_MPORT_1_en = 1'h1;
   assign table_3_MPORT_addr = table_3_MPORT_addr_pipe_0;
   assign table_3_MPORT_data = table_3[table_3_MPORT_addr]; // @[tage.scala 91:27]
-  assign table_3_MPORT_1_data = doing_reset ? 11'h0 : _T_80;
+  assign table_3_MPORT_1_data = doing_reset ? 11'h0 : _T_64;
   assign table_3_MPORT_1_addr = doing_reset ? reset_idx : update_idx;
-  assign table_3_MPORT_1_mask = _T_84[3];
+  assign table_3_MPORT_1_mask = _T_68[3];
   assign table_3_MPORT_1_en = 1'h1;
   assign io_f3_resp_0_valid = REG; // @[tage.scala 104:28]
   assign io_f3_resp_0_bits_ctr = REG_2; // @[tage.scala 106:28]
@@ -466,84 +460,84 @@ module TageTable(
     end
     hi_us_0_s2_req_rhius_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      hi_us_0_s2_req_rhius_addr_pipe_0 <= _T_9[6:0];
+      hi_us_0_s2_req_rhius_addr_pipe_0 <= _T_5[6:0];
     end
     if(hi_us_1_MPORT_2_en & hi_us_1_MPORT_2_mask) begin
       hi_us_1[hi_us_1_MPORT_2_addr] <= hi_us_1_MPORT_2_data; // @[tage.scala 89:27]
     end
     hi_us_1_s2_req_rhius_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      hi_us_1_s2_req_rhius_addr_pipe_0 <= _T_9[6:0];
+      hi_us_1_s2_req_rhius_addr_pipe_0 <= _T_5[6:0];
     end
     if(hi_us_2_MPORT_2_en & hi_us_2_MPORT_2_mask) begin
       hi_us_2[hi_us_2_MPORT_2_addr] <= hi_us_2_MPORT_2_data; // @[tage.scala 89:27]
     end
     hi_us_2_s2_req_rhius_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      hi_us_2_s2_req_rhius_addr_pipe_0 <= _T_9[6:0];
+      hi_us_2_s2_req_rhius_addr_pipe_0 <= _T_5[6:0];
     end
     if(hi_us_3_MPORT_2_en & hi_us_3_MPORT_2_mask) begin
       hi_us_3[hi_us_3_MPORT_2_addr] <= hi_us_3_MPORT_2_data; // @[tage.scala 89:27]
     end
     hi_us_3_s2_req_rhius_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      hi_us_3_s2_req_rhius_addr_pipe_0 <= _T_9[6:0];
+      hi_us_3_s2_req_rhius_addr_pipe_0 <= _T_5[6:0];
     end
     if(lo_us_0_MPORT_3_en & lo_us_0_MPORT_3_mask) begin
       lo_us_0[lo_us_0_MPORT_3_addr] <= lo_us_0_MPORT_3_data; // @[tage.scala 90:27]
     end
     lo_us_0_s2_req_rlous_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      lo_us_0_s2_req_rlous_addr_pipe_0 <= _T_9[6:0];
+      lo_us_0_s2_req_rlous_addr_pipe_0 <= _T_5[6:0];
     end
     if(lo_us_1_MPORT_3_en & lo_us_1_MPORT_3_mask) begin
       lo_us_1[lo_us_1_MPORT_3_addr] <= lo_us_1_MPORT_3_data; // @[tage.scala 90:27]
     end
     lo_us_1_s2_req_rlous_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      lo_us_1_s2_req_rlous_addr_pipe_0 <= _T_9[6:0];
+      lo_us_1_s2_req_rlous_addr_pipe_0 <= _T_5[6:0];
     end
     if(lo_us_2_MPORT_3_en & lo_us_2_MPORT_3_mask) begin
       lo_us_2[lo_us_2_MPORT_3_addr] <= lo_us_2_MPORT_3_data; // @[tage.scala 90:27]
     end
     lo_us_2_s2_req_rlous_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      lo_us_2_s2_req_rlous_addr_pipe_0 <= _T_9[6:0];
+      lo_us_2_s2_req_rlous_addr_pipe_0 <= _T_5[6:0];
     end
     if(lo_us_3_MPORT_3_en & lo_us_3_MPORT_3_mask) begin
       lo_us_3[lo_us_3_MPORT_3_addr] <= lo_us_3_MPORT_3_data; // @[tage.scala 90:27]
     end
     lo_us_3_s2_req_rlous_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      lo_us_3_s2_req_rlous_addr_pipe_0 <= _T_9[6:0];
+      lo_us_3_s2_req_rlous_addr_pipe_0 <= _T_5[6:0];
     end
     if(table_0_MPORT_1_en & table_0_MPORT_1_mask) begin
       table_0[table_0_MPORT_1_addr] <= table_0_MPORT_1_data; // @[tage.scala 91:27]
     end
     table_0_MPORT_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      table_0_MPORT_addr_pipe_0 <= _T_9[6:0];
+      table_0_MPORT_addr_pipe_0 <= _T_5[6:0];
     end
     if(table_1_MPORT_1_en & table_1_MPORT_1_mask) begin
       table_1[table_1_MPORT_1_addr] <= table_1_MPORT_1_data; // @[tage.scala 91:27]
     end
     table_1_MPORT_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      table_1_MPORT_addr_pipe_0 <= _T_9[6:0];
+      table_1_MPORT_addr_pipe_0 <= _T_5[6:0];
     end
     if(table_2_MPORT_1_en & table_2_MPORT_1_mask) begin
       table_2[table_2_MPORT_1_addr] <= table_2_MPORT_1_data; // @[tage.scala 91:27]
     end
     table_2_MPORT_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      table_2_MPORT_addr_pipe_0 <= _T_9[6:0];
+      table_2_MPORT_addr_pipe_0 <= _T_5[6:0];
     end
     if(table_3_MPORT_1_en & table_3_MPORT_1_mask) begin
       table_3[table_3_MPORT_1_addr] <= table_3_MPORT_1_data; // @[tage.scala 91:27]
     end
     table_3_MPORT_en_pipe_0 <= io_f1_req_valid;
     if (io_f1_req_valid) begin
-      table_3_MPORT_addr_pipe_0 <= _T_9[6:0];
+      table_3_MPORT_addr_pipe_0 <= _T_5[6:0];
     end
     doing_reset <= reset | _GEN_0; // @[tage.scala 72:28 tage.scala 72:28]
     if (reset) begin // @[tage.scala 73:26]
@@ -551,7 +545,7 @@ module TageTable(
     end else begin
       reset_idx <= _T_1; // @[tage.scala 74:13]
     end
-    s2_tag <= _T_16[6:0]; // @[tage.scala 62:64]
+    s2_tag <= _T_8[6:0]; // @[tage.scala 62:64]
     REG <= s2_req_rtage_0_valid & s2_req_rtage_0_tag == s2_tag & ~doing_reset; // @[tage.scala 100:80]
     REG_1 <= {hi_us_0_s2_req_rhius_data,lo_us_0_s2_req_rlous_data}; // @[Cat.scala 30:58]
     REG_2 <= _WIRE_2[2:0]; // @[tage.scala 97:87]
@@ -569,7 +563,7 @@ module TageTable(
     end else if (doing_reset) begin // @[tage.scala 110:22]
       clear_u_ctr <= 19'h1; // @[tage.scala 110:36]
     end else begin
-      clear_u_ctr <= _T_56; // @[tage.scala 110:70]
+      clear_u_ctr <= _T_48; // @[tage.scala 110:70]
     end
     if (io_update_mask_0 | io_update_mask_1 | io_update_mask_2 | io_update_mask_3) begin // @[tage.scala 170:38]
       if (!(wrbypass_hit)) begin // @[tage.scala 171:39]
@@ -675,7 +669,7 @@ module TageTable(
       wrbypass_enq_idx <= 1'h0; // @[tage.scala 144:33]
     end else if (io_update_mask_0 | io_update_mask_1 | io_update_mask_2 | io_update_mask_3) begin // @[tage.scala 170:38]
       if (!(wrbypass_hit)) begin // @[tage.scala 171:39]
-        wrbypass_enq_idx <= _T_230; // @[tage.scala 177:24]
+        wrbypass_enq_idx <= _T_214; // @[tage.scala 177:24]
       end
     end
   end

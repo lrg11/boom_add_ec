@@ -276,6 +276,31 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
   val icache_blocked = false.B
   csr.io.counters foreach { c => c.inc := RegNext(perfEvents.evaluate(c.eventSel)) }
 
+  // counting the cycle number for debug purposes
+  val debug_cycle = RegInit(0.U(64.W)) 
+  debug_cycle := debug_cycle + 1.U
+
+  val dyn_insts = RegInit(0.U(64.W)) 
+  dyn_insts := dyn_insts + rob.io.commit.arch_valids.asUInt
+
+  // data commit
+  val cnt_data_com = RegInit(0.U(64.W)) 
+  cnt_data_com := cnt_data_com + PopCount((rob.io.commit.valids zip rob.io.commit.uops).map{case (v, u) => v && (u.dst_rtype === RT_FIX || u.dst_rtype === RT_FLT) && u.ldst_val})
+
+  // all rs
+  val cnt_all_rs = RegInit(0.U(64.W))
+  cnt_all_rs := cnt_all_rs + PopCount((iss_valids zip iss_uops).map{case (v, u) => v && u.lrs1_rtype === RT_FIX}) + 
+    PopCount((iss_valids zip iss_uops).map{case (v, u) => v && u.lrs2_rtype === RT_FIX})
+
+  val cnt_rob_full = RegInit(0.U(64.W)) 
+  cnt_rob_full := cnt_rob_full + Mux(rob.io.full, 1.U, 0.U)
+
+  XSDebug(debug_cycle % 1000.U === 0.U, p"curr_cycle: ${debug_cycle}, curr_instrs: ${dyn_insts}, cnt_data_com: ${cnt_data_com}, cnt_all_rs: ${cnt_all_rs}, cnt_rob_full: ${cnt_rob_full}\n")
+
+  when(debug_cycle >= 90000.U) {
+    XSDebug(debug_cycle % 1000.U === 0.U, p"curr_cycle: ${debug_cycle}, curr_instrs: ${dyn_insts}, cnt_data_com: ${cnt_data_com}, cnt_all_rs: ${cnt_all_rs}, cnt_rob_full: ${cnt_rob_full}\n")
+  }
+
   //****************************************
   // Time Stamp Counter & Retired Instruction Counter
   // (only used for printf and vcd dumps - the actual counters are in the CSRFile)

@@ -24,7 +24,7 @@ module RoundRawFNToRecFN_2(
   wire  roundAnyRawFNToRecFN_io_detectTininess; // @[RoundAnyRawFNToRecFN.scala 307:15]
   wire [64:0] roundAnyRawFNToRecFN_io_out; // @[RoundAnyRawFNToRecFN.scala 307:15]
   wire [4:0] roundAnyRawFNToRecFN_io_exceptionFlags; // @[RoundAnyRawFNToRecFN.scala 307:15]
-  RoundAnyRawFNToRecFN_9 roundAnyRawFNToRecFN ( // @[RoundAnyRawFNToRecFN.scala 307:15]
+  RoundAnyRawFNToRecFN_7 roundAnyRawFNToRecFN ( // @[RoundAnyRawFNToRecFN.scala 307:15]
     .io_invalidExc(roundAnyRawFNToRecFN_io_invalidExc),
     .io_infiniteExc(roundAnyRawFNToRecFN_io_infiniteExc),
     .io_in_isNaN(roundAnyRawFNToRecFN_io_in_isNaN),

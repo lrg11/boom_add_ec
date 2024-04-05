@@ -1,107 +1,107 @@
 module BranchPredictor(
-  input         clock,
-  input         reset,
-  input         io_f0_req_valid,
-  input  [39:0] io_f0_req_bits_pc,
-  input  [15:0] io_f0_req_bits_ghist_old_history,
-  input         io_f0_req_bits_ghist_current_saw_branch_not_taken,
-  input         io_f0_req_bits_ghist_new_saw_branch_not_taken,
-  input         io_f0_req_bits_ghist_new_saw_branch_taken,
-  input  [4:0]  io_f0_req_bits_ghist_ras_idx,
-  output [39:0] io_resp_f1_pc,
-  output        io_resp_f1_preds_0_taken,
-  output        io_resp_f1_preds_0_is_br,
-  output        io_resp_f1_preds_0_is_jal,
-  output        io_resp_f1_preds_0_predicted_pc_valid,
-  output [39:0] io_resp_f1_preds_0_predicted_pc_bits,
-  output        io_resp_f1_preds_1_taken,
-  output        io_resp_f1_preds_1_is_br,
-  output        io_resp_f1_preds_1_is_jal,
-  output        io_resp_f1_preds_1_predicted_pc_valid,
-  output [39:0] io_resp_f1_preds_1_predicted_pc_bits,
-  output        io_resp_f1_preds_2_taken,
-  output        io_resp_f1_preds_2_is_br,
-  output        io_resp_f1_preds_2_is_jal,
-  output        io_resp_f1_preds_2_predicted_pc_valid,
-  output [39:0] io_resp_f1_preds_2_predicted_pc_bits,
-  output        io_resp_f1_preds_3_taken,
-  output        io_resp_f1_preds_3_is_br,
-  output        io_resp_f1_preds_3_is_jal,
-  output        io_resp_f1_preds_3_predicted_pc_valid,
-  output [39:0] io_resp_f1_preds_3_predicted_pc_bits,
-  output [44:0] io_resp_f1_meta_0,
-  output        io_resp_f1_lhist_0,
-  output [39:0] io_resp_f2_pc,
-  output        io_resp_f2_preds_0_taken,
-  output        io_resp_f2_preds_0_is_br,
-  output        io_resp_f2_preds_0_is_jal,
-  output        io_resp_f2_preds_0_predicted_pc_valid,
-  output [39:0] io_resp_f2_preds_0_predicted_pc_bits,
-  output        io_resp_f2_preds_1_taken,
-  output        io_resp_f2_preds_1_is_br,
-  output        io_resp_f2_preds_1_is_jal,
-  output        io_resp_f2_preds_1_predicted_pc_valid,
-  output [39:0] io_resp_f2_preds_1_predicted_pc_bits,
-  output        io_resp_f2_preds_2_taken,
-  output        io_resp_f2_preds_2_is_br,
-  output        io_resp_f2_preds_2_is_jal,
-  output        io_resp_f2_preds_2_predicted_pc_valid,
-  output [39:0] io_resp_f2_preds_2_predicted_pc_bits,
-  output        io_resp_f2_preds_3_taken,
-  output        io_resp_f2_preds_3_is_br,
-  output        io_resp_f2_preds_3_is_jal,
-  output        io_resp_f2_preds_3_predicted_pc_valid,
-  output [39:0] io_resp_f2_preds_3_predicted_pc_bits,
-  output [44:0] io_resp_f2_meta_0,
-  output        io_resp_f2_lhist_0,
-  output [39:0] io_resp_f3_pc,
-  output        io_resp_f3_preds_0_taken,
-  output        io_resp_f3_preds_0_is_br,
-  output        io_resp_f3_preds_0_is_jal,
-  output        io_resp_f3_preds_0_predicted_pc_valid,
-  output [39:0] io_resp_f3_preds_0_predicted_pc_bits,
-  output        io_resp_f3_preds_1_taken,
-  output        io_resp_f3_preds_1_is_br,
-  output        io_resp_f3_preds_1_is_jal,
-  output        io_resp_f3_preds_1_predicted_pc_valid,
-  output [39:0] io_resp_f3_preds_1_predicted_pc_bits,
-  output        io_resp_f3_preds_2_taken,
-  output        io_resp_f3_preds_2_is_br,
-  output        io_resp_f3_preds_2_is_jal,
-  output        io_resp_f3_preds_2_predicted_pc_valid,
-  output [39:0] io_resp_f3_preds_2_predicted_pc_bits,
-  output        io_resp_f3_preds_3_taken,
-  output        io_resp_f3_preds_3_is_br,
-  output        io_resp_f3_preds_3_is_jal,
-  output        io_resp_f3_preds_3_predicted_pc_valid,
-  output [39:0] io_resp_f3_preds_3_predicted_pc_bits,
-  output [44:0] io_resp_f3_meta_0,
-  output        io_resp_f3_lhist_0,
-  input         io_f3_fire,
-  input         io_update_valid,
-  input         io_update_bits_is_mispredict_update,
-  input         io_update_bits_is_repair_update,
-  input  [3:0]  io_update_bits_btb_mispredicts,
-  input  [39:0] io_update_bits_pc,
-  input  [3:0]  io_update_bits_br_mask,
-  input         io_update_bits_cfi_idx_valid,
-  input  [1:0]  io_update_bits_cfi_idx_bits,
-  input         io_update_bits_cfi_taken,
-  input         io_update_bits_cfi_mispredicted,
-  input         io_update_bits_cfi_is_br,
-  input         io_update_bits_cfi_is_jal,
-  input         io_update_bits_cfi_is_jalr,
-  input  [15:0] io_update_bits_ghist_old_history,
-  input         io_update_bits_ghist_current_saw_branch_not_taken,
-  input         io_update_bits_ghist_new_saw_branch_not_taken,
-  input         io_update_bits_ghist_new_saw_branch_taken,
-  input  [4:0]  io_update_bits_ghist_ras_idx,
-  input         io_update_bits_lhist_0,
-  input  [39:0] io_update_bits_target,
-  input  [44:0] io_update_bits_meta_0
+  input          clock,
+  input          reset,
+  input          io_f0_req_valid,
+  input  [39:0]  io_f0_req_bits_pc,
+  input  [63:0]  io_f0_req_bits_ghist_old_history,
+  input          io_f0_req_bits_ghist_current_saw_branch_not_taken,
+  input          io_f0_req_bits_ghist_new_saw_branch_not_taken,
+  input          io_f0_req_bits_ghist_new_saw_branch_taken,
+  input  [4:0]   io_f0_req_bits_ghist_ras_idx,
+  output [39:0]  io_resp_f1_pc,
+  output         io_resp_f1_preds_0_taken,
+  output         io_resp_f1_preds_0_is_br,
+  output         io_resp_f1_preds_0_is_jal,
+  output         io_resp_f1_preds_0_predicted_pc_valid,
+  output [39:0]  io_resp_f1_preds_0_predicted_pc_bits,
+  output         io_resp_f1_preds_1_taken,
+  output         io_resp_f1_preds_1_is_br,
+  output         io_resp_f1_preds_1_is_jal,
+  output         io_resp_f1_preds_1_predicted_pc_valid,
+  output [39:0]  io_resp_f1_preds_1_predicted_pc_bits,
+  output         io_resp_f1_preds_2_taken,
+  output         io_resp_f1_preds_2_is_br,
+  output         io_resp_f1_preds_2_is_jal,
+  output         io_resp_f1_preds_2_predicted_pc_valid,
+  output [39:0]  io_resp_f1_preds_2_predicted_pc_bits,
+  output         io_resp_f1_preds_3_taken,
+  output         io_resp_f1_preds_3_is_br,
+  output         io_resp_f1_preds_3_is_jal,
+  output         io_resp_f1_preds_3_predicted_pc_valid,
+  output [39:0]  io_resp_f1_preds_3_predicted_pc_bits,
+  output [119:0] io_resp_f1_meta_0,
+  output         io_resp_f1_lhist_0,
+  output [39:0]  io_resp_f2_pc,
+  output         io_resp_f2_preds_0_taken,
+  output         io_resp_f2_preds_0_is_br,
+  output         io_resp_f2_preds_0_is_jal,
+  output         io_resp_f2_preds_0_predicted_pc_valid,
+  output [39:0]  io_resp_f2_preds_0_predicted_pc_bits,
+  output         io_resp_f2_preds_1_taken,
+  output         io_resp_f2_preds_1_is_br,
+  output         io_resp_f2_preds_1_is_jal,
+  output         io_resp_f2_preds_1_predicted_pc_valid,
+  output [39:0]  io_resp_f2_preds_1_predicted_pc_bits,
+  output         io_resp_f2_preds_2_taken,
+  output         io_resp_f2_preds_2_is_br,
+  output         io_resp_f2_preds_2_is_jal,
+  output         io_resp_f2_preds_2_predicted_pc_valid,
+  output [39:0]  io_resp_f2_preds_2_predicted_pc_bits,
+  output         io_resp_f2_preds_3_taken,
+  output         io_resp_f2_preds_3_is_br,
+  output         io_resp_f2_preds_3_is_jal,
+  output         io_resp_f2_preds_3_predicted_pc_valid,
+  output [39:0]  io_resp_f2_preds_3_predicted_pc_bits,
+  output [119:0] io_resp_f2_meta_0,
+  output         io_resp_f2_lhist_0,
+  output [39:0]  io_resp_f3_pc,
+  output         io_resp_f3_preds_0_taken,
+  output         io_resp_f3_preds_0_is_br,
+  output         io_resp_f3_preds_0_is_jal,
+  output         io_resp_f3_preds_0_predicted_pc_valid,
+  output [39:0]  io_resp_f3_preds_0_predicted_pc_bits,
+  output         io_resp_f3_preds_1_taken,
+  output         io_resp_f3_preds_1_is_br,
+  output         io_resp_f3_preds_1_is_jal,
+  output         io_resp_f3_preds_1_predicted_pc_valid,
+  output [39:0]  io_resp_f3_preds_1_predicted_pc_bits,
+  output         io_resp_f3_preds_2_taken,
+  output         io_resp_f3_preds_2_is_br,
+  output         io_resp_f3_preds_2_is_jal,
+  output         io_resp_f3_preds_2_predicted_pc_valid,
+  output [39:0]  io_resp_f3_preds_2_predicted_pc_bits,
+  output         io_resp_f3_preds_3_taken,
+  output         io_resp_f3_preds_3_is_br,
+  output         io_resp_f3_preds_3_is_jal,
+  output         io_resp_f3_preds_3_predicted_pc_valid,
+  output [39:0]  io_resp_f3_preds_3_predicted_pc_bits,
+  output [119:0] io_resp_f3_meta_0,
+  output         io_resp_f3_lhist_0,
+  input          io_f3_fire,
+  input          io_update_valid,
+  input          io_update_bits_is_mispredict_update,
+  input          io_update_bits_is_repair_update,
+  input  [3:0]   io_update_bits_btb_mispredicts,
+  input  [39:0]  io_update_bits_pc,
+  input  [3:0]   io_update_bits_br_mask,
+  input          io_update_bits_cfi_idx_valid,
+  input  [1:0]   io_update_bits_cfi_idx_bits,
+  input          io_update_bits_cfi_taken,
+  input          io_update_bits_cfi_mispredicted,
+  input          io_update_bits_cfi_is_br,
+  input          io_update_bits_cfi_is_jal,
+  input          io_update_bits_cfi_is_jalr,
+  input  [63:0]  io_update_bits_ghist_old_history,
+  input          io_update_bits_ghist_current_saw_branch_not_taken,
+  input          io_update_bits_ghist_new_saw_branch_not_taken,
+  input          io_update_bits_ghist_new_saw_branch_taken,
+  input  [4:0]   io_update_bits_ghist_ras_idx,
+  input          io_update_bits_lhist_0,
+  input  [39:0]  io_update_bits_target,
+  input  [119:0] io_update_bits_meta_0
 );
 `ifdef RANDOMIZE_REG_INIT
-  reg [31:0] _RAND_0;
+  reg [63:0] _RAND_0;
   reg [63:0] _RAND_1;
   reg [63:0] _RAND_2;
   reg [63:0] _RAND_3;
@@ -111,7 +111,7 @@ module BranchPredictor(
   wire  banked_predictors_0_io_f0_valid; // @[predictor.scala 218:19]
   wire [39:0] banked_predictors_0_io_f0_pc; // @[predictor.scala 218:19]
   wire [3:0] banked_predictors_0_io_f0_mask; // @[predictor.scala 218:19]
-  wire [15:0] banked_predictors_0_io_f1_ghist; // @[predictor.scala 218:19]
+  wire [63:0] banked_predictors_0_io_f1_ghist; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_f1_lhist; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_resp_in_0_f1_0_taken; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_resp_in_0_f1_0_is_br; // @[predictor.scala 218:19]
@@ -233,7 +233,7 @@ module BranchPredictor(
   wire  banked_predictors_0_io_resp_f3_3_is_jal; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_resp_f3_3_predicted_pc_valid; // @[predictor.scala 218:19]
   wire [39:0] banked_predictors_0_io_resp_f3_3_predicted_pc_bits; // @[predictor.scala 218:19]
-  wire [44:0] banked_predictors_0_io_f3_meta; // @[predictor.scala 218:19]
+  wire [119:0] banked_predictors_0_io_f3_meta; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_f3_fire; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_update_valid; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_update_bits_is_mispredict_update; // @[predictor.scala 218:19]
@@ -248,10 +248,10 @@ module BranchPredictor(
   wire  banked_predictors_0_io_update_bits_cfi_is_br; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_update_bits_cfi_is_jal; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_update_bits_cfi_is_jalr; // @[predictor.scala 218:19]
-  wire [15:0] banked_predictors_0_io_update_bits_ghist; // @[predictor.scala 218:19]
+  wire [63:0] banked_predictors_0_io_update_bits_ghist; // @[predictor.scala 218:19]
   wire  banked_predictors_0_io_update_bits_lhist; // @[predictor.scala 218:19]
   wire [39:0] banked_predictors_0_io_update_bits_target; // @[predictor.scala 218:19]
-  wire [44:0] banked_predictors_0_io_update_bits_meta; // @[predictor.scala 218:19]
+  wire [119:0] banked_predictors_0_io_update_bits_meta; // @[predictor.scala 218:19]
   wire  banked_lhist_providers_0_clock; // @[predictor.scala 228:57]
   wire  banked_lhist_providers_0_reset; // @[predictor.scala 228:57]
   wire  banked_lhist_providers_0_io_f0_valid; // @[predictor.scala 228:57]
@@ -268,7 +268,7 @@ module BranchPredictor(
   wire [39:0] _T = ~io_f0_req_bits_pc; // @[frontend.scala 161:33]
   wire [39:0] _T_1 = _T | 40'h7; // @[frontend.scala 161:39]
   wire [6:0] _T_7 = 7'hf << io_f0_req_bits_pc[2:1]; // @[frontend.scala 178:31]
-  reg [15:0] REG; // @[predictor.scala 239:48]
+  reg [63:0] REG; // @[predictor.scala 239:48]
   wire  _T_9 = banked_predictors_0_io_resp_f3_0_is_br & banked_predictors_0_io_resp_f3_0_predicted_pc_valid &
     banked_predictors_0_io_resp_f3_0_taken; // @[predictor.scala 293:39]
   wire  _T_11 = banked_predictors_0_io_resp_f3_1_is_br & banked_predictors_0_io_resp_f3_1_predicted_pc_valid &
@@ -468,7 +468,7 @@ module BranchPredictor(
   assign io_resp_f1_preds_3_is_jal = banked_predictors_0_io_resp_f1_3_is_jal; // @[predictor.scala 298:25]
   assign io_resp_f1_preds_3_predicted_pc_valid = banked_predictors_0_io_resp_f1_3_predicted_pc_valid; // @[predictor.scala 298:25]
   assign io_resp_f1_preds_3_predicted_pc_bits = banked_predictors_0_io_resp_f1_3_predicted_pc_bits; // @[predictor.scala 298:25]
-  assign io_resp_f1_meta_0 = 45'h0;
+  assign io_resp_f1_meta_0 = 120'h0;
   assign io_resp_f1_lhist_0 = 1'h0;
   assign io_resp_f2_pc = REG_2; // @[predictor.scala 363:17]
   assign io_resp_f2_preds_0_taken = banked_predictors_0_io_resp_f2_0_taken; // @[predictor.scala 299:25]
@@ -491,7 +491,7 @@ module BranchPredictor(
   assign io_resp_f2_preds_3_is_jal = banked_predictors_0_io_resp_f2_3_is_jal; // @[predictor.scala 299:25]
   assign io_resp_f2_preds_3_predicted_pc_valid = banked_predictors_0_io_resp_f2_3_predicted_pc_valid; // @[predictor.scala 299:25]
   assign io_resp_f2_preds_3_predicted_pc_bits = banked_predictors_0_io_resp_f2_3_predicted_pc_bits; // @[predictor.scala 299:25]
-  assign io_resp_f2_meta_0 = 45'h0;
+  assign io_resp_f2_meta_0 = 120'h0;
   assign io_resp_f2_lhist_0 = 1'h0;
   assign io_resp_f3_pc = REG_3; // @[predictor.scala 364:17]
   assign io_resp_f3_preds_0_taken = banked_predictors_0_io_resp_f3_0_taken; // @[predictor.scala 300:25]
@@ -678,8 +678,8 @@ initial begin
       `endif
     `endif
 `ifdef RANDOMIZE_REG_INIT
-  _RAND_0 = {1{`RANDOM}};
-  REG = _RAND_0[15:0];
+  _RAND_0 = {2{`RANDOM}};
+  REG = _RAND_0[63:0];
   _RAND_1 = {2{`RANDOM}};
   REG_1 = _RAND_1[39:0];
   _RAND_2 = {2{`RANDOM}};

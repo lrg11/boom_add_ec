@@ -8,7 +8,7 @@ module Queue_21(
   input  [3:0]  io_enq_bits_mask,
   input         io_enq_bits_xcpt_pf_inst,
   input         io_enq_bits_xcpt_ae_inst,
-  input  [15:0] io_enq_bits_ghist_old_history,
+  input  [63:0] io_enq_bits_ghist_old_history,
   input         io_enq_bits_ghist_current_saw_branch_not_taken,
   input         io_enq_bits_ghist_new_saw_branch_not_taken,
   input         io_enq_bits_ghist_new_saw_branch_taken,
@@ -22,7 +22,7 @@ module Queue_21(
   output [3:0]  io_deq_bits_mask,
   output        io_deq_bits_xcpt_pf_inst,
   output        io_deq_bits_xcpt_ae_inst,
-  output [15:0] io_deq_bits_ghist_old_history,
+  output [63:0] io_deq_bits_ghist_old_history,
   output        io_deq_bits_ghist_current_saw_branch_not_taken,
   output        io_deq_bits_ghist_new_saw_branch_not_taken,
   output        io_deq_bits_ghist_new_saw_branch_taken,
@@ -37,7 +37,7 @@ module Queue_21(
   reg [31:0] _RAND_2;
   reg [31:0] _RAND_3;
   reg [31:0] _RAND_4;
-  reg [31:0] _RAND_5;
+  reg [63:0] _RAND_5;
   reg [31:0] _RAND_6;
   reg [31:0] _RAND_7;
   reg [31:0] _RAND_8;
@@ -83,10 +83,10 @@ module Queue_21(
   wire  ram_xcpt_ae_inst_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_xcpt_ae_inst_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_xcpt_ae_inst_MPORT_en; // @[Decoupled.scala 218:16]
-  reg [15:0] ram_ghist_old_history [0:0]; // @[Decoupled.scala 218:16]
-  wire [15:0] ram_ghist_old_history_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
+  reg [63:0] ram_ghist_old_history [0:0]; // @[Decoupled.scala 218:16]
+  wire [63:0] ram_ghist_old_history_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_io_deq_bits_MPORT_addr; // @[Decoupled.scala 218:16]
-  wire [15:0] ram_ghist_old_history_MPORT_data; // @[Decoupled.scala 218:16]
+  wire [63:0] ram_ghist_old_history_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_en; // @[Decoupled.scala 218:16]
@@ -324,9 +324,9 @@ initial begin
   _RAND_4 = {1{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_xcpt_ae_inst[initvar] = _RAND_4[0:0];
-  _RAND_5 = {1{`RANDOM}};
+  _RAND_5 = {2{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
-    ram_ghist_old_history[initvar] = _RAND_5[15:0];
+    ram_ghist_old_history[initvar] = _RAND_5[63:0];
   _RAND_6 = {1{`RANDOM}};
   for (initvar = 0; initvar < 1; initvar = initvar+1)
     ram_ghist_current_saw_branch_not_taken[initvar] = _RAND_6[0:0];

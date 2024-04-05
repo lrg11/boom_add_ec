@@ -3,23 +3,6 @@ module Arbiter_6(
   input         reset,
   output        io_in_0_ready,
   input         io_in_0_valid,
-  input         io_in_0_bits_uop_switch,
-  input         io_in_0_bits_uop_switch_off,
-  input         io_in_0_bits_uop_is_unicore,
-  input  [2:0]  io_in_0_bits_uop_shift,
-  input  [1:0]  io_in_0_bits_uop_lrs3_rtype,
-  input         io_in_0_bits_uop_rflag,
-  input         io_in_0_bits_uop_wflag,
-  input  [3:0]  io_in_0_bits_uop_prflag,
-  input  [3:0]  io_in_0_bits_uop_pwflag,
-  input         io_in_0_bits_uop_pflag_busy,
-  input  [3:0]  io_in_0_bits_uop_stale_pflag,
-  input  [3:0]  io_in_0_bits_uop_op1_sel,
-  input  [3:0]  io_in_0_bits_uop_op2_sel,
-  input  [5:0]  io_in_0_bits_uop_split_num,
-  input  [5:0]  io_in_0_bits_uop_self_index,
-  input  [5:0]  io_in_0_bits_uop_rob_inst_idx,
-  input  [5:0]  io_in_0_bits_uop_address_num,
   input  [6:0]  io_in_0_bits_uop_uopc,
   input  [31:0] io_in_0_bits_uop_inst,
   input  [31:0] io_in_0_bits_uop_debug_inst,
@@ -37,7 +20,6 @@ module Arbiter_6(
   input         io_in_0_bits_uop_ctrl_is_load,
   input         io_in_0_bits_uop_ctrl_is_sta,
   input         io_in_0_bits_uop_ctrl_is_std,
-  input  [1:0]  io_in_0_bits_uop_ctrl_op3_sel,
   input  [1:0]  io_in_0_bits_uop_iw_state,
   input         io_in_0_bits_uop_iw_p1_poisoned,
   input         io_in_0_bits_uop_iw_p2_poisoned,
@@ -54,19 +36,19 @@ module Arbiter_6(
   input  [19:0] io_in_0_bits_uop_imm_packed,
   input  [11:0] io_in_0_bits_uop_csr_addr,
   input  [5:0]  io_in_0_bits_uop_rob_idx,
-  input  [4:0]  io_in_0_bits_uop_ldq_idx,
-  input  [4:0]  io_in_0_bits_uop_stq_idx,
+  input  [3:0]  io_in_0_bits_uop_ldq_idx,
+  input  [3:0]  io_in_0_bits_uop_stq_idx,
   input  [1:0]  io_in_0_bits_uop_rxq_idx,
-  input  [6:0]  io_in_0_bits_uop_pdst,
-  input  [6:0]  io_in_0_bits_uop_prs1,
-  input  [6:0]  io_in_0_bits_uop_prs2,
-  input  [6:0]  io_in_0_bits_uop_prs3,
+  input  [5:0]  io_in_0_bits_uop_pdst,
+  input  [5:0]  io_in_0_bits_uop_prs1,
+  input  [5:0]  io_in_0_bits_uop_prs2,
+  input  [5:0]  io_in_0_bits_uop_prs3,
   input  [4:0]  io_in_0_bits_uop_ppred,
   input         io_in_0_bits_uop_prs1_busy,
   input         io_in_0_bits_uop_prs2_busy,
   input         io_in_0_bits_uop_prs3_busy,
   input         io_in_0_bits_uop_ppred_busy,
-  input  [6:0]  io_in_0_bits_uop_stale_pdst,
+  input  [5:0]  io_in_0_bits_uop_stale_pdst,
   input         io_in_0_bits_uop_exception,
   input  [63:0] io_in_0_bits_uop_exc_cause,
   input         io_in_0_bits_uop_bypassable,
@@ -104,23 +86,6 @@ module Arbiter_6(
   input         io_in_0_bits_is_hella,
   output        io_in_1_ready,
   input         io_in_1_valid,
-  input         io_in_1_bits_uop_switch,
-  input         io_in_1_bits_uop_switch_off,
-  input         io_in_1_bits_uop_is_unicore,
-  input  [2:0]  io_in_1_bits_uop_shift,
-  input  [1:0]  io_in_1_bits_uop_lrs3_rtype,
-  input         io_in_1_bits_uop_rflag,
-  input         io_in_1_bits_uop_wflag,
-  input  [3:0]  io_in_1_bits_uop_prflag,
-  input  [3:0]  io_in_1_bits_uop_pwflag,
-  input         io_in_1_bits_uop_pflag_busy,
-  input  [3:0]  io_in_1_bits_uop_stale_pflag,
-  input  [3:0]  io_in_1_bits_uop_op1_sel,
-  input  [3:0]  io_in_1_bits_uop_op2_sel,
-  input  [5:0]  io_in_1_bits_uop_split_num,
-  input  [5:0]  io_in_1_bits_uop_self_index,
-  input  [5:0]  io_in_1_bits_uop_rob_inst_idx,
-  input  [5:0]  io_in_1_bits_uop_address_num,
   input  [6:0]  io_in_1_bits_uop_uopc,
   input  [31:0] io_in_1_bits_uop_inst,
   input  [31:0] io_in_1_bits_uop_debug_inst,
@@ -138,7 +103,6 @@ module Arbiter_6(
   input         io_in_1_bits_uop_ctrl_is_load,
   input         io_in_1_bits_uop_ctrl_is_sta,
   input         io_in_1_bits_uop_ctrl_is_std,
-  input  [1:0]  io_in_1_bits_uop_ctrl_op3_sel,
   input  [1:0]  io_in_1_bits_uop_iw_state,
   input         io_in_1_bits_uop_iw_p1_poisoned,
   input         io_in_1_bits_uop_iw_p2_poisoned,
@@ -155,19 +119,19 @@ module Arbiter_6(
   input  [19:0] io_in_1_bits_uop_imm_packed,
   input  [11:0] io_in_1_bits_uop_csr_addr,
   input  [5:0]  io_in_1_bits_uop_rob_idx,
-  input  [4:0]  io_in_1_bits_uop_ldq_idx,
-  input  [4:0]  io_in_1_bits_uop_stq_idx,
+  input  [3:0]  io_in_1_bits_uop_ldq_idx,
+  input  [3:0]  io_in_1_bits_uop_stq_idx,
   input  [1:0]  io_in_1_bits_uop_rxq_idx,
-  input  [6:0]  io_in_1_bits_uop_pdst,
-  input  [6:0]  io_in_1_bits_uop_prs1,
-  input  [6:0]  io_in_1_bits_uop_prs2,
-  input  [6:0]  io_in_1_bits_uop_prs3,
+  input  [5:0]  io_in_1_bits_uop_pdst,
+  input  [5:0]  io_in_1_bits_uop_prs1,
+  input  [5:0]  io_in_1_bits_uop_prs2,
+  input  [5:0]  io_in_1_bits_uop_prs3,
   input  [4:0]  io_in_1_bits_uop_ppred,
   input         io_in_1_bits_uop_prs1_busy,
   input         io_in_1_bits_uop_prs2_busy,
   input         io_in_1_bits_uop_prs3_busy,
   input         io_in_1_bits_uop_ppred_busy,
-  input  [6:0]  io_in_1_bits_uop_stale_pdst,
+  input  [5:0]  io_in_1_bits_uop_stale_pdst,
   input         io_in_1_bits_uop_exception,
   input  [63:0] io_in_1_bits_uop_exc_cause,
   input         io_in_1_bits_uop_bypassable,
@@ -205,23 +169,6 @@ module Arbiter_6(
   input         io_in_1_bits_is_hella,
   output        io_in_2_ready,
   input         io_in_2_valid,
-  input         io_in_2_bits_uop_switch,
-  input         io_in_2_bits_uop_switch_off,
-  input         io_in_2_bits_uop_is_unicore,
-  input  [2:0]  io_in_2_bits_uop_shift,
-  input  [1:0]  io_in_2_bits_uop_lrs3_rtype,
-  input         io_in_2_bits_uop_rflag,
-  input         io_in_2_bits_uop_wflag,
-  input  [3:0]  io_in_2_bits_uop_prflag,
-  input  [3:0]  io_in_2_bits_uop_pwflag,
-  input         io_in_2_bits_uop_pflag_busy,
-  input  [3:0]  io_in_2_bits_uop_stale_pflag,
-  input  [3:0]  io_in_2_bits_uop_op1_sel,
-  input  [3:0]  io_in_2_bits_uop_op2_sel,
-  input  [5:0]  io_in_2_bits_uop_split_num,
-  input  [5:0]  io_in_2_bits_uop_self_index,
-  input  [5:0]  io_in_2_bits_uop_rob_inst_idx,
-  input  [5:0]  io_in_2_bits_uop_address_num,
   input  [6:0]  io_in_2_bits_uop_uopc,
   input  [31:0] io_in_2_bits_uop_inst,
   input  [31:0] io_in_2_bits_uop_debug_inst,
@@ -239,7 +186,6 @@ module Arbiter_6(
   input         io_in_2_bits_uop_ctrl_is_load,
   input         io_in_2_bits_uop_ctrl_is_sta,
   input         io_in_2_bits_uop_ctrl_is_std,
-  input  [1:0]  io_in_2_bits_uop_ctrl_op3_sel,
   input  [1:0]  io_in_2_bits_uop_iw_state,
   input         io_in_2_bits_uop_iw_p1_poisoned,
   input         io_in_2_bits_uop_iw_p2_poisoned,
@@ -256,19 +202,19 @@ module Arbiter_6(
   input  [19:0] io_in_2_bits_uop_imm_packed,
   input  [11:0] io_in_2_bits_uop_csr_addr,
   input  [5:0]  io_in_2_bits_uop_rob_idx,
-  input  [4:0]  io_in_2_bits_uop_ldq_idx,
-  input  [4:0]  io_in_2_bits_uop_stq_idx,
+  input  [3:0]  io_in_2_bits_uop_ldq_idx,
+  input  [3:0]  io_in_2_bits_uop_stq_idx,
   input  [1:0]  io_in_2_bits_uop_rxq_idx,
-  input  [6:0]  io_in_2_bits_uop_pdst,
-  input  [6:0]  io_in_2_bits_uop_prs1,
-  input  [6:0]  io_in_2_bits_uop_prs2,
-  input  [6:0]  io_in_2_bits_uop_prs3,
+  input  [5:0]  io_in_2_bits_uop_pdst,
+  input  [5:0]  io_in_2_bits_uop_prs1,
+  input  [5:0]  io_in_2_bits_uop_prs2,
+  input  [5:0]  io_in_2_bits_uop_prs3,
   input  [4:0]  io_in_2_bits_uop_ppred,
   input         io_in_2_bits_uop_prs1_busy,
   input         io_in_2_bits_uop_prs2_busy,
   input         io_in_2_bits_uop_prs3_busy,
   input         io_in_2_bits_uop_ppred_busy,
-  input  [6:0]  io_in_2_bits_uop_stale_pdst,
+  input  [5:0]  io_in_2_bits_uop_stale_pdst,
   input         io_in_2_bits_uop_exception,
   input  [63:0] io_in_2_bits_uop_exc_cause,
   input         io_in_2_bits_uop_bypassable,
@@ -306,23 +252,6 @@ module Arbiter_6(
   input         io_in_2_bits_is_hella,
   input         io_out_ready,
   output        io_out_valid,
-  output        io_out_bits_uop_switch,
-  output        io_out_bits_uop_switch_off,
-  output        io_out_bits_uop_is_unicore,
-  output [2:0]  io_out_bits_uop_shift,
-  output [1:0]  io_out_bits_uop_lrs3_rtype,
-  output        io_out_bits_uop_rflag,
-  output        io_out_bits_uop_wflag,
-  output [3:0]  io_out_bits_uop_prflag,
-  output [3:0]  io_out_bits_uop_pwflag,
-  output        io_out_bits_uop_pflag_busy,
-  output [3:0]  io_out_bits_uop_stale_pflag,
-  output [3:0]  io_out_bits_uop_op1_sel,
-  output [3:0]  io_out_bits_uop_op2_sel,
-  output [5:0]  io_out_bits_uop_split_num,
-  output [5:0]  io_out_bits_uop_self_index,
-  output [5:0]  io_out_bits_uop_rob_inst_idx,
-  output [5:0]  io_out_bits_uop_address_num,
   output [6:0]  io_out_bits_uop_uopc,
   output [31:0] io_out_bits_uop_inst,
   output [31:0] io_out_bits_uop_debug_inst,
@@ -340,7 +269,6 @@ module Arbiter_6(
   output        io_out_bits_uop_ctrl_is_load,
   output        io_out_bits_uop_ctrl_is_sta,
   output        io_out_bits_uop_ctrl_is_std,
-  output [1:0]  io_out_bits_uop_ctrl_op3_sel,
   output [1:0]  io_out_bits_uop_iw_state,
   output        io_out_bits_uop_iw_p1_poisoned,
   output        io_out_bits_uop_iw_p2_poisoned,
@@ -357,19 +285,19 @@ module Arbiter_6(
   output [19:0] io_out_bits_uop_imm_packed,
   output [11:0] io_out_bits_uop_csr_addr,
   output [5:0]  io_out_bits_uop_rob_idx,
-  output [4:0]  io_out_bits_uop_ldq_idx,
-  output [4:0]  io_out_bits_uop_stq_idx,
+  output [3:0]  io_out_bits_uop_ldq_idx,
+  output [3:0]  io_out_bits_uop_stq_idx,
   output [1:0]  io_out_bits_uop_rxq_idx,
-  output [6:0]  io_out_bits_uop_pdst,
-  output [6:0]  io_out_bits_uop_prs1,
-  output [6:0]  io_out_bits_uop_prs2,
-  output [6:0]  io_out_bits_uop_prs3,
+  output [5:0]  io_out_bits_uop_pdst,
+  output [5:0]  io_out_bits_uop_prs1,
+  output [5:0]  io_out_bits_uop_prs2,
+  output [5:0]  io_out_bits_uop_prs3,
   output [4:0]  io_out_bits_uop_ppred,
   output        io_out_bits_uop_prs1_busy,
   output        io_out_bits_uop_prs2_busy,
   output        io_out_bits_uop_prs3_busy,
   output        io_out_bits_uop_ppred_busy,
-  output [6:0]  io_out_bits_uop_stale_pdst,
+  output [5:0]  io_out_bits_uop_stale_pdst,
   output        io_out_bits_uop_exception,
   output [63:0] io_out_bits_uop_exc_cause,
   output        io_out_bits_uop_bypassable,
@@ -443,19 +371,19 @@ module Arbiter_6(
   wire  _GEN_33 = io_in_1_valid ? io_in_1_bits_uop_bypassable : io_in_2_bits_uop_bypassable; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire [63:0] _GEN_34 = io_in_1_valid ? io_in_1_bits_uop_exc_cause : io_in_2_bits_uop_exc_cause; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire  _GEN_35 = io_in_1_valid ? io_in_1_bits_uop_exception : io_in_2_bits_uop_exception; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [6:0] _GEN_36 = io_in_1_valid ? io_in_1_bits_uop_stale_pdst : io_in_2_bits_uop_stale_pdst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [5:0] _GEN_36 = io_in_1_valid ? io_in_1_bits_uop_stale_pdst : io_in_2_bits_uop_stale_pdst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire  _GEN_37 = io_in_1_valid ? io_in_1_bits_uop_ppred_busy : io_in_2_bits_uop_ppred_busy; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire  _GEN_38 = io_in_1_valid ? io_in_1_bits_uop_prs3_busy : io_in_2_bits_uop_prs3_busy; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire  _GEN_39 = io_in_1_valid ? io_in_1_bits_uop_prs2_busy : io_in_2_bits_uop_prs2_busy; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire  _GEN_40 = io_in_1_valid ? io_in_1_bits_uop_prs1_busy : io_in_2_bits_uop_prs1_busy; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire [4:0] _GEN_41 = io_in_1_valid ? io_in_1_bits_uop_ppred : io_in_2_bits_uop_ppred; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [6:0] _GEN_42 = io_in_1_valid ? io_in_1_bits_uop_prs3 : io_in_2_bits_uop_prs3; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [6:0] _GEN_43 = io_in_1_valid ? io_in_1_bits_uop_prs2 : io_in_2_bits_uop_prs2; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [6:0] _GEN_44 = io_in_1_valid ? io_in_1_bits_uop_prs1 : io_in_2_bits_uop_prs1; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [6:0] _GEN_45 = io_in_1_valid ? io_in_1_bits_uop_pdst : io_in_2_bits_uop_pdst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [5:0] _GEN_42 = io_in_1_valid ? io_in_1_bits_uop_prs3 : io_in_2_bits_uop_prs3; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [5:0] _GEN_43 = io_in_1_valid ? io_in_1_bits_uop_prs2 : io_in_2_bits_uop_prs2; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [5:0] _GEN_44 = io_in_1_valid ? io_in_1_bits_uop_prs1 : io_in_2_bits_uop_prs1; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [5:0] _GEN_45 = io_in_1_valid ? io_in_1_bits_uop_pdst : io_in_2_bits_uop_pdst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire [1:0] _GEN_46 = io_in_1_valid ? io_in_1_bits_uop_rxq_idx : io_in_2_bits_uop_rxq_idx; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [4:0] _GEN_47 = io_in_1_valid ? io_in_1_bits_uop_stq_idx : io_in_2_bits_uop_stq_idx; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [4:0] _GEN_48 = io_in_1_valid ? io_in_1_bits_uop_ldq_idx : io_in_2_bits_uop_ldq_idx; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [3:0] _GEN_47 = io_in_1_valid ? io_in_1_bits_uop_stq_idx : io_in_2_bits_uop_stq_idx; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [3:0] _GEN_48 = io_in_1_valid ? io_in_1_bits_uop_ldq_idx : io_in_2_bits_uop_ldq_idx; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire [5:0] _GEN_49 = io_in_1_valid ? io_in_1_bits_uop_rob_idx : io_in_2_bits_uop_rob_idx; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire [11:0] _GEN_50 = io_in_1_valid ? io_in_1_bits_uop_csr_addr : io_in_2_bits_uop_csr_addr; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire [19:0] _GEN_51 = io_in_1_valid ? io_in_1_bits_uop_imm_packed : io_in_2_bits_uop_imm_packed; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
@@ -472,82 +400,46 @@ module Arbiter_6(
   wire  _GEN_62 = io_in_1_valid ? io_in_1_bits_uop_iw_p2_poisoned : io_in_2_bits_uop_iw_p2_poisoned; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire  _GEN_63 = io_in_1_valid ? io_in_1_bits_uop_iw_p1_poisoned : io_in_2_bits_uop_iw_p1_poisoned; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire [1:0] _GEN_64 = io_in_1_valid ? io_in_1_bits_uop_iw_state : io_in_2_bits_uop_iw_state; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [1:0] _GEN_65 = io_in_1_valid ? io_in_1_bits_uop_ctrl_op3_sel : io_in_2_bits_uop_ctrl_op3_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_66 = io_in_1_valid ? io_in_1_bits_uop_ctrl_is_std : io_in_2_bits_uop_ctrl_is_std; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_67 = io_in_1_valid ? io_in_1_bits_uop_ctrl_is_sta : io_in_2_bits_uop_ctrl_is_sta; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_68 = io_in_1_valid ? io_in_1_bits_uop_ctrl_is_load : io_in_2_bits_uop_ctrl_is_load; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [2:0] _GEN_69 = io_in_1_valid ? io_in_1_bits_uop_ctrl_csr_cmd : io_in_2_bits_uop_ctrl_csr_cmd; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_70 = io_in_1_valid ? io_in_1_bits_uop_ctrl_fcn_dw : io_in_2_bits_uop_ctrl_fcn_dw; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [3:0] _GEN_71 = io_in_1_valid ? io_in_1_bits_uop_ctrl_op_fcn : io_in_2_bits_uop_ctrl_op_fcn; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [2:0] _GEN_72 = io_in_1_valid ? io_in_1_bits_uop_ctrl_imm_sel : io_in_2_bits_uop_ctrl_imm_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [2:0] _GEN_73 = io_in_1_valid ? io_in_1_bits_uop_ctrl_op2_sel : io_in_2_bits_uop_ctrl_op2_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [1:0] _GEN_74 = io_in_1_valid ? io_in_1_bits_uop_ctrl_op1_sel : io_in_2_bits_uop_ctrl_op1_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [3:0] _GEN_75 = io_in_1_valid ? io_in_1_bits_uop_ctrl_br_type : io_in_2_bits_uop_ctrl_br_type; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [9:0] _GEN_76 = io_in_1_valid ? io_in_1_bits_uop_fu_code : io_in_2_bits_uop_fu_code; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [2:0] _GEN_77 = io_in_1_valid ? io_in_1_bits_uop_iq_type : io_in_2_bits_uop_iq_type; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [39:0] _GEN_78 = io_in_1_valid ? io_in_1_bits_uop_debug_pc : io_in_2_bits_uop_debug_pc; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_79 = io_in_1_valid ? io_in_1_bits_uop_is_rvc : io_in_2_bits_uop_is_rvc; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [31:0] _GEN_80 = io_in_1_valid ? io_in_1_bits_uop_debug_inst : io_in_2_bits_uop_debug_inst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [31:0] _GEN_81 = io_in_1_valid ? io_in_1_bits_uop_inst : io_in_2_bits_uop_inst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [6:0] _GEN_82 = io_in_1_valid ? io_in_1_bits_uop_uopc : io_in_2_bits_uop_uopc; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [5:0] _GEN_83 = io_in_1_valid ? io_in_1_bits_uop_address_num : io_in_2_bits_uop_address_num; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [5:0] _GEN_84 = io_in_1_valid ? io_in_1_bits_uop_rob_inst_idx : io_in_2_bits_uop_rob_inst_idx; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [5:0] _GEN_85 = io_in_1_valid ? io_in_1_bits_uop_self_index : io_in_2_bits_uop_self_index; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [5:0] _GEN_86 = io_in_1_valid ? io_in_1_bits_uop_split_num : io_in_2_bits_uop_split_num; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [3:0] _GEN_87 = io_in_1_valid ? io_in_1_bits_uop_op2_sel : io_in_2_bits_uop_op2_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [3:0] _GEN_88 = io_in_1_valid ? io_in_1_bits_uop_op1_sel : io_in_2_bits_uop_op1_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [3:0] _GEN_89 = io_in_1_valid ? io_in_1_bits_uop_stale_pflag : io_in_2_bits_uop_stale_pflag; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_90 = io_in_1_valid ? io_in_1_bits_uop_pflag_busy : io_in_2_bits_uop_pflag_busy; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [3:0] _GEN_91 = io_in_1_valid ? io_in_1_bits_uop_pwflag : io_in_2_bits_uop_pwflag; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [3:0] _GEN_92 = io_in_1_valid ? io_in_1_bits_uop_prflag : io_in_2_bits_uop_prflag; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_93 = io_in_1_valid ? io_in_1_bits_uop_wflag : io_in_2_bits_uop_wflag; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_94 = io_in_1_valid ? io_in_1_bits_uop_rflag : io_in_2_bits_uop_rflag; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [1:0] _GEN_95 = io_in_1_valid ? io_in_1_bits_uop_lrs3_rtype : io_in_2_bits_uop_lrs3_rtype; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire [2:0] _GEN_96 = io_in_1_valid ? io_in_1_bits_uop_shift : io_in_2_bits_uop_shift; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_97 = io_in_1_valid ? io_in_1_bits_uop_is_unicore : io_in_2_bits_uop_is_unicore; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_98 = io_in_1_valid ? io_in_1_bits_uop_switch_off : io_in_2_bits_uop_switch_off; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
-  wire  _GEN_99 = io_in_1_valid ? io_in_1_bits_uop_switch : io_in_2_bits_uop_switch; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire  _GEN_65 = io_in_1_valid ? io_in_1_bits_uop_ctrl_is_std : io_in_2_bits_uop_ctrl_is_std; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire  _GEN_66 = io_in_1_valid ? io_in_1_bits_uop_ctrl_is_sta : io_in_2_bits_uop_ctrl_is_sta; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire  _GEN_67 = io_in_1_valid ? io_in_1_bits_uop_ctrl_is_load : io_in_2_bits_uop_ctrl_is_load; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [2:0] _GEN_68 = io_in_1_valid ? io_in_1_bits_uop_ctrl_csr_cmd : io_in_2_bits_uop_ctrl_csr_cmd; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire  _GEN_69 = io_in_1_valid ? io_in_1_bits_uop_ctrl_fcn_dw : io_in_2_bits_uop_ctrl_fcn_dw; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [3:0] _GEN_70 = io_in_1_valid ? io_in_1_bits_uop_ctrl_op_fcn : io_in_2_bits_uop_ctrl_op_fcn; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [2:0] _GEN_71 = io_in_1_valid ? io_in_1_bits_uop_ctrl_imm_sel : io_in_2_bits_uop_ctrl_imm_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [2:0] _GEN_72 = io_in_1_valid ? io_in_1_bits_uop_ctrl_op2_sel : io_in_2_bits_uop_ctrl_op2_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [1:0] _GEN_73 = io_in_1_valid ? io_in_1_bits_uop_ctrl_op1_sel : io_in_2_bits_uop_ctrl_op1_sel; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [3:0] _GEN_74 = io_in_1_valid ? io_in_1_bits_uop_ctrl_br_type : io_in_2_bits_uop_ctrl_br_type; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [9:0] _GEN_75 = io_in_1_valid ? io_in_1_bits_uop_fu_code : io_in_2_bits_uop_fu_code; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [2:0] _GEN_76 = io_in_1_valid ? io_in_1_bits_uop_iq_type : io_in_2_bits_uop_iq_type; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [39:0] _GEN_77 = io_in_1_valid ? io_in_1_bits_uop_debug_pc : io_in_2_bits_uop_debug_pc; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire  _GEN_78 = io_in_1_valid ? io_in_1_bits_uop_is_rvc : io_in_2_bits_uop_is_rvc; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [31:0] _GEN_79 = io_in_1_valid ? io_in_1_bits_uop_debug_inst : io_in_2_bits_uop_debug_inst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [31:0] _GEN_80 = io_in_1_valid ? io_in_1_bits_uop_inst : io_in_2_bits_uop_inst; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
+  wire [6:0] _GEN_81 = io_in_1_valid ? io_in_1_bits_uop_uopc : io_in_2_bits_uop_uopc; // @[Arbiter.scala 126:27 Arbiter.scala 128:19 Arbiter.scala 124:15]
   wire  grant_1 = ~io_in_0_valid; // @[Arbiter.scala 31:78]
   wire  grant_2 = ~(io_in_0_valid | io_in_1_valid); // @[Arbiter.scala 31:78]
   assign io_in_0_ready = io_out_ready; // @[Arbiter.scala 134:19]
   assign io_in_1_ready = grant_1 & io_out_ready; // @[Arbiter.scala 134:19]
   assign io_in_2_ready = grant_2 & io_out_ready; // @[Arbiter.scala 134:19]
   assign io_out_valid = ~grant_2 | io_in_2_valid; // @[Arbiter.scala 135:31]
-  assign io_out_bits_uop_switch = io_in_0_valid ? io_in_0_bits_uop_switch : _GEN_99; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_switch_off = io_in_0_valid ? io_in_0_bits_uop_switch_off : _GEN_98; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_is_unicore = io_in_0_valid ? io_in_0_bits_uop_is_unicore : _GEN_97; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_shift = io_in_0_valid ? io_in_0_bits_uop_shift : _GEN_96; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_lrs3_rtype = io_in_0_valid ? io_in_0_bits_uop_lrs3_rtype : _GEN_95; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_rflag = io_in_0_valid ? io_in_0_bits_uop_rflag : _GEN_94; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_wflag = io_in_0_valid ? io_in_0_bits_uop_wflag : _GEN_93; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_prflag = io_in_0_valid ? io_in_0_bits_uop_prflag : _GEN_92; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_pwflag = io_in_0_valid ? io_in_0_bits_uop_pwflag : _GEN_91; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_pflag_busy = io_in_0_valid ? io_in_0_bits_uop_pflag_busy : _GEN_90; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_stale_pflag = io_in_0_valid ? io_in_0_bits_uop_stale_pflag : _GEN_89; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_op1_sel = io_in_0_valid ? io_in_0_bits_uop_op1_sel : _GEN_88; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_op2_sel = io_in_0_valid ? io_in_0_bits_uop_op2_sel : _GEN_87; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_split_num = io_in_0_valid ? io_in_0_bits_uop_split_num : _GEN_86; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_self_index = io_in_0_valid ? io_in_0_bits_uop_self_index : _GEN_85; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_rob_inst_idx = io_in_0_valid ? io_in_0_bits_uop_rob_inst_idx : _GEN_84; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_address_num = io_in_0_valid ? io_in_0_bits_uop_address_num : _GEN_83; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_uopc = io_in_0_valid ? io_in_0_bits_uop_uopc : _GEN_82; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_inst = io_in_0_valid ? io_in_0_bits_uop_inst : _GEN_81; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_debug_inst = io_in_0_valid ? io_in_0_bits_uop_debug_inst : _GEN_80; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_is_rvc = io_in_0_valid ? io_in_0_bits_uop_is_rvc : _GEN_79; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_debug_pc = io_in_0_valid ? io_in_0_bits_uop_debug_pc : _GEN_78; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_iq_type = io_in_0_valid ? io_in_0_bits_uop_iq_type : _GEN_77; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_fu_code = io_in_0_valid ? io_in_0_bits_uop_fu_code : _GEN_76; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_br_type = io_in_0_valid ? io_in_0_bits_uop_ctrl_br_type : _GEN_75; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_op1_sel = io_in_0_valid ? io_in_0_bits_uop_ctrl_op1_sel : _GEN_74; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_op2_sel = io_in_0_valid ? io_in_0_bits_uop_ctrl_op2_sel : _GEN_73; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_imm_sel = io_in_0_valid ? io_in_0_bits_uop_ctrl_imm_sel : _GEN_72; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_op_fcn = io_in_0_valid ? io_in_0_bits_uop_ctrl_op_fcn : _GEN_71; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_fcn_dw = io_in_0_valid ? io_in_0_bits_uop_ctrl_fcn_dw : _GEN_70; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_csr_cmd = io_in_0_valid ? io_in_0_bits_uop_ctrl_csr_cmd : _GEN_69; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_is_load = io_in_0_valid ? io_in_0_bits_uop_ctrl_is_load : _GEN_68; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_is_sta = io_in_0_valid ? io_in_0_bits_uop_ctrl_is_sta : _GEN_67; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_is_std = io_in_0_valid ? io_in_0_bits_uop_ctrl_is_std : _GEN_66; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
-  assign io_out_bits_uop_ctrl_op3_sel = io_in_0_valid ? io_in_0_bits_uop_ctrl_op3_sel : _GEN_65; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_uopc = io_in_0_valid ? io_in_0_bits_uop_uopc : _GEN_81; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_inst = io_in_0_valid ? io_in_0_bits_uop_inst : _GEN_80; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_debug_inst = io_in_0_valid ? io_in_0_bits_uop_debug_inst : _GEN_79; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_is_rvc = io_in_0_valid ? io_in_0_bits_uop_is_rvc : _GEN_78; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_debug_pc = io_in_0_valid ? io_in_0_bits_uop_debug_pc : _GEN_77; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_iq_type = io_in_0_valid ? io_in_0_bits_uop_iq_type : _GEN_76; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_fu_code = io_in_0_valid ? io_in_0_bits_uop_fu_code : _GEN_75; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_br_type = io_in_0_valid ? io_in_0_bits_uop_ctrl_br_type : _GEN_74; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_op1_sel = io_in_0_valid ? io_in_0_bits_uop_ctrl_op1_sel : _GEN_73; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_op2_sel = io_in_0_valid ? io_in_0_bits_uop_ctrl_op2_sel : _GEN_72; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_imm_sel = io_in_0_valid ? io_in_0_bits_uop_ctrl_imm_sel : _GEN_71; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_op_fcn = io_in_0_valid ? io_in_0_bits_uop_ctrl_op_fcn : _GEN_70; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_fcn_dw = io_in_0_valid ? io_in_0_bits_uop_ctrl_fcn_dw : _GEN_69; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_csr_cmd = io_in_0_valid ? io_in_0_bits_uop_ctrl_csr_cmd : _GEN_68; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_is_load = io_in_0_valid ? io_in_0_bits_uop_ctrl_is_load : _GEN_67; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_is_sta = io_in_0_valid ? io_in_0_bits_uop_ctrl_is_sta : _GEN_66; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
+  assign io_out_bits_uop_ctrl_is_std = io_in_0_valid ? io_in_0_bits_uop_ctrl_is_std : _GEN_65; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
   assign io_out_bits_uop_iw_state = io_in_0_valid ? io_in_0_bits_uop_iw_state : _GEN_64; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
   assign io_out_bits_uop_iw_p1_poisoned = io_in_0_valid ? io_in_0_bits_uop_iw_p1_poisoned : _GEN_63; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]
   assign io_out_bits_uop_iw_p2_poisoned = io_in_0_valid ? io_in_0_bits_uop_iw_p2_poisoned : _GEN_62; // @[Arbiter.scala 126:27 Arbiter.scala 128:19]

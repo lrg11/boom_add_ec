@@ -1,51 +1,51 @@
 module Queue_23(
-  input         clock,
-  input         reset,
-  output        io_enq_ready,
-  input         io_enq_valid,
-  input         io_enq_bits_is_mispredict_update,
-  input         io_enq_bits_is_repair_update,
-  input  [3:0]  io_enq_bits_btb_mispredicts,
-  input  [39:0] io_enq_bits_pc,
-  input  [3:0]  io_enq_bits_br_mask,
-  input         io_enq_bits_cfi_idx_valid,
-  input  [1:0]  io_enq_bits_cfi_idx_bits,
-  input         io_enq_bits_cfi_taken,
-  input         io_enq_bits_cfi_mispredicted,
-  input         io_enq_bits_cfi_is_br,
-  input         io_enq_bits_cfi_is_jal,
-  input         io_enq_bits_cfi_is_jalr,
-  input  [15:0] io_enq_bits_ghist_old_history,
-  input         io_enq_bits_ghist_current_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_taken,
-  input  [4:0]  io_enq_bits_ghist_ras_idx,
-  input         io_enq_bits_lhist_0,
-  input  [39:0] io_enq_bits_target,
-  input  [44:0] io_enq_bits_meta_0,
-  input         io_deq_ready,
-  output        io_deq_valid,
-  output        io_deq_bits_is_mispredict_update,
-  output        io_deq_bits_is_repair_update,
-  output [3:0]  io_deq_bits_btb_mispredicts,
-  output [39:0] io_deq_bits_pc,
-  output [3:0]  io_deq_bits_br_mask,
-  output        io_deq_bits_cfi_idx_valid,
-  output [1:0]  io_deq_bits_cfi_idx_bits,
-  output        io_deq_bits_cfi_taken,
-  output        io_deq_bits_cfi_mispredicted,
-  output        io_deq_bits_cfi_is_br,
-  output        io_deq_bits_cfi_is_jal,
-  output        io_deq_bits_cfi_is_jalr,
-  output [15:0] io_deq_bits_ghist_old_history,
-  output        io_deq_bits_ghist_current_saw_branch_not_taken,
-  output        io_deq_bits_ghist_new_saw_branch_not_taken,
-  output        io_deq_bits_ghist_new_saw_branch_taken,
-  output [4:0]  io_deq_bits_ghist_ras_idx,
-  output        io_deq_bits_lhist_0,
-  output [39:0] io_deq_bits_target,
-  output [44:0] io_deq_bits_meta_0,
-  output [1:0]  io_count
+  input          clock,
+  input          reset,
+  output         io_enq_ready,
+  input          io_enq_valid,
+  input          io_enq_bits_is_mispredict_update,
+  input          io_enq_bits_is_repair_update,
+  input  [3:0]   io_enq_bits_btb_mispredicts,
+  input  [39:0]  io_enq_bits_pc,
+  input  [3:0]   io_enq_bits_br_mask,
+  input          io_enq_bits_cfi_idx_valid,
+  input  [1:0]   io_enq_bits_cfi_idx_bits,
+  input          io_enq_bits_cfi_taken,
+  input          io_enq_bits_cfi_mispredicted,
+  input          io_enq_bits_cfi_is_br,
+  input          io_enq_bits_cfi_is_jal,
+  input          io_enq_bits_cfi_is_jalr,
+  input  [63:0]  io_enq_bits_ghist_old_history,
+  input          io_enq_bits_ghist_current_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_taken,
+  input  [4:0]   io_enq_bits_ghist_ras_idx,
+  input          io_enq_bits_lhist_0,
+  input  [39:0]  io_enq_bits_target,
+  input  [119:0] io_enq_bits_meta_0,
+  input          io_deq_ready,
+  output         io_deq_valid,
+  output         io_deq_bits_is_mispredict_update,
+  output         io_deq_bits_is_repair_update,
+  output [3:0]   io_deq_bits_btb_mispredicts,
+  output [39:0]  io_deq_bits_pc,
+  output [3:0]   io_deq_bits_br_mask,
+  output         io_deq_bits_cfi_idx_valid,
+  output [1:0]   io_deq_bits_cfi_idx_bits,
+  output         io_deq_bits_cfi_taken,
+  output         io_deq_bits_cfi_mispredicted,
+  output         io_deq_bits_cfi_is_br,
+  output         io_deq_bits_cfi_is_jal,
+  output         io_deq_bits_cfi_is_jalr,
+  output [63:0]  io_deq_bits_ghist_old_history,
+  output         io_deq_bits_ghist_current_saw_branch_not_taken,
+  output         io_deq_bits_ghist_new_saw_branch_not_taken,
+  output         io_deq_bits_ghist_new_saw_branch_taken,
+  output [4:0]   io_deq_bits_ghist_ras_idx,
+  output         io_deq_bits_lhist_0,
+  output [39:0]  io_deq_bits_target,
+  output [119:0] io_deq_bits_meta_0,
+  output [1:0]   io_count
 );
 `ifdef RANDOMIZE_MEM_INIT
   reg [31:0] _RAND_0;
@@ -60,14 +60,14 @@ module Queue_23(
   reg [31:0] _RAND_9;
   reg [31:0] _RAND_10;
   reg [31:0] _RAND_11;
-  reg [31:0] _RAND_12;
+  reg [63:0] _RAND_12;
   reg [31:0] _RAND_13;
   reg [31:0] _RAND_14;
   reg [31:0] _RAND_15;
   reg [31:0] _RAND_16;
   reg [31:0] _RAND_17;
   reg [63:0] _RAND_18;
-  reg [63:0] _RAND_19;
+  reg [127:0] _RAND_19;
 `endif // RANDOMIZE_MEM_INIT
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_20;
@@ -158,10 +158,10 @@ module Queue_23(
   wire  ram_cfi_is_jalr_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_cfi_is_jalr_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_cfi_is_jalr_MPORT_en; // @[Decoupled.scala 218:16]
-  reg [15:0] ram_ghist_old_history [0:1]; // @[Decoupled.scala 218:16]
-  wire [15:0] ram_ghist_old_history_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
+  reg [63:0] ram_ghist_old_history [0:1]; // @[Decoupled.scala 218:16]
+  wire [63:0] ram_ghist_old_history_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_io_deq_bits_MPORT_addr; // @[Decoupled.scala 218:16]
-  wire [15:0] ram_ghist_old_history_MPORT_data; // @[Decoupled.scala 218:16]
+  wire [63:0] ram_ghist_old_history_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_ghist_old_history_MPORT_en; // @[Decoupled.scala 218:16]
@@ -207,10 +207,10 @@ module Queue_23(
   wire  ram_target_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_target_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_target_MPORT_en; // @[Decoupled.scala 218:16]
-  reg [44:0] ram_meta_0 [0:1]; // @[Decoupled.scala 218:16]
-  wire [44:0] ram_meta_0_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
+  reg [119:0] ram_meta_0 [0:1]; // @[Decoupled.scala 218:16]
+  wire [119:0] ram_meta_0_io_deq_bits_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_io_deq_bits_MPORT_addr; // @[Decoupled.scala 218:16]
-  wire [44:0] ram_meta_0_MPORT_data; // @[Decoupled.scala 218:16]
+  wire [119:0] ram_meta_0_MPORT_data; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_MPORT_addr; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_MPORT_mask; // @[Decoupled.scala 218:16]
   wire  ram_meta_0_MPORT_en; // @[Decoupled.scala 218:16]
@@ -527,9 +527,9 @@ initial begin
   _RAND_11 = {1{`RANDOM}};
   for (initvar = 0; initvar < 2; initvar = initvar+1)
     ram_cfi_is_jalr[initvar] = _RAND_11[0:0];
-  _RAND_12 = {1{`RANDOM}};
+  _RAND_12 = {2{`RANDOM}};
   for (initvar = 0; initvar < 2; initvar = initvar+1)
-    ram_ghist_old_history[initvar] = _RAND_12[15:0];
+    ram_ghist_old_history[initvar] = _RAND_12[63:0];
   _RAND_13 = {1{`RANDOM}};
   for (initvar = 0; initvar < 2; initvar = initvar+1)
     ram_ghist_current_saw_branch_not_taken[initvar] = _RAND_13[0:0];
@@ -548,9 +548,9 @@ initial begin
   _RAND_18 = {2{`RANDOM}};
   for (initvar = 0; initvar < 2; initvar = initvar+1)
     ram_target[initvar] = _RAND_18[39:0];
-  _RAND_19 = {2{`RANDOM}};
+  _RAND_19 = {4{`RANDOM}};
   for (initvar = 0; initvar < 2; initvar = initvar+1)
-    ram_meta_0[initvar] = _RAND_19[44:0];
+    ram_meta_0[initvar] = _RAND_19[119:0];
 `endif // RANDOMIZE_MEM_INIT
 `ifdef RANDOMIZE_REG_INIT
   _RAND_20 = {1{`RANDOM}};

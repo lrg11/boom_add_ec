@@ -3,23 +3,6 @@ module BoomMSHRFile(
   input         reset,
   output        io_req_0_ready,
   input         io_req_0_valid,
-  input         io_req_0_bits_uop_switch,
-  input         io_req_0_bits_uop_switch_off,
-  input         io_req_0_bits_uop_is_unicore,
-  input  [2:0]  io_req_0_bits_uop_shift,
-  input  [1:0]  io_req_0_bits_uop_lrs3_rtype,
-  input         io_req_0_bits_uop_rflag,
-  input         io_req_0_bits_uop_wflag,
-  input  [3:0]  io_req_0_bits_uop_prflag,
-  input  [3:0]  io_req_0_bits_uop_pwflag,
-  input         io_req_0_bits_uop_pflag_busy,
-  input  [3:0]  io_req_0_bits_uop_stale_pflag,
-  input  [3:0]  io_req_0_bits_uop_op1_sel,
-  input  [3:0]  io_req_0_bits_uop_op2_sel,
-  input  [5:0]  io_req_0_bits_uop_split_num,
-  input  [5:0]  io_req_0_bits_uop_self_index,
-  input  [5:0]  io_req_0_bits_uop_rob_inst_idx,
-  input  [5:0]  io_req_0_bits_uop_address_num,
   input  [6:0]  io_req_0_bits_uop_uopc,
   input  [31:0] io_req_0_bits_uop_inst,
   input  [31:0] io_req_0_bits_uop_debug_inst,
@@ -37,7 +20,6 @@ module BoomMSHRFile(
   input         io_req_0_bits_uop_ctrl_is_load,
   input         io_req_0_bits_uop_ctrl_is_sta,
   input         io_req_0_bits_uop_ctrl_is_std,
-  input  [1:0]  io_req_0_bits_uop_ctrl_op3_sel,
   input  [1:0]  io_req_0_bits_uop_iw_state,
   input         io_req_0_bits_uop_iw_p1_poisoned,
   input         io_req_0_bits_uop_iw_p2_poisoned,
@@ -54,19 +36,19 @@ module BoomMSHRFile(
   input  [19:0] io_req_0_bits_uop_imm_packed,
   input  [11:0] io_req_0_bits_uop_csr_addr,
   input  [5:0]  io_req_0_bits_uop_rob_idx,
-  input  [4:0]  io_req_0_bits_uop_ldq_idx,
-  input  [4:0]  io_req_0_bits_uop_stq_idx,
+  input  [3:0]  io_req_0_bits_uop_ldq_idx,
+  input  [3:0]  io_req_0_bits_uop_stq_idx,
   input  [1:0]  io_req_0_bits_uop_rxq_idx,
-  input  [6:0]  io_req_0_bits_uop_pdst,
-  input  [6:0]  io_req_0_bits_uop_prs1,
-  input  [6:0]  io_req_0_bits_uop_prs2,
-  input  [6:0]  io_req_0_bits_uop_prs3,
+  input  [5:0]  io_req_0_bits_uop_pdst,
+  input  [5:0]  io_req_0_bits_uop_prs1,
+  input  [5:0]  io_req_0_bits_uop_prs2,
+  input  [5:0]  io_req_0_bits_uop_prs3,
   input  [4:0]  io_req_0_bits_uop_ppred,
   input         io_req_0_bits_uop_prs1_busy,
   input         io_req_0_bits_uop_prs2_busy,
   input         io_req_0_bits_uop_prs3_busy,
   input         io_req_0_bits_uop_ppred_busy,
-  input  [6:0]  io_req_0_bits_uop_stale_pdst,
+  input  [5:0]  io_req_0_bits_uop_stale_pdst,
   input         io_req_0_bits_uop_exception,
   input  [63:0] io_req_0_bits_uop_exc_cause,
   input         io_req_0_bits_uop_bypassable,
@@ -106,28 +88,11 @@ module BoomMSHRFile(
   input         io_req_0_bits_tag_match,
   input  [1:0]  io_req_0_bits_old_meta_coh_state,
   input  [19:0] io_req_0_bits_old_meta_tag,
-  input         io_req_0_bits_way_en,
+  input  [3:0]  io_req_0_bits_way_en,
   input  [4:0]  io_req_0_bits_sdq_id,
   input         io_req_is_probe_0,
   input         io_resp_ready,
   output        io_resp_valid,
-  output        io_resp_bits_uop_switch,
-  output        io_resp_bits_uop_switch_off,
-  output        io_resp_bits_uop_is_unicore,
-  output [2:0]  io_resp_bits_uop_shift,
-  output [1:0]  io_resp_bits_uop_lrs3_rtype,
-  output        io_resp_bits_uop_rflag,
-  output        io_resp_bits_uop_wflag,
-  output [3:0]  io_resp_bits_uop_prflag,
-  output [3:0]  io_resp_bits_uop_pwflag,
-  output        io_resp_bits_uop_pflag_busy,
-  output [3:0]  io_resp_bits_uop_stale_pflag,
-  output [3:0]  io_resp_bits_uop_op1_sel,
-  output [3:0]  io_resp_bits_uop_op2_sel,
-  output [5:0]  io_resp_bits_uop_split_num,
-  output [5:0]  io_resp_bits_uop_self_index,
-  output [5:0]  io_resp_bits_uop_rob_inst_idx,
-  output [5:0]  io_resp_bits_uop_address_num,
   output [6:0]  io_resp_bits_uop_uopc,
   output [31:0] io_resp_bits_uop_inst,
   output [31:0] io_resp_bits_uop_debug_inst,
@@ -145,7 +110,6 @@ module BoomMSHRFile(
   output        io_resp_bits_uop_ctrl_is_load,
   output        io_resp_bits_uop_ctrl_is_sta,
   output        io_resp_bits_uop_ctrl_is_std,
-  output [1:0]  io_resp_bits_uop_ctrl_op3_sel,
   output [1:0]  io_resp_bits_uop_iw_state,
   output        io_resp_bits_uop_iw_p1_poisoned,
   output        io_resp_bits_uop_iw_p2_poisoned,
@@ -162,19 +126,19 @@ module BoomMSHRFile(
   output [19:0] io_resp_bits_uop_imm_packed,
   output [11:0] io_resp_bits_uop_csr_addr,
   output [5:0]  io_resp_bits_uop_rob_idx,
-  output [4:0]  io_resp_bits_uop_ldq_idx,
-  output [4:0]  io_resp_bits_uop_stq_idx,
+  output [3:0]  io_resp_bits_uop_ldq_idx,
+  output [3:0]  io_resp_bits_uop_stq_idx,
   output [1:0]  io_resp_bits_uop_rxq_idx,
-  output [6:0]  io_resp_bits_uop_pdst,
-  output [6:0]  io_resp_bits_uop_prs1,
-  output [6:0]  io_resp_bits_uop_prs2,
-  output [6:0]  io_resp_bits_uop_prs3,
+  output [5:0]  io_resp_bits_uop_pdst,
+  output [5:0]  io_resp_bits_uop_prs1,
+  output [5:0]  io_resp_bits_uop_prs2,
+  output [5:0]  io_resp_bits_uop_prs3,
   output [4:0]  io_resp_bits_uop_ppred,
   output        io_resp_bits_uop_prs1_busy,
   output        io_resp_bits_uop_prs2_busy,
   output        io_resp_bits_uop_prs3_busy,
   output        io_resp_bits_uop_ppred_busy,
-  output [6:0]  io_resp_bits_uop_stale_pdst,
+  output [5:0]  io_resp_bits_uop_stale_pdst,
   output        io_resp_bits_uop_exception,
   output [63:0] io_resp_bits_uop_exc_cause,
   output        io_resp_bits_uop_bypassable,
@@ -214,23 +178,6 @@ module BoomMSHRFile(
   output        io_block_hit_0,
   input  [11:0] io_brupdate_b1_resolve_mask,
   input  [11:0] io_brupdate_b1_mispredict_mask,
-  input         io_brupdate_b2_uop_switch,
-  input         io_brupdate_b2_uop_switch_off,
-  input         io_brupdate_b2_uop_is_unicore,
-  input  [2:0]  io_brupdate_b2_uop_shift,
-  input  [1:0]  io_brupdate_b2_uop_lrs3_rtype,
-  input         io_brupdate_b2_uop_rflag,
-  input         io_brupdate_b2_uop_wflag,
-  input  [3:0]  io_brupdate_b2_uop_prflag,
-  input  [3:0]  io_brupdate_b2_uop_pwflag,
-  input         io_brupdate_b2_uop_pflag_busy,
-  input  [3:0]  io_brupdate_b2_uop_stale_pflag,
-  input  [3:0]  io_brupdate_b2_uop_op1_sel,
-  input  [3:0]  io_brupdate_b2_uop_op2_sel,
-  input  [5:0]  io_brupdate_b2_uop_split_num,
-  input  [5:0]  io_brupdate_b2_uop_self_index,
-  input  [5:0]  io_brupdate_b2_uop_rob_inst_idx,
-  input  [5:0]  io_brupdate_b2_uop_address_num,
   input  [6:0]  io_brupdate_b2_uop_uopc,
   input  [31:0] io_brupdate_b2_uop_inst,
   input  [31:0] io_brupdate_b2_uop_debug_inst,
@@ -248,7 +195,6 @@ module BoomMSHRFile(
   input         io_brupdate_b2_uop_ctrl_is_load,
   input         io_brupdate_b2_uop_ctrl_is_sta,
   input         io_brupdate_b2_uop_ctrl_is_std,
-  input  [1:0]  io_brupdate_b2_uop_ctrl_op3_sel,
   input  [1:0]  io_brupdate_b2_uop_iw_state,
   input         io_brupdate_b2_uop_iw_p1_poisoned,
   input         io_brupdate_b2_uop_iw_p2_poisoned,
@@ -265,19 +211,19 @@ module BoomMSHRFile(
   input  [19:0] io_brupdate_b2_uop_imm_packed,
   input  [11:0] io_brupdate_b2_uop_csr_addr,
   input  [5:0]  io_brupdate_b2_uop_rob_idx,
-  input  [4:0]  io_brupdate_b2_uop_ldq_idx,
-  input  [4:0]  io_brupdate_b2_uop_stq_idx,
+  input  [3:0]  io_brupdate_b2_uop_ldq_idx,
+  input  [3:0]  io_brupdate_b2_uop_stq_idx,
   input  [1:0]  io_brupdate_b2_uop_rxq_idx,
-  input  [6:0]  io_brupdate_b2_uop_pdst,
-  input  [6:0]  io_brupdate_b2_uop_prs1,
-  input  [6:0]  io_brupdate_b2_uop_prs2,
-  input  [6:0]  io_brupdate_b2_uop_prs3,
+  input  [5:0]  io_brupdate_b2_uop_pdst,
+  input  [5:0]  io_brupdate_b2_uop_prs1,
+  input  [5:0]  io_brupdate_b2_uop_prs2,
+  input  [5:0]  io_brupdate_b2_uop_prs3,
   input  [4:0]  io_brupdate_b2_uop_ppred,
   input         io_brupdate_b2_uop_prs1_busy,
   input         io_brupdate_b2_uop_prs2_busy,
   input         io_brupdate_b2_uop_prs3_busy,
   input         io_brupdate_b2_uop_ppred_busy,
-  input  [6:0]  io_brupdate_b2_uop_stale_pdst,
+  input  [5:0]  io_brupdate_b2_uop_stale_pdst,
   input         io_brupdate_b2_uop_exception,
   input  [63:0] io_brupdate_b2_uop_exc_cause,
   input         io_brupdate_b2_uop_bypassable,
@@ -317,7 +263,7 @@ module BoomMSHRFile(
   input  [2:0]  io_brupdate_b2_cfi_type,
   input  [1:0]  io_brupdate_b2_pc_sel,
   input  [39:0] io_brupdate_b2_jalr_target,
-  input  [31:0] io_brupdate_b2_target_offset,
+  input  [20:0] io_brupdate_b2_target_offset,
   input         io_exception,
   input  [5:0]  io_rob_pnr_idx,
   input  [5:0]  io_rob_head_idx,
@@ -346,44 +292,27 @@ module BoomMSHRFile(
   output [1:0]  io_mem_finish_bits_sink,
   input         io_refill_ready,
   output        io_refill_valid,
-  output        io_refill_bits_way_en,
+  output [3:0]  io_refill_bits_way_en,
   output [11:0] io_refill_bits_addr,
   output        io_refill_bits_wmask,
   output [63:0] io_refill_bits_data,
   input         io_meta_write_ready,
   output        io_meta_write_valid,
   output [5:0]  io_meta_write_bits_idx,
-  output        io_meta_write_bits_way_en,
+  output [3:0]  io_meta_write_bits_way_en,
   output [19:0] io_meta_write_bits_tag,
   output [1:0]  io_meta_write_bits_data_coh_state,
   output [19:0] io_meta_write_bits_data_tag,
   input         io_meta_read_ready,
   output        io_meta_read_valid,
   output [5:0]  io_meta_read_bits_idx,
-  output        io_meta_read_bits_way_en,
+  output [3:0]  io_meta_read_bits_way_en,
   output [19:0] io_meta_read_bits_tag,
   input         io_meta_resp_valid,
   input  [1:0]  io_meta_resp_bits_coh_state,
   input  [19:0] io_meta_resp_bits_tag,
   input         io_replay_ready,
   output        io_replay_valid,
-  output        io_replay_bits_uop_switch,
-  output        io_replay_bits_uop_switch_off,
-  output        io_replay_bits_uop_is_unicore,
-  output [2:0]  io_replay_bits_uop_shift,
-  output [1:0]  io_replay_bits_uop_lrs3_rtype,
-  output        io_replay_bits_uop_rflag,
-  output        io_replay_bits_uop_wflag,
-  output [3:0]  io_replay_bits_uop_prflag,
-  output [3:0]  io_replay_bits_uop_pwflag,
-  output        io_replay_bits_uop_pflag_busy,
-  output [3:0]  io_replay_bits_uop_stale_pflag,
-  output [3:0]  io_replay_bits_uop_op1_sel,
-  output [3:0]  io_replay_bits_uop_op2_sel,
-  output [5:0]  io_replay_bits_uop_split_num,
-  output [5:0]  io_replay_bits_uop_self_index,
-  output [5:0]  io_replay_bits_uop_rob_inst_idx,
-  output [5:0]  io_replay_bits_uop_address_num,
   output [6:0]  io_replay_bits_uop_uopc,
   output [31:0] io_replay_bits_uop_inst,
   output [31:0] io_replay_bits_uop_debug_inst,
@@ -401,7 +330,6 @@ module BoomMSHRFile(
   output        io_replay_bits_uop_ctrl_is_load,
   output        io_replay_bits_uop_ctrl_is_sta,
   output        io_replay_bits_uop_ctrl_is_std,
-  output [1:0]  io_replay_bits_uop_ctrl_op3_sel,
   output [1:0]  io_replay_bits_uop_iw_state,
   output        io_replay_bits_uop_iw_p1_poisoned,
   output        io_replay_bits_uop_iw_p2_poisoned,
@@ -418,19 +346,19 @@ module BoomMSHRFile(
   output [19:0] io_replay_bits_uop_imm_packed,
   output [11:0] io_replay_bits_uop_csr_addr,
   output [5:0]  io_replay_bits_uop_rob_idx,
-  output [4:0]  io_replay_bits_uop_ldq_idx,
-  output [4:0]  io_replay_bits_uop_stq_idx,
+  output [3:0]  io_replay_bits_uop_ldq_idx,
+  output [3:0]  io_replay_bits_uop_stq_idx,
   output [1:0]  io_replay_bits_uop_rxq_idx,
-  output [6:0]  io_replay_bits_uop_pdst,
-  output [6:0]  io_replay_bits_uop_prs1,
-  output [6:0]  io_replay_bits_uop_prs2,
-  output [6:0]  io_replay_bits_uop_prs3,
+  output [5:0]  io_replay_bits_uop_pdst,
+  output [5:0]  io_replay_bits_uop_prs1,
+  output [5:0]  io_replay_bits_uop_prs2,
+  output [5:0]  io_replay_bits_uop_prs3,
   output [4:0]  io_replay_bits_uop_ppred,
   output        io_replay_bits_uop_prs1_busy,
   output        io_replay_bits_uop_prs2_busy,
   output        io_replay_bits_uop_prs3_busy,
   output        io_replay_bits_uop_ppred_busy,
-  output [6:0]  io_replay_bits_uop_stale_pdst,
+  output [5:0]  io_replay_bits_uop_stale_pdst,
   output        io_replay_bits_uop_exception,
   output [63:0] io_replay_bits_uop_exc_cause,
   output        io_replay_bits_uop_bypassable,
@@ -470,27 +398,10 @@ module BoomMSHRFile(
   output        io_replay_bits_tag_match,
   output [1:0]  io_replay_bits_old_meta_coh_state,
   output [19:0] io_replay_bits_old_meta_tag,
-  output        io_replay_bits_way_en,
+  output [3:0]  io_replay_bits_way_en,
   output [4:0]  io_replay_bits_sdq_id,
   input         io_prefetch_ready,
   output        io_prefetch_valid,
-  output        io_prefetch_bits_uop_switch,
-  output        io_prefetch_bits_uop_switch_off,
-  output        io_prefetch_bits_uop_is_unicore,
-  output [2:0]  io_prefetch_bits_uop_shift,
-  output [1:0]  io_prefetch_bits_uop_lrs3_rtype,
-  output        io_prefetch_bits_uop_rflag,
-  output        io_prefetch_bits_uop_wflag,
-  output [3:0]  io_prefetch_bits_uop_prflag,
-  output [3:0]  io_prefetch_bits_uop_pwflag,
-  output        io_prefetch_bits_uop_pflag_busy,
-  output [3:0]  io_prefetch_bits_uop_stale_pflag,
-  output [3:0]  io_prefetch_bits_uop_op1_sel,
-  output [3:0]  io_prefetch_bits_uop_op2_sel,
-  output [5:0]  io_prefetch_bits_uop_split_num,
-  output [5:0]  io_prefetch_bits_uop_self_index,
-  output [5:0]  io_prefetch_bits_uop_rob_inst_idx,
-  output [5:0]  io_prefetch_bits_uop_address_num,
   output [6:0]  io_prefetch_bits_uop_uopc,
   output [31:0] io_prefetch_bits_uop_inst,
   output [31:0] io_prefetch_bits_uop_debug_inst,
@@ -508,7 +419,6 @@ module BoomMSHRFile(
   output        io_prefetch_bits_uop_ctrl_is_load,
   output        io_prefetch_bits_uop_ctrl_is_sta,
   output        io_prefetch_bits_uop_ctrl_is_std,
-  output [1:0]  io_prefetch_bits_uop_ctrl_op3_sel,
   output [1:0]  io_prefetch_bits_uop_iw_state,
   output        io_prefetch_bits_uop_iw_p1_poisoned,
   output        io_prefetch_bits_uop_iw_p2_poisoned,
@@ -525,19 +435,19 @@ module BoomMSHRFile(
   output [19:0] io_prefetch_bits_uop_imm_packed,
   output [11:0] io_prefetch_bits_uop_csr_addr,
   output [5:0]  io_prefetch_bits_uop_rob_idx,
-  output [4:0]  io_prefetch_bits_uop_ldq_idx,
-  output [4:0]  io_prefetch_bits_uop_stq_idx,
+  output [3:0]  io_prefetch_bits_uop_ldq_idx,
+  output [3:0]  io_prefetch_bits_uop_stq_idx,
   output [1:0]  io_prefetch_bits_uop_rxq_idx,
-  output [6:0]  io_prefetch_bits_uop_pdst,
-  output [6:0]  io_prefetch_bits_uop_prs1,
-  output [6:0]  io_prefetch_bits_uop_prs2,
-  output [6:0]  io_prefetch_bits_uop_prs3,
+  output [5:0]  io_prefetch_bits_uop_pdst,
+  output [5:0]  io_prefetch_bits_uop_prs1,
+  output [5:0]  io_prefetch_bits_uop_prs2,
+  output [5:0]  io_prefetch_bits_uop_prs3,
   output [4:0]  io_prefetch_bits_uop_ppred,
   output        io_prefetch_bits_uop_prs1_busy,
   output        io_prefetch_bits_uop_prs2_busy,
   output        io_prefetch_bits_uop_prs3_busy,
   output        io_prefetch_bits_uop_ppred_busy,
-  output [6:0]  io_prefetch_bits_uop_stale_pdst,
+  output [5:0]  io_prefetch_bits_uop_stale_pdst,
   output        io_prefetch_bits_uop_exception,
   output [63:0] io_prefetch_bits_uop_exc_cause,
   output        io_prefetch_bits_uop_bypassable,
@@ -580,7 +490,7 @@ module BoomMSHRFile(
   output [5:0]  io_wb_req_bits_idx,
   output [1:0]  io_wb_req_bits_source,
   output [2:0]  io_wb_req_bits_param,
-  output        io_wb_req_bits_way_en,
+  output [3:0]  io_wb_req_bits_way_en,
   output        io_wb_req_bits_voluntary,
   input         io_prober_state_valid,
   input  [39:0] io_prober_state_bits,
@@ -620,23 +530,6 @@ module BoomMSHRFile(
   wire [1:0] prefetcher_io_req_coh_state; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_ready; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_valid; // @[mshrs.scala 546:65]
-  wire  prefetcher_io_prefetch_bits_uop_switch; // @[mshrs.scala 546:65]
-  wire  prefetcher_io_prefetch_bits_uop_switch_off; // @[mshrs.scala 546:65]
-  wire  prefetcher_io_prefetch_bits_uop_is_unicore; // @[mshrs.scala 546:65]
-  wire [2:0] prefetcher_io_prefetch_bits_uop_shift; // @[mshrs.scala 546:65]
-  wire [1:0] prefetcher_io_prefetch_bits_uop_lrs3_rtype; // @[mshrs.scala 546:65]
-  wire  prefetcher_io_prefetch_bits_uop_rflag; // @[mshrs.scala 546:65]
-  wire  prefetcher_io_prefetch_bits_uop_wflag; // @[mshrs.scala 546:65]
-  wire [3:0] prefetcher_io_prefetch_bits_uop_prflag; // @[mshrs.scala 546:65]
-  wire [3:0] prefetcher_io_prefetch_bits_uop_pwflag; // @[mshrs.scala 546:65]
-  wire  prefetcher_io_prefetch_bits_uop_pflag_busy; // @[mshrs.scala 546:65]
-  wire [3:0] prefetcher_io_prefetch_bits_uop_stale_pflag; // @[mshrs.scala 546:65]
-  wire [3:0] prefetcher_io_prefetch_bits_uop_op1_sel; // @[mshrs.scala 546:65]
-  wire [3:0] prefetcher_io_prefetch_bits_uop_op2_sel; // @[mshrs.scala 546:65]
-  wire [5:0] prefetcher_io_prefetch_bits_uop_split_num; // @[mshrs.scala 546:65]
-  wire [5:0] prefetcher_io_prefetch_bits_uop_self_index; // @[mshrs.scala 546:65]
-  wire [5:0] prefetcher_io_prefetch_bits_uop_rob_inst_idx; // @[mshrs.scala 546:65]
-  wire [5:0] prefetcher_io_prefetch_bits_uop_address_num; // @[mshrs.scala 546:65]
   wire [6:0] prefetcher_io_prefetch_bits_uop_uopc; // @[mshrs.scala 546:65]
   wire [31:0] prefetcher_io_prefetch_bits_uop_inst; // @[mshrs.scala 546:65]
   wire [31:0] prefetcher_io_prefetch_bits_uop_debug_inst; // @[mshrs.scala 546:65]
@@ -654,7 +547,6 @@ module BoomMSHRFile(
   wire  prefetcher_io_prefetch_bits_uop_ctrl_is_load; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_ctrl_is_sta; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_ctrl_is_std; // @[mshrs.scala 546:65]
-  wire [1:0] prefetcher_io_prefetch_bits_uop_ctrl_op3_sel; // @[mshrs.scala 546:65]
   wire [1:0] prefetcher_io_prefetch_bits_uop_iw_state; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_iw_p1_poisoned; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_iw_p2_poisoned; // @[mshrs.scala 546:65]
@@ -671,19 +563,19 @@ module BoomMSHRFile(
   wire [19:0] prefetcher_io_prefetch_bits_uop_imm_packed; // @[mshrs.scala 546:65]
   wire [11:0] prefetcher_io_prefetch_bits_uop_csr_addr; // @[mshrs.scala 546:65]
   wire [5:0] prefetcher_io_prefetch_bits_uop_rob_idx; // @[mshrs.scala 546:65]
-  wire [4:0] prefetcher_io_prefetch_bits_uop_ldq_idx; // @[mshrs.scala 546:65]
-  wire [4:0] prefetcher_io_prefetch_bits_uop_stq_idx; // @[mshrs.scala 546:65]
+  wire [3:0] prefetcher_io_prefetch_bits_uop_ldq_idx; // @[mshrs.scala 546:65]
+  wire [3:0] prefetcher_io_prefetch_bits_uop_stq_idx; // @[mshrs.scala 546:65]
   wire [1:0] prefetcher_io_prefetch_bits_uop_rxq_idx; // @[mshrs.scala 546:65]
-  wire [6:0] prefetcher_io_prefetch_bits_uop_pdst; // @[mshrs.scala 546:65]
-  wire [6:0] prefetcher_io_prefetch_bits_uop_prs1; // @[mshrs.scala 546:65]
-  wire [6:0] prefetcher_io_prefetch_bits_uop_prs2; // @[mshrs.scala 546:65]
-  wire [6:0] prefetcher_io_prefetch_bits_uop_prs3; // @[mshrs.scala 546:65]
+  wire [5:0] prefetcher_io_prefetch_bits_uop_pdst; // @[mshrs.scala 546:65]
+  wire [5:0] prefetcher_io_prefetch_bits_uop_prs1; // @[mshrs.scala 546:65]
+  wire [5:0] prefetcher_io_prefetch_bits_uop_prs2; // @[mshrs.scala 546:65]
+  wire [5:0] prefetcher_io_prefetch_bits_uop_prs3; // @[mshrs.scala 546:65]
   wire [4:0] prefetcher_io_prefetch_bits_uop_ppred; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_prs1_busy; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_prs2_busy; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_prs3_busy; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_ppred_busy; // @[mshrs.scala 546:65]
-  wire [6:0] prefetcher_io_prefetch_bits_uop_stale_pdst; // @[mshrs.scala 546:65]
+  wire [5:0] prefetcher_io_prefetch_bits_uop_stale_pdst; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_exception; // @[mshrs.scala 546:65]
   wire [63:0] prefetcher_io_prefetch_bits_uop_exc_cause; // @[mshrs.scala 546:65]
   wire  prefetcher_io_prefetch_bits_uop_bypassable; // @[mshrs.scala 546:65]
@@ -772,21 +664,21 @@ module BoomMSHRFile(
   wire  meta_write_arb_io_in_0_ready; // @[mshrs.scala 599:30]
   wire  meta_write_arb_io_in_0_valid; // @[mshrs.scala 599:30]
   wire [5:0] meta_write_arb_io_in_0_bits_idx; // @[mshrs.scala 599:30]
-  wire  meta_write_arb_io_in_0_bits_way_en; // @[mshrs.scala 599:30]
+  wire [3:0] meta_write_arb_io_in_0_bits_way_en; // @[mshrs.scala 599:30]
   wire [19:0] meta_write_arb_io_in_0_bits_tag; // @[mshrs.scala 599:30]
   wire [1:0] meta_write_arb_io_in_0_bits_data_coh_state; // @[mshrs.scala 599:30]
   wire [19:0] meta_write_arb_io_in_0_bits_data_tag; // @[mshrs.scala 599:30]
   wire  meta_write_arb_io_in_1_ready; // @[mshrs.scala 599:30]
   wire  meta_write_arb_io_in_1_valid; // @[mshrs.scala 599:30]
   wire [5:0] meta_write_arb_io_in_1_bits_idx; // @[mshrs.scala 599:30]
-  wire  meta_write_arb_io_in_1_bits_way_en; // @[mshrs.scala 599:30]
+  wire [3:0] meta_write_arb_io_in_1_bits_way_en; // @[mshrs.scala 599:30]
   wire [19:0] meta_write_arb_io_in_1_bits_tag; // @[mshrs.scala 599:30]
   wire [1:0] meta_write_arb_io_in_1_bits_data_coh_state; // @[mshrs.scala 599:30]
   wire [19:0] meta_write_arb_io_in_1_bits_data_tag; // @[mshrs.scala 599:30]
   wire  meta_write_arb_io_out_ready; // @[mshrs.scala 599:30]
   wire  meta_write_arb_io_out_valid; // @[mshrs.scala 599:30]
   wire [5:0] meta_write_arb_io_out_bits_idx; // @[mshrs.scala 599:30]
-  wire  meta_write_arb_io_out_bits_way_en; // @[mshrs.scala 599:30]
+  wire [3:0] meta_write_arb_io_out_bits_way_en; // @[mshrs.scala 599:30]
   wire [19:0] meta_write_arb_io_out_bits_tag; // @[mshrs.scala 599:30]
   wire [1:0] meta_write_arb_io_out_bits_data_coh_state; // @[mshrs.scala 599:30]
   wire [19:0] meta_write_arb_io_out_bits_data_tag; // @[mshrs.scala 599:30]
@@ -796,17 +688,17 @@ module BoomMSHRFile(
   wire  meta_read_arb_io_in_0_ready; // @[mshrs.scala 600:30]
   wire  meta_read_arb_io_in_0_valid; // @[mshrs.scala 600:30]
   wire [5:0] meta_read_arb_io_in_0_bits_idx; // @[mshrs.scala 600:30]
-  wire  meta_read_arb_io_in_0_bits_way_en; // @[mshrs.scala 600:30]
+  wire [3:0] meta_read_arb_io_in_0_bits_way_en; // @[mshrs.scala 600:30]
   wire [19:0] meta_read_arb_io_in_0_bits_tag; // @[mshrs.scala 600:30]
   wire  meta_read_arb_io_in_1_ready; // @[mshrs.scala 600:30]
   wire  meta_read_arb_io_in_1_valid; // @[mshrs.scala 600:30]
   wire [5:0] meta_read_arb_io_in_1_bits_idx; // @[mshrs.scala 600:30]
-  wire  meta_read_arb_io_in_1_bits_way_en; // @[mshrs.scala 600:30]
+  wire [3:0] meta_read_arb_io_in_1_bits_way_en; // @[mshrs.scala 600:30]
   wire [19:0] meta_read_arb_io_in_1_bits_tag; // @[mshrs.scala 600:30]
   wire  meta_read_arb_io_out_ready; // @[mshrs.scala 600:30]
   wire  meta_read_arb_io_out_valid; // @[mshrs.scala 600:30]
   wire [5:0] meta_read_arb_io_out_bits_idx; // @[mshrs.scala 600:30]
-  wire  meta_read_arb_io_out_bits_way_en; // @[mshrs.scala 600:30]
+  wire [3:0] meta_read_arb_io_out_bits_way_en; // @[mshrs.scala 600:30]
   wire [19:0] meta_read_arb_io_out_bits_tag; // @[mshrs.scala 600:30]
   wire  meta_read_arb_io_chosen; // @[mshrs.scala 600:30]
   wire  wb_req_arb_clock; // @[mshrs.scala 601:30]
@@ -817,7 +709,7 @@ module BoomMSHRFile(
   wire [5:0] wb_req_arb_io_in_0_bits_idx; // @[mshrs.scala 601:30]
   wire [1:0] wb_req_arb_io_in_0_bits_source; // @[mshrs.scala 601:30]
   wire [2:0] wb_req_arb_io_in_0_bits_param; // @[mshrs.scala 601:30]
-  wire  wb_req_arb_io_in_0_bits_way_en; // @[mshrs.scala 601:30]
+  wire [3:0] wb_req_arb_io_in_0_bits_way_en; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_in_0_bits_voluntary; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_in_1_ready; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_in_1_valid; // @[mshrs.scala 601:30]
@@ -825,7 +717,7 @@ module BoomMSHRFile(
   wire [5:0] wb_req_arb_io_in_1_bits_idx; // @[mshrs.scala 601:30]
   wire [1:0] wb_req_arb_io_in_1_bits_source; // @[mshrs.scala 601:30]
   wire [2:0] wb_req_arb_io_in_1_bits_param; // @[mshrs.scala 601:30]
-  wire  wb_req_arb_io_in_1_bits_way_en; // @[mshrs.scala 601:30]
+  wire [3:0] wb_req_arb_io_in_1_bits_way_en; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_in_1_bits_voluntary; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_out_ready; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_out_valid; // @[mshrs.scala 601:30]
@@ -833,30 +725,13 @@ module BoomMSHRFile(
   wire [5:0] wb_req_arb_io_out_bits_idx; // @[mshrs.scala 601:30]
   wire [1:0] wb_req_arb_io_out_bits_source; // @[mshrs.scala 601:30]
   wire [2:0] wb_req_arb_io_out_bits_param; // @[mshrs.scala 601:30]
-  wire  wb_req_arb_io_out_bits_way_en; // @[mshrs.scala 601:30]
+  wire [3:0] wb_req_arb_io_out_bits_way_en; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_out_bits_voluntary; // @[mshrs.scala 601:30]
   wire  wb_req_arb_io_chosen; // @[mshrs.scala 601:30]
   wire  replay_arb_clock; // @[mshrs.scala 602:30]
   wire  replay_arb_reset; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_ready; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_valid; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_0_bits_uop_switch; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_0_bits_uop_switch_off; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_0_bits_uop_is_unicore; // @[mshrs.scala 602:30]
-  wire [2:0] replay_arb_io_in_0_bits_uop_shift; // @[mshrs.scala 602:30]
-  wire [1:0] replay_arb_io_in_0_bits_uop_lrs3_rtype; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_0_bits_uop_rflag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_0_bits_uop_wflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_0_bits_uop_prflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_0_bits_uop_pwflag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_0_bits_uop_pflag_busy; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_0_bits_uop_stale_pflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_0_bits_uop_op1_sel; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_0_bits_uop_op2_sel; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_0_bits_uop_split_num; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_0_bits_uop_self_index; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_0_bits_uop_rob_inst_idx; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_0_bits_uop_address_num; // @[mshrs.scala 602:30]
   wire [6:0] replay_arb_io_in_0_bits_uop_uopc; // @[mshrs.scala 602:30]
   wire [31:0] replay_arb_io_in_0_bits_uop_inst; // @[mshrs.scala 602:30]
   wire [31:0] replay_arb_io_in_0_bits_uop_debug_inst; // @[mshrs.scala 602:30]
@@ -874,7 +749,6 @@ module BoomMSHRFile(
   wire  replay_arb_io_in_0_bits_uop_ctrl_is_load; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_ctrl_is_sta; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_ctrl_is_std; // @[mshrs.scala 602:30]
-  wire [1:0] replay_arb_io_in_0_bits_uop_ctrl_op3_sel; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_in_0_bits_uop_iw_state; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_iw_p1_poisoned; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_iw_p2_poisoned; // @[mshrs.scala 602:30]
@@ -891,19 +765,19 @@ module BoomMSHRFile(
   wire [19:0] replay_arb_io_in_0_bits_uop_imm_packed; // @[mshrs.scala 602:30]
   wire [11:0] replay_arb_io_in_0_bits_uop_csr_addr; // @[mshrs.scala 602:30]
   wire [5:0] replay_arb_io_in_0_bits_uop_rob_idx; // @[mshrs.scala 602:30]
-  wire [4:0] replay_arb_io_in_0_bits_uop_ldq_idx; // @[mshrs.scala 602:30]
-  wire [4:0] replay_arb_io_in_0_bits_uop_stq_idx; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_in_0_bits_uop_ldq_idx; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_in_0_bits_uop_stq_idx; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_in_0_bits_uop_rxq_idx; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_0_bits_uop_pdst; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_0_bits_uop_prs1; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_0_bits_uop_prs2; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_0_bits_uop_prs3; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_0_bits_uop_pdst; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_0_bits_uop_prs1; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_0_bits_uop_prs2; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_0_bits_uop_prs3; // @[mshrs.scala 602:30]
   wire [4:0] replay_arb_io_in_0_bits_uop_ppred; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_prs1_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_prs2_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_prs3_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_ppred_busy; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_0_bits_uop_stale_pdst; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_0_bits_uop_stale_pdst; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_exception; // @[mshrs.scala 602:30]
   wire [63:0] replay_arb_io_in_0_bits_uop_exc_cause; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_0_bits_uop_bypassable; // @[mshrs.scala 602:30]
@@ -943,27 +817,10 @@ module BoomMSHRFile(
   wire  replay_arb_io_in_0_bits_tag_match; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_in_0_bits_old_meta_coh_state; // @[mshrs.scala 602:30]
   wire [19:0] replay_arb_io_in_0_bits_old_meta_tag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_0_bits_way_en; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_in_0_bits_way_en; // @[mshrs.scala 602:30]
   wire [4:0] replay_arb_io_in_0_bits_sdq_id; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_ready; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_valid; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_1_bits_uop_switch; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_1_bits_uop_switch_off; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_1_bits_uop_is_unicore; // @[mshrs.scala 602:30]
-  wire [2:0] replay_arb_io_in_1_bits_uop_shift; // @[mshrs.scala 602:30]
-  wire [1:0] replay_arb_io_in_1_bits_uop_lrs3_rtype; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_1_bits_uop_rflag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_1_bits_uop_wflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_1_bits_uop_prflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_1_bits_uop_pwflag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_1_bits_uop_pflag_busy; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_1_bits_uop_stale_pflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_1_bits_uop_op1_sel; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_in_1_bits_uop_op2_sel; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_1_bits_uop_split_num; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_1_bits_uop_self_index; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_1_bits_uop_rob_inst_idx; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_in_1_bits_uop_address_num; // @[mshrs.scala 602:30]
   wire [6:0] replay_arb_io_in_1_bits_uop_uopc; // @[mshrs.scala 602:30]
   wire [31:0] replay_arb_io_in_1_bits_uop_inst; // @[mshrs.scala 602:30]
   wire [31:0] replay_arb_io_in_1_bits_uop_debug_inst; // @[mshrs.scala 602:30]
@@ -981,7 +838,6 @@ module BoomMSHRFile(
   wire  replay_arb_io_in_1_bits_uop_ctrl_is_load; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_ctrl_is_sta; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_ctrl_is_std; // @[mshrs.scala 602:30]
-  wire [1:0] replay_arb_io_in_1_bits_uop_ctrl_op3_sel; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_in_1_bits_uop_iw_state; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_iw_p1_poisoned; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_iw_p2_poisoned; // @[mshrs.scala 602:30]
@@ -998,19 +854,19 @@ module BoomMSHRFile(
   wire [19:0] replay_arb_io_in_1_bits_uop_imm_packed; // @[mshrs.scala 602:30]
   wire [11:0] replay_arb_io_in_1_bits_uop_csr_addr; // @[mshrs.scala 602:30]
   wire [5:0] replay_arb_io_in_1_bits_uop_rob_idx; // @[mshrs.scala 602:30]
-  wire [4:0] replay_arb_io_in_1_bits_uop_ldq_idx; // @[mshrs.scala 602:30]
-  wire [4:0] replay_arb_io_in_1_bits_uop_stq_idx; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_in_1_bits_uop_ldq_idx; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_in_1_bits_uop_stq_idx; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_in_1_bits_uop_rxq_idx; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_1_bits_uop_pdst; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_1_bits_uop_prs1; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_1_bits_uop_prs2; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_1_bits_uop_prs3; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_1_bits_uop_pdst; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_1_bits_uop_prs1; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_1_bits_uop_prs2; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_1_bits_uop_prs3; // @[mshrs.scala 602:30]
   wire [4:0] replay_arb_io_in_1_bits_uop_ppred; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_prs1_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_prs2_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_prs3_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_ppred_busy; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_in_1_bits_uop_stale_pdst; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_in_1_bits_uop_stale_pdst; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_exception; // @[mshrs.scala 602:30]
   wire [63:0] replay_arb_io_in_1_bits_uop_exc_cause; // @[mshrs.scala 602:30]
   wire  replay_arb_io_in_1_bits_uop_bypassable; // @[mshrs.scala 602:30]
@@ -1050,27 +906,10 @@ module BoomMSHRFile(
   wire  replay_arb_io_in_1_bits_tag_match; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_in_1_bits_old_meta_coh_state; // @[mshrs.scala 602:30]
   wire [19:0] replay_arb_io_in_1_bits_old_meta_tag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_in_1_bits_way_en; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_in_1_bits_way_en; // @[mshrs.scala 602:30]
   wire [4:0] replay_arb_io_in_1_bits_sdq_id; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_ready; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_valid; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_out_bits_uop_switch; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_out_bits_uop_switch_off; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_out_bits_uop_is_unicore; // @[mshrs.scala 602:30]
-  wire [2:0] replay_arb_io_out_bits_uop_shift; // @[mshrs.scala 602:30]
-  wire [1:0] replay_arb_io_out_bits_uop_lrs3_rtype; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_out_bits_uop_rflag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_out_bits_uop_wflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_out_bits_uop_prflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_out_bits_uop_pwflag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_out_bits_uop_pflag_busy; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_out_bits_uop_stale_pflag; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_out_bits_uop_op1_sel; // @[mshrs.scala 602:30]
-  wire [3:0] replay_arb_io_out_bits_uop_op2_sel; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_out_bits_uop_split_num; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_out_bits_uop_self_index; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_out_bits_uop_rob_inst_idx; // @[mshrs.scala 602:30]
-  wire [5:0] replay_arb_io_out_bits_uop_address_num; // @[mshrs.scala 602:30]
   wire [6:0] replay_arb_io_out_bits_uop_uopc; // @[mshrs.scala 602:30]
   wire [31:0] replay_arb_io_out_bits_uop_inst; // @[mshrs.scala 602:30]
   wire [31:0] replay_arb_io_out_bits_uop_debug_inst; // @[mshrs.scala 602:30]
@@ -1088,7 +927,6 @@ module BoomMSHRFile(
   wire  replay_arb_io_out_bits_uop_ctrl_is_load; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_ctrl_is_sta; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_ctrl_is_std; // @[mshrs.scala 602:30]
-  wire [1:0] replay_arb_io_out_bits_uop_ctrl_op3_sel; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_out_bits_uop_iw_state; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_iw_p1_poisoned; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_iw_p2_poisoned; // @[mshrs.scala 602:30]
@@ -1105,19 +943,19 @@ module BoomMSHRFile(
   wire [19:0] replay_arb_io_out_bits_uop_imm_packed; // @[mshrs.scala 602:30]
   wire [11:0] replay_arb_io_out_bits_uop_csr_addr; // @[mshrs.scala 602:30]
   wire [5:0] replay_arb_io_out_bits_uop_rob_idx; // @[mshrs.scala 602:30]
-  wire [4:0] replay_arb_io_out_bits_uop_ldq_idx; // @[mshrs.scala 602:30]
-  wire [4:0] replay_arb_io_out_bits_uop_stq_idx; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_out_bits_uop_ldq_idx; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_out_bits_uop_stq_idx; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_out_bits_uop_rxq_idx; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_out_bits_uop_pdst; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_out_bits_uop_prs1; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_out_bits_uop_prs2; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_out_bits_uop_prs3; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_out_bits_uop_pdst; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_out_bits_uop_prs1; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_out_bits_uop_prs2; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_out_bits_uop_prs3; // @[mshrs.scala 602:30]
   wire [4:0] replay_arb_io_out_bits_uop_ppred; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_prs1_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_prs2_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_prs3_busy; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_ppred_busy; // @[mshrs.scala 602:30]
-  wire [6:0] replay_arb_io_out_bits_uop_stale_pdst; // @[mshrs.scala 602:30]
+  wire [5:0] replay_arb_io_out_bits_uop_stale_pdst; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_exception; // @[mshrs.scala 602:30]
   wire [63:0] replay_arb_io_out_bits_uop_exc_cause; // @[mshrs.scala 602:30]
   wire  replay_arb_io_out_bits_uop_bypassable; // @[mshrs.scala 602:30]
@@ -1157,30 +995,13 @@ module BoomMSHRFile(
   wire  replay_arb_io_out_bits_tag_match; // @[mshrs.scala 602:30]
   wire [1:0] replay_arb_io_out_bits_old_meta_coh_state; // @[mshrs.scala 602:30]
   wire [19:0] replay_arb_io_out_bits_old_meta_tag; // @[mshrs.scala 602:30]
-  wire  replay_arb_io_out_bits_way_en; // @[mshrs.scala 602:30]
+  wire [3:0] replay_arb_io_out_bits_way_en; // @[mshrs.scala 602:30]
   wire [4:0] replay_arb_io_out_bits_sdq_id; // @[mshrs.scala 602:30]
   wire  replay_arb_io_chosen; // @[mshrs.scala 602:30]
   wire  resp_arb_clock; // @[mshrs.scala 603:30]
   wire  resp_arb_reset; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_ready; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_valid; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_0_bits_uop_switch; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_0_bits_uop_switch_off; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_0_bits_uop_is_unicore; // @[mshrs.scala 603:30]
-  wire [2:0] resp_arb_io_in_0_bits_uop_shift; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_in_0_bits_uop_lrs3_rtype; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_0_bits_uop_rflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_0_bits_uop_wflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_0_bits_uop_prflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_0_bits_uop_pwflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_0_bits_uop_pflag_busy; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_0_bits_uop_stale_pflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_0_bits_uop_op1_sel; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_0_bits_uop_op2_sel; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_0_bits_uop_split_num; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_0_bits_uop_self_index; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_0_bits_uop_rob_inst_idx; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_0_bits_uop_address_num; // @[mshrs.scala 603:30]
   wire [6:0] resp_arb_io_in_0_bits_uop_uopc; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_in_0_bits_uop_inst; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_in_0_bits_uop_debug_inst; // @[mshrs.scala 603:30]
@@ -1198,7 +1019,6 @@ module BoomMSHRFile(
   wire  resp_arb_io_in_0_bits_uop_ctrl_is_load; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_ctrl_is_sta; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_ctrl_is_std; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_in_0_bits_uop_ctrl_op3_sel; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_in_0_bits_uop_iw_state; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_iw_p1_poisoned; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_iw_p2_poisoned; // @[mshrs.scala 603:30]
@@ -1215,19 +1035,19 @@ module BoomMSHRFile(
   wire [19:0] resp_arb_io_in_0_bits_uop_imm_packed; // @[mshrs.scala 603:30]
   wire [11:0] resp_arb_io_in_0_bits_uop_csr_addr; // @[mshrs.scala 603:30]
   wire [5:0] resp_arb_io_in_0_bits_uop_rob_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_in_0_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_in_0_bits_uop_stq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_in_0_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_in_0_bits_uop_stq_idx; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_in_0_bits_uop_rxq_idx; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_0_bits_uop_pdst; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_0_bits_uop_prs1; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_0_bits_uop_prs2; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_0_bits_uop_prs3; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_0_bits_uop_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_0_bits_uop_prs1; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_0_bits_uop_prs2; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_0_bits_uop_prs3; // @[mshrs.scala 603:30]
   wire [4:0] resp_arb_io_in_0_bits_uop_ppred; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_prs1_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_prs2_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_prs3_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_ppred_busy; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_0_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_0_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_exception; // @[mshrs.scala 603:30]
   wire [63:0] resp_arb_io_in_0_bits_uop_exc_cause; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_0_bits_uop_bypassable; // @[mshrs.scala 603:30]
@@ -1265,23 +1085,6 @@ module BoomMSHRFile(
   wire  resp_arb_io_in_0_bits_is_hella; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_ready; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_valid; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_1_bits_uop_switch; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_1_bits_uop_switch_off; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_1_bits_uop_is_unicore; // @[mshrs.scala 603:30]
-  wire [2:0] resp_arb_io_in_1_bits_uop_shift; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_in_1_bits_uop_lrs3_rtype; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_1_bits_uop_rflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_1_bits_uop_wflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_1_bits_uop_prflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_1_bits_uop_pwflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_1_bits_uop_pflag_busy; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_1_bits_uop_stale_pflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_1_bits_uop_op1_sel; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_1_bits_uop_op2_sel; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_1_bits_uop_split_num; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_1_bits_uop_self_index; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_1_bits_uop_rob_inst_idx; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_1_bits_uop_address_num; // @[mshrs.scala 603:30]
   wire [6:0] resp_arb_io_in_1_bits_uop_uopc; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_in_1_bits_uop_inst; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_in_1_bits_uop_debug_inst; // @[mshrs.scala 603:30]
@@ -1299,7 +1102,6 @@ module BoomMSHRFile(
   wire  resp_arb_io_in_1_bits_uop_ctrl_is_load; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_ctrl_is_sta; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_ctrl_is_std; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_in_1_bits_uop_ctrl_op3_sel; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_in_1_bits_uop_iw_state; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_iw_p1_poisoned; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_iw_p2_poisoned; // @[mshrs.scala 603:30]
@@ -1316,19 +1118,19 @@ module BoomMSHRFile(
   wire [19:0] resp_arb_io_in_1_bits_uop_imm_packed; // @[mshrs.scala 603:30]
   wire [11:0] resp_arb_io_in_1_bits_uop_csr_addr; // @[mshrs.scala 603:30]
   wire [5:0] resp_arb_io_in_1_bits_uop_rob_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_in_1_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_in_1_bits_uop_stq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_in_1_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_in_1_bits_uop_stq_idx; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_in_1_bits_uop_rxq_idx; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_1_bits_uop_pdst; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_1_bits_uop_prs1; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_1_bits_uop_prs2; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_1_bits_uop_prs3; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_1_bits_uop_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_1_bits_uop_prs1; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_1_bits_uop_prs2; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_1_bits_uop_prs3; // @[mshrs.scala 603:30]
   wire [4:0] resp_arb_io_in_1_bits_uop_ppred; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_prs1_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_prs2_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_prs3_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_ppred_busy; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_1_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_1_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_exception; // @[mshrs.scala 603:30]
   wire [63:0] resp_arb_io_in_1_bits_uop_exc_cause; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_1_bits_uop_bypassable; // @[mshrs.scala 603:30]
@@ -1366,23 +1168,6 @@ module BoomMSHRFile(
   wire  resp_arb_io_in_1_bits_is_hella; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_ready; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_valid; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_2_bits_uop_switch; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_2_bits_uop_switch_off; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_2_bits_uop_is_unicore; // @[mshrs.scala 603:30]
-  wire [2:0] resp_arb_io_in_2_bits_uop_shift; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_in_2_bits_uop_lrs3_rtype; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_2_bits_uop_rflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_2_bits_uop_wflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_2_bits_uop_prflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_2_bits_uop_pwflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_in_2_bits_uop_pflag_busy; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_2_bits_uop_stale_pflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_2_bits_uop_op1_sel; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_in_2_bits_uop_op2_sel; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_2_bits_uop_split_num; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_2_bits_uop_self_index; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_2_bits_uop_rob_inst_idx; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_in_2_bits_uop_address_num; // @[mshrs.scala 603:30]
   wire [6:0] resp_arb_io_in_2_bits_uop_uopc; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_in_2_bits_uop_inst; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_in_2_bits_uop_debug_inst; // @[mshrs.scala 603:30]
@@ -1400,7 +1185,6 @@ module BoomMSHRFile(
   wire  resp_arb_io_in_2_bits_uop_ctrl_is_load; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_ctrl_is_sta; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_ctrl_is_std; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_in_2_bits_uop_ctrl_op3_sel; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_in_2_bits_uop_iw_state; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_iw_p1_poisoned; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_iw_p2_poisoned; // @[mshrs.scala 603:30]
@@ -1417,19 +1201,19 @@ module BoomMSHRFile(
   wire [19:0] resp_arb_io_in_2_bits_uop_imm_packed; // @[mshrs.scala 603:30]
   wire [11:0] resp_arb_io_in_2_bits_uop_csr_addr; // @[mshrs.scala 603:30]
   wire [5:0] resp_arb_io_in_2_bits_uop_rob_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_in_2_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_in_2_bits_uop_stq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_in_2_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_in_2_bits_uop_stq_idx; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_in_2_bits_uop_rxq_idx; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_2_bits_uop_pdst; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_2_bits_uop_prs1; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_2_bits_uop_prs2; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_2_bits_uop_prs3; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_2_bits_uop_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_2_bits_uop_prs1; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_2_bits_uop_prs2; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_2_bits_uop_prs3; // @[mshrs.scala 603:30]
   wire [4:0] resp_arb_io_in_2_bits_uop_ppred; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_prs1_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_prs2_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_prs3_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_ppred_busy; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_in_2_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_in_2_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_exception; // @[mshrs.scala 603:30]
   wire [63:0] resp_arb_io_in_2_bits_uop_exc_cause; // @[mshrs.scala 603:30]
   wire  resp_arb_io_in_2_bits_uop_bypassable; // @[mshrs.scala 603:30]
@@ -1467,23 +1251,6 @@ module BoomMSHRFile(
   wire  resp_arb_io_in_2_bits_is_hella; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_ready; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_valid; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_out_bits_uop_switch; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_out_bits_uop_switch_off; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_out_bits_uop_is_unicore; // @[mshrs.scala 603:30]
-  wire [2:0] resp_arb_io_out_bits_uop_shift; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_out_bits_uop_lrs3_rtype; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_out_bits_uop_rflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_out_bits_uop_wflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_out_bits_uop_prflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_out_bits_uop_pwflag; // @[mshrs.scala 603:30]
-  wire  resp_arb_io_out_bits_uop_pflag_busy; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_out_bits_uop_stale_pflag; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_out_bits_uop_op1_sel; // @[mshrs.scala 603:30]
-  wire [3:0] resp_arb_io_out_bits_uop_op2_sel; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_out_bits_uop_split_num; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_out_bits_uop_self_index; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_out_bits_uop_rob_inst_idx; // @[mshrs.scala 603:30]
-  wire [5:0] resp_arb_io_out_bits_uop_address_num; // @[mshrs.scala 603:30]
   wire [6:0] resp_arb_io_out_bits_uop_uopc; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_out_bits_uop_inst; // @[mshrs.scala 603:30]
   wire [31:0] resp_arb_io_out_bits_uop_debug_inst; // @[mshrs.scala 603:30]
@@ -1501,7 +1268,6 @@ module BoomMSHRFile(
   wire  resp_arb_io_out_bits_uop_ctrl_is_load; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_ctrl_is_sta; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_ctrl_is_std; // @[mshrs.scala 603:30]
-  wire [1:0] resp_arb_io_out_bits_uop_ctrl_op3_sel; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_out_bits_uop_iw_state; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_iw_p1_poisoned; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_iw_p2_poisoned; // @[mshrs.scala 603:30]
@@ -1518,19 +1284,19 @@ module BoomMSHRFile(
   wire [19:0] resp_arb_io_out_bits_uop_imm_packed; // @[mshrs.scala 603:30]
   wire [11:0] resp_arb_io_out_bits_uop_csr_addr; // @[mshrs.scala 603:30]
   wire [5:0] resp_arb_io_out_bits_uop_rob_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_out_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
-  wire [4:0] resp_arb_io_out_bits_uop_stq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_out_bits_uop_ldq_idx; // @[mshrs.scala 603:30]
+  wire [3:0] resp_arb_io_out_bits_uop_stq_idx; // @[mshrs.scala 603:30]
   wire [1:0] resp_arb_io_out_bits_uop_rxq_idx; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_out_bits_uop_pdst; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_out_bits_uop_prs1; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_out_bits_uop_prs2; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_out_bits_uop_prs3; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_out_bits_uop_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_out_bits_uop_prs1; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_out_bits_uop_prs2; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_out_bits_uop_prs3; // @[mshrs.scala 603:30]
   wire [4:0] resp_arb_io_out_bits_uop_ppred; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_prs1_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_prs2_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_prs3_busy; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_ppred_busy; // @[mshrs.scala 603:30]
-  wire [6:0] resp_arb_io_out_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
+  wire [5:0] resp_arb_io_out_bits_uop_stale_pdst; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_exception; // @[mshrs.scala 603:30]
   wire [63:0] resp_arb_io_out_bits_uop_exc_cause; // @[mshrs.scala 603:30]
   wire  resp_arb_io_out_bits_uop_bypassable; // @[mshrs.scala 603:30]
@@ -1571,19 +1337,19 @@ module BoomMSHRFile(
   wire  refill_arb_reset; // @[mshrs.scala 604:30]
   wire  refill_arb_io_in_0_ready; // @[mshrs.scala 604:30]
   wire  refill_arb_io_in_0_valid; // @[mshrs.scala 604:30]
-  wire  refill_arb_io_in_0_bits_way_en; // @[mshrs.scala 604:30]
+  wire [3:0] refill_arb_io_in_0_bits_way_en; // @[mshrs.scala 604:30]
   wire [11:0] refill_arb_io_in_0_bits_addr; // @[mshrs.scala 604:30]
   wire  refill_arb_io_in_0_bits_wmask; // @[mshrs.scala 604:30]
   wire [63:0] refill_arb_io_in_0_bits_data; // @[mshrs.scala 604:30]
   wire  refill_arb_io_in_1_ready; // @[mshrs.scala 604:30]
   wire  refill_arb_io_in_1_valid; // @[mshrs.scala 604:30]
-  wire  refill_arb_io_in_1_bits_way_en; // @[mshrs.scala 604:30]
+  wire [3:0] refill_arb_io_in_1_bits_way_en; // @[mshrs.scala 604:30]
   wire [11:0] refill_arb_io_in_1_bits_addr; // @[mshrs.scala 604:30]
   wire  refill_arb_io_in_1_bits_wmask; // @[mshrs.scala 604:30]
   wire [63:0] refill_arb_io_in_1_bits_data; // @[mshrs.scala 604:30]
   wire  refill_arb_io_out_ready; // @[mshrs.scala 604:30]
   wire  refill_arb_io_out_valid; // @[mshrs.scala 604:30]
-  wire  refill_arb_io_out_bits_way_en; // @[mshrs.scala 604:30]
+  wire [3:0] refill_arb_io_out_bits_way_en; // @[mshrs.scala 604:30]
   wire [11:0] refill_arb_io_out_bits_addr; // @[mshrs.scala 604:30]
   wire  refill_arb_io_out_bits_wmask; // @[mshrs.scala 604:30]
   wire [63:0] refill_arb_io_out_bits_data; // @[mshrs.scala 604:30]
@@ -1598,23 +1364,6 @@ module BoomMSHRFile(
   wire  mshrs_0_io_clear_prefetch; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_0_io_brupdate_b1_resolve_mask; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_0_io_brupdate_b1_mispredict_mask; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_brupdate_b2_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_brupdate_b2_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_0_io_brupdate_b2_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_brupdate_b2_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_brupdate_b2_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_brupdate_b2_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_brupdate_b2_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_brupdate_b2_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_brupdate_b2_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_brupdate_b2_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_0_io_brupdate_b2_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_brupdate_b2_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -1632,7 +1381,6 @@ module BoomMSHRFile(
   wire  mshrs_0_io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_brupdate_b2_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -1649,19 +1397,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_0_io_brupdate_b2_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_0_io_brupdate_b2_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_brupdate_b2_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_brupdate_b2_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_brupdate_b2_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_brupdate_b2_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_brupdate_b2_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_brupdate_b2_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_brupdate_b2_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_brupdate_b2_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_brupdate_b2_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_brupdate_b2_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_0_io_brupdate_b2_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_0_io_brupdate_b2_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_brupdate_b2_uop_bypassable; // @[mshrs.scala 620:22]
@@ -1701,27 +1449,10 @@ module BoomMSHRFile(
   wire [2:0] mshrs_0_io_brupdate_b2_cfi_type; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_brupdate_b2_pc_sel; // @[mshrs.scala 620:22]
   wire [39:0] mshrs_0_io_brupdate_b2_jalr_target; // @[mshrs.scala 620:22]
-  wire [31:0] mshrs_0_io_brupdate_b2_target_offset; // @[mshrs.scala 620:22]
+  wire [20:0] mshrs_0_io_brupdate_b2_target_offset; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_exception; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_rob_pnr_idx; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_rob_head_idx; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_req_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_req_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_req_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_0_io_req_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_req_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_req_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_req_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_req_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_req_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_req_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_req_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_req_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_req_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_req_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_req_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_req_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_req_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_0_io_req_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_req_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_req_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -1739,7 +1470,6 @@ module BoomMSHRFile(
   wire  mshrs_0_io_req_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_req_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_req_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -1756,19 +1486,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_0_io_req_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_0_io_req_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_req_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_req_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_req_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_req_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_req_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_req_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_req_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_req_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_req_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_req_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_req_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_req_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_req_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_req_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_0_io_req_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_req_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_req_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_0_io_req_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_uop_bypassable; // @[mshrs.scala 620:22]
@@ -1808,13 +1538,13 @@ module BoomMSHRFile(
   wire  mshrs_0_io_req_tag_match; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_req_old_meta_coh_state; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_0_io_req_old_meta_tag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_req_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_req_way_en; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_0_io_req_sdq_id; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_req_is_probe; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_idx_valid; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_idx_bits; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_way_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_way_bits; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_way_bits; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_tag_valid; // @[mshrs.scala 620:22]
   wire [27:0] mshrs_0_io_tag_bits; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_mem_acquire_ready; // @[mshrs.scala 620:22]
@@ -1844,21 +1574,21 @@ module BoomMSHRFile(
   wire [39:0] mshrs_0_io_prober_state_bits; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_refill_ready; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_refill_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_refill_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_refill_bits_way_en; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_0_io_refill_bits_addr; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_refill_bits_wmask; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_0_io_refill_bits_data; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_meta_write_ready; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_meta_write_valid; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_meta_write_bits_idx; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_meta_write_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_meta_write_bits_way_en; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_0_io_meta_write_bits_tag; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_meta_write_bits_data_coh_state; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_0_io_meta_write_bits_data_tag; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_meta_read_ready; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_meta_read_valid; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_meta_read_bits_idx; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_meta_read_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_meta_read_bits_way_en; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_0_io_meta_read_bits_tag; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_meta_resp_valid; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_meta_resp_bits_coh_state; // @[mshrs.scala 620:22]
@@ -1869,7 +1599,7 @@ module BoomMSHRFile(
   wire [5:0] mshrs_0_io_wb_req_bits_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_wb_req_bits_source; // @[mshrs.scala 620:22]
   wire [2:0] mshrs_0_io_wb_req_bits_param; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_wb_req_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_wb_req_bits_way_en; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_wb_req_bits_voluntary; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_commit_val; // @[mshrs.scala 620:22]
   wire [39:0] mshrs_0_io_commit_addr; // @[mshrs.scala 620:22]
@@ -1886,23 +1616,6 @@ module BoomMSHRFile(
   wire [63:0] mshrs_0_io_lb_write_bits_data; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_ready; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_replay_bits_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_replay_bits_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_replay_bits_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_0_io_replay_bits_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_replay_bits_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_replay_bits_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_replay_bits_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_replay_bits_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_replay_bits_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_replay_bits_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_replay_bits_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_replay_bits_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_replay_bits_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_replay_bits_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_replay_bits_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_replay_bits_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_replay_bits_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_0_io_replay_bits_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_replay_bits_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_replay_bits_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -1920,7 +1633,6 @@ module BoomMSHRFile(
   wire  mshrs_0_io_replay_bits_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_replay_bits_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_replay_bits_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -1937,19 +1649,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_0_io_replay_bits_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_0_io_replay_bits_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_replay_bits_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_replay_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_replay_bits_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_replay_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_replay_bits_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_replay_bits_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_replay_bits_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_replay_bits_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_replay_bits_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_replay_bits_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_replay_bits_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_replay_bits_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_replay_bits_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_replay_bits_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_0_io_replay_bits_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_replay_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_replay_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_0_io_replay_bits_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_replay_bits_uop_bypassable; // @[mshrs.scala 620:22]
@@ -1989,27 +1701,10 @@ module BoomMSHRFile(
   wire  mshrs_0_io_replay_bits_tag_match; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_replay_bits_old_meta_coh_state; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_0_io_replay_bits_old_meta_tag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_replay_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_replay_bits_way_en; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_0_io_replay_bits_sdq_id; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_ready; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_resp_bits_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_resp_bits_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_resp_bits_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_0_io_resp_bits_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_resp_bits_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_resp_bits_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_resp_bits_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_resp_bits_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_resp_bits_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_0_io_resp_bits_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_resp_bits_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_resp_bits_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_0_io_resp_bits_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_resp_bits_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_resp_bits_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_resp_bits_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_0_io_resp_bits_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_0_io_resp_bits_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_resp_bits_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_0_io_resp_bits_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -2027,7 +1722,6 @@ module BoomMSHRFile(
   wire  mshrs_0_io_resp_bits_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_0_io_resp_bits_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_resp_bits_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -2044,19 +1738,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_0_io_resp_bits_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_0_io_resp_bits_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_0_io_resp_bits_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_resp_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_0_io_resp_bits_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_resp_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_0_io_resp_bits_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_0_io_resp_bits_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_resp_bits_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_resp_bits_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_resp_bits_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_resp_bits_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_resp_bits_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_resp_bits_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_resp_bits_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_resp_bits_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_0_io_resp_bits_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_0_io_resp_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_0_io_resp_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_0_io_resp_bits_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_0_io_resp_bits_uop_bypassable; // @[mshrs.scala 620:22]
@@ -2104,23 +1798,6 @@ module BoomMSHRFile(
   wire  mshrs_1_io_clear_prefetch; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_1_io_brupdate_b1_resolve_mask; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_1_io_brupdate_b1_mispredict_mask; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_brupdate_b2_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_brupdate_b2_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_1_io_brupdate_b2_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_brupdate_b2_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_brupdate_b2_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_brupdate_b2_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_brupdate_b2_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_brupdate_b2_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_brupdate_b2_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_brupdate_b2_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_1_io_brupdate_b2_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_brupdate_b2_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -2138,7 +1815,6 @@ module BoomMSHRFile(
   wire  mshrs_1_io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_brupdate_b2_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -2155,19 +1831,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_1_io_brupdate_b2_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_1_io_brupdate_b2_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_brupdate_b2_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_brupdate_b2_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_brupdate_b2_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_brupdate_b2_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_brupdate_b2_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_brupdate_b2_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_brupdate_b2_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_brupdate_b2_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_brupdate_b2_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_brupdate_b2_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_1_io_brupdate_b2_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_1_io_brupdate_b2_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_brupdate_b2_uop_bypassable; // @[mshrs.scala 620:22]
@@ -2207,27 +1883,10 @@ module BoomMSHRFile(
   wire [2:0] mshrs_1_io_brupdate_b2_cfi_type; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_brupdate_b2_pc_sel; // @[mshrs.scala 620:22]
   wire [39:0] mshrs_1_io_brupdate_b2_jalr_target; // @[mshrs.scala 620:22]
-  wire [31:0] mshrs_1_io_brupdate_b2_target_offset; // @[mshrs.scala 620:22]
+  wire [20:0] mshrs_1_io_brupdate_b2_target_offset; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_exception; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_rob_pnr_idx; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_rob_head_idx; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_req_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_req_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_req_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_1_io_req_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_req_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_req_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_req_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_req_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_req_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_req_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_req_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_req_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_req_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_req_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_req_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_req_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_req_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_1_io_req_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_req_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_req_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -2245,7 +1904,6 @@ module BoomMSHRFile(
   wire  mshrs_1_io_req_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_req_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_req_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -2262,19 +1920,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_1_io_req_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_1_io_req_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_req_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_req_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_req_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_req_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_req_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_req_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_req_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_req_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_req_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_req_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_req_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_req_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_req_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_req_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_1_io_req_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_req_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_req_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_1_io_req_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_uop_bypassable; // @[mshrs.scala 620:22]
@@ -2314,13 +1972,13 @@ module BoomMSHRFile(
   wire  mshrs_1_io_req_tag_match; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_req_old_meta_coh_state; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_1_io_req_old_meta_tag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_req_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_req_way_en; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_1_io_req_sdq_id; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_req_is_probe; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_idx_valid; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_idx_bits; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_way_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_way_bits; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_way_bits; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_tag_valid; // @[mshrs.scala 620:22]
   wire [27:0] mshrs_1_io_tag_bits; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_mem_acquire_ready; // @[mshrs.scala 620:22]
@@ -2350,21 +2008,21 @@ module BoomMSHRFile(
   wire [39:0] mshrs_1_io_prober_state_bits; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_refill_ready; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_refill_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_refill_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_refill_bits_way_en; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_1_io_refill_bits_addr; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_refill_bits_wmask; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_1_io_refill_bits_data; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_meta_write_ready; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_meta_write_valid; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_meta_write_bits_idx; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_meta_write_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_meta_write_bits_way_en; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_1_io_meta_write_bits_tag; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_meta_write_bits_data_coh_state; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_1_io_meta_write_bits_data_tag; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_meta_read_ready; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_meta_read_valid; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_meta_read_bits_idx; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_meta_read_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_meta_read_bits_way_en; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_1_io_meta_read_bits_tag; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_meta_resp_valid; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_meta_resp_bits_coh_state; // @[mshrs.scala 620:22]
@@ -2375,7 +2033,7 @@ module BoomMSHRFile(
   wire [5:0] mshrs_1_io_wb_req_bits_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_wb_req_bits_source; // @[mshrs.scala 620:22]
   wire [2:0] mshrs_1_io_wb_req_bits_param; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_wb_req_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_wb_req_bits_way_en; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_wb_req_bits_voluntary; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_commit_val; // @[mshrs.scala 620:22]
   wire [39:0] mshrs_1_io_commit_addr; // @[mshrs.scala 620:22]
@@ -2392,23 +2050,6 @@ module BoomMSHRFile(
   wire [63:0] mshrs_1_io_lb_write_bits_data; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_ready; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_replay_bits_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_replay_bits_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_replay_bits_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_1_io_replay_bits_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_replay_bits_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_replay_bits_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_replay_bits_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_replay_bits_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_replay_bits_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_replay_bits_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_replay_bits_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_replay_bits_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_replay_bits_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_replay_bits_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_replay_bits_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_replay_bits_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_replay_bits_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_1_io_replay_bits_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_replay_bits_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_replay_bits_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -2426,7 +2067,6 @@ module BoomMSHRFile(
   wire  mshrs_1_io_replay_bits_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_replay_bits_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_replay_bits_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -2443,19 +2083,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_1_io_replay_bits_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_1_io_replay_bits_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_replay_bits_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_replay_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_replay_bits_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_replay_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_replay_bits_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_replay_bits_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_replay_bits_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_replay_bits_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_replay_bits_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_replay_bits_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_replay_bits_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_replay_bits_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_replay_bits_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_replay_bits_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_1_io_replay_bits_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_replay_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_replay_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_1_io_replay_bits_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_replay_bits_uop_bypassable; // @[mshrs.scala 620:22]
@@ -2495,27 +2135,10 @@ module BoomMSHRFile(
   wire  mshrs_1_io_replay_bits_tag_match; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_replay_bits_old_meta_coh_state; // @[mshrs.scala 620:22]
   wire [19:0] mshrs_1_io_replay_bits_old_meta_tag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_replay_bits_way_en; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_replay_bits_way_en; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_1_io_replay_bits_sdq_id; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_ready; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_valid; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_resp_bits_uop_switch; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_resp_bits_uop_switch_off; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_resp_bits_uop_is_unicore; // @[mshrs.scala 620:22]
-  wire [2:0] mshrs_1_io_resp_bits_uop_shift; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_resp_bits_uop_lrs3_rtype; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_resp_bits_uop_rflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_resp_bits_uop_wflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_resp_bits_uop_prflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_resp_bits_uop_pwflag; // @[mshrs.scala 620:22]
-  wire  mshrs_1_io_resp_bits_uop_pflag_busy; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_resp_bits_uop_stale_pflag; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_resp_bits_uop_op1_sel; // @[mshrs.scala 620:22]
-  wire [3:0] mshrs_1_io_resp_bits_uop_op2_sel; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_resp_bits_uop_split_num; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_resp_bits_uop_self_index; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_resp_bits_uop_rob_inst_idx; // @[mshrs.scala 620:22]
-  wire [5:0] mshrs_1_io_resp_bits_uop_address_num; // @[mshrs.scala 620:22]
   wire [6:0] mshrs_1_io_resp_bits_uop_uopc; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_resp_bits_uop_inst; // @[mshrs.scala 620:22]
   wire [31:0] mshrs_1_io_resp_bits_uop_debug_inst; // @[mshrs.scala 620:22]
@@ -2533,7 +2156,6 @@ module BoomMSHRFile(
   wire  mshrs_1_io_resp_bits_uop_ctrl_is_load; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_ctrl_is_sta; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_ctrl_is_std; // @[mshrs.scala 620:22]
-  wire [1:0] mshrs_1_io_resp_bits_uop_ctrl_op3_sel; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_resp_bits_uop_iw_state; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_iw_p1_poisoned; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_iw_p2_poisoned; // @[mshrs.scala 620:22]
@@ -2550,19 +2172,19 @@ module BoomMSHRFile(
   wire [19:0] mshrs_1_io_resp_bits_uop_imm_packed; // @[mshrs.scala 620:22]
   wire [11:0] mshrs_1_io_resp_bits_uop_csr_addr; // @[mshrs.scala 620:22]
   wire [5:0] mshrs_1_io_resp_bits_uop_rob_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_resp_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
-  wire [4:0] mshrs_1_io_resp_bits_uop_stq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_resp_bits_uop_ldq_idx; // @[mshrs.scala 620:22]
+  wire [3:0] mshrs_1_io_resp_bits_uop_stq_idx; // @[mshrs.scala 620:22]
   wire [1:0] mshrs_1_io_resp_bits_uop_rxq_idx; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_resp_bits_uop_pdst; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_resp_bits_uop_prs1; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_resp_bits_uop_prs2; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_resp_bits_uop_prs3; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_resp_bits_uop_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_resp_bits_uop_prs1; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_resp_bits_uop_prs2; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_resp_bits_uop_prs3; // @[mshrs.scala 620:22]
   wire [4:0] mshrs_1_io_resp_bits_uop_ppred; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_prs1_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_prs2_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_prs3_busy; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_ppred_busy; // @[mshrs.scala 620:22]
-  wire [6:0] mshrs_1_io_resp_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
+  wire [5:0] mshrs_1_io_resp_bits_uop_stale_pdst; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_exception; // @[mshrs.scala 620:22]
   wire [63:0] mshrs_1_io_resp_bits_uop_exc_cause; // @[mshrs.scala 620:22]
   wire  mshrs_1_io_resp_bits_uop_bypassable; // @[mshrs.scala 620:22]
@@ -2612,23 +2234,6 @@ module BoomMSHRFile(
   wire  mmios_0_reset; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_ready; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_valid; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_req_bits_uop_switch; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_req_bits_uop_switch_off; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_req_bits_uop_is_unicore; // @[mshrs.scala 710:22]
-  wire [2:0] mmios_0_io_req_bits_uop_shift; // @[mshrs.scala 710:22]
-  wire [1:0] mmios_0_io_req_bits_uop_lrs3_rtype; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_req_bits_uop_rflag; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_req_bits_uop_wflag; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_req_bits_uop_prflag; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_req_bits_uop_pwflag; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_req_bits_uop_pflag_busy; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_req_bits_uop_stale_pflag; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_req_bits_uop_op1_sel; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_req_bits_uop_op2_sel; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_req_bits_uop_split_num; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_req_bits_uop_self_index; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_req_bits_uop_rob_inst_idx; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_req_bits_uop_address_num; // @[mshrs.scala 710:22]
   wire [6:0] mmios_0_io_req_bits_uop_uopc; // @[mshrs.scala 710:22]
   wire [31:0] mmios_0_io_req_bits_uop_inst; // @[mshrs.scala 710:22]
   wire [31:0] mmios_0_io_req_bits_uop_debug_inst; // @[mshrs.scala 710:22]
@@ -2646,7 +2251,6 @@ module BoomMSHRFile(
   wire  mmios_0_io_req_bits_uop_ctrl_is_load; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_ctrl_is_sta; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_ctrl_is_std; // @[mshrs.scala 710:22]
-  wire [1:0] mmios_0_io_req_bits_uop_ctrl_op3_sel; // @[mshrs.scala 710:22]
   wire [1:0] mmios_0_io_req_bits_uop_iw_state; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_iw_p1_poisoned; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_iw_p2_poisoned; // @[mshrs.scala 710:22]
@@ -2663,19 +2267,19 @@ module BoomMSHRFile(
   wire [19:0] mmios_0_io_req_bits_uop_imm_packed; // @[mshrs.scala 710:22]
   wire [11:0] mmios_0_io_req_bits_uop_csr_addr; // @[mshrs.scala 710:22]
   wire [5:0] mmios_0_io_req_bits_uop_rob_idx; // @[mshrs.scala 710:22]
-  wire [4:0] mmios_0_io_req_bits_uop_ldq_idx; // @[mshrs.scala 710:22]
-  wire [4:0] mmios_0_io_req_bits_uop_stq_idx; // @[mshrs.scala 710:22]
+  wire [3:0] mmios_0_io_req_bits_uop_ldq_idx; // @[mshrs.scala 710:22]
+  wire [3:0] mmios_0_io_req_bits_uop_stq_idx; // @[mshrs.scala 710:22]
   wire [1:0] mmios_0_io_req_bits_uop_rxq_idx; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_req_bits_uop_pdst; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_req_bits_uop_prs1; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_req_bits_uop_prs2; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_req_bits_uop_prs3; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_req_bits_uop_pdst; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_req_bits_uop_prs1; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_req_bits_uop_prs2; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_req_bits_uop_prs3; // @[mshrs.scala 710:22]
   wire [4:0] mmios_0_io_req_bits_uop_ppred; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_prs1_busy; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_prs2_busy; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_prs3_busy; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_ppred_busy; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_req_bits_uop_stale_pdst; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_req_bits_uop_stale_pdst; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_exception; // @[mshrs.scala 710:22]
   wire [63:0] mmios_0_io_req_bits_uop_exc_cause; // @[mshrs.scala 710:22]
   wire  mmios_0_io_req_bits_uop_bypassable; // @[mshrs.scala 710:22]
@@ -2714,23 +2318,6 @@ module BoomMSHRFile(
   wire  mmios_0_io_req_bits_is_hella; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_ready; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_valid; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_resp_bits_uop_switch; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_resp_bits_uop_switch_off; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_resp_bits_uop_is_unicore; // @[mshrs.scala 710:22]
-  wire [2:0] mmios_0_io_resp_bits_uop_shift; // @[mshrs.scala 710:22]
-  wire [1:0] mmios_0_io_resp_bits_uop_lrs3_rtype; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_resp_bits_uop_rflag; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_resp_bits_uop_wflag; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_resp_bits_uop_prflag; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_resp_bits_uop_pwflag; // @[mshrs.scala 710:22]
-  wire  mmios_0_io_resp_bits_uop_pflag_busy; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_resp_bits_uop_stale_pflag; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_resp_bits_uop_op1_sel; // @[mshrs.scala 710:22]
-  wire [3:0] mmios_0_io_resp_bits_uop_op2_sel; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_resp_bits_uop_split_num; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_resp_bits_uop_self_index; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_resp_bits_uop_rob_inst_idx; // @[mshrs.scala 710:22]
-  wire [5:0] mmios_0_io_resp_bits_uop_address_num; // @[mshrs.scala 710:22]
   wire [6:0] mmios_0_io_resp_bits_uop_uopc; // @[mshrs.scala 710:22]
   wire [31:0] mmios_0_io_resp_bits_uop_inst; // @[mshrs.scala 710:22]
   wire [31:0] mmios_0_io_resp_bits_uop_debug_inst; // @[mshrs.scala 710:22]
@@ -2748,7 +2335,6 @@ module BoomMSHRFile(
   wire  mmios_0_io_resp_bits_uop_ctrl_is_load; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_ctrl_is_sta; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_ctrl_is_std; // @[mshrs.scala 710:22]
-  wire [1:0] mmios_0_io_resp_bits_uop_ctrl_op3_sel; // @[mshrs.scala 710:22]
   wire [1:0] mmios_0_io_resp_bits_uop_iw_state; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_iw_p1_poisoned; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_iw_p2_poisoned; // @[mshrs.scala 710:22]
@@ -2765,19 +2351,19 @@ module BoomMSHRFile(
   wire [19:0] mmios_0_io_resp_bits_uop_imm_packed; // @[mshrs.scala 710:22]
   wire [11:0] mmios_0_io_resp_bits_uop_csr_addr; // @[mshrs.scala 710:22]
   wire [5:0] mmios_0_io_resp_bits_uop_rob_idx; // @[mshrs.scala 710:22]
-  wire [4:0] mmios_0_io_resp_bits_uop_ldq_idx; // @[mshrs.scala 710:22]
-  wire [4:0] mmios_0_io_resp_bits_uop_stq_idx; // @[mshrs.scala 710:22]
+  wire [3:0] mmios_0_io_resp_bits_uop_ldq_idx; // @[mshrs.scala 710:22]
+  wire [3:0] mmios_0_io_resp_bits_uop_stq_idx; // @[mshrs.scala 710:22]
   wire [1:0] mmios_0_io_resp_bits_uop_rxq_idx; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_resp_bits_uop_pdst; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_resp_bits_uop_prs1; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_resp_bits_uop_prs2; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_resp_bits_uop_prs3; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_resp_bits_uop_pdst; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_resp_bits_uop_prs1; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_resp_bits_uop_prs2; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_resp_bits_uop_prs3; // @[mshrs.scala 710:22]
   wire [4:0] mmios_0_io_resp_bits_uop_ppred; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_prs1_busy; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_prs2_busy; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_prs3_busy; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_ppred_busy; // @[mshrs.scala 710:22]
-  wire [6:0] mmios_0_io_resp_bits_uop_stale_pdst; // @[mshrs.scala 710:22]
+  wire [5:0] mmios_0_io_resp_bits_uop_stale_pdst; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_exception; // @[mshrs.scala 710:22]
   wire [63:0] mmios_0_io_resp_bits_uop_exc_cause; // @[mshrs.scala 710:22]
   wire  mmios_0_io_resp_bits_uop_bypassable; // @[mshrs.scala 710:22]
@@ -2836,23 +2422,6 @@ module BoomMSHRFile(
   wire  respq_reset; // @[mshrs.scala 737:21]
   wire  respq_io_enq_ready; // @[mshrs.scala 737:21]
   wire  respq_io_enq_valid; // @[mshrs.scala 737:21]
-  wire  respq_io_enq_bits_uop_switch; // @[mshrs.scala 737:21]
-  wire  respq_io_enq_bits_uop_switch_off; // @[mshrs.scala 737:21]
-  wire  respq_io_enq_bits_uop_is_unicore; // @[mshrs.scala 737:21]
-  wire [2:0] respq_io_enq_bits_uop_shift; // @[mshrs.scala 737:21]
-  wire [1:0] respq_io_enq_bits_uop_lrs3_rtype; // @[mshrs.scala 737:21]
-  wire  respq_io_enq_bits_uop_rflag; // @[mshrs.scala 737:21]
-  wire  respq_io_enq_bits_uop_wflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_enq_bits_uop_prflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_enq_bits_uop_pwflag; // @[mshrs.scala 737:21]
-  wire  respq_io_enq_bits_uop_pflag_busy; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_enq_bits_uop_stale_pflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_enq_bits_uop_op1_sel; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_enq_bits_uop_op2_sel; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_enq_bits_uop_split_num; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_enq_bits_uop_self_index; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_enq_bits_uop_rob_inst_idx; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_enq_bits_uop_address_num; // @[mshrs.scala 737:21]
   wire [6:0] respq_io_enq_bits_uop_uopc; // @[mshrs.scala 737:21]
   wire [31:0] respq_io_enq_bits_uop_inst; // @[mshrs.scala 737:21]
   wire [31:0] respq_io_enq_bits_uop_debug_inst; // @[mshrs.scala 737:21]
@@ -2870,7 +2439,6 @@ module BoomMSHRFile(
   wire  respq_io_enq_bits_uop_ctrl_is_load; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_ctrl_is_sta; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_ctrl_is_std; // @[mshrs.scala 737:21]
-  wire [1:0] respq_io_enq_bits_uop_ctrl_op3_sel; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_enq_bits_uop_iw_state; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_iw_p1_poisoned; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_iw_p2_poisoned; // @[mshrs.scala 737:21]
@@ -2887,19 +2455,19 @@ module BoomMSHRFile(
   wire [19:0] respq_io_enq_bits_uop_imm_packed; // @[mshrs.scala 737:21]
   wire [11:0] respq_io_enq_bits_uop_csr_addr; // @[mshrs.scala 737:21]
   wire [5:0] respq_io_enq_bits_uop_rob_idx; // @[mshrs.scala 737:21]
-  wire [4:0] respq_io_enq_bits_uop_ldq_idx; // @[mshrs.scala 737:21]
-  wire [4:0] respq_io_enq_bits_uop_stq_idx; // @[mshrs.scala 737:21]
+  wire [3:0] respq_io_enq_bits_uop_ldq_idx; // @[mshrs.scala 737:21]
+  wire [3:0] respq_io_enq_bits_uop_stq_idx; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_enq_bits_uop_rxq_idx; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_enq_bits_uop_pdst; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_enq_bits_uop_prs1; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_enq_bits_uop_prs2; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_enq_bits_uop_prs3; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_enq_bits_uop_pdst; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_enq_bits_uop_prs1; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_enq_bits_uop_prs2; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_enq_bits_uop_prs3; // @[mshrs.scala 737:21]
   wire [4:0] respq_io_enq_bits_uop_ppred; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_prs1_busy; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_prs2_busy; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_prs3_busy; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_ppred_busy; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_enq_bits_uop_stale_pdst; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_enq_bits_uop_stale_pdst; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_exception; // @[mshrs.scala 737:21]
   wire [63:0] respq_io_enq_bits_uop_exc_cause; // @[mshrs.scala 737:21]
   wire  respq_io_enq_bits_uop_bypassable; // @[mshrs.scala 737:21]
@@ -2937,23 +2505,6 @@ module BoomMSHRFile(
   wire  respq_io_enq_bits_is_hella; // @[mshrs.scala 737:21]
   wire  respq_io_deq_ready; // @[mshrs.scala 737:21]
   wire  respq_io_deq_valid; // @[mshrs.scala 737:21]
-  wire  respq_io_deq_bits_uop_switch; // @[mshrs.scala 737:21]
-  wire  respq_io_deq_bits_uop_switch_off; // @[mshrs.scala 737:21]
-  wire  respq_io_deq_bits_uop_is_unicore; // @[mshrs.scala 737:21]
-  wire [2:0] respq_io_deq_bits_uop_shift; // @[mshrs.scala 737:21]
-  wire [1:0] respq_io_deq_bits_uop_lrs3_rtype; // @[mshrs.scala 737:21]
-  wire  respq_io_deq_bits_uop_rflag; // @[mshrs.scala 737:21]
-  wire  respq_io_deq_bits_uop_wflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_deq_bits_uop_prflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_deq_bits_uop_pwflag; // @[mshrs.scala 737:21]
-  wire  respq_io_deq_bits_uop_pflag_busy; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_deq_bits_uop_stale_pflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_deq_bits_uop_op1_sel; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_deq_bits_uop_op2_sel; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_deq_bits_uop_split_num; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_deq_bits_uop_self_index; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_deq_bits_uop_rob_inst_idx; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_deq_bits_uop_address_num; // @[mshrs.scala 737:21]
   wire [6:0] respq_io_deq_bits_uop_uopc; // @[mshrs.scala 737:21]
   wire [31:0] respq_io_deq_bits_uop_inst; // @[mshrs.scala 737:21]
   wire [31:0] respq_io_deq_bits_uop_debug_inst; // @[mshrs.scala 737:21]
@@ -2971,7 +2522,6 @@ module BoomMSHRFile(
   wire  respq_io_deq_bits_uop_ctrl_is_load; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_ctrl_is_sta; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_ctrl_is_std; // @[mshrs.scala 737:21]
-  wire [1:0] respq_io_deq_bits_uop_ctrl_op3_sel; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_deq_bits_uop_iw_state; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_iw_p1_poisoned; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_iw_p2_poisoned; // @[mshrs.scala 737:21]
@@ -2988,19 +2538,19 @@ module BoomMSHRFile(
   wire [19:0] respq_io_deq_bits_uop_imm_packed; // @[mshrs.scala 737:21]
   wire [11:0] respq_io_deq_bits_uop_csr_addr; // @[mshrs.scala 737:21]
   wire [5:0] respq_io_deq_bits_uop_rob_idx; // @[mshrs.scala 737:21]
-  wire [4:0] respq_io_deq_bits_uop_ldq_idx; // @[mshrs.scala 737:21]
-  wire [4:0] respq_io_deq_bits_uop_stq_idx; // @[mshrs.scala 737:21]
+  wire [3:0] respq_io_deq_bits_uop_ldq_idx; // @[mshrs.scala 737:21]
+  wire [3:0] respq_io_deq_bits_uop_stq_idx; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_deq_bits_uop_rxq_idx; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_deq_bits_uop_pdst; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_deq_bits_uop_prs1; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_deq_bits_uop_prs2; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_deq_bits_uop_prs3; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_deq_bits_uop_pdst; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_deq_bits_uop_prs1; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_deq_bits_uop_prs2; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_deq_bits_uop_prs3; // @[mshrs.scala 737:21]
   wire [4:0] respq_io_deq_bits_uop_ppred; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_prs1_busy; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_prs2_busy; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_prs3_busy; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_ppred_busy; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_deq_bits_uop_stale_pdst; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_deq_bits_uop_stale_pdst; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_exception; // @[mshrs.scala 737:21]
   wire [63:0] respq_io_deq_bits_uop_exc_cause; // @[mshrs.scala 737:21]
   wire  respq_io_deq_bits_uop_bypassable; // @[mshrs.scala 737:21]
@@ -3038,23 +2588,6 @@ module BoomMSHRFile(
   wire  respq_io_deq_bits_is_hella; // @[mshrs.scala 737:21]
   wire [11:0] respq_io_brupdate_b1_resolve_mask; // @[mshrs.scala 737:21]
   wire [11:0] respq_io_brupdate_b1_mispredict_mask; // @[mshrs.scala 737:21]
-  wire  respq_io_brupdate_b2_uop_switch; // @[mshrs.scala 737:21]
-  wire  respq_io_brupdate_b2_uop_switch_off; // @[mshrs.scala 737:21]
-  wire  respq_io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 737:21]
-  wire [2:0] respq_io_brupdate_b2_uop_shift; // @[mshrs.scala 737:21]
-  wire [1:0] respq_io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 737:21]
-  wire  respq_io_brupdate_b2_uop_rflag; // @[mshrs.scala 737:21]
-  wire  respq_io_brupdate_b2_uop_wflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_brupdate_b2_uop_prflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_brupdate_b2_uop_pwflag; // @[mshrs.scala 737:21]
-  wire  respq_io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 737:21]
-  wire [3:0] respq_io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_brupdate_b2_uop_split_num; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_brupdate_b2_uop_self_index; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 737:21]
-  wire [5:0] respq_io_brupdate_b2_uop_address_num; // @[mshrs.scala 737:21]
   wire [6:0] respq_io_brupdate_b2_uop_uopc; // @[mshrs.scala 737:21]
   wire [31:0] respq_io_brupdate_b2_uop_inst; // @[mshrs.scala 737:21]
   wire [31:0] respq_io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 737:21]
@@ -3072,7 +2605,6 @@ module BoomMSHRFile(
   wire  respq_io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 737:21]
-  wire [1:0] respq_io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_brupdate_b2_uop_iw_state; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 737:21]
@@ -3089,19 +2621,19 @@ module BoomMSHRFile(
   wire [19:0] respq_io_brupdate_b2_uop_imm_packed; // @[mshrs.scala 737:21]
   wire [11:0] respq_io_brupdate_b2_uop_csr_addr; // @[mshrs.scala 737:21]
   wire [5:0] respq_io_brupdate_b2_uop_rob_idx; // @[mshrs.scala 737:21]
-  wire [4:0] respq_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 737:21]
-  wire [4:0] respq_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 737:21]
+  wire [3:0] respq_io_brupdate_b2_uop_ldq_idx; // @[mshrs.scala 737:21]
+  wire [3:0] respq_io_brupdate_b2_uop_stq_idx; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_brupdate_b2_uop_rxq_idx; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_brupdate_b2_uop_pdst; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_brupdate_b2_uop_prs1; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_brupdate_b2_uop_prs2; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_brupdate_b2_uop_prs3; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_brupdate_b2_uop_pdst; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_brupdate_b2_uop_prs1; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_brupdate_b2_uop_prs2; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_brupdate_b2_uop_prs3; // @[mshrs.scala 737:21]
   wire [4:0] respq_io_brupdate_b2_uop_ppred; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_prs1_busy; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_prs2_busy; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_prs3_busy; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_ppred_busy; // @[mshrs.scala 737:21]
-  wire [6:0] respq_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 737:21]
+  wire [5:0] respq_io_brupdate_b2_uop_stale_pdst; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_exception; // @[mshrs.scala 737:21]
   wire [63:0] respq_io_brupdate_b2_uop_exc_cause; // @[mshrs.scala 737:21]
   wire  respq_io_brupdate_b2_uop_bypassable; // @[mshrs.scala 737:21]
@@ -3141,7 +2673,7 @@ module BoomMSHRFile(
   wire [2:0] respq_io_brupdate_b2_cfi_type; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_brupdate_b2_pc_sel; // @[mshrs.scala 737:21]
   wire [39:0] respq_io_brupdate_b2_jalr_target; // @[mshrs.scala 737:21]
-  wire [31:0] respq_io_brupdate_b2_target_offset; // @[mshrs.scala 737:21]
+  wire [20:0] respq_io_brupdate_b2_target_offset; // @[mshrs.scala 737:21]
   wire  respq_io_flush; // @[mshrs.scala 737:21]
   wire  respq_io_empty; // @[mshrs.scala 737:21]
   wire [1:0] respq_io_count; // @[mshrs.scala 737:21]
@@ -3224,12 +2756,12 @@ module BoomMSHRFile(
   wire  sec_rdy = mshrs_0_io_req_sec_rdy & mshrs_0_io_req_sec_val | mshrs_1_io_req_sec_rdy & mshrs_1_io_req_sec_val; // @[mshrs.scala 677:25]
   wire  _GEN_43 = ~mshrs_1_io_req_pri_rdy ? 1'h0 : _GEN_30; // @[mshrs.scala 680:33 mshrs.scala 681:20]
   reg  mshr_head; // @[mshrs.scala 693:31]
-  wire  _T_190 = mshrs_0_io_req_pri_rdy & 1'h0 >= mshr_head; // @[util.scala 422:65]
-  wire  _T_192 = mshrs_1_io_req_pri_rdy; // @[util.scala 422:65]
+  wire  _T_190 = mshrs_0_io_req_pri_rdy & 1'h0 >= mshr_head; // @[util.scala 351:65]
+  wire  _T_192 = mshrs_1_io_req_pri_rdy; // @[util.scala 351:65]
   wire [1:0] _T_193 = mshrs_0_io_req_pri_rdy ? 2'h2 : 2'h3; // @[Mux.scala 47:69]
   wire [1:0] _T_194 = _T_192 ? 2'h1 : _T_193; // @[Mux.scala 47:69]
   wire [1:0] _T_195 = _T_190 ? 2'h0 : _T_194; // @[Mux.scala 47:69]
-  wire  _T_199 = mshr_head + 1'h1; // @[util.scala 260:14]
+  wire  _T_199 = mshr_head + 1'h1; // @[util.scala 203:14]
   wire  mmio_rdy = mmios_0_io_req_ready; // @[mshrs.scala 717:25]
   wire  _T_201 = io_mem_grant_bits_source == 2'h3; // @[mshrs.scala 720:77]
   wire  _T_205 = ~cacheable; // @[mshrs.scala 732:47]
@@ -3442,23 +2974,6 @@ module BoomMSHRFile(
     .io_req_coh_state(prefetcher_io_req_coh_state),
     .io_prefetch_ready(prefetcher_io_prefetch_ready),
     .io_prefetch_valid(prefetcher_io_prefetch_valid),
-    .io_prefetch_bits_uop_switch(prefetcher_io_prefetch_bits_uop_switch),
-    .io_prefetch_bits_uop_switch_off(prefetcher_io_prefetch_bits_uop_switch_off),
-    .io_prefetch_bits_uop_is_unicore(prefetcher_io_prefetch_bits_uop_is_unicore),
-    .io_prefetch_bits_uop_shift(prefetcher_io_prefetch_bits_uop_shift),
-    .io_prefetch_bits_uop_lrs3_rtype(prefetcher_io_prefetch_bits_uop_lrs3_rtype),
-    .io_prefetch_bits_uop_rflag(prefetcher_io_prefetch_bits_uop_rflag),
-    .io_prefetch_bits_uop_wflag(prefetcher_io_prefetch_bits_uop_wflag),
-    .io_prefetch_bits_uop_prflag(prefetcher_io_prefetch_bits_uop_prflag),
-    .io_prefetch_bits_uop_pwflag(prefetcher_io_prefetch_bits_uop_pwflag),
-    .io_prefetch_bits_uop_pflag_busy(prefetcher_io_prefetch_bits_uop_pflag_busy),
-    .io_prefetch_bits_uop_stale_pflag(prefetcher_io_prefetch_bits_uop_stale_pflag),
-    .io_prefetch_bits_uop_op1_sel(prefetcher_io_prefetch_bits_uop_op1_sel),
-    .io_prefetch_bits_uop_op2_sel(prefetcher_io_prefetch_bits_uop_op2_sel),
-    .io_prefetch_bits_uop_split_num(prefetcher_io_prefetch_bits_uop_split_num),
-    .io_prefetch_bits_uop_self_index(prefetcher_io_prefetch_bits_uop_self_index),
-    .io_prefetch_bits_uop_rob_inst_idx(prefetcher_io_prefetch_bits_uop_rob_inst_idx),
-    .io_prefetch_bits_uop_address_num(prefetcher_io_prefetch_bits_uop_address_num),
     .io_prefetch_bits_uop_uopc(prefetcher_io_prefetch_bits_uop_uopc),
     .io_prefetch_bits_uop_inst(prefetcher_io_prefetch_bits_uop_inst),
     .io_prefetch_bits_uop_debug_inst(prefetcher_io_prefetch_bits_uop_debug_inst),
@@ -3476,7 +2991,6 @@ module BoomMSHRFile(
     .io_prefetch_bits_uop_ctrl_is_load(prefetcher_io_prefetch_bits_uop_ctrl_is_load),
     .io_prefetch_bits_uop_ctrl_is_sta(prefetcher_io_prefetch_bits_uop_ctrl_is_sta),
     .io_prefetch_bits_uop_ctrl_is_std(prefetcher_io_prefetch_bits_uop_ctrl_is_std),
-    .io_prefetch_bits_uop_ctrl_op3_sel(prefetcher_io_prefetch_bits_uop_ctrl_op3_sel),
     .io_prefetch_bits_uop_iw_state(prefetcher_io_prefetch_bits_uop_iw_state),
     .io_prefetch_bits_uop_iw_p1_poisoned(prefetcher_io_prefetch_bits_uop_iw_p1_poisoned),
     .io_prefetch_bits_uop_iw_p2_poisoned(prefetcher_io_prefetch_bits_uop_iw_p2_poisoned),
@@ -3660,23 +3174,6 @@ module BoomMSHRFile(
     .reset(replay_arb_reset),
     .io_in_0_ready(replay_arb_io_in_0_ready),
     .io_in_0_valid(replay_arb_io_in_0_valid),
-    .io_in_0_bits_uop_switch(replay_arb_io_in_0_bits_uop_switch),
-    .io_in_0_bits_uop_switch_off(replay_arb_io_in_0_bits_uop_switch_off),
-    .io_in_0_bits_uop_is_unicore(replay_arb_io_in_0_bits_uop_is_unicore),
-    .io_in_0_bits_uop_shift(replay_arb_io_in_0_bits_uop_shift),
-    .io_in_0_bits_uop_lrs3_rtype(replay_arb_io_in_0_bits_uop_lrs3_rtype),
-    .io_in_0_bits_uop_rflag(replay_arb_io_in_0_bits_uop_rflag),
-    .io_in_0_bits_uop_wflag(replay_arb_io_in_0_bits_uop_wflag),
-    .io_in_0_bits_uop_prflag(replay_arb_io_in_0_bits_uop_prflag),
-    .io_in_0_bits_uop_pwflag(replay_arb_io_in_0_bits_uop_pwflag),
-    .io_in_0_bits_uop_pflag_busy(replay_arb_io_in_0_bits_uop_pflag_busy),
-    .io_in_0_bits_uop_stale_pflag(replay_arb_io_in_0_bits_uop_stale_pflag),
-    .io_in_0_bits_uop_op1_sel(replay_arb_io_in_0_bits_uop_op1_sel),
-    .io_in_0_bits_uop_op2_sel(replay_arb_io_in_0_bits_uop_op2_sel),
-    .io_in_0_bits_uop_split_num(replay_arb_io_in_0_bits_uop_split_num),
-    .io_in_0_bits_uop_self_index(replay_arb_io_in_0_bits_uop_self_index),
-    .io_in_0_bits_uop_rob_inst_idx(replay_arb_io_in_0_bits_uop_rob_inst_idx),
-    .io_in_0_bits_uop_address_num(replay_arb_io_in_0_bits_uop_address_num),
     .io_in_0_bits_uop_uopc(replay_arb_io_in_0_bits_uop_uopc),
     .io_in_0_bits_uop_inst(replay_arb_io_in_0_bits_uop_inst),
     .io_in_0_bits_uop_debug_inst(replay_arb_io_in_0_bits_uop_debug_inst),
@@ -3694,7 +3191,6 @@ module BoomMSHRFile(
     .io_in_0_bits_uop_ctrl_is_load(replay_arb_io_in_0_bits_uop_ctrl_is_load),
     .io_in_0_bits_uop_ctrl_is_sta(replay_arb_io_in_0_bits_uop_ctrl_is_sta),
     .io_in_0_bits_uop_ctrl_is_std(replay_arb_io_in_0_bits_uop_ctrl_is_std),
-    .io_in_0_bits_uop_ctrl_op3_sel(replay_arb_io_in_0_bits_uop_ctrl_op3_sel),
     .io_in_0_bits_uop_iw_state(replay_arb_io_in_0_bits_uop_iw_state),
     .io_in_0_bits_uop_iw_p1_poisoned(replay_arb_io_in_0_bits_uop_iw_p1_poisoned),
     .io_in_0_bits_uop_iw_p2_poisoned(replay_arb_io_in_0_bits_uop_iw_p2_poisoned),
@@ -3767,23 +3263,6 @@ module BoomMSHRFile(
     .io_in_0_bits_sdq_id(replay_arb_io_in_0_bits_sdq_id),
     .io_in_1_ready(replay_arb_io_in_1_ready),
     .io_in_1_valid(replay_arb_io_in_1_valid),
-    .io_in_1_bits_uop_switch(replay_arb_io_in_1_bits_uop_switch),
-    .io_in_1_bits_uop_switch_off(replay_arb_io_in_1_bits_uop_switch_off),
-    .io_in_1_bits_uop_is_unicore(replay_arb_io_in_1_bits_uop_is_unicore),
-    .io_in_1_bits_uop_shift(replay_arb_io_in_1_bits_uop_shift),
-    .io_in_1_bits_uop_lrs3_rtype(replay_arb_io_in_1_bits_uop_lrs3_rtype),
-    .io_in_1_bits_uop_rflag(replay_arb_io_in_1_bits_uop_rflag),
-    .io_in_1_bits_uop_wflag(replay_arb_io_in_1_bits_uop_wflag),
-    .io_in_1_bits_uop_prflag(replay_arb_io_in_1_bits_uop_prflag),
-    .io_in_1_bits_uop_pwflag(replay_arb_io_in_1_bits_uop_pwflag),
-    .io_in_1_bits_uop_pflag_busy(replay_arb_io_in_1_bits_uop_pflag_busy),
-    .io_in_1_bits_uop_stale_pflag(replay_arb_io_in_1_bits_uop_stale_pflag),
-    .io_in_1_bits_uop_op1_sel(replay_arb_io_in_1_bits_uop_op1_sel),
-    .io_in_1_bits_uop_op2_sel(replay_arb_io_in_1_bits_uop_op2_sel),
-    .io_in_1_bits_uop_split_num(replay_arb_io_in_1_bits_uop_split_num),
-    .io_in_1_bits_uop_self_index(replay_arb_io_in_1_bits_uop_self_index),
-    .io_in_1_bits_uop_rob_inst_idx(replay_arb_io_in_1_bits_uop_rob_inst_idx),
-    .io_in_1_bits_uop_address_num(replay_arb_io_in_1_bits_uop_address_num),
     .io_in_1_bits_uop_uopc(replay_arb_io_in_1_bits_uop_uopc),
     .io_in_1_bits_uop_inst(replay_arb_io_in_1_bits_uop_inst),
     .io_in_1_bits_uop_debug_inst(replay_arb_io_in_1_bits_uop_debug_inst),
@@ -3801,7 +3280,6 @@ module BoomMSHRFile(
     .io_in_1_bits_uop_ctrl_is_load(replay_arb_io_in_1_bits_uop_ctrl_is_load),
     .io_in_1_bits_uop_ctrl_is_sta(replay_arb_io_in_1_bits_uop_ctrl_is_sta),
     .io_in_1_bits_uop_ctrl_is_std(replay_arb_io_in_1_bits_uop_ctrl_is_std),
-    .io_in_1_bits_uop_ctrl_op3_sel(replay_arb_io_in_1_bits_uop_ctrl_op3_sel),
     .io_in_1_bits_uop_iw_state(replay_arb_io_in_1_bits_uop_iw_state),
     .io_in_1_bits_uop_iw_p1_poisoned(replay_arb_io_in_1_bits_uop_iw_p1_poisoned),
     .io_in_1_bits_uop_iw_p2_poisoned(replay_arb_io_in_1_bits_uop_iw_p2_poisoned),
@@ -3874,23 +3352,6 @@ module BoomMSHRFile(
     .io_in_1_bits_sdq_id(replay_arb_io_in_1_bits_sdq_id),
     .io_out_ready(replay_arb_io_out_ready),
     .io_out_valid(replay_arb_io_out_valid),
-    .io_out_bits_uop_switch(replay_arb_io_out_bits_uop_switch),
-    .io_out_bits_uop_switch_off(replay_arb_io_out_bits_uop_switch_off),
-    .io_out_bits_uop_is_unicore(replay_arb_io_out_bits_uop_is_unicore),
-    .io_out_bits_uop_shift(replay_arb_io_out_bits_uop_shift),
-    .io_out_bits_uop_lrs3_rtype(replay_arb_io_out_bits_uop_lrs3_rtype),
-    .io_out_bits_uop_rflag(replay_arb_io_out_bits_uop_rflag),
-    .io_out_bits_uop_wflag(replay_arb_io_out_bits_uop_wflag),
-    .io_out_bits_uop_prflag(replay_arb_io_out_bits_uop_prflag),
-    .io_out_bits_uop_pwflag(replay_arb_io_out_bits_uop_pwflag),
-    .io_out_bits_uop_pflag_busy(replay_arb_io_out_bits_uop_pflag_busy),
-    .io_out_bits_uop_stale_pflag(replay_arb_io_out_bits_uop_stale_pflag),
-    .io_out_bits_uop_op1_sel(replay_arb_io_out_bits_uop_op1_sel),
-    .io_out_bits_uop_op2_sel(replay_arb_io_out_bits_uop_op2_sel),
-    .io_out_bits_uop_split_num(replay_arb_io_out_bits_uop_split_num),
-    .io_out_bits_uop_self_index(replay_arb_io_out_bits_uop_self_index),
-    .io_out_bits_uop_rob_inst_idx(replay_arb_io_out_bits_uop_rob_inst_idx),
-    .io_out_bits_uop_address_num(replay_arb_io_out_bits_uop_address_num),
     .io_out_bits_uop_uopc(replay_arb_io_out_bits_uop_uopc),
     .io_out_bits_uop_inst(replay_arb_io_out_bits_uop_inst),
     .io_out_bits_uop_debug_inst(replay_arb_io_out_bits_uop_debug_inst),
@@ -3908,7 +3369,6 @@ module BoomMSHRFile(
     .io_out_bits_uop_ctrl_is_load(replay_arb_io_out_bits_uop_ctrl_is_load),
     .io_out_bits_uop_ctrl_is_sta(replay_arb_io_out_bits_uop_ctrl_is_sta),
     .io_out_bits_uop_ctrl_is_std(replay_arb_io_out_bits_uop_ctrl_is_std),
-    .io_out_bits_uop_ctrl_op3_sel(replay_arb_io_out_bits_uop_ctrl_op3_sel),
     .io_out_bits_uop_iw_state(replay_arb_io_out_bits_uop_iw_state),
     .io_out_bits_uop_iw_p1_poisoned(replay_arb_io_out_bits_uop_iw_p1_poisoned),
     .io_out_bits_uop_iw_p2_poisoned(replay_arb_io_out_bits_uop_iw_p2_poisoned),
@@ -3986,23 +3446,6 @@ module BoomMSHRFile(
     .reset(resp_arb_reset),
     .io_in_0_ready(resp_arb_io_in_0_ready),
     .io_in_0_valid(resp_arb_io_in_0_valid),
-    .io_in_0_bits_uop_switch(resp_arb_io_in_0_bits_uop_switch),
-    .io_in_0_bits_uop_switch_off(resp_arb_io_in_0_bits_uop_switch_off),
-    .io_in_0_bits_uop_is_unicore(resp_arb_io_in_0_bits_uop_is_unicore),
-    .io_in_0_bits_uop_shift(resp_arb_io_in_0_bits_uop_shift),
-    .io_in_0_bits_uop_lrs3_rtype(resp_arb_io_in_0_bits_uop_lrs3_rtype),
-    .io_in_0_bits_uop_rflag(resp_arb_io_in_0_bits_uop_rflag),
-    .io_in_0_bits_uop_wflag(resp_arb_io_in_0_bits_uop_wflag),
-    .io_in_0_bits_uop_prflag(resp_arb_io_in_0_bits_uop_prflag),
-    .io_in_0_bits_uop_pwflag(resp_arb_io_in_0_bits_uop_pwflag),
-    .io_in_0_bits_uop_pflag_busy(resp_arb_io_in_0_bits_uop_pflag_busy),
-    .io_in_0_bits_uop_stale_pflag(resp_arb_io_in_0_bits_uop_stale_pflag),
-    .io_in_0_bits_uop_op1_sel(resp_arb_io_in_0_bits_uop_op1_sel),
-    .io_in_0_bits_uop_op2_sel(resp_arb_io_in_0_bits_uop_op2_sel),
-    .io_in_0_bits_uop_split_num(resp_arb_io_in_0_bits_uop_split_num),
-    .io_in_0_bits_uop_self_index(resp_arb_io_in_0_bits_uop_self_index),
-    .io_in_0_bits_uop_rob_inst_idx(resp_arb_io_in_0_bits_uop_rob_inst_idx),
-    .io_in_0_bits_uop_address_num(resp_arb_io_in_0_bits_uop_address_num),
     .io_in_0_bits_uop_uopc(resp_arb_io_in_0_bits_uop_uopc),
     .io_in_0_bits_uop_inst(resp_arb_io_in_0_bits_uop_inst),
     .io_in_0_bits_uop_debug_inst(resp_arb_io_in_0_bits_uop_debug_inst),
@@ -4020,7 +3463,6 @@ module BoomMSHRFile(
     .io_in_0_bits_uop_ctrl_is_load(resp_arb_io_in_0_bits_uop_ctrl_is_load),
     .io_in_0_bits_uop_ctrl_is_sta(resp_arb_io_in_0_bits_uop_ctrl_is_sta),
     .io_in_0_bits_uop_ctrl_is_std(resp_arb_io_in_0_bits_uop_ctrl_is_std),
-    .io_in_0_bits_uop_ctrl_op3_sel(resp_arb_io_in_0_bits_uop_ctrl_op3_sel),
     .io_in_0_bits_uop_iw_state(resp_arb_io_in_0_bits_uop_iw_state),
     .io_in_0_bits_uop_iw_p1_poisoned(resp_arb_io_in_0_bits_uop_iw_p1_poisoned),
     .io_in_0_bits_uop_iw_p2_poisoned(resp_arb_io_in_0_bits_uop_iw_p2_poisoned),
@@ -4087,23 +3529,6 @@ module BoomMSHRFile(
     .io_in_0_bits_is_hella(resp_arb_io_in_0_bits_is_hella),
     .io_in_1_ready(resp_arb_io_in_1_ready),
     .io_in_1_valid(resp_arb_io_in_1_valid),
-    .io_in_1_bits_uop_switch(resp_arb_io_in_1_bits_uop_switch),
-    .io_in_1_bits_uop_switch_off(resp_arb_io_in_1_bits_uop_switch_off),
-    .io_in_1_bits_uop_is_unicore(resp_arb_io_in_1_bits_uop_is_unicore),
-    .io_in_1_bits_uop_shift(resp_arb_io_in_1_bits_uop_shift),
-    .io_in_1_bits_uop_lrs3_rtype(resp_arb_io_in_1_bits_uop_lrs3_rtype),
-    .io_in_1_bits_uop_rflag(resp_arb_io_in_1_bits_uop_rflag),
-    .io_in_1_bits_uop_wflag(resp_arb_io_in_1_bits_uop_wflag),
-    .io_in_1_bits_uop_prflag(resp_arb_io_in_1_bits_uop_prflag),
-    .io_in_1_bits_uop_pwflag(resp_arb_io_in_1_bits_uop_pwflag),
-    .io_in_1_bits_uop_pflag_busy(resp_arb_io_in_1_bits_uop_pflag_busy),
-    .io_in_1_bits_uop_stale_pflag(resp_arb_io_in_1_bits_uop_stale_pflag),
-    .io_in_1_bits_uop_op1_sel(resp_arb_io_in_1_bits_uop_op1_sel),
-    .io_in_1_bits_uop_op2_sel(resp_arb_io_in_1_bits_uop_op2_sel),
-    .io_in_1_bits_uop_split_num(resp_arb_io_in_1_bits_uop_split_num),
-    .io_in_1_bits_uop_self_index(resp_arb_io_in_1_bits_uop_self_index),
-    .io_in_1_bits_uop_rob_inst_idx(resp_arb_io_in_1_bits_uop_rob_inst_idx),
-    .io_in_1_bits_uop_address_num(resp_arb_io_in_1_bits_uop_address_num),
     .io_in_1_bits_uop_uopc(resp_arb_io_in_1_bits_uop_uopc),
     .io_in_1_bits_uop_inst(resp_arb_io_in_1_bits_uop_inst),
     .io_in_1_bits_uop_debug_inst(resp_arb_io_in_1_bits_uop_debug_inst),
@@ -4121,7 +3546,6 @@ module BoomMSHRFile(
     .io_in_1_bits_uop_ctrl_is_load(resp_arb_io_in_1_bits_uop_ctrl_is_load),
     .io_in_1_bits_uop_ctrl_is_sta(resp_arb_io_in_1_bits_uop_ctrl_is_sta),
     .io_in_1_bits_uop_ctrl_is_std(resp_arb_io_in_1_bits_uop_ctrl_is_std),
-    .io_in_1_bits_uop_ctrl_op3_sel(resp_arb_io_in_1_bits_uop_ctrl_op3_sel),
     .io_in_1_bits_uop_iw_state(resp_arb_io_in_1_bits_uop_iw_state),
     .io_in_1_bits_uop_iw_p1_poisoned(resp_arb_io_in_1_bits_uop_iw_p1_poisoned),
     .io_in_1_bits_uop_iw_p2_poisoned(resp_arb_io_in_1_bits_uop_iw_p2_poisoned),
@@ -4188,23 +3612,6 @@ module BoomMSHRFile(
     .io_in_1_bits_is_hella(resp_arb_io_in_1_bits_is_hella),
     .io_in_2_ready(resp_arb_io_in_2_ready),
     .io_in_2_valid(resp_arb_io_in_2_valid),
-    .io_in_2_bits_uop_switch(resp_arb_io_in_2_bits_uop_switch),
-    .io_in_2_bits_uop_switch_off(resp_arb_io_in_2_bits_uop_switch_off),
-    .io_in_2_bits_uop_is_unicore(resp_arb_io_in_2_bits_uop_is_unicore),
-    .io_in_2_bits_uop_shift(resp_arb_io_in_2_bits_uop_shift),
-    .io_in_2_bits_uop_lrs3_rtype(resp_arb_io_in_2_bits_uop_lrs3_rtype),
-    .io_in_2_bits_uop_rflag(resp_arb_io_in_2_bits_uop_rflag),
-    .io_in_2_bits_uop_wflag(resp_arb_io_in_2_bits_uop_wflag),
-    .io_in_2_bits_uop_prflag(resp_arb_io_in_2_bits_uop_prflag),
-    .io_in_2_bits_uop_pwflag(resp_arb_io_in_2_bits_uop_pwflag),
-    .io_in_2_bits_uop_pflag_busy(resp_arb_io_in_2_bits_uop_pflag_busy),
-    .io_in_2_bits_uop_stale_pflag(resp_arb_io_in_2_bits_uop_stale_pflag),
-    .io_in_2_bits_uop_op1_sel(resp_arb_io_in_2_bits_uop_op1_sel),
-    .io_in_2_bits_uop_op2_sel(resp_arb_io_in_2_bits_uop_op2_sel),
-    .io_in_2_bits_uop_split_num(resp_arb_io_in_2_bits_uop_split_num),
-    .io_in_2_bits_uop_self_index(resp_arb_io_in_2_bits_uop_self_index),
-    .io_in_2_bits_uop_rob_inst_idx(resp_arb_io_in_2_bits_uop_rob_inst_idx),
-    .io_in_2_bits_uop_address_num(resp_arb_io_in_2_bits_uop_address_num),
     .io_in_2_bits_uop_uopc(resp_arb_io_in_2_bits_uop_uopc),
     .io_in_2_bits_uop_inst(resp_arb_io_in_2_bits_uop_inst),
     .io_in_2_bits_uop_debug_inst(resp_arb_io_in_2_bits_uop_debug_inst),
@@ -4222,7 +3629,6 @@ module BoomMSHRFile(
     .io_in_2_bits_uop_ctrl_is_load(resp_arb_io_in_2_bits_uop_ctrl_is_load),
     .io_in_2_bits_uop_ctrl_is_sta(resp_arb_io_in_2_bits_uop_ctrl_is_sta),
     .io_in_2_bits_uop_ctrl_is_std(resp_arb_io_in_2_bits_uop_ctrl_is_std),
-    .io_in_2_bits_uop_ctrl_op3_sel(resp_arb_io_in_2_bits_uop_ctrl_op3_sel),
     .io_in_2_bits_uop_iw_state(resp_arb_io_in_2_bits_uop_iw_state),
     .io_in_2_bits_uop_iw_p1_poisoned(resp_arb_io_in_2_bits_uop_iw_p1_poisoned),
     .io_in_2_bits_uop_iw_p2_poisoned(resp_arb_io_in_2_bits_uop_iw_p2_poisoned),
@@ -4289,23 +3695,6 @@ module BoomMSHRFile(
     .io_in_2_bits_is_hella(resp_arb_io_in_2_bits_is_hella),
     .io_out_ready(resp_arb_io_out_ready),
     .io_out_valid(resp_arb_io_out_valid),
-    .io_out_bits_uop_switch(resp_arb_io_out_bits_uop_switch),
-    .io_out_bits_uop_switch_off(resp_arb_io_out_bits_uop_switch_off),
-    .io_out_bits_uop_is_unicore(resp_arb_io_out_bits_uop_is_unicore),
-    .io_out_bits_uop_shift(resp_arb_io_out_bits_uop_shift),
-    .io_out_bits_uop_lrs3_rtype(resp_arb_io_out_bits_uop_lrs3_rtype),
-    .io_out_bits_uop_rflag(resp_arb_io_out_bits_uop_rflag),
-    .io_out_bits_uop_wflag(resp_arb_io_out_bits_uop_wflag),
-    .io_out_bits_uop_prflag(resp_arb_io_out_bits_uop_prflag),
-    .io_out_bits_uop_pwflag(resp_arb_io_out_bits_uop_pwflag),
-    .io_out_bits_uop_pflag_busy(resp_arb_io_out_bits_uop_pflag_busy),
-    .io_out_bits_uop_stale_pflag(resp_arb_io_out_bits_uop_stale_pflag),
-    .io_out_bits_uop_op1_sel(resp_arb_io_out_bits_uop_op1_sel),
-    .io_out_bits_uop_op2_sel(resp_arb_io_out_bits_uop_op2_sel),
-    .io_out_bits_uop_split_num(resp_arb_io_out_bits_uop_split_num),
-    .io_out_bits_uop_self_index(resp_arb_io_out_bits_uop_self_index),
-    .io_out_bits_uop_rob_inst_idx(resp_arb_io_out_bits_uop_rob_inst_idx),
-    .io_out_bits_uop_address_num(resp_arb_io_out_bits_uop_address_num),
     .io_out_bits_uop_uopc(resp_arb_io_out_bits_uop_uopc),
     .io_out_bits_uop_inst(resp_arb_io_out_bits_uop_inst),
     .io_out_bits_uop_debug_inst(resp_arb_io_out_bits_uop_debug_inst),
@@ -4323,7 +3712,6 @@ module BoomMSHRFile(
     .io_out_bits_uop_ctrl_is_load(resp_arb_io_out_bits_uop_ctrl_is_load),
     .io_out_bits_uop_ctrl_is_sta(resp_arb_io_out_bits_uop_ctrl_is_sta),
     .io_out_bits_uop_ctrl_is_std(resp_arb_io_out_bits_uop_ctrl_is_std),
-    .io_out_bits_uop_ctrl_op3_sel(resp_arb_io_out_bits_uop_ctrl_op3_sel),
     .io_out_bits_uop_iw_state(resp_arb_io_out_bits_uop_iw_state),
     .io_out_bits_uop_iw_p1_poisoned(resp_arb_io_out_bits_uop_iw_p1_poisoned),
     .io_out_bits_uop_iw_p2_poisoned(resp_arb_io_out_bits_uop_iw_p2_poisoned),
@@ -4424,23 +3812,6 @@ module BoomMSHRFile(
     .io_clear_prefetch(mshrs_0_io_clear_prefetch),
     .io_brupdate_b1_resolve_mask(mshrs_0_io_brupdate_b1_resolve_mask),
     .io_brupdate_b1_mispredict_mask(mshrs_0_io_brupdate_b1_mispredict_mask),
-    .io_brupdate_b2_uop_switch(mshrs_0_io_brupdate_b2_uop_switch),
-    .io_brupdate_b2_uop_switch_off(mshrs_0_io_brupdate_b2_uop_switch_off),
-    .io_brupdate_b2_uop_is_unicore(mshrs_0_io_brupdate_b2_uop_is_unicore),
-    .io_brupdate_b2_uop_shift(mshrs_0_io_brupdate_b2_uop_shift),
-    .io_brupdate_b2_uop_lrs3_rtype(mshrs_0_io_brupdate_b2_uop_lrs3_rtype),
-    .io_brupdate_b2_uop_rflag(mshrs_0_io_brupdate_b2_uop_rflag),
-    .io_brupdate_b2_uop_wflag(mshrs_0_io_brupdate_b2_uop_wflag),
-    .io_brupdate_b2_uop_prflag(mshrs_0_io_brupdate_b2_uop_prflag),
-    .io_brupdate_b2_uop_pwflag(mshrs_0_io_brupdate_b2_uop_pwflag),
-    .io_brupdate_b2_uop_pflag_busy(mshrs_0_io_brupdate_b2_uop_pflag_busy),
-    .io_brupdate_b2_uop_stale_pflag(mshrs_0_io_brupdate_b2_uop_stale_pflag),
-    .io_brupdate_b2_uop_op1_sel(mshrs_0_io_brupdate_b2_uop_op1_sel),
-    .io_brupdate_b2_uop_op2_sel(mshrs_0_io_brupdate_b2_uop_op2_sel),
-    .io_brupdate_b2_uop_split_num(mshrs_0_io_brupdate_b2_uop_split_num),
-    .io_brupdate_b2_uop_self_index(mshrs_0_io_brupdate_b2_uop_self_index),
-    .io_brupdate_b2_uop_rob_inst_idx(mshrs_0_io_brupdate_b2_uop_rob_inst_idx),
-    .io_brupdate_b2_uop_address_num(mshrs_0_io_brupdate_b2_uop_address_num),
     .io_brupdate_b2_uop_uopc(mshrs_0_io_brupdate_b2_uop_uopc),
     .io_brupdate_b2_uop_inst(mshrs_0_io_brupdate_b2_uop_inst),
     .io_brupdate_b2_uop_debug_inst(mshrs_0_io_brupdate_b2_uop_debug_inst),
@@ -4458,7 +3829,6 @@ module BoomMSHRFile(
     .io_brupdate_b2_uop_ctrl_is_load(mshrs_0_io_brupdate_b2_uop_ctrl_is_load),
     .io_brupdate_b2_uop_ctrl_is_sta(mshrs_0_io_brupdate_b2_uop_ctrl_is_sta),
     .io_brupdate_b2_uop_ctrl_is_std(mshrs_0_io_brupdate_b2_uop_ctrl_is_std),
-    .io_brupdate_b2_uop_ctrl_op3_sel(mshrs_0_io_brupdate_b2_uop_ctrl_op3_sel),
     .io_brupdate_b2_uop_iw_state(mshrs_0_io_brupdate_b2_uop_iw_state),
     .io_brupdate_b2_uop_iw_p1_poisoned(mshrs_0_io_brupdate_b2_uop_iw_p1_poisoned),
     .io_brupdate_b2_uop_iw_p2_poisoned(mshrs_0_io_brupdate_b2_uop_iw_p2_poisoned),
@@ -4531,23 +3901,6 @@ module BoomMSHRFile(
     .io_exception(mshrs_0_io_exception),
     .io_rob_pnr_idx(mshrs_0_io_rob_pnr_idx),
     .io_rob_head_idx(mshrs_0_io_rob_head_idx),
-    .io_req_uop_switch(mshrs_0_io_req_uop_switch),
-    .io_req_uop_switch_off(mshrs_0_io_req_uop_switch_off),
-    .io_req_uop_is_unicore(mshrs_0_io_req_uop_is_unicore),
-    .io_req_uop_shift(mshrs_0_io_req_uop_shift),
-    .io_req_uop_lrs3_rtype(mshrs_0_io_req_uop_lrs3_rtype),
-    .io_req_uop_rflag(mshrs_0_io_req_uop_rflag),
-    .io_req_uop_wflag(mshrs_0_io_req_uop_wflag),
-    .io_req_uop_prflag(mshrs_0_io_req_uop_prflag),
-    .io_req_uop_pwflag(mshrs_0_io_req_uop_pwflag),
-    .io_req_uop_pflag_busy(mshrs_0_io_req_uop_pflag_busy),
-    .io_req_uop_stale_pflag(mshrs_0_io_req_uop_stale_pflag),
-    .io_req_uop_op1_sel(mshrs_0_io_req_uop_op1_sel),
-    .io_req_uop_op2_sel(mshrs_0_io_req_uop_op2_sel),
-    .io_req_uop_split_num(mshrs_0_io_req_uop_split_num),
-    .io_req_uop_self_index(mshrs_0_io_req_uop_self_index),
-    .io_req_uop_rob_inst_idx(mshrs_0_io_req_uop_rob_inst_idx),
-    .io_req_uop_address_num(mshrs_0_io_req_uop_address_num),
     .io_req_uop_uopc(mshrs_0_io_req_uop_uopc),
     .io_req_uop_inst(mshrs_0_io_req_uop_inst),
     .io_req_uop_debug_inst(mshrs_0_io_req_uop_debug_inst),
@@ -4565,7 +3918,6 @@ module BoomMSHRFile(
     .io_req_uop_ctrl_is_load(mshrs_0_io_req_uop_ctrl_is_load),
     .io_req_uop_ctrl_is_sta(mshrs_0_io_req_uop_ctrl_is_sta),
     .io_req_uop_ctrl_is_std(mshrs_0_io_req_uop_ctrl_is_std),
-    .io_req_uop_ctrl_op3_sel(mshrs_0_io_req_uop_ctrl_op3_sel),
     .io_req_uop_iw_state(mshrs_0_io_req_uop_iw_state),
     .io_req_uop_iw_p1_poisoned(mshrs_0_io_req_uop_iw_p1_poisoned),
     .io_req_uop_iw_p2_poisoned(mshrs_0_io_req_uop_iw_p2_poisoned),
@@ -4712,23 +4064,6 @@ module BoomMSHRFile(
     .io_lb_write_bits_data(mshrs_0_io_lb_write_bits_data),
     .io_replay_ready(mshrs_0_io_replay_ready),
     .io_replay_valid(mshrs_0_io_replay_valid),
-    .io_replay_bits_uop_switch(mshrs_0_io_replay_bits_uop_switch),
-    .io_replay_bits_uop_switch_off(mshrs_0_io_replay_bits_uop_switch_off),
-    .io_replay_bits_uop_is_unicore(mshrs_0_io_replay_bits_uop_is_unicore),
-    .io_replay_bits_uop_shift(mshrs_0_io_replay_bits_uop_shift),
-    .io_replay_bits_uop_lrs3_rtype(mshrs_0_io_replay_bits_uop_lrs3_rtype),
-    .io_replay_bits_uop_rflag(mshrs_0_io_replay_bits_uop_rflag),
-    .io_replay_bits_uop_wflag(mshrs_0_io_replay_bits_uop_wflag),
-    .io_replay_bits_uop_prflag(mshrs_0_io_replay_bits_uop_prflag),
-    .io_replay_bits_uop_pwflag(mshrs_0_io_replay_bits_uop_pwflag),
-    .io_replay_bits_uop_pflag_busy(mshrs_0_io_replay_bits_uop_pflag_busy),
-    .io_replay_bits_uop_stale_pflag(mshrs_0_io_replay_bits_uop_stale_pflag),
-    .io_replay_bits_uop_op1_sel(mshrs_0_io_replay_bits_uop_op1_sel),
-    .io_replay_bits_uop_op2_sel(mshrs_0_io_replay_bits_uop_op2_sel),
-    .io_replay_bits_uop_split_num(mshrs_0_io_replay_bits_uop_split_num),
-    .io_replay_bits_uop_self_index(mshrs_0_io_replay_bits_uop_self_index),
-    .io_replay_bits_uop_rob_inst_idx(mshrs_0_io_replay_bits_uop_rob_inst_idx),
-    .io_replay_bits_uop_address_num(mshrs_0_io_replay_bits_uop_address_num),
     .io_replay_bits_uop_uopc(mshrs_0_io_replay_bits_uop_uopc),
     .io_replay_bits_uop_inst(mshrs_0_io_replay_bits_uop_inst),
     .io_replay_bits_uop_debug_inst(mshrs_0_io_replay_bits_uop_debug_inst),
@@ -4746,7 +4081,6 @@ module BoomMSHRFile(
     .io_replay_bits_uop_ctrl_is_load(mshrs_0_io_replay_bits_uop_ctrl_is_load),
     .io_replay_bits_uop_ctrl_is_sta(mshrs_0_io_replay_bits_uop_ctrl_is_sta),
     .io_replay_bits_uop_ctrl_is_std(mshrs_0_io_replay_bits_uop_ctrl_is_std),
-    .io_replay_bits_uop_ctrl_op3_sel(mshrs_0_io_replay_bits_uop_ctrl_op3_sel),
     .io_replay_bits_uop_iw_state(mshrs_0_io_replay_bits_uop_iw_state),
     .io_replay_bits_uop_iw_p1_poisoned(mshrs_0_io_replay_bits_uop_iw_p1_poisoned),
     .io_replay_bits_uop_iw_p2_poisoned(mshrs_0_io_replay_bits_uop_iw_p2_poisoned),
@@ -4819,23 +4153,6 @@ module BoomMSHRFile(
     .io_replay_bits_sdq_id(mshrs_0_io_replay_bits_sdq_id),
     .io_resp_ready(mshrs_0_io_resp_ready),
     .io_resp_valid(mshrs_0_io_resp_valid),
-    .io_resp_bits_uop_switch(mshrs_0_io_resp_bits_uop_switch),
-    .io_resp_bits_uop_switch_off(mshrs_0_io_resp_bits_uop_switch_off),
-    .io_resp_bits_uop_is_unicore(mshrs_0_io_resp_bits_uop_is_unicore),
-    .io_resp_bits_uop_shift(mshrs_0_io_resp_bits_uop_shift),
-    .io_resp_bits_uop_lrs3_rtype(mshrs_0_io_resp_bits_uop_lrs3_rtype),
-    .io_resp_bits_uop_rflag(mshrs_0_io_resp_bits_uop_rflag),
-    .io_resp_bits_uop_wflag(mshrs_0_io_resp_bits_uop_wflag),
-    .io_resp_bits_uop_prflag(mshrs_0_io_resp_bits_uop_prflag),
-    .io_resp_bits_uop_pwflag(mshrs_0_io_resp_bits_uop_pwflag),
-    .io_resp_bits_uop_pflag_busy(mshrs_0_io_resp_bits_uop_pflag_busy),
-    .io_resp_bits_uop_stale_pflag(mshrs_0_io_resp_bits_uop_stale_pflag),
-    .io_resp_bits_uop_op1_sel(mshrs_0_io_resp_bits_uop_op1_sel),
-    .io_resp_bits_uop_op2_sel(mshrs_0_io_resp_bits_uop_op2_sel),
-    .io_resp_bits_uop_split_num(mshrs_0_io_resp_bits_uop_split_num),
-    .io_resp_bits_uop_self_index(mshrs_0_io_resp_bits_uop_self_index),
-    .io_resp_bits_uop_rob_inst_idx(mshrs_0_io_resp_bits_uop_rob_inst_idx),
-    .io_resp_bits_uop_address_num(mshrs_0_io_resp_bits_uop_address_num),
     .io_resp_bits_uop_uopc(mshrs_0_io_resp_bits_uop_uopc),
     .io_resp_bits_uop_inst(mshrs_0_io_resp_bits_uop_inst),
     .io_resp_bits_uop_debug_inst(mshrs_0_io_resp_bits_uop_debug_inst),
@@ -4853,7 +4170,6 @@ module BoomMSHRFile(
     .io_resp_bits_uop_ctrl_is_load(mshrs_0_io_resp_bits_uop_ctrl_is_load),
     .io_resp_bits_uop_ctrl_is_sta(mshrs_0_io_resp_bits_uop_ctrl_is_sta),
     .io_resp_bits_uop_ctrl_is_std(mshrs_0_io_resp_bits_uop_ctrl_is_std),
-    .io_resp_bits_uop_ctrl_op3_sel(mshrs_0_io_resp_bits_uop_ctrl_op3_sel),
     .io_resp_bits_uop_iw_state(mshrs_0_io_resp_bits_uop_iw_state),
     .io_resp_bits_uop_iw_p1_poisoned(mshrs_0_io_resp_bits_uop_iw_p1_poisoned),
     .io_resp_bits_uop_iw_p2_poisoned(mshrs_0_io_resp_bits_uop_iw_p2_poisoned),
@@ -4932,23 +4248,6 @@ module BoomMSHRFile(
     .io_clear_prefetch(mshrs_1_io_clear_prefetch),
     .io_brupdate_b1_resolve_mask(mshrs_1_io_brupdate_b1_resolve_mask),
     .io_brupdate_b1_mispredict_mask(mshrs_1_io_brupdate_b1_mispredict_mask),
-    .io_brupdate_b2_uop_switch(mshrs_1_io_brupdate_b2_uop_switch),
-    .io_brupdate_b2_uop_switch_off(mshrs_1_io_brupdate_b2_uop_switch_off),
-    .io_brupdate_b2_uop_is_unicore(mshrs_1_io_brupdate_b2_uop_is_unicore),
-    .io_brupdate_b2_uop_shift(mshrs_1_io_brupdate_b2_uop_shift),
-    .io_brupdate_b2_uop_lrs3_rtype(mshrs_1_io_brupdate_b2_uop_lrs3_rtype),
-    .io_brupdate_b2_uop_rflag(mshrs_1_io_brupdate_b2_uop_rflag),
-    .io_brupdate_b2_uop_wflag(mshrs_1_io_brupdate_b2_uop_wflag),
-    .io_brupdate_b2_uop_prflag(mshrs_1_io_brupdate_b2_uop_prflag),
-    .io_brupdate_b2_uop_pwflag(mshrs_1_io_brupdate_b2_uop_pwflag),
-    .io_brupdate_b2_uop_pflag_busy(mshrs_1_io_brupdate_b2_uop_pflag_busy),
-    .io_brupdate_b2_uop_stale_pflag(mshrs_1_io_brupdate_b2_uop_stale_pflag),
-    .io_brupdate_b2_uop_op1_sel(mshrs_1_io_brupdate_b2_uop_op1_sel),
-    .io_brupdate_b2_uop_op2_sel(mshrs_1_io_brupdate_b2_uop_op2_sel),
-    .io_brupdate_b2_uop_split_num(mshrs_1_io_brupdate_b2_uop_split_num),
-    .io_brupdate_b2_uop_self_index(mshrs_1_io_brupdate_b2_uop_self_index),
-    .io_brupdate_b2_uop_rob_inst_idx(mshrs_1_io_brupdate_b2_uop_rob_inst_idx),
-    .io_brupdate_b2_uop_address_num(mshrs_1_io_brupdate_b2_uop_address_num),
     .io_brupdate_b2_uop_uopc(mshrs_1_io_brupdate_b2_uop_uopc),
     .io_brupdate_b2_uop_inst(mshrs_1_io_brupdate_b2_uop_inst),
     .io_brupdate_b2_uop_debug_inst(mshrs_1_io_brupdate_b2_uop_debug_inst),
@@ -4966,7 +4265,6 @@ module BoomMSHRFile(
     .io_brupdate_b2_uop_ctrl_is_load(mshrs_1_io_brupdate_b2_uop_ctrl_is_load),
     .io_brupdate_b2_uop_ctrl_is_sta(mshrs_1_io_brupdate_b2_uop_ctrl_is_sta),
     .io_brupdate_b2_uop_ctrl_is_std(mshrs_1_io_brupdate_b2_uop_ctrl_is_std),
-    .io_brupdate_b2_uop_ctrl_op3_sel(mshrs_1_io_brupdate_b2_uop_ctrl_op3_sel),
     .io_brupdate_b2_uop_iw_state(mshrs_1_io_brupdate_b2_uop_iw_state),
     .io_brupdate_b2_uop_iw_p1_poisoned(mshrs_1_io_brupdate_b2_uop_iw_p1_poisoned),
     .io_brupdate_b2_uop_iw_p2_poisoned(mshrs_1_io_brupdate_b2_uop_iw_p2_poisoned),
@@ -5039,23 +4337,6 @@ module BoomMSHRFile(
     .io_exception(mshrs_1_io_exception),
     .io_rob_pnr_idx(mshrs_1_io_rob_pnr_idx),
     .io_rob_head_idx(mshrs_1_io_rob_head_idx),
-    .io_req_uop_switch(mshrs_1_io_req_uop_switch),
-    .io_req_uop_switch_off(mshrs_1_io_req_uop_switch_off),
-    .io_req_uop_is_unicore(mshrs_1_io_req_uop_is_unicore),
-    .io_req_uop_shift(mshrs_1_io_req_uop_shift),
-    .io_req_uop_lrs3_rtype(mshrs_1_io_req_uop_lrs3_rtype),
-    .io_req_uop_rflag(mshrs_1_io_req_uop_rflag),
-    .io_req_uop_wflag(mshrs_1_io_req_uop_wflag),
-    .io_req_uop_prflag(mshrs_1_io_req_uop_prflag),
-    .io_req_uop_pwflag(mshrs_1_io_req_uop_pwflag),
-    .io_req_uop_pflag_busy(mshrs_1_io_req_uop_pflag_busy),
-    .io_req_uop_stale_pflag(mshrs_1_io_req_uop_stale_pflag),
-    .io_req_uop_op1_sel(mshrs_1_io_req_uop_op1_sel),
-    .io_req_uop_op2_sel(mshrs_1_io_req_uop_op2_sel),
-    .io_req_uop_split_num(mshrs_1_io_req_uop_split_num),
-    .io_req_uop_self_index(mshrs_1_io_req_uop_self_index),
-    .io_req_uop_rob_inst_idx(mshrs_1_io_req_uop_rob_inst_idx),
-    .io_req_uop_address_num(mshrs_1_io_req_uop_address_num),
     .io_req_uop_uopc(mshrs_1_io_req_uop_uopc),
     .io_req_uop_inst(mshrs_1_io_req_uop_inst),
     .io_req_uop_debug_inst(mshrs_1_io_req_uop_debug_inst),
@@ -5073,7 +4354,6 @@ module BoomMSHRFile(
     .io_req_uop_ctrl_is_load(mshrs_1_io_req_uop_ctrl_is_load),
     .io_req_uop_ctrl_is_sta(mshrs_1_io_req_uop_ctrl_is_sta),
     .io_req_uop_ctrl_is_std(mshrs_1_io_req_uop_ctrl_is_std),
-    .io_req_uop_ctrl_op3_sel(mshrs_1_io_req_uop_ctrl_op3_sel),
     .io_req_uop_iw_state(mshrs_1_io_req_uop_iw_state),
     .io_req_uop_iw_p1_poisoned(mshrs_1_io_req_uop_iw_p1_poisoned),
     .io_req_uop_iw_p2_poisoned(mshrs_1_io_req_uop_iw_p2_poisoned),
@@ -5220,23 +4500,6 @@ module BoomMSHRFile(
     .io_lb_write_bits_data(mshrs_1_io_lb_write_bits_data),
     .io_replay_ready(mshrs_1_io_replay_ready),
     .io_replay_valid(mshrs_1_io_replay_valid),
-    .io_replay_bits_uop_switch(mshrs_1_io_replay_bits_uop_switch),
-    .io_replay_bits_uop_switch_off(mshrs_1_io_replay_bits_uop_switch_off),
-    .io_replay_bits_uop_is_unicore(mshrs_1_io_replay_bits_uop_is_unicore),
-    .io_replay_bits_uop_shift(mshrs_1_io_replay_bits_uop_shift),
-    .io_replay_bits_uop_lrs3_rtype(mshrs_1_io_replay_bits_uop_lrs3_rtype),
-    .io_replay_bits_uop_rflag(mshrs_1_io_replay_bits_uop_rflag),
-    .io_replay_bits_uop_wflag(mshrs_1_io_replay_bits_uop_wflag),
-    .io_replay_bits_uop_prflag(mshrs_1_io_replay_bits_uop_prflag),
-    .io_replay_bits_uop_pwflag(mshrs_1_io_replay_bits_uop_pwflag),
-    .io_replay_bits_uop_pflag_busy(mshrs_1_io_replay_bits_uop_pflag_busy),
-    .io_replay_bits_uop_stale_pflag(mshrs_1_io_replay_bits_uop_stale_pflag),
-    .io_replay_bits_uop_op1_sel(mshrs_1_io_replay_bits_uop_op1_sel),
-    .io_replay_bits_uop_op2_sel(mshrs_1_io_replay_bits_uop_op2_sel),
-    .io_replay_bits_uop_split_num(mshrs_1_io_replay_bits_uop_split_num),
-    .io_replay_bits_uop_self_index(mshrs_1_io_replay_bits_uop_self_index),
-    .io_replay_bits_uop_rob_inst_idx(mshrs_1_io_replay_bits_uop_rob_inst_idx),
-    .io_replay_bits_uop_address_num(mshrs_1_io_replay_bits_uop_address_num),
     .io_replay_bits_uop_uopc(mshrs_1_io_replay_bits_uop_uopc),
     .io_replay_bits_uop_inst(mshrs_1_io_replay_bits_uop_inst),
     .io_replay_bits_uop_debug_inst(mshrs_1_io_replay_bits_uop_debug_inst),
@@ -5254,7 +4517,6 @@ module BoomMSHRFile(
     .io_replay_bits_uop_ctrl_is_load(mshrs_1_io_replay_bits_uop_ctrl_is_load),
     .io_replay_bits_uop_ctrl_is_sta(mshrs_1_io_replay_bits_uop_ctrl_is_sta),
     .io_replay_bits_uop_ctrl_is_std(mshrs_1_io_replay_bits_uop_ctrl_is_std),
-    .io_replay_bits_uop_ctrl_op3_sel(mshrs_1_io_replay_bits_uop_ctrl_op3_sel),
     .io_replay_bits_uop_iw_state(mshrs_1_io_replay_bits_uop_iw_state),
     .io_replay_bits_uop_iw_p1_poisoned(mshrs_1_io_replay_bits_uop_iw_p1_poisoned),
     .io_replay_bits_uop_iw_p2_poisoned(mshrs_1_io_replay_bits_uop_iw_p2_poisoned),
@@ -5327,23 +4589,6 @@ module BoomMSHRFile(
     .io_replay_bits_sdq_id(mshrs_1_io_replay_bits_sdq_id),
     .io_resp_ready(mshrs_1_io_resp_ready),
     .io_resp_valid(mshrs_1_io_resp_valid),
-    .io_resp_bits_uop_switch(mshrs_1_io_resp_bits_uop_switch),
-    .io_resp_bits_uop_switch_off(mshrs_1_io_resp_bits_uop_switch_off),
-    .io_resp_bits_uop_is_unicore(mshrs_1_io_resp_bits_uop_is_unicore),
-    .io_resp_bits_uop_shift(mshrs_1_io_resp_bits_uop_shift),
-    .io_resp_bits_uop_lrs3_rtype(mshrs_1_io_resp_bits_uop_lrs3_rtype),
-    .io_resp_bits_uop_rflag(mshrs_1_io_resp_bits_uop_rflag),
-    .io_resp_bits_uop_wflag(mshrs_1_io_resp_bits_uop_wflag),
-    .io_resp_bits_uop_prflag(mshrs_1_io_resp_bits_uop_prflag),
-    .io_resp_bits_uop_pwflag(mshrs_1_io_resp_bits_uop_pwflag),
-    .io_resp_bits_uop_pflag_busy(mshrs_1_io_resp_bits_uop_pflag_busy),
-    .io_resp_bits_uop_stale_pflag(mshrs_1_io_resp_bits_uop_stale_pflag),
-    .io_resp_bits_uop_op1_sel(mshrs_1_io_resp_bits_uop_op1_sel),
-    .io_resp_bits_uop_op2_sel(mshrs_1_io_resp_bits_uop_op2_sel),
-    .io_resp_bits_uop_split_num(mshrs_1_io_resp_bits_uop_split_num),
-    .io_resp_bits_uop_self_index(mshrs_1_io_resp_bits_uop_self_index),
-    .io_resp_bits_uop_rob_inst_idx(mshrs_1_io_resp_bits_uop_rob_inst_idx),
-    .io_resp_bits_uop_address_num(mshrs_1_io_resp_bits_uop_address_num),
     .io_resp_bits_uop_uopc(mshrs_1_io_resp_bits_uop_uopc),
     .io_resp_bits_uop_inst(mshrs_1_io_resp_bits_uop_inst),
     .io_resp_bits_uop_debug_inst(mshrs_1_io_resp_bits_uop_debug_inst),
@@ -5361,7 +4606,6 @@ module BoomMSHRFile(
     .io_resp_bits_uop_ctrl_is_load(mshrs_1_io_resp_bits_uop_ctrl_is_load),
     .io_resp_bits_uop_ctrl_is_sta(mshrs_1_io_resp_bits_uop_ctrl_is_sta),
     .io_resp_bits_uop_ctrl_is_std(mshrs_1_io_resp_bits_uop_ctrl_is_std),
-    .io_resp_bits_uop_ctrl_op3_sel(mshrs_1_io_resp_bits_uop_ctrl_op3_sel),
     .io_resp_bits_uop_iw_state(mshrs_1_io_resp_bits_uop_iw_state),
     .io_resp_bits_uop_iw_p1_poisoned(mshrs_1_io_resp_bits_uop_iw_p1_poisoned),
     .io_resp_bits_uop_iw_p2_poisoned(mshrs_1_io_resp_bits_uop_iw_p2_poisoned),
@@ -5444,23 +4688,6 @@ module BoomMSHRFile(
     .reset(mmios_0_reset),
     .io_req_ready(mmios_0_io_req_ready),
     .io_req_valid(mmios_0_io_req_valid),
-    .io_req_bits_uop_switch(mmios_0_io_req_bits_uop_switch),
-    .io_req_bits_uop_switch_off(mmios_0_io_req_bits_uop_switch_off),
-    .io_req_bits_uop_is_unicore(mmios_0_io_req_bits_uop_is_unicore),
-    .io_req_bits_uop_shift(mmios_0_io_req_bits_uop_shift),
-    .io_req_bits_uop_lrs3_rtype(mmios_0_io_req_bits_uop_lrs3_rtype),
-    .io_req_bits_uop_rflag(mmios_0_io_req_bits_uop_rflag),
-    .io_req_bits_uop_wflag(mmios_0_io_req_bits_uop_wflag),
-    .io_req_bits_uop_prflag(mmios_0_io_req_bits_uop_prflag),
-    .io_req_bits_uop_pwflag(mmios_0_io_req_bits_uop_pwflag),
-    .io_req_bits_uop_pflag_busy(mmios_0_io_req_bits_uop_pflag_busy),
-    .io_req_bits_uop_stale_pflag(mmios_0_io_req_bits_uop_stale_pflag),
-    .io_req_bits_uop_op1_sel(mmios_0_io_req_bits_uop_op1_sel),
-    .io_req_bits_uop_op2_sel(mmios_0_io_req_bits_uop_op2_sel),
-    .io_req_bits_uop_split_num(mmios_0_io_req_bits_uop_split_num),
-    .io_req_bits_uop_self_index(mmios_0_io_req_bits_uop_self_index),
-    .io_req_bits_uop_rob_inst_idx(mmios_0_io_req_bits_uop_rob_inst_idx),
-    .io_req_bits_uop_address_num(mmios_0_io_req_bits_uop_address_num),
     .io_req_bits_uop_uopc(mmios_0_io_req_bits_uop_uopc),
     .io_req_bits_uop_inst(mmios_0_io_req_bits_uop_inst),
     .io_req_bits_uop_debug_inst(mmios_0_io_req_bits_uop_debug_inst),
@@ -5478,7 +4705,6 @@ module BoomMSHRFile(
     .io_req_bits_uop_ctrl_is_load(mmios_0_io_req_bits_uop_ctrl_is_load),
     .io_req_bits_uop_ctrl_is_sta(mmios_0_io_req_bits_uop_ctrl_is_sta),
     .io_req_bits_uop_ctrl_is_std(mmios_0_io_req_bits_uop_ctrl_is_std),
-    .io_req_bits_uop_ctrl_op3_sel(mmios_0_io_req_bits_uop_ctrl_op3_sel),
     .io_req_bits_uop_iw_state(mmios_0_io_req_bits_uop_iw_state),
     .io_req_bits_uop_iw_p1_poisoned(mmios_0_io_req_bits_uop_iw_p1_poisoned),
     .io_req_bits_uop_iw_p2_poisoned(mmios_0_io_req_bits_uop_iw_p2_poisoned),
@@ -5546,23 +4772,6 @@ module BoomMSHRFile(
     .io_req_bits_is_hella(mmios_0_io_req_bits_is_hella),
     .io_resp_ready(mmios_0_io_resp_ready),
     .io_resp_valid(mmios_0_io_resp_valid),
-    .io_resp_bits_uop_switch(mmios_0_io_resp_bits_uop_switch),
-    .io_resp_bits_uop_switch_off(mmios_0_io_resp_bits_uop_switch_off),
-    .io_resp_bits_uop_is_unicore(mmios_0_io_resp_bits_uop_is_unicore),
-    .io_resp_bits_uop_shift(mmios_0_io_resp_bits_uop_shift),
-    .io_resp_bits_uop_lrs3_rtype(mmios_0_io_resp_bits_uop_lrs3_rtype),
-    .io_resp_bits_uop_rflag(mmios_0_io_resp_bits_uop_rflag),
-    .io_resp_bits_uop_wflag(mmios_0_io_resp_bits_uop_wflag),
-    .io_resp_bits_uop_prflag(mmios_0_io_resp_bits_uop_prflag),
-    .io_resp_bits_uop_pwflag(mmios_0_io_resp_bits_uop_pwflag),
-    .io_resp_bits_uop_pflag_busy(mmios_0_io_resp_bits_uop_pflag_busy),
-    .io_resp_bits_uop_stale_pflag(mmios_0_io_resp_bits_uop_stale_pflag),
-    .io_resp_bits_uop_op1_sel(mmios_0_io_resp_bits_uop_op1_sel),
-    .io_resp_bits_uop_op2_sel(mmios_0_io_resp_bits_uop_op2_sel),
-    .io_resp_bits_uop_split_num(mmios_0_io_resp_bits_uop_split_num),
-    .io_resp_bits_uop_self_index(mmios_0_io_resp_bits_uop_self_index),
-    .io_resp_bits_uop_rob_inst_idx(mmios_0_io_resp_bits_uop_rob_inst_idx),
-    .io_resp_bits_uop_address_num(mmios_0_io_resp_bits_uop_address_num),
     .io_resp_bits_uop_uopc(mmios_0_io_resp_bits_uop_uopc),
     .io_resp_bits_uop_inst(mmios_0_io_resp_bits_uop_inst),
     .io_resp_bits_uop_debug_inst(mmios_0_io_resp_bits_uop_debug_inst),
@@ -5580,7 +4789,6 @@ module BoomMSHRFile(
     .io_resp_bits_uop_ctrl_is_load(mmios_0_io_resp_bits_uop_ctrl_is_load),
     .io_resp_bits_uop_ctrl_is_sta(mmios_0_io_resp_bits_uop_ctrl_is_sta),
     .io_resp_bits_uop_ctrl_is_std(mmios_0_io_resp_bits_uop_ctrl_is_std),
-    .io_resp_bits_uop_ctrl_op3_sel(mmios_0_io_resp_bits_uop_ctrl_op3_sel),
     .io_resp_bits_uop_iw_state(mmios_0_io_resp_bits_uop_iw_state),
     .io_resp_bits_uop_iw_p1_poisoned(mmios_0_io_resp_bits_uop_iw_p1_poisoned),
     .io_resp_bits_uop_iw_p2_poisoned(mmios_0_io_resp_bits_uop_iw_p2_poisoned),
@@ -5670,23 +4878,6 @@ module BoomMSHRFile(
     .reset(respq_reset),
     .io_enq_ready(respq_io_enq_ready),
     .io_enq_valid(respq_io_enq_valid),
-    .io_enq_bits_uop_switch(respq_io_enq_bits_uop_switch),
-    .io_enq_bits_uop_switch_off(respq_io_enq_bits_uop_switch_off),
-    .io_enq_bits_uop_is_unicore(respq_io_enq_bits_uop_is_unicore),
-    .io_enq_bits_uop_shift(respq_io_enq_bits_uop_shift),
-    .io_enq_bits_uop_lrs3_rtype(respq_io_enq_bits_uop_lrs3_rtype),
-    .io_enq_bits_uop_rflag(respq_io_enq_bits_uop_rflag),
-    .io_enq_bits_uop_wflag(respq_io_enq_bits_uop_wflag),
-    .io_enq_bits_uop_prflag(respq_io_enq_bits_uop_prflag),
-    .io_enq_bits_uop_pwflag(respq_io_enq_bits_uop_pwflag),
-    .io_enq_bits_uop_pflag_busy(respq_io_enq_bits_uop_pflag_busy),
-    .io_enq_bits_uop_stale_pflag(respq_io_enq_bits_uop_stale_pflag),
-    .io_enq_bits_uop_op1_sel(respq_io_enq_bits_uop_op1_sel),
-    .io_enq_bits_uop_op2_sel(respq_io_enq_bits_uop_op2_sel),
-    .io_enq_bits_uop_split_num(respq_io_enq_bits_uop_split_num),
-    .io_enq_bits_uop_self_index(respq_io_enq_bits_uop_self_index),
-    .io_enq_bits_uop_rob_inst_idx(respq_io_enq_bits_uop_rob_inst_idx),
-    .io_enq_bits_uop_address_num(respq_io_enq_bits_uop_address_num),
     .io_enq_bits_uop_uopc(respq_io_enq_bits_uop_uopc),
     .io_enq_bits_uop_inst(respq_io_enq_bits_uop_inst),
     .io_enq_bits_uop_debug_inst(respq_io_enq_bits_uop_debug_inst),
@@ -5704,7 +4895,6 @@ module BoomMSHRFile(
     .io_enq_bits_uop_ctrl_is_load(respq_io_enq_bits_uop_ctrl_is_load),
     .io_enq_bits_uop_ctrl_is_sta(respq_io_enq_bits_uop_ctrl_is_sta),
     .io_enq_bits_uop_ctrl_is_std(respq_io_enq_bits_uop_ctrl_is_std),
-    .io_enq_bits_uop_ctrl_op3_sel(respq_io_enq_bits_uop_ctrl_op3_sel),
     .io_enq_bits_uop_iw_state(respq_io_enq_bits_uop_iw_state),
     .io_enq_bits_uop_iw_p1_poisoned(respq_io_enq_bits_uop_iw_p1_poisoned),
     .io_enq_bits_uop_iw_p2_poisoned(respq_io_enq_bits_uop_iw_p2_poisoned),
@@ -5771,23 +4961,6 @@ module BoomMSHRFile(
     .io_enq_bits_is_hella(respq_io_enq_bits_is_hella),
     .io_deq_ready(respq_io_deq_ready),
     .io_deq_valid(respq_io_deq_valid),
-    .io_deq_bits_uop_switch(respq_io_deq_bits_uop_switch),
-    .io_deq_bits_uop_switch_off(respq_io_deq_bits_uop_switch_off),
-    .io_deq_bits_uop_is_unicore(respq_io_deq_bits_uop_is_unicore),
-    .io_deq_bits_uop_shift(respq_io_deq_bits_uop_shift),
-    .io_deq_bits_uop_lrs3_rtype(respq_io_deq_bits_uop_lrs3_rtype),
-    .io_deq_bits_uop_rflag(respq_io_deq_bits_uop_rflag),
-    .io_deq_bits_uop_wflag(respq_io_deq_bits_uop_wflag),
-    .io_deq_bits_uop_prflag(respq_io_deq_bits_uop_prflag),
-    .io_deq_bits_uop_pwflag(respq_io_deq_bits_uop_pwflag),
-    .io_deq_bits_uop_pflag_busy(respq_io_deq_bits_uop_pflag_busy),
-    .io_deq_bits_uop_stale_pflag(respq_io_deq_bits_uop_stale_pflag),
-    .io_deq_bits_uop_op1_sel(respq_io_deq_bits_uop_op1_sel),
-    .io_deq_bits_uop_op2_sel(respq_io_deq_bits_uop_op2_sel),
-    .io_deq_bits_uop_split_num(respq_io_deq_bits_uop_split_num),
-    .io_deq_bits_uop_self_index(respq_io_deq_bits_uop_self_index),
-    .io_deq_bits_uop_rob_inst_idx(respq_io_deq_bits_uop_rob_inst_idx),
-    .io_deq_bits_uop_address_num(respq_io_deq_bits_uop_address_num),
     .io_deq_bits_uop_uopc(respq_io_deq_bits_uop_uopc),
     .io_deq_bits_uop_inst(respq_io_deq_bits_uop_inst),
     .io_deq_bits_uop_debug_inst(respq_io_deq_bits_uop_debug_inst),
@@ -5805,7 +4978,6 @@ module BoomMSHRFile(
     .io_deq_bits_uop_ctrl_is_load(respq_io_deq_bits_uop_ctrl_is_load),
     .io_deq_bits_uop_ctrl_is_sta(respq_io_deq_bits_uop_ctrl_is_sta),
     .io_deq_bits_uop_ctrl_is_std(respq_io_deq_bits_uop_ctrl_is_std),
-    .io_deq_bits_uop_ctrl_op3_sel(respq_io_deq_bits_uop_ctrl_op3_sel),
     .io_deq_bits_uop_iw_state(respq_io_deq_bits_uop_iw_state),
     .io_deq_bits_uop_iw_p1_poisoned(respq_io_deq_bits_uop_iw_p1_poisoned),
     .io_deq_bits_uop_iw_p2_poisoned(respq_io_deq_bits_uop_iw_p2_poisoned),
@@ -5872,23 +5044,6 @@ module BoomMSHRFile(
     .io_deq_bits_is_hella(respq_io_deq_bits_is_hella),
     .io_brupdate_b1_resolve_mask(respq_io_brupdate_b1_resolve_mask),
     .io_brupdate_b1_mispredict_mask(respq_io_brupdate_b1_mispredict_mask),
-    .io_brupdate_b2_uop_switch(respq_io_brupdate_b2_uop_switch),
-    .io_brupdate_b2_uop_switch_off(respq_io_brupdate_b2_uop_switch_off),
-    .io_brupdate_b2_uop_is_unicore(respq_io_brupdate_b2_uop_is_unicore),
-    .io_brupdate_b2_uop_shift(respq_io_brupdate_b2_uop_shift),
-    .io_brupdate_b2_uop_lrs3_rtype(respq_io_brupdate_b2_uop_lrs3_rtype),
-    .io_brupdate_b2_uop_rflag(respq_io_brupdate_b2_uop_rflag),
-    .io_brupdate_b2_uop_wflag(respq_io_brupdate_b2_uop_wflag),
-    .io_brupdate_b2_uop_prflag(respq_io_brupdate_b2_uop_prflag),
-    .io_brupdate_b2_uop_pwflag(respq_io_brupdate_b2_uop_pwflag),
-    .io_brupdate_b2_uop_pflag_busy(respq_io_brupdate_b2_uop_pflag_busy),
-    .io_brupdate_b2_uop_stale_pflag(respq_io_brupdate_b2_uop_stale_pflag),
-    .io_brupdate_b2_uop_op1_sel(respq_io_brupdate_b2_uop_op1_sel),
-    .io_brupdate_b2_uop_op2_sel(respq_io_brupdate_b2_uop_op2_sel),
-    .io_brupdate_b2_uop_split_num(respq_io_brupdate_b2_uop_split_num),
-    .io_brupdate_b2_uop_self_index(respq_io_brupdate_b2_uop_self_index),
-    .io_brupdate_b2_uop_rob_inst_idx(respq_io_brupdate_b2_uop_rob_inst_idx),
-    .io_brupdate_b2_uop_address_num(respq_io_brupdate_b2_uop_address_num),
     .io_brupdate_b2_uop_uopc(respq_io_brupdate_b2_uop_uopc),
     .io_brupdate_b2_uop_inst(respq_io_brupdate_b2_uop_inst),
     .io_brupdate_b2_uop_debug_inst(respq_io_brupdate_b2_uop_debug_inst),
@@ -5906,7 +5061,6 @@ module BoomMSHRFile(
     .io_brupdate_b2_uop_ctrl_is_load(respq_io_brupdate_b2_uop_ctrl_is_load),
     .io_brupdate_b2_uop_ctrl_is_sta(respq_io_brupdate_b2_uop_ctrl_is_sta),
     .io_brupdate_b2_uop_ctrl_is_std(respq_io_brupdate_b2_uop_ctrl_is_std),
-    .io_brupdate_b2_uop_ctrl_op3_sel(respq_io_brupdate_b2_uop_ctrl_op3_sel),
     .io_brupdate_b2_uop_iw_state(respq_io_brupdate_b2_uop_iw_state),
     .io_brupdate_b2_uop_iw_p1_poisoned(respq_io_brupdate_b2_uop_iw_p1_poisoned),
     .io_brupdate_b2_uop_iw_p2_poisoned(respq_io_brupdate_b2_uop_iw_p2_poisoned),
@@ -5998,23 +5152,6 @@ module BoomMSHRFile(
   assign lb_MPORT_1_en = lb_write_arb_io_out_ready & lb_write_arb_io_out_valid;
   assign io_req_0_ready = _T_205 ? mmio_rdy : sdq_rdy & _T_312; // @[mshrs.scala 745:10]
   assign io_resp_valid = respq_io_deq_valid; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_switch = respq_io_deq_bits_uop_switch; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_switch_off = respq_io_deq_bits_uop_switch_off; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_is_unicore = respq_io_deq_bits_uop_is_unicore; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_shift = respq_io_deq_bits_uop_shift; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_lrs3_rtype = respq_io_deq_bits_uop_lrs3_rtype; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_rflag = respq_io_deq_bits_uop_rflag; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_wflag = respq_io_deq_bits_uop_wflag; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_prflag = respq_io_deq_bits_uop_prflag; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_pwflag = respq_io_deq_bits_uop_pwflag; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_pflag_busy = respq_io_deq_bits_uop_pflag_busy; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_stale_pflag = respq_io_deq_bits_uop_stale_pflag; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_op1_sel = respq_io_deq_bits_uop_op1_sel; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_op2_sel = respq_io_deq_bits_uop_op2_sel; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_split_num = respq_io_deq_bits_uop_split_num; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_self_index = respq_io_deq_bits_uop_self_index; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_rob_inst_idx = respq_io_deq_bits_uop_rob_inst_idx; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_address_num = respq_io_deq_bits_uop_address_num; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_uopc = respq_io_deq_bits_uop_uopc; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_inst = respq_io_deq_bits_uop_inst; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_debug_inst = respq_io_deq_bits_uop_debug_inst; // @[mshrs.scala 741:21]
@@ -6032,7 +5169,6 @@ module BoomMSHRFile(
   assign io_resp_bits_uop_ctrl_is_load = respq_io_deq_bits_uop_ctrl_is_load; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_ctrl_is_sta = respq_io_deq_bits_uop_ctrl_is_sta; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_ctrl_is_std = respq_io_deq_bits_uop_ctrl_is_std; // @[mshrs.scala 741:21]
-  assign io_resp_bits_uop_ctrl_op3_sel = respq_io_deq_bits_uop_ctrl_op3_sel; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_iw_state = respq_io_deq_bits_uop_iw_state; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_iw_p1_poisoned = respq_io_deq_bits_uop_iw_p1_poisoned; // @[mshrs.scala 741:21]
   assign io_resp_bits_uop_iw_p2_poisoned = respq_io_deq_bits_uop_iw_p2_poisoned; // @[mshrs.scala 741:21]
@@ -6128,23 +5264,6 @@ module BoomMSHRFile(
   assign io_meta_read_bits_way_en = meta_read_arb_io_out_bits_way_en; // @[mshrs.scala 700:17]
   assign io_meta_read_bits_tag = meta_read_arb_io_out_bits_tag; // @[mshrs.scala 700:17]
   assign io_replay_valid = replay_arb_io_out_valid; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_switch = replay_arb_io_out_bits_uop_switch; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_switch_off = replay_arb_io_out_bits_uop_switch_off; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_is_unicore = replay_arb_io_out_bits_uop_is_unicore; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_shift = replay_arb_io_out_bits_uop_shift; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_lrs3_rtype = replay_arb_io_out_bits_uop_lrs3_rtype; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_rflag = replay_arb_io_out_bits_uop_rflag; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_wflag = replay_arb_io_out_bits_uop_wflag; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_prflag = replay_arb_io_out_bits_uop_prflag; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_pwflag = replay_arb_io_out_bits_uop_pwflag; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_pflag_busy = replay_arb_io_out_bits_uop_pflag_busy; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_stale_pflag = replay_arb_io_out_bits_uop_stale_pflag; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_op1_sel = replay_arb_io_out_bits_uop_op1_sel; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_op2_sel = replay_arb_io_out_bits_uop_op2_sel; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_split_num = replay_arb_io_out_bits_uop_split_num; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_self_index = replay_arb_io_out_bits_uop_self_index; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_rob_inst_idx = replay_arb_io_out_bits_uop_rob_inst_idx; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_address_num = replay_arb_io_out_bits_uop_address_num; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_uopc = replay_arb_io_out_bits_uop_uopc; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_inst = replay_arb_io_out_bits_uop_inst; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_debug_inst = replay_arb_io_out_bits_uop_debug_inst; // @[mshrs.scala 753:13]
@@ -6162,7 +5281,6 @@ module BoomMSHRFile(
   assign io_replay_bits_uop_ctrl_is_load = replay_arb_io_out_bits_uop_ctrl_is_load; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_ctrl_is_sta = replay_arb_io_out_bits_uop_ctrl_is_sta; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_ctrl_is_std = replay_arb_io_out_bits_uop_ctrl_is_std; // @[mshrs.scala 753:13]
-  assign io_replay_bits_uop_ctrl_op3_sel = replay_arb_io_out_bits_uop_ctrl_op3_sel; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_iw_state = replay_arb_io_out_bits_uop_iw_state; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_iw_p1_poisoned = replay_arb_io_out_bits_uop_iw_p1_poisoned; // @[mshrs.scala 753:13]
   assign io_replay_bits_uop_iw_p2_poisoned = replay_arb_io_out_bits_uop_iw_p2_poisoned; // @[mshrs.scala 753:13]
@@ -6234,23 +5352,6 @@ module BoomMSHRFile(
   assign io_replay_bits_way_en = replay_arb_io_out_bits_way_en; // @[mshrs.scala 753:13]
   assign io_replay_bits_sdq_id = replay_arb_io_out_bits_sdq_id; // @[mshrs.scala 753:13]
   assign io_prefetch_valid = prefetcher_io_prefetch_valid; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_switch = prefetcher_io_prefetch_bits_uop_switch; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_switch_off = prefetcher_io_prefetch_bits_uop_switch_off; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_is_unicore = prefetcher_io_prefetch_bits_uop_is_unicore; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_shift = prefetcher_io_prefetch_bits_uop_shift; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_lrs3_rtype = prefetcher_io_prefetch_bits_uop_lrs3_rtype; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_rflag = prefetcher_io_prefetch_bits_uop_rflag; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_wflag = prefetcher_io_prefetch_bits_uop_wflag; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_prflag = prefetcher_io_prefetch_bits_uop_prflag; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_pwflag = prefetcher_io_prefetch_bits_uop_pwflag; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_pflag_busy = prefetcher_io_prefetch_bits_uop_pflag_busy; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_stale_pflag = prefetcher_io_prefetch_bits_uop_stale_pflag; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_op1_sel = prefetcher_io_prefetch_bits_uop_op1_sel; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_op2_sel = prefetcher_io_prefetch_bits_uop_op2_sel; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_split_num = prefetcher_io_prefetch_bits_uop_split_num; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_self_index = prefetcher_io_prefetch_bits_uop_self_index; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_rob_inst_idx = prefetcher_io_prefetch_bits_uop_rob_inst_idx; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_address_num = prefetcher_io_prefetch_bits_uop_address_num; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_uopc = prefetcher_io_prefetch_bits_uop_uopc; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_inst = prefetcher_io_prefetch_bits_uop_inst; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_debug_inst = prefetcher_io_prefetch_bits_uop_debug_inst; // @[mshrs.scala 548:15]
@@ -6268,7 +5369,6 @@ module BoomMSHRFile(
   assign io_prefetch_bits_uop_ctrl_is_load = prefetcher_io_prefetch_bits_uop_ctrl_is_load; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_ctrl_is_sta = prefetcher_io_prefetch_bits_uop_ctrl_is_sta; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_ctrl_is_std = prefetcher_io_prefetch_bits_uop_ctrl_is_std; // @[mshrs.scala 548:15]
-  assign io_prefetch_bits_uop_ctrl_op3_sel = prefetcher_io_prefetch_bits_uop_ctrl_op3_sel; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_iw_state = prefetcher_io_prefetch_bits_uop_iw_state; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_iw_p1_poisoned = prefetcher_io_prefetch_bits_uop_iw_p1_poisoned; // @[mshrs.scala 548:15]
   assign io_prefetch_bits_uop_iw_p2_poisoned = prefetcher_io_prefetch_bits_uop_iw_p2_poisoned; // @[mshrs.scala 548:15]
@@ -6416,23 +5516,6 @@ module BoomMSHRFile(
   assign replay_arb_clock = clock;
   assign replay_arb_reset = reset;
   assign replay_arb_io_in_0_valid = mshrs_0_io_replay_valid; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_switch = mshrs_0_io_replay_bits_uop_switch; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_switch_off = mshrs_0_io_replay_bits_uop_switch_off; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_is_unicore = mshrs_0_io_replay_bits_uop_is_unicore; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_shift = mshrs_0_io_replay_bits_uop_shift; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_lrs3_rtype = mshrs_0_io_replay_bits_uop_lrs3_rtype; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_rflag = mshrs_0_io_replay_bits_uop_rflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_wflag = mshrs_0_io_replay_bits_uop_wflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_prflag = mshrs_0_io_replay_bits_uop_prflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_pwflag = mshrs_0_io_replay_bits_uop_pwflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_pflag_busy = mshrs_0_io_replay_bits_uop_pflag_busy; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_stale_pflag = mshrs_0_io_replay_bits_uop_stale_pflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_op1_sel = mshrs_0_io_replay_bits_uop_op1_sel; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_op2_sel = mshrs_0_io_replay_bits_uop_op2_sel; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_split_num = mshrs_0_io_replay_bits_uop_split_num; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_self_index = mshrs_0_io_replay_bits_uop_self_index; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_rob_inst_idx = mshrs_0_io_replay_bits_uop_rob_inst_idx; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_address_num = mshrs_0_io_replay_bits_uop_address_num; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_uopc = mshrs_0_io_replay_bits_uop_uopc; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_inst = mshrs_0_io_replay_bits_uop_inst; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_debug_inst = mshrs_0_io_replay_bits_uop_debug_inst; // @[mshrs.scala 660:29]
@@ -6450,7 +5533,6 @@ module BoomMSHRFile(
   assign replay_arb_io_in_0_bits_uop_ctrl_is_load = mshrs_0_io_replay_bits_uop_ctrl_is_load; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_ctrl_is_sta = mshrs_0_io_replay_bits_uop_ctrl_is_sta; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_ctrl_is_std = mshrs_0_io_replay_bits_uop_ctrl_is_std; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_0_bits_uop_ctrl_op3_sel = mshrs_0_io_replay_bits_uop_ctrl_op3_sel; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_iw_state = mshrs_0_io_replay_bits_uop_iw_state; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_iw_p1_poisoned = mshrs_0_io_replay_bits_uop_iw_p1_poisoned; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_uop_iw_p2_poisoned = mshrs_0_io_replay_bits_uop_iw_p2_poisoned; // @[mshrs.scala 660:29]
@@ -6522,23 +5604,6 @@ module BoomMSHRFile(
   assign replay_arb_io_in_0_bits_way_en = mshrs_0_io_replay_bits_way_en; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_0_bits_sdq_id = mshrs_0_io_replay_bits_sdq_id; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_valid = mshrs_1_io_replay_valid; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_switch = mshrs_1_io_replay_bits_uop_switch; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_switch_off = mshrs_1_io_replay_bits_uop_switch_off; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_is_unicore = mshrs_1_io_replay_bits_uop_is_unicore; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_shift = mshrs_1_io_replay_bits_uop_shift; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_lrs3_rtype = mshrs_1_io_replay_bits_uop_lrs3_rtype; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_rflag = mshrs_1_io_replay_bits_uop_rflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_wflag = mshrs_1_io_replay_bits_uop_wflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_prflag = mshrs_1_io_replay_bits_uop_prflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_pwflag = mshrs_1_io_replay_bits_uop_pwflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_pflag_busy = mshrs_1_io_replay_bits_uop_pflag_busy; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_stale_pflag = mshrs_1_io_replay_bits_uop_stale_pflag; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_op1_sel = mshrs_1_io_replay_bits_uop_op1_sel; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_op2_sel = mshrs_1_io_replay_bits_uop_op2_sel; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_split_num = mshrs_1_io_replay_bits_uop_split_num; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_self_index = mshrs_1_io_replay_bits_uop_self_index; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_rob_inst_idx = mshrs_1_io_replay_bits_uop_rob_inst_idx; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_address_num = mshrs_1_io_replay_bits_uop_address_num; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_uopc = mshrs_1_io_replay_bits_uop_uopc; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_inst = mshrs_1_io_replay_bits_uop_inst; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_debug_inst = mshrs_1_io_replay_bits_uop_debug_inst; // @[mshrs.scala 660:29]
@@ -6556,7 +5621,6 @@ module BoomMSHRFile(
   assign replay_arb_io_in_1_bits_uop_ctrl_is_load = mshrs_1_io_replay_bits_uop_ctrl_is_load; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_ctrl_is_sta = mshrs_1_io_replay_bits_uop_ctrl_is_sta; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_ctrl_is_std = mshrs_1_io_replay_bits_uop_ctrl_is_std; // @[mshrs.scala 660:29]
-  assign replay_arb_io_in_1_bits_uop_ctrl_op3_sel = mshrs_1_io_replay_bits_uop_ctrl_op3_sel; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_iw_state = mshrs_1_io_replay_bits_uop_iw_state; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_iw_p1_poisoned = mshrs_1_io_replay_bits_uop_iw_p1_poisoned; // @[mshrs.scala 660:29]
   assign replay_arb_io_in_1_bits_uop_iw_p2_poisoned = mshrs_1_io_replay_bits_uop_iw_p2_poisoned; // @[mshrs.scala 660:29]
@@ -6631,23 +5695,6 @@ module BoomMSHRFile(
   assign resp_arb_clock = clock;
   assign resp_arb_reset = reset;
   assign resp_arb_io_in_0_valid = mshrs_0_io_resp_valid; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_switch = mshrs_0_io_resp_bits_uop_switch; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_switch_off = mshrs_0_io_resp_bits_uop_switch_off; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_is_unicore = mshrs_0_io_resp_bits_uop_is_unicore; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_shift = mshrs_0_io_resp_bits_uop_shift; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_lrs3_rtype = mshrs_0_io_resp_bits_uop_lrs3_rtype; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_rflag = mshrs_0_io_resp_bits_uop_rflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_wflag = mshrs_0_io_resp_bits_uop_wflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_prflag = mshrs_0_io_resp_bits_uop_prflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_pwflag = mshrs_0_io_resp_bits_uop_pwflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_pflag_busy = mshrs_0_io_resp_bits_uop_pflag_busy; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_stale_pflag = mshrs_0_io_resp_bits_uop_stale_pflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_op1_sel = mshrs_0_io_resp_bits_uop_op1_sel; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_op2_sel = mshrs_0_io_resp_bits_uop_op2_sel; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_split_num = mshrs_0_io_resp_bits_uop_split_num; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_self_index = mshrs_0_io_resp_bits_uop_self_index; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_rob_inst_idx = mshrs_0_io_resp_bits_uop_rob_inst_idx; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_address_num = mshrs_0_io_resp_bits_uop_address_num; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_uopc = mshrs_0_io_resp_bits_uop_uopc; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_inst = mshrs_0_io_resp_bits_uop_inst; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_debug_inst = mshrs_0_io_resp_bits_uop_debug_inst; // @[mshrs.scala 678:23]
@@ -6665,7 +5712,6 @@ module BoomMSHRFile(
   assign resp_arb_io_in_0_bits_uop_ctrl_is_load = mshrs_0_io_resp_bits_uop_ctrl_is_load; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_ctrl_is_sta = mshrs_0_io_resp_bits_uop_ctrl_is_sta; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_ctrl_is_std = mshrs_0_io_resp_bits_uop_ctrl_is_std; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_0_bits_uop_ctrl_op3_sel = mshrs_0_io_resp_bits_uop_ctrl_op3_sel; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_iw_state = mshrs_0_io_resp_bits_uop_iw_state; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_iw_p1_poisoned = mshrs_0_io_resp_bits_uop_iw_p1_poisoned; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_uop_iw_p2_poisoned = mshrs_0_io_resp_bits_uop_iw_p2_poisoned; // @[mshrs.scala 678:23]
@@ -6731,23 +5777,6 @@ module BoomMSHRFile(
   assign resp_arb_io_in_0_bits_data = mshrs_0_io_resp_bits_data; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_0_bits_is_hella = mshrs_0_io_resp_bits_is_hella; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_valid = mshrs_1_io_resp_valid; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_switch = mshrs_1_io_resp_bits_uop_switch; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_switch_off = mshrs_1_io_resp_bits_uop_switch_off; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_is_unicore = mshrs_1_io_resp_bits_uop_is_unicore; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_shift = mshrs_1_io_resp_bits_uop_shift; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_lrs3_rtype = mshrs_1_io_resp_bits_uop_lrs3_rtype; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_rflag = mshrs_1_io_resp_bits_uop_rflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_wflag = mshrs_1_io_resp_bits_uop_wflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_prflag = mshrs_1_io_resp_bits_uop_prflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_pwflag = mshrs_1_io_resp_bits_uop_pwflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_pflag_busy = mshrs_1_io_resp_bits_uop_pflag_busy; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_stale_pflag = mshrs_1_io_resp_bits_uop_stale_pflag; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_op1_sel = mshrs_1_io_resp_bits_uop_op1_sel; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_op2_sel = mshrs_1_io_resp_bits_uop_op2_sel; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_split_num = mshrs_1_io_resp_bits_uop_split_num; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_self_index = mshrs_1_io_resp_bits_uop_self_index; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_rob_inst_idx = mshrs_1_io_resp_bits_uop_rob_inst_idx; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_address_num = mshrs_1_io_resp_bits_uop_address_num; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_uopc = mshrs_1_io_resp_bits_uop_uopc; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_inst = mshrs_1_io_resp_bits_uop_inst; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_debug_inst = mshrs_1_io_resp_bits_uop_debug_inst; // @[mshrs.scala 678:23]
@@ -6765,7 +5794,6 @@ module BoomMSHRFile(
   assign resp_arb_io_in_1_bits_uop_ctrl_is_load = mshrs_1_io_resp_bits_uop_ctrl_is_load; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_ctrl_is_sta = mshrs_1_io_resp_bits_uop_ctrl_is_sta; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_ctrl_is_std = mshrs_1_io_resp_bits_uop_ctrl_is_std; // @[mshrs.scala 678:23]
-  assign resp_arb_io_in_1_bits_uop_ctrl_op3_sel = mshrs_1_io_resp_bits_uop_ctrl_op3_sel; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_iw_state = mshrs_1_io_resp_bits_uop_iw_state; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_iw_p1_poisoned = mshrs_1_io_resp_bits_uop_iw_p1_poisoned; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_uop_iw_p2_poisoned = mshrs_1_io_resp_bits_uop_iw_p2_poisoned; // @[mshrs.scala 678:23]
@@ -6831,23 +5859,6 @@ module BoomMSHRFile(
   assign resp_arb_io_in_1_bits_data = mshrs_1_io_resp_bits_data; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_1_bits_is_hella = mshrs_1_io_resp_bits_is_hella; // @[mshrs.scala 678:23]
   assign resp_arb_io_in_2_valid = mmios_0_io_resp_valid; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_switch = mmios_0_io_resp_bits_uop_switch; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_switch_off = mmios_0_io_resp_bits_uop_switch_off; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_is_unicore = mmios_0_io_resp_bits_uop_is_unicore; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_shift = mmios_0_io_resp_bits_uop_shift; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_lrs3_rtype = mmios_0_io_resp_bits_uop_lrs3_rtype; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_rflag = mmios_0_io_resp_bits_uop_rflag; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_wflag = mmios_0_io_resp_bits_uop_wflag; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_prflag = mmios_0_io_resp_bits_uop_prflag; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_pwflag = mmios_0_io_resp_bits_uop_pwflag; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_pflag_busy = mmios_0_io_resp_bits_uop_pflag_busy; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_stale_pflag = mmios_0_io_resp_bits_uop_stale_pflag; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_op1_sel = mmios_0_io_resp_bits_uop_op1_sel; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_op2_sel = mmios_0_io_resp_bits_uop_op2_sel; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_split_num = mmios_0_io_resp_bits_uop_split_num; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_self_index = mmios_0_io_resp_bits_uop_self_index; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_rob_inst_idx = mmios_0_io_resp_bits_uop_rob_inst_idx; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_address_num = mmios_0_io_resp_bits_uop_address_num; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_uopc = mmios_0_io_resp_bits_uop_uopc; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_inst = mmios_0_io_resp_bits_uop_inst; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_debug_inst = mmios_0_io_resp_bits_uop_debug_inst; // @[mshrs.scala 725:36]
@@ -6865,7 +5876,6 @@ module BoomMSHRFile(
   assign resp_arb_io_in_2_bits_uop_ctrl_is_load = mmios_0_io_resp_bits_uop_ctrl_is_load; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_ctrl_is_sta = mmios_0_io_resp_bits_uop_ctrl_is_sta; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_ctrl_is_std = mmios_0_io_resp_bits_uop_ctrl_is_std; // @[mshrs.scala 725:36]
-  assign resp_arb_io_in_2_bits_uop_ctrl_op3_sel = mmios_0_io_resp_bits_uop_ctrl_op3_sel; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_iw_state = mmios_0_io_resp_bits_uop_iw_state; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_iw_p1_poisoned = mmios_0_io_resp_bits_uop_iw_p1_poisoned; // @[mshrs.scala 725:36]
   assign resp_arb_io_in_2_bits_uop_iw_p2_poisoned = mmios_0_io_resp_bits_uop_iw_p2_poisoned; // @[mshrs.scala 725:36]
@@ -6952,23 +5962,6 @@ module BoomMSHRFile(
   assign mshrs_0_io_clear_prefetch = _T_149 | _T_150; // @[mshrs.scala 645:82]
   assign mshrs_0_io_brupdate_b1_resolve_mask = io_brupdate_b1_resolve_mask; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b1_mispredict_mask = io_brupdate_b1_mispredict_mask; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_switch = io_brupdate_b2_uop_switch; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_switch_off = io_brupdate_b2_uop_switch_off; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_is_unicore = io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_shift = io_brupdate_b2_uop_shift; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_lrs3_rtype = io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_rflag = io_brupdate_b2_uop_rflag; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_wflag = io_brupdate_b2_uop_wflag; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_prflag = io_brupdate_b2_uop_prflag; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_pwflag = io_brupdate_b2_uop_pwflag; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_pflag_busy = io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_stale_pflag = io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_op1_sel = io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_op2_sel = io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_split_num = io_brupdate_b2_uop_split_num; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_self_index = io_brupdate_b2_uop_self_index; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_rob_inst_idx = io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_address_num = io_brupdate_b2_uop_address_num; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_uopc = io_brupdate_b2_uop_uopc; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_inst = io_brupdate_b2_uop_inst; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_debug_inst = io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 647:28]
@@ -6986,7 +5979,6 @@ module BoomMSHRFile(
   assign mshrs_0_io_brupdate_b2_uop_ctrl_is_load = io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_ctrl_is_sta = io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_ctrl_is_std = io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 647:28]
-  assign mshrs_0_io_brupdate_b2_uop_ctrl_op3_sel = io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_iw_state = io_brupdate_b2_uop_iw_state; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_iw_p1_poisoned = io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 647:28]
   assign mshrs_0_io_brupdate_b2_uop_iw_p2_poisoned = io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 647:28]
@@ -7059,23 +6051,6 @@ module BoomMSHRFile(
   assign mshrs_0_io_exception = io_exception; // @[mshrs.scala 648:26]
   assign mshrs_0_io_rob_pnr_idx = io_rob_pnr_idx; // @[mshrs.scala 649:26]
   assign mshrs_0_io_rob_head_idx = io_rob_head_idx; // @[mshrs.scala 650:26]
-  assign mshrs_0_io_req_uop_switch = io_req_0_bits_uop_switch; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_switch_off = io_req_0_bits_uop_switch_off; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_is_unicore = io_req_0_bits_uop_is_unicore; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_shift = io_req_0_bits_uop_shift; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_lrs3_rtype = io_req_0_bits_uop_lrs3_rtype; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_rflag = io_req_0_bits_uop_rflag; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_wflag = io_req_0_bits_uop_wflag; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_prflag = io_req_0_bits_uop_prflag; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_pwflag = io_req_0_bits_uop_pwflag; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_pflag_busy = io_req_0_bits_uop_pflag_busy; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_stale_pflag = io_req_0_bits_uop_stale_pflag; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_op1_sel = io_req_0_bits_uop_op1_sel; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_op2_sel = io_req_0_bits_uop_op2_sel; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_split_num = io_req_0_bits_uop_split_num; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_self_index = io_req_0_bits_uop_self_index; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_rob_inst_idx = io_req_0_bits_uop_rob_inst_idx; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_address_num = io_req_0_bits_uop_address_num; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_uopc = io_req_0_bits_uop_uopc; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_inst = io_req_0_bits_uop_inst; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_debug_inst = io_req_0_bits_uop_debug_inst; // @[mshrs.scala 638:26]
@@ -7093,7 +6068,6 @@ module BoomMSHRFile(
   assign mshrs_0_io_req_uop_ctrl_is_load = io_req_0_bits_uop_ctrl_is_load; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_ctrl_is_sta = io_req_0_bits_uop_ctrl_is_sta; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_ctrl_is_std = io_req_0_bits_uop_ctrl_is_std; // @[mshrs.scala 638:26]
-  assign mshrs_0_io_req_uop_ctrl_op3_sel = io_req_0_bits_uop_ctrl_op3_sel; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_iw_state = io_req_0_bits_uop_iw_state; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_iw_p1_poisoned = io_req_0_bits_uop_iw_p1_poisoned; // @[mshrs.scala 638:26]
   assign mshrs_0_io_req_uop_iw_p2_poisoned = io_req_0_bits_uop_iw_p2_poisoned; // @[mshrs.scala 638:26]
@@ -7199,23 +6173,6 @@ module BoomMSHRFile(
   assign mshrs_1_io_clear_prefetch = _T_180 | _T_181; // @[mshrs.scala 645:82]
   assign mshrs_1_io_brupdate_b1_resolve_mask = io_brupdate_b1_resolve_mask; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b1_mispredict_mask = io_brupdate_b1_mispredict_mask; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_switch = io_brupdate_b2_uop_switch; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_switch_off = io_brupdate_b2_uop_switch_off; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_is_unicore = io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_shift = io_brupdate_b2_uop_shift; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_lrs3_rtype = io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_rflag = io_brupdate_b2_uop_rflag; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_wflag = io_brupdate_b2_uop_wflag; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_prflag = io_brupdate_b2_uop_prflag; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_pwflag = io_brupdate_b2_uop_pwflag; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_pflag_busy = io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_stale_pflag = io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_op1_sel = io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_op2_sel = io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_split_num = io_brupdate_b2_uop_split_num; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_self_index = io_brupdate_b2_uop_self_index; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_rob_inst_idx = io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_address_num = io_brupdate_b2_uop_address_num; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_uopc = io_brupdate_b2_uop_uopc; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_inst = io_brupdate_b2_uop_inst; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_debug_inst = io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 647:28]
@@ -7233,7 +6190,6 @@ module BoomMSHRFile(
   assign mshrs_1_io_brupdate_b2_uop_ctrl_is_load = io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_ctrl_is_sta = io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_ctrl_is_std = io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 647:28]
-  assign mshrs_1_io_brupdate_b2_uop_ctrl_op3_sel = io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_iw_state = io_brupdate_b2_uop_iw_state; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_iw_p1_poisoned = io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 647:28]
   assign mshrs_1_io_brupdate_b2_uop_iw_p2_poisoned = io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 647:28]
@@ -7306,23 +6262,6 @@ module BoomMSHRFile(
   assign mshrs_1_io_exception = io_exception; // @[mshrs.scala 648:26]
   assign mshrs_1_io_rob_pnr_idx = io_rob_pnr_idx; // @[mshrs.scala 649:26]
   assign mshrs_1_io_rob_head_idx = io_rob_head_idx; // @[mshrs.scala 650:26]
-  assign mshrs_1_io_req_uop_switch = io_req_0_bits_uop_switch; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_switch_off = io_req_0_bits_uop_switch_off; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_is_unicore = io_req_0_bits_uop_is_unicore; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_shift = io_req_0_bits_uop_shift; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_lrs3_rtype = io_req_0_bits_uop_lrs3_rtype; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_rflag = io_req_0_bits_uop_rflag; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_wflag = io_req_0_bits_uop_wflag; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_prflag = io_req_0_bits_uop_prflag; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_pwflag = io_req_0_bits_uop_pwflag; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_pflag_busy = io_req_0_bits_uop_pflag_busy; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_stale_pflag = io_req_0_bits_uop_stale_pflag; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_op1_sel = io_req_0_bits_uop_op1_sel; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_op2_sel = io_req_0_bits_uop_op2_sel; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_split_num = io_req_0_bits_uop_split_num; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_self_index = io_req_0_bits_uop_self_index; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_rob_inst_idx = io_req_0_bits_uop_rob_inst_idx; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_address_num = io_req_0_bits_uop_address_num; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_uopc = io_req_0_bits_uop_uopc; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_inst = io_req_0_bits_uop_inst; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_debug_inst = io_req_0_bits_uop_debug_inst; // @[mshrs.scala 638:26]
@@ -7340,7 +6279,6 @@ module BoomMSHRFile(
   assign mshrs_1_io_req_uop_ctrl_is_load = io_req_0_bits_uop_ctrl_is_load; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_ctrl_is_sta = io_req_0_bits_uop_ctrl_is_sta; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_ctrl_is_std = io_req_0_bits_uop_ctrl_is_std; // @[mshrs.scala 638:26]
-  assign mshrs_1_io_req_uop_ctrl_op3_sel = io_req_0_bits_uop_ctrl_op3_sel; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_iw_state = io_req_0_bits_uop_iw_state; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_iw_p1_poisoned = io_req_0_bits_uop_iw_p1_poisoned; // @[mshrs.scala 638:26]
   assign mshrs_1_io_req_uop_iw_p2_poisoned = io_req_0_bits_uop_iw_p2_poisoned; // @[mshrs.scala 638:26]
@@ -7446,23 +6384,6 @@ module BoomMSHRFile(
   assign mmios_0_clock = clock;
   assign mmios_0_reset = reset;
   assign mmios_0_io_req_valid = mmio_alloc_arb_io_in_0_ready; // @[mshrs.scala 714:23]
-  assign mmios_0_io_req_bits_uop_switch = io_req_0_bits_uop_switch; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_switch_off = io_req_0_bits_uop_switch_off; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_is_unicore = io_req_0_bits_uop_is_unicore; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_shift = io_req_0_bits_uop_shift; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_lrs3_rtype = io_req_0_bits_uop_lrs3_rtype; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_rflag = io_req_0_bits_uop_rflag; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_wflag = io_req_0_bits_uop_wflag; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_prflag = io_req_0_bits_uop_prflag; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_pwflag = io_req_0_bits_uop_pwflag; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_pflag_busy = io_req_0_bits_uop_pflag_busy; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_stale_pflag = io_req_0_bits_uop_stale_pflag; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_op1_sel = io_req_0_bits_uop_op1_sel; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_op2_sel = io_req_0_bits_uop_op2_sel; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_split_num = io_req_0_bits_uop_split_num; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_self_index = io_req_0_bits_uop_self_index; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_rob_inst_idx = io_req_0_bits_uop_rob_inst_idx; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_address_num = io_req_0_bits_uop_address_num; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_uopc = io_req_0_bits_uop_uopc; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_inst = io_req_0_bits_uop_inst; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_debug_inst = io_req_0_bits_uop_debug_inst; // @[mshrs.scala 715:23]
@@ -7480,7 +6401,6 @@ module BoomMSHRFile(
   assign mmios_0_io_req_bits_uop_ctrl_is_load = io_req_0_bits_uop_ctrl_is_load; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_ctrl_is_sta = io_req_0_bits_uop_ctrl_is_sta; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_ctrl_is_std = io_req_0_bits_uop_ctrl_is_std; // @[mshrs.scala 715:23]
-  assign mmios_0_io_req_bits_uop_ctrl_op3_sel = io_req_0_bits_uop_ctrl_op3_sel; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_iw_state = io_req_0_bits_uop_iw_state; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_iw_p1_poisoned = io_req_0_bits_uop_iw_p1_poisoned; // @[mshrs.scala 715:23]
   assign mmios_0_io_req_bits_uop_iw_p2_poisoned = io_req_0_bits_uop_iw_p2_poisoned; // @[mshrs.scala 715:23]
@@ -7560,23 +6480,6 @@ module BoomMSHRFile(
   assign respq_clock = clock;
   assign respq_reset = reset;
   assign respq_io_enq_valid = resp_arb_io_out_valid; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_switch = resp_arb_io_out_bits_uop_switch; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_switch_off = resp_arb_io_out_bits_uop_switch_off; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_is_unicore = resp_arb_io_out_bits_uop_is_unicore; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_shift = resp_arb_io_out_bits_uop_shift; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_lrs3_rtype = resp_arb_io_out_bits_uop_lrs3_rtype; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_rflag = resp_arb_io_out_bits_uop_rflag; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_wflag = resp_arb_io_out_bits_uop_wflag; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_prflag = resp_arb_io_out_bits_uop_prflag; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_pwflag = resp_arb_io_out_bits_uop_pwflag; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_pflag_busy = resp_arb_io_out_bits_uop_pflag_busy; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_stale_pflag = resp_arb_io_out_bits_uop_stale_pflag; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_op1_sel = resp_arb_io_out_bits_uop_op1_sel; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_op2_sel = resp_arb_io_out_bits_uop_op2_sel; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_split_num = resp_arb_io_out_bits_uop_split_num; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_self_index = resp_arb_io_out_bits_uop_self_index; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_rob_inst_idx = resp_arb_io_out_bits_uop_rob_inst_idx; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_address_num = resp_arb_io_out_bits_uop_address_num; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_uopc = resp_arb_io_out_bits_uop_uopc; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_inst = resp_arb_io_out_bits_uop_inst; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_debug_inst = resp_arb_io_out_bits_uop_debug_inst; // @[mshrs.scala 740:21]
@@ -7594,7 +6497,6 @@ module BoomMSHRFile(
   assign respq_io_enq_bits_uop_ctrl_is_load = resp_arb_io_out_bits_uop_ctrl_is_load; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_ctrl_is_sta = resp_arb_io_out_bits_uop_ctrl_is_sta; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_ctrl_is_std = resp_arb_io_out_bits_uop_ctrl_is_std; // @[mshrs.scala 740:21]
-  assign respq_io_enq_bits_uop_ctrl_op3_sel = resp_arb_io_out_bits_uop_ctrl_op3_sel; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_iw_state = resp_arb_io_out_bits_uop_iw_state; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_iw_p1_poisoned = resp_arb_io_out_bits_uop_iw_p1_poisoned; // @[mshrs.scala 740:21]
   assign respq_io_enq_bits_uop_iw_p2_poisoned = resp_arb_io_out_bits_uop_iw_p2_poisoned; // @[mshrs.scala 740:21]
@@ -7662,23 +6564,6 @@ module BoomMSHRFile(
   assign respq_io_deq_ready = io_resp_ready; // @[mshrs.scala 741:21]
   assign respq_io_brupdate_b1_resolve_mask = io_brupdate_b1_resolve_mask; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b1_mispredict_mask = io_brupdate_b1_mispredict_mask; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_switch = io_brupdate_b2_uop_switch; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_switch_off = io_brupdate_b2_uop_switch_off; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_is_unicore = io_brupdate_b2_uop_is_unicore; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_shift = io_brupdate_b2_uop_shift; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_lrs3_rtype = io_brupdate_b2_uop_lrs3_rtype; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_rflag = io_brupdate_b2_uop_rflag; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_wflag = io_brupdate_b2_uop_wflag; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_prflag = io_brupdate_b2_uop_prflag; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_pwflag = io_brupdate_b2_uop_pwflag; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_pflag_busy = io_brupdate_b2_uop_pflag_busy; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_stale_pflag = io_brupdate_b2_uop_stale_pflag; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_op1_sel = io_brupdate_b2_uop_op1_sel; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_op2_sel = io_brupdate_b2_uop_op2_sel; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_split_num = io_brupdate_b2_uop_split_num; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_self_index = io_brupdate_b2_uop_self_index; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_rob_inst_idx = io_brupdate_b2_uop_rob_inst_idx; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_address_num = io_brupdate_b2_uop_address_num; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_uopc = io_brupdate_b2_uop_uopc; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_inst = io_brupdate_b2_uop_inst; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_debug_inst = io_brupdate_b2_uop_debug_inst; // @[mshrs.scala 738:21]
@@ -7696,7 +6581,6 @@ module BoomMSHRFile(
   assign respq_io_brupdate_b2_uop_ctrl_is_load = io_brupdate_b2_uop_ctrl_is_load; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_ctrl_is_sta = io_brupdate_b2_uop_ctrl_is_sta; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_ctrl_is_std = io_brupdate_b2_uop_ctrl_is_std; // @[mshrs.scala 738:21]
-  assign respq_io_brupdate_b2_uop_ctrl_op3_sel = io_brupdate_b2_uop_ctrl_op3_sel; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_iw_state = io_brupdate_b2_uop_iw_state; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_iw_p1_poisoned = io_brupdate_b2_uop_iw_p1_poisoned; // @[mshrs.scala 738:21]
   assign respq_io_brupdate_b2_uop_iw_p2_poisoned = io_brupdate_b2_uop_iw_p2_poisoned; // @[mshrs.scala 738:21]
@@ -7779,7 +6663,7 @@ module BoomMSHRFile(
     end else begin
       sdq_val <= _GEN_48[16:0];
     end
-    REG <= _T_195[0]; // @[util.scala 424:8]
+    REG <= _T_195[0]; // @[util.scala 353:8]
     if (reset) begin // @[mshrs.scala 693:31]
       mshr_head <= 1'h0; // @[mshrs.scala 693:31]
     end else if (pri_rdy & pri_val) begin // @[mshrs.scala 695:29]

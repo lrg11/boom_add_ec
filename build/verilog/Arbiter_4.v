@@ -7,7 +7,7 @@ module Arbiter_4(
   input  [5:0]  io_in_0_bits_idx,
   input  [1:0]  io_in_0_bits_source,
   input  [2:0]  io_in_0_bits_param,
-  input         io_in_0_bits_way_en,
+  input  [3:0]  io_in_0_bits_way_en,
   input         io_in_0_bits_voluntary,
   output        io_in_1_ready,
   input         io_in_1_valid,
@@ -15,7 +15,7 @@ module Arbiter_4(
   input  [5:0]  io_in_1_bits_idx,
   input  [1:0]  io_in_1_bits_source,
   input  [2:0]  io_in_1_bits_param,
-  input         io_in_1_bits_way_en,
+  input  [3:0]  io_in_1_bits_way_en,
   input         io_in_1_bits_voluntary,
   input         io_out_ready,
   output        io_out_valid,
@@ -23,7 +23,7 @@ module Arbiter_4(
   output [5:0]  io_out_bits_idx,
   output [1:0]  io_out_bits_source,
   output [2:0]  io_out_bits_param,
-  output        io_out_bits_way_en,
+  output [3:0]  io_out_bits_way_en,
   output        io_out_bits_voluntary,
   output        io_chosen
 );

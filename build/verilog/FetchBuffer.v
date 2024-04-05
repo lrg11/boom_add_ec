@@ -1,269 +1,233 @@
 module FetchBuffer(
-  input         clock,
-  input         reset,
-  output        io_enq_ready,
-  input         io_enq_valid,
-  input  [39:0] io_enq_bits_pc,
-  input  [39:0] io_enq_bits_next_pc,
-  input         io_enq_bits_edge_inst_0,
-  input  [31:0] io_enq_bits_insts_0,
-  input  [31:0] io_enq_bits_insts_1,
-  input  [31:0] io_enq_bits_insts_2,
-  input  [31:0] io_enq_bits_insts_3,
-  input  [31:0] io_enq_bits_exp_insts_0,
-  input  [31:0] io_enq_bits_exp_insts_1,
-  input  [31:0] io_enq_bits_exp_insts_2,
-  input  [31:0] io_enq_bits_exp_insts_3,
-  input         io_enq_bits_sfbs_0,
-  input         io_enq_bits_sfbs_1,
-  input         io_enq_bits_sfbs_2,
-  input         io_enq_bits_sfbs_3,
-  input  [7:0]  io_enq_bits_sfb_masks_0,
-  input  [7:0]  io_enq_bits_sfb_masks_1,
-  input  [7:0]  io_enq_bits_sfb_masks_2,
-  input  [7:0]  io_enq_bits_sfb_masks_3,
-  input  [3:0]  io_enq_bits_sfb_dests_0,
-  input  [3:0]  io_enq_bits_sfb_dests_1,
-  input  [3:0]  io_enq_bits_sfb_dests_2,
-  input  [3:0]  io_enq_bits_sfb_dests_3,
-  input         io_enq_bits_shadowable_mask_0,
-  input         io_enq_bits_shadowable_mask_1,
-  input         io_enq_bits_shadowable_mask_2,
-  input         io_enq_bits_shadowable_mask_3,
-  input         io_enq_bits_shadowed_mask_0,
-  input         io_enq_bits_shadowed_mask_1,
-  input         io_enq_bits_shadowed_mask_2,
-  input         io_enq_bits_shadowed_mask_3,
-  input         io_enq_bits_cfi_idx_valid,
-  input  [1:0]  io_enq_bits_cfi_idx_bits,
-  input  [2:0]  io_enq_bits_cfi_type,
-  input         io_enq_bits_cfi_is_call,
-  input         io_enq_bits_cfi_is_ret,
-  input         io_enq_bits_cfi_npc_plus4,
-  input  [39:0] io_enq_bits_ras_top,
-  input  [4:0]  io_enq_bits_ftq_idx,
-  input  [3:0]  io_enq_bits_mask,
-  input  [3:0]  io_enq_bits_br_mask,
-  input  [15:0] io_enq_bits_ghist_old_history,
-  input         io_enq_bits_ghist_current_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_not_taken,
-  input         io_enq_bits_ghist_new_saw_branch_taken,
-  input  [4:0]  io_enq_bits_ghist_ras_idx,
-  input         io_enq_bits_lhist_0,
-  input         io_enq_bits_xcpt_pf_if,
-  input         io_enq_bits_xcpt_ae_if,
-  input         io_enq_bits_bp_debug_if_oh_0,
-  input         io_enq_bits_bp_debug_if_oh_1,
-  input         io_enq_bits_bp_debug_if_oh_2,
-  input         io_enq_bits_bp_debug_if_oh_3,
-  input         io_enq_bits_bp_xcpt_if_oh_0,
-  input         io_enq_bits_bp_xcpt_if_oh_1,
-  input         io_enq_bits_bp_xcpt_if_oh_2,
-  input         io_enq_bits_bp_xcpt_if_oh_3,
-  input         io_enq_bits_end_half_valid,
-  input  [15:0] io_enq_bits_end_half_bits,
-  input  [44:0] io_enq_bits_bpd_meta_0,
-  input  [1:0]  io_enq_bits_fsrc,
-  input  [1:0]  io_enq_bits_tsrc,
-  input         io_deq_ready,
-  output        io_deq_valid,
-  output        io_deq_bits_uops_0_valid,
-  output        io_deq_bits_uops_0_bits_switch,
-  output        io_deq_bits_uops_0_bits_switch_off,
-  output        io_deq_bits_uops_0_bits_is_unicore,
-  output [2:0]  io_deq_bits_uops_0_bits_shift,
-  output [1:0]  io_deq_bits_uops_0_bits_lrs3_rtype,
-  output        io_deq_bits_uops_0_bits_rflag,
-  output        io_deq_bits_uops_0_bits_wflag,
-  output [3:0]  io_deq_bits_uops_0_bits_prflag,
-  output [3:0]  io_deq_bits_uops_0_bits_pwflag,
-  output        io_deq_bits_uops_0_bits_pflag_busy,
-  output [3:0]  io_deq_bits_uops_0_bits_stale_pflag,
-  output [3:0]  io_deq_bits_uops_0_bits_op1_sel,
-  output [3:0]  io_deq_bits_uops_0_bits_op2_sel,
-  output [5:0]  io_deq_bits_uops_0_bits_split_num,
-  output [5:0]  io_deq_bits_uops_0_bits_self_index,
-  output [5:0]  io_deq_bits_uops_0_bits_rob_inst_idx,
-  output [5:0]  io_deq_bits_uops_0_bits_address_num,
-  output [6:0]  io_deq_bits_uops_0_bits_uopc,
-  output [31:0] io_deq_bits_uops_0_bits_inst,
-  output [31:0] io_deq_bits_uops_0_bits_debug_inst,
-  output        io_deq_bits_uops_0_bits_is_rvc,
-  output [39:0] io_deq_bits_uops_0_bits_debug_pc,
-  output [2:0]  io_deq_bits_uops_0_bits_iq_type,
-  output [9:0]  io_deq_bits_uops_0_bits_fu_code,
-  output [3:0]  io_deq_bits_uops_0_bits_ctrl_br_type,
-  output [1:0]  io_deq_bits_uops_0_bits_ctrl_op1_sel,
-  output [2:0]  io_deq_bits_uops_0_bits_ctrl_op2_sel,
-  output [2:0]  io_deq_bits_uops_0_bits_ctrl_imm_sel,
-  output [3:0]  io_deq_bits_uops_0_bits_ctrl_op_fcn,
-  output        io_deq_bits_uops_0_bits_ctrl_fcn_dw,
-  output [2:0]  io_deq_bits_uops_0_bits_ctrl_csr_cmd,
-  output        io_deq_bits_uops_0_bits_ctrl_is_load,
-  output        io_deq_bits_uops_0_bits_ctrl_is_sta,
-  output        io_deq_bits_uops_0_bits_ctrl_is_std,
-  output [1:0]  io_deq_bits_uops_0_bits_ctrl_op3_sel,
-  output [1:0]  io_deq_bits_uops_0_bits_iw_state,
-  output        io_deq_bits_uops_0_bits_iw_p1_poisoned,
-  output        io_deq_bits_uops_0_bits_iw_p2_poisoned,
-  output        io_deq_bits_uops_0_bits_is_br,
-  output        io_deq_bits_uops_0_bits_is_jalr,
-  output        io_deq_bits_uops_0_bits_is_jal,
-  output        io_deq_bits_uops_0_bits_is_sfb,
-  output [11:0] io_deq_bits_uops_0_bits_br_mask,
-  output [3:0]  io_deq_bits_uops_0_bits_br_tag,
-  output [4:0]  io_deq_bits_uops_0_bits_ftq_idx,
-  output        io_deq_bits_uops_0_bits_edge_inst,
-  output [5:0]  io_deq_bits_uops_0_bits_pc_lob,
-  output        io_deq_bits_uops_0_bits_taken,
-  output [19:0] io_deq_bits_uops_0_bits_imm_packed,
-  output [11:0] io_deq_bits_uops_0_bits_csr_addr,
-  output [5:0]  io_deq_bits_uops_0_bits_rob_idx,
-  output [4:0]  io_deq_bits_uops_0_bits_ldq_idx,
-  output [4:0]  io_deq_bits_uops_0_bits_stq_idx,
-  output [1:0]  io_deq_bits_uops_0_bits_rxq_idx,
-  output [6:0]  io_deq_bits_uops_0_bits_pdst,
-  output [6:0]  io_deq_bits_uops_0_bits_prs1,
-  output [6:0]  io_deq_bits_uops_0_bits_prs2,
-  output [6:0]  io_deq_bits_uops_0_bits_prs3,
-  output [4:0]  io_deq_bits_uops_0_bits_ppred,
-  output        io_deq_bits_uops_0_bits_prs1_busy,
-  output        io_deq_bits_uops_0_bits_prs2_busy,
-  output        io_deq_bits_uops_0_bits_prs3_busy,
-  output        io_deq_bits_uops_0_bits_ppred_busy,
-  output [6:0]  io_deq_bits_uops_0_bits_stale_pdst,
-  output        io_deq_bits_uops_0_bits_exception,
-  output [63:0] io_deq_bits_uops_0_bits_exc_cause,
-  output        io_deq_bits_uops_0_bits_bypassable,
-  output [4:0]  io_deq_bits_uops_0_bits_mem_cmd,
-  output [1:0]  io_deq_bits_uops_0_bits_mem_size,
-  output        io_deq_bits_uops_0_bits_mem_signed,
-  output        io_deq_bits_uops_0_bits_is_fence,
-  output        io_deq_bits_uops_0_bits_is_fencei,
-  output        io_deq_bits_uops_0_bits_is_amo,
-  output        io_deq_bits_uops_0_bits_uses_ldq,
-  output        io_deq_bits_uops_0_bits_uses_stq,
-  output        io_deq_bits_uops_0_bits_is_sys_pc2epc,
-  output        io_deq_bits_uops_0_bits_is_unique,
-  output        io_deq_bits_uops_0_bits_flush_on_commit,
-  output        io_deq_bits_uops_0_bits_ldst_is_rs1,
-  output [5:0]  io_deq_bits_uops_0_bits_ldst,
-  output [5:0]  io_deq_bits_uops_0_bits_lrs1,
-  output [5:0]  io_deq_bits_uops_0_bits_lrs2,
-  output [5:0]  io_deq_bits_uops_0_bits_lrs3,
-  output        io_deq_bits_uops_0_bits_ldst_val,
-  output [1:0]  io_deq_bits_uops_0_bits_dst_rtype,
-  output [1:0]  io_deq_bits_uops_0_bits_lrs1_rtype,
-  output [1:0]  io_deq_bits_uops_0_bits_lrs2_rtype,
-  output        io_deq_bits_uops_0_bits_frs3_en,
-  output        io_deq_bits_uops_0_bits_fp_val,
-  output        io_deq_bits_uops_0_bits_fp_single,
-  output        io_deq_bits_uops_0_bits_xcpt_pf_if,
-  output        io_deq_bits_uops_0_bits_xcpt_ae_if,
-  output        io_deq_bits_uops_0_bits_xcpt_ma_if,
-  output        io_deq_bits_uops_0_bits_bp_debug_if,
-  output        io_deq_bits_uops_0_bits_bp_xcpt_if,
-  output [1:0]  io_deq_bits_uops_0_bits_debug_fsrc,
-  output [1:0]  io_deq_bits_uops_0_bits_debug_tsrc,
-  output        io_deq_bits_uops_1_valid,
-  output        io_deq_bits_uops_1_bits_switch,
-  output        io_deq_bits_uops_1_bits_switch_off,
-  output        io_deq_bits_uops_1_bits_is_unicore,
-  output [2:0]  io_deq_bits_uops_1_bits_shift,
-  output [1:0]  io_deq_bits_uops_1_bits_lrs3_rtype,
-  output        io_deq_bits_uops_1_bits_rflag,
-  output        io_deq_bits_uops_1_bits_wflag,
-  output [3:0]  io_deq_bits_uops_1_bits_prflag,
-  output [3:0]  io_deq_bits_uops_1_bits_pwflag,
-  output        io_deq_bits_uops_1_bits_pflag_busy,
-  output [3:0]  io_deq_bits_uops_1_bits_stale_pflag,
-  output [3:0]  io_deq_bits_uops_1_bits_op1_sel,
-  output [3:0]  io_deq_bits_uops_1_bits_op2_sel,
-  output [5:0]  io_deq_bits_uops_1_bits_split_num,
-  output [5:0]  io_deq_bits_uops_1_bits_self_index,
-  output [5:0]  io_deq_bits_uops_1_bits_rob_inst_idx,
-  output [5:0]  io_deq_bits_uops_1_bits_address_num,
-  output [6:0]  io_deq_bits_uops_1_bits_uopc,
-  output [31:0] io_deq_bits_uops_1_bits_inst,
-  output [31:0] io_deq_bits_uops_1_bits_debug_inst,
-  output        io_deq_bits_uops_1_bits_is_rvc,
-  output [39:0] io_deq_bits_uops_1_bits_debug_pc,
-  output [2:0]  io_deq_bits_uops_1_bits_iq_type,
-  output [9:0]  io_deq_bits_uops_1_bits_fu_code,
-  output [3:0]  io_deq_bits_uops_1_bits_ctrl_br_type,
-  output [1:0]  io_deq_bits_uops_1_bits_ctrl_op1_sel,
-  output [2:0]  io_deq_bits_uops_1_bits_ctrl_op2_sel,
-  output [2:0]  io_deq_bits_uops_1_bits_ctrl_imm_sel,
-  output [3:0]  io_deq_bits_uops_1_bits_ctrl_op_fcn,
-  output        io_deq_bits_uops_1_bits_ctrl_fcn_dw,
-  output [2:0]  io_deq_bits_uops_1_bits_ctrl_csr_cmd,
-  output        io_deq_bits_uops_1_bits_ctrl_is_load,
-  output        io_deq_bits_uops_1_bits_ctrl_is_sta,
-  output        io_deq_bits_uops_1_bits_ctrl_is_std,
-  output [1:0]  io_deq_bits_uops_1_bits_ctrl_op3_sel,
-  output [1:0]  io_deq_bits_uops_1_bits_iw_state,
-  output        io_deq_bits_uops_1_bits_iw_p1_poisoned,
-  output        io_deq_bits_uops_1_bits_iw_p2_poisoned,
-  output        io_deq_bits_uops_1_bits_is_br,
-  output        io_deq_bits_uops_1_bits_is_jalr,
-  output        io_deq_bits_uops_1_bits_is_jal,
-  output        io_deq_bits_uops_1_bits_is_sfb,
-  output [11:0] io_deq_bits_uops_1_bits_br_mask,
-  output [3:0]  io_deq_bits_uops_1_bits_br_tag,
-  output [4:0]  io_deq_bits_uops_1_bits_ftq_idx,
-  output        io_deq_bits_uops_1_bits_edge_inst,
-  output [5:0]  io_deq_bits_uops_1_bits_pc_lob,
-  output        io_deq_bits_uops_1_bits_taken,
-  output [19:0] io_deq_bits_uops_1_bits_imm_packed,
-  output [11:0] io_deq_bits_uops_1_bits_csr_addr,
-  output [5:0]  io_deq_bits_uops_1_bits_rob_idx,
-  output [4:0]  io_deq_bits_uops_1_bits_ldq_idx,
-  output [4:0]  io_deq_bits_uops_1_bits_stq_idx,
-  output [1:0]  io_deq_bits_uops_1_bits_rxq_idx,
-  output [6:0]  io_deq_bits_uops_1_bits_pdst,
-  output [6:0]  io_deq_bits_uops_1_bits_prs1,
-  output [6:0]  io_deq_bits_uops_1_bits_prs2,
-  output [6:0]  io_deq_bits_uops_1_bits_prs3,
-  output [4:0]  io_deq_bits_uops_1_bits_ppred,
-  output        io_deq_bits_uops_1_bits_prs1_busy,
-  output        io_deq_bits_uops_1_bits_prs2_busy,
-  output        io_deq_bits_uops_1_bits_prs3_busy,
-  output        io_deq_bits_uops_1_bits_ppred_busy,
-  output [6:0]  io_deq_bits_uops_1_bits_stale_pdst,
-  output        io_deq_bits_uops_1_bits_exception,
-  output [63:0] io_deq_bits_uops_1_bits_exc_cause,
-  output        io_deq_bits_uops_1_bits_bypassable,
-  output [4:0]  io_deq_bits_uops_1_bits_mem_cmd,
-  output [1:0]  io_deq_bits_uops_1_bits_mem_size,
-  output        io_deq_bits_uops_1_bits_mem_signed,
-  output        io_deq_bits_uops_1_bits_is_fence,
-  output        io_deq_bits_uops_1_bits_is_fencei,
-  output        io_deq_bits_uops_1_bits_is_amo,
-  output        io_deq_bits_uops_1_bits_uses_ldq,
-  output        io_deq_bits_uops_1_bits_uses_stq,
-  output        io_deq_bits_uops_1_bits_is_sys_pc2epc,
-  output        io_deq_bits_uops_1_bits_is_unique,
-  output        io_deq_bits_uops_1_bits_flush_on_commit,
-  output        io_deq_bits_uops_1_bits_ldst_is_rs1,
-  output [5:0]  io_deq_bits_uops_1_bits_ldst,
-  output [5:0]  io_deq_bits_uops_1_bits_lrs1,
-  output [5:0]  io_deq_bits_uops_1_bits_lrs2,
-  output [5:0]  io_deq_bits_uops_1_bits_lrs3,
-  output        io_deq_bits_uops_1_bits_ldst_val,
-  output [1:0]  io_deq_bits_uops_1_bits_dst_rtype,
-  output [1:0]  io_deq_bits_uops_1_bits_lrs1_rtype,
-  output [1:0]  io_deq_bits_uops_1_bits_lrs2_rtype,
-  output        io_deq_bits_uops_1_bits_frs3_en,
-  output        io_deq_bits_uops_1_bits_fp_val,
-  output        io_deq_bits_uops_1_bits_fp_single,
-  output        io_deq_bits_uops_1_bits_xcpt_pf_if,
-  output        io_deq_bits_uops_1_bits_xcpt_ae_if,
-  output        io_deq_bits_uops_1_bits_xcpt_ma_if,
-  output        io_deq_bits_uops_1_bits_bp_debug_if,
-  output        io_deq_bits_uops_1_bits_bp_xcpt_if,
-  output [1:0]  io_deq_bits_uops_1_bits_debug_fsrc,
-  output [1:0]  io_deq_bits_uops_1_bits_debug_tsrc,
-  input         io_clear
+  input          clock,
+  input          reset,
+  output         io_enq_ready,
+  input          io_enq_valid,
+  input  [39:0]  io_enq_bits_pc,
+  input  [39:0]  io_enq_bits_next_pc,
+  input          io_enq_bits_edge_inst_0,
+  input  [31:0]  io_enq_bits_insts_0,
+  input  [31:0]  io_enq_bits_insts_1,
+  input  [31:0]  io_enq_bits_insts_2,
+  input  [31:0]  io_enq_bits_insts_3,
+  input  [31:0]  io_enq_bits_exp_insts_0,
+  input  [31:0]  io_enq_bits_exp_insts_1,
+  input  [31:0]  io_enq_bits_exp_insts_2,
+  input  [31:0]  io_enq_bits_exp_insts_3,
+  input          io_enq_bits_sfbs_0,
+  input          io_enq_bits_sfbs_1,
+  input          io_enq_bits_sfbs_2,
+  input          io_enq_bits_sfbs_3,
+  input  [7:0]   io_enq_bits_sfb_masks_0,
+  input  [7:0]   io_enq_bits_sfb_masks_1,
+  input  [7:0]   io_enq_bits_sfb_masks_2,
+  input  [7:0]   io_enq_bits_sfb_masks_3,
+  input  [3:0]   io_enq_bits_sfb_dests_0,
+  input  [3:0]   io_enq_bits_sfb_dests_1,
+  input  [3:0]   io_enq_bits_sfb_dests_2,
+  input  [3:0]   io_enq_bits_sfb_dests_3,
+  input          io_enq_bits_shadowable_mask_0,
+  input          io_enq_bits_shadowable_mask_1,
+  input          io_enq_bits_shadowable_mask_2,
+  input          io_enq_bits_shadowable_mask_3,
+  input          io_enq_bits_shadowed_mask_0,
+  input          io_enq_bits_shadowed_mask_1,
+  input          io_enq_bits_shadowed_mask_2,
+  input          io_enq_bits_shadowed_mask_3,
+  input          io_enq_bits_cfi_idx_valid,
+  input  [1:0]   io_enq_bits_cfi_idx_bits,
+  input  [2:0]   io_enq_bits_cfi_type,
+  input          io_enq_bits_cfi_is_call,
+  input          io_enq_bits_cfi_is_ret,
+  input          io_enq_bits_cfi_npc_plus4,
+  input  [39:0]  io_enq_bits_ras_top,
+  input  [4:0]   io_enq_bits_ftq_idx,
+  input  [3:0]   io_enq_bits_mask,
+  input  [3:0]   io_enq_bits_br_mask,
+  input  [63:0]  io_enq_bits_ghist_old_history,
+  input          io_enq_bits_ghist_current_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_not_taken,
+  input          io_enq_bits_ghist_new_saw_branch_taken,
+  input  [4:0]   io_enq_bits_ghist_ras_idx,
+  input          io_enq_bits_lhist_0,
+  input          io_enq_bits_xcpt_pf_if,
+  input          io_enq_bits_xcpt_ae_if,
+  input          io_enq_bits_bp_debug_if_oh_0,
+  input          io_enq_bits_bp_debug_if_oh_1,
+  input          io_enq_bits_bp_debug_if_oh_2,
+  input          io_enq_bits_bp_debug_if_oh_3,
+  input          io_enq_bits_bp_xcpt_if_oh_0,
+  input          io_enq_bits_bp_xcpt_if_oh_1,
+  input          io_enq_bits_bp_xcpt_if_oh_2,
+  input          io_enq_bits_bp_xcpt_if_oh_3,
+  input          io_enq_bits_end_half_valid,
+  input  [15:0]  io_enq_bits_end_half_bits,
+  input  [119:0] io_enq_bits_bpd_meta_0,
+  input  [1:0]   io_enq_bits_fsrc,
+  input  [1:0]   io_enq_bits_tsrc,
+  input          io_deq_ready,
+  output         io_deq_valid,
+  output         io_deq_bits_uops_0_valid,
+  output [6:0]   io_deq_bits_uops_0_bits_uopc,
+  output [31:0]  io_deq_bits_uops_0_bits_inst,
+  output [31:0]  io_deq_bits_uops_0_bits_debug_inst,
+  output         io_deq_bits_uops_0_bits_is_rvc,
+  output [39:0]  io_deq_bits_uops_0_bits_debug_pc,
+  output [2:0]   io_deq_bits_uops_0_bits_iq_type,
+  output [9:0]   io_deq_bits_uops_0_bits_fu_code,
+  output [3:0]   io_deq_bits_uops_0_bits_ctrl_br_type,
+  output [1:0]   io_deq_bits_uops_0_bits_ctrl_op1_sel,
+  output [2:0]   io_deq_bits_uops_0_bits_ctrl_op2_sel,
+  output [2:0]   io_deq_bits_uops_0_bits_ctrl_imm_sel,
+  output [3:0]   io_deq_bits_uops_0_bits_ctrl_op_fcn,
+  output         io_deq_bits_uops_0_bits_ctrl_fcn_dw,
+  output [2:0]   io_deq_bits_uops_0_bits_ctrl_csr_cmd,
+  output         io_deq_bits_uops_0_bits_ctrl_is_load,
+  output         io_deq_bits_uops_0_bits_ctrl_is_sta,
+  output         io_deq_bits_uops_0_bits_ctrl_is_std,
+  output [1:0]   io_deq_bits_uops_0_bits_iw_state,
+  output         io_deq_bits_uops_0_bits_iw_p1_poisoned,
+  output         io_deq_bits_uops_0_bits_iw_p2_poisoned,
+  output         io_deq_bits_uops_0_bits_is_br,
+  output         io_deq_bits_uops_0_bits_is_jalr,
+  output         io_deq_bits_uops_0_bits_is_jal,
+  output         io_deq_bits_uops_0_bits_is_sfb,
+  output [11:0]  io_deq_bits_uops_0_bits_br_mask,
+  output [3:0]   io_deq_bits_uops_0_bits_br_tag,
+  output [4:0]   io_deq_bits_uops_0_bits_ftq_idx,
+  output         io_deq_bits_uops_0_bits_edge_inst,
+  output [5:0]   io_deq_bits_uops_0_bits_pc_lob,
+  output         io_deq_bits_uops_0_bits_taken,
+  output [19:0]  io_deq_bits_uops_0_bits_imm_packed,
+  output [11:0]  io_deq_bits_uops_0_bits_csr_addr,
+  output [5:0]   io_deq_bits_uops_0_bits_rob_idx,
+  output [3:0]   io_deq_bits_uops_0_bits_ldq_idx,
+  output [3:0]   io_deq_bits_uops_0_bits_stq_idx,
+  output [1:0]   io_deq_bits_uops_0_bits_rxq_idx,
+  output [5:0]   io_deq_bits_uops_0_bits_pdst,
+  output [5:0]   io_deq_bits_uops_0_bits_prs1,
+  output [5:0]   io_deq_bits_uops_0_bits_prs2,
+  output [5:0]   io_deq_bits_uops_0_bits_prs3,
+  output [4:0]   io_deq_bits_uops_0_bits_ppred,
+  output         io_deq_bits_uops_0_bits_prs1_busy,
+  output         io_deq_bits_uops_0_bits_prs2_busy,
+  output         io_deq_bits_uops_0_bits_prs3_busy,
+  output         io_deq_bits_uops_0_bits_ppred_busy,
+  output [5:0]   io_deq_bits_uops_0_bits_stale_pdst,
+  output         io_deq_bits_uops_0_bits_exception,
+  output [63:0]  io_deq_bits_uops_0_bits_exc_cause,
+  output         io_deq_bits_uops_0_bits_bypassable,
+  output [4:0]   io_deq_bits_uops_0_bits_mem_cmd,
+  output [1:0]   io_deq_bits_uops_0_bits_mem_size,
+  output         io_deq_bits_uops_0_bits_mem_signed,
+  output         io_deq_bits_uops_0_bits_is_fence,
+  output         io_deq_bits_uops_0_bits_is_fencei,
+  output         io_deq_bits_uops_0_bits_is_amo,
+  output         io_deq_bits_uops_0_bits_uses_ldq,
+  output         io_deq_bits_uops_0_bits_uses_stq,
+  output         io_deq_bits_uops_0_bits_is_sys_pc2epc,
+  output         io_deq_bits_uops_0_bits_is_unique,
+  output         io_deq_bits_uops_0_bits_flush_on_commit,
+  output         io_deq_bits_uops_0_bits_ldst_is_rs1,
+  output [5:0]   io_deq_bits_uops_0_bits_ldst,
+  output [5:0]   io_deq_bits_uops_0_bits_lrs1,
+  output [5:0]   io_deq_bits_uops_0_bits_lrs2,
+  output [5:0]   io_deq_bits_uops_0_bits_lrs3,
+  output         io_deq_bits_uops_0_bits_ldst_val,
+  output [1:0]   io_deq_bits_uops_0_bits_dst_rtype,
+  output [1:0]   io_deq_bits_uops_0_bits_lrs1_rtype,
+  output [1:0]   io_deq_bits_uops_0_bits_lrs2_rtype,
+  output         io_deq_bits_uops_0_bits_frs3_en,
+  output         io_deq_bits_uops_0_bits_fp_val,
+  output         io_deq_bits_uops_0_bits_fp_single,
+  output         io_deq_bits_uops_0_bits_xcpt_pf_if,
+  output         io_deq_bits_uops_0_bits_xcpt_ae_if,
+  output         io_deq_bits_uops_0_bits_xcpt_ma_if,
+  output         io_deq_bits_uops_0_bits_bp_debug_if,
+  output         io_deq_bits_uops_0_bits_bp_xcpt_if,
+  output [1:0]   io_deq_bits_uops_0_bits_debug_fsrc,
+  output [1:0]   io_deq_bits_uops_0_bits_debug_tsrc,
+  output         io_deq_bits_uops_1_valid,
+  output [6:0]   io_deq_bits_uops_1_bits_uopc,
+  output [31:0]  io_deq_bits_uops_1_bits_inst,
+  output [31:0]  io_deq_bits_uops_1_bits_debug_inst,
+  output         io_deq_bits_uops_1_bits_is_rvc,
+  output [39:0]  io_deq_bits_uops_1_bits_debug_pc,
+  output [2:0]   io_deq_bits_uops_1_bits_iq_type,
+  output [9:0]   io_deq_bits_uops_1_bits_fu_code,
+  output [3:0]   io_deq_bits_uops_1_bits_ctrl_br_type,
+  output [1:0]   io_deq_bits_uops_1_bits_ctrl_op1_sel,
+  output [2:0]   io_deq_bits_uops_1_bits_ctrl_op2_sel,
+  output [2:0]   io_deq_bits_uops_1_bits_ctrl_imm_sel,
+  output [3:0]   io_deq_bits_uops_1_bits_ctrl_op_fcn,
+  output         io_deq_bits_uops_1_bits_ctrl_fcn_dw,
+  output [2:0]   io_deq_bits_uops_1_bits_ctrl_csr_cmd,
+  output         io_deq_bits_uops_1_bits_ctrl_is_load,
+  output         io_deq_bits_uops_1_bits_ctrl_is_sta,
+  output         io_deq_bits_uops_1_bits_ctrl_is_std,
+  output [1:0]   io_deq_bits_uops_1_bits_iw_state,
+  output         io_deq_bits_uops_1_bits_iw_p1_poisoned,
+  output         io_deq_bits_uops_1_bits_iw_p2_poisoned,
+  output         io_deq_bits_uops_1_bits_is_br,
+  output         io_deq_bits_uops_1_bits_is_jalr,
+  output         io_deq_bits_uops_1_bits_is_jal,
+  output         io_deq_bits_uops_1_bits_is_sfb,
+  output [11:0]  io_deq_bits_uops_1_bits_br_mask,
+  output [3:0]   io_deq_bits_uops_1_bits_br_tag,
+  output [4:0]   io_deq_bits_uops_1_bits_ftq_idx,
+  output         io_deq_bits_uops_1_bits_edge_inst,
+  output [5:0]   io_deq_bits_uops_1_bits_pc_lob,
+  output         io_deq_bits_uops_1_bits_taken,
+  output [19:0]  io_deq_bits_uops_1_bits_imm_packed,
+  output [11:0]  io_deq_bits_uops_1_bits_csr_addr,
+  output [5:0]   io_deq_bits_uops_1_bits_rob_idx,
+  output [3:0]   io_deq_bits_uops_1_bits_ldq_idx,
+  output [3:0]   io_deq_bits_uops_1_bits_stq_idx,
+  output [1:0]   io_deq_bits_uops_1_bits_rxq_idx,
+  output [5:0]   io_deq_bits_uops_1_bits_pdst,
+  output [5:0]   io_deq_bits_uops_1_bits_prs1,
+  output [5:0]   io_deq_bits_uops_1_bits_prs2,
+  output [5:0]   io_deq_bits_uops_1_bits_prs3,
+  output [4:0]   io_deq_bits_uops_1_bits_ppred,
+  output         io_deq_bits_uops_1_bits_prs1_busy,
+  output         io_deq_bits_uops_1_bits_prs2_busy,
+  output         io_deq_bits_uops_1_bits_prs3_busy,
+  output         io_deq_bits_uops_1_bits_ppred_busy,
+  output [5:0]   io_deq_bits_uops_1_bits_stale_pdst,
+  output         io_deq_bits_uops_1_bits_exception,
+  output [63:0]  io_deq_bits_uops_1_bits_exc_cause,
+  output         io_deq_bits_uops_1_bits_bypassable,
+  output [4:0]   io_deq_bits_uops_1_bits_mem_cmd,
+  output [1:0]   io_deq_bits_uops_1_bits_mem_size,
+  output         io_deq_bits_uops_1_bits_mem_signed,
+  output         io_deq_bits_uops_1_bits_is_fence,
+  output         io_deq_bits_uops_1_bits_is_fencei,
+  output         io_deq_bits_uops_1_bits_is_amo,
+  output         io_deq_bits_uops_1_bits_uses_ldq,
+  output         io_deq_bits_uops_1_bits_uses_stq,
+  output         io_deq_bits_uops_1_bits_is_sys_pc2epc,
+  output         io_deq_bits_uops_1_bits_is_unique,
+  output         io_deq_bits_uops_1_bits_flush_on_commit,
+  output         io_deq_bits_uops_1_bits_ldst_is_rs1,
+  output [5:0]   io_deq_bits_uops_1_bits_ldst,
+  output [5:0]   io_deq_bits_uops_1_bits_lrs1,
+  output [5:0]   io_deq_bits_uops_1_bits_lrs2,
+  output [5:0]   io_deq_bits_uops_1_bits_lrs3,
+  output         io_deq_bits_uops_1_bits_ldst_val,
+  output [1:0]   io_deq_bits_uops_1_bits_dst_rtype,
+  output [1:0]   io_deq_bits_uops_1_bits_lrs1_rtype,
+  output [1:0]   io_deq_bits_uops_1_bits_lrs2_rtype,
+  output         io_deq_bits_uops_1_bits_frs3_en,
+  output         io_deq_bits_uops_1_bits_fp_val,
+  output         io_deq_bits_uops_1_bits_fp_single,
+  output         io_deq_bits_uops_1_bits_xcpt_pf_if,
+  output         io_deq_bits_uops_1_bits_xcpt_ae_if,
+  output         io_deq_bits_uops_1_bits_xcpt_ma_if,
+  output         io_deq_bits_uops_1_bits_bp_debug_if,
+  output         io_deq_bits_uops_1_bits_bp_xcpt_if,
+  output [1:0]   io_deq_bits_uops_1_bits_debug_fsrc,
+  output [1:0]   io_deq_bits_uops_1_bits_debug_tsrc,
+  input          io_clear
 );
 `ifdef RANDOMIZE_REG_INIT
   reg [31:0] _RAND_0;
@@ -805,9 +769,9 @@ module FetchBuffer(
   wire [1:0] slot_will_hit_tail = _T_416 | tail_collisions[15:14]; // @[fetch-buffer.scala 156:112]
   wire  will_hit_tail = |slot_will_hit_tail; // @[fetch-buffer.scala 157:42]
   wire  do_deq = io_deq_ready & ~will_hit_tail; // @[fetch-buffer.scala 159:29]
-  wire [2:0] _T_418 = {{1'd0}, slot_will_hit_tail}; // @[util.scala 455:30]
-  wire [2:0] _T_420 = {slot_will_hit_tail, 1'h0}; // @[util.scala 455:30]
-  wire [1:0] _T_422 = _T_418[1:0] | _T_420[1:0]; // @[util.scala 455:54]
+  wire [2:0] _T_418 = {{1'd0}, slot_will_hit_tail}; // @[util.scala 384:30]
+  wire [2:0] _T_420 = {slot_will_hit_tail, 1'h0}; // @[util.scala 384:30]
+  wire [1:0] _T_422 = _T_418[1:0] | _T_420[1:0]; // @[util.scala 384:54]
   wire [1:0] _T_423 = ~_T_422; // @[fetch-buffer.scala 161:21]
   wire  deq_valids_0 = _T_423[0]; // @[fetch-buffer.scala 161:53]
   wire  deq_valids_1 = _T_423[1]; // @[fetch-buffer.scala 161:53]
@@ -853,162 +817,145 @@ module FetchBuffer(
   wire [4:0] _T_1223 = _T_1222 | _T_1216; // @[Mux.scala 27:72]
   wire [4:0] _T_1224 = _T_1223 | _T_1217; // @[Mux.scala 27:72]
   wire [4:0] _T_1225 = _T_1224 | _T_1218; // @[Mux.scala 27:72]
-  wire [39:0] _T_1557 = head[0] ? fb_uop_ram_0_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1558 = head[1] ? fb_uop_ram_2_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1559 = head[2] ? fb_uop_ram_4_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1560 = head[3] ? fb_uop_ram_6_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1561 = head[4] ? fb_uop_ram_8_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1562 = head[5] ? fb_uop_ram_10_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1563 = head[6] ? fb_uop_ram_12_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1564 = head[7] ? fb_uop_ram_14_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_1565 = _T_1557 | _T_1558; // @[Mux.scala 27:72]
-  wire [39:0] _T_1566 = _T_1565 | _T_1559; // @[Mux.scala 27:72]
-  wire [39:0] _T_1567 = _T_1566 | _T_1560; // @[Mux.scala 27:72]
-  wire [39:0] _T_1568 = _T_1567 | _T_1561; // @[Mux.scala 27:72]
-  wire [39:0] _T_1569 = _T_1568 | _T_1562; // @[Mux.scala 27:72]
-  wire [39:0] _T_1570 = _T_1569 | _T_1563; // @[Mux.scala 27:72]
-  wire [31:0] _T_1587 = head[0] ? fb_uop_ram_0_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1588 = head[1] ? fb_uop_ram_2_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1589 = head[2] ? fb_uop_ram_4_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1590 = head[3] ? fb_uop_ram_6_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1591 = head[4] ? fb_uop_ram_8_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1592 = head[5] ? fb_uop_ram_10_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1593 = head[6] ? fb_uop_ram_12_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1594 = head[7] ? fb_uop_ram_14_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1542 = head[0] ? fb_uop_ram_0_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1543 = head[1] ? fb_uop_ram_2_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1544 = head[2] ? fb_uop_ram_4_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1545 = head[3] ? fb_uop_ram_6_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1546 = head[4] ? fb_uop_ram_8_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1547 = head[5] ? fb_uop_ram_10_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1548 = head[6] ? fb_uop_ram_12_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1549 = head[7] ? fb_uop_ram_14_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_1550 = _T_1542 | _T_1543; // @[Mux.scala 27:72]
+  wire [39:0] _T_1551 = _T_1550 | _T_1544; // @[Mux.scala 27:72]
+  wire [39:0] _T_1552 = _T_1551 | _T_1545; // @[Mux.scala 27:72]
+  wire [39:0] _T_1553 = _T_1552 | _T_1546; // @[Mux.scala 27:72]
+  wire [39:0] _T_1554 = _T_1553 | _T_1547; // @[Mux.scala 27:72]
+  wire [39:0] _T_1555 = _T_1554 | _T_1548; // @[Mux.scala 27:72]
+  wire [31:0] _T_1572 = head[0] ? fb_uop_ram_0_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1573 = head[1] ? fb_uop_ram_2_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1574 = head[2] ? fb_uop_ram_4_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1575 = head[3] ? fb_uop_ram_6_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1576 = head[4] ? fb_uop_ram_8_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1577 = head[5] ? fb_uop_ram_10_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1578 = head[6] ? fb_uop_ram_12_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1579 = head[7] ? fb_uop_ram_14_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1580 = _T_1572 | _T_1573; // @[Mux.scala 27:72]
+  wire [31:0] _T_1581 = _T_1580 | _T_1574; // @[Mux.scala 27:72]
+  wire [31:0] _T_1582 = _T_1581 | _T_1575; // @[Mux.scala 27:72]
+  wire [31:0] _T_1583 = _T_1582 | _T_1576; // @[Mux.scala 27:72]
+  wire [31:0] _T_1584 = _T_1583 | _T_1577; // @[Mux.scala 27:72]
+  wire [31:0] _T_1585 = _T_1584 | _T_1578; // @[Mux.scala 27:72]
+  wire [31:0] _T_1587 = head[0] ? fb_uop_ram_0_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1588 = head[1] ? fb_uop_ram_2_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1589 = head[2] ? fb_uop_ram_4_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1590 = head[3] ? fb_uop_ram_6_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1591 = head[4] ? fb_uop_ram_8_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1592 = head[5] ? fb_uop_ram_10_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1593 = head[6] ? fb_uop_ram_12_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_1594 = head[7] ? fb_uop_ram_14_inst : 32'h0; // @[Mux.scala 27:72]
   wire [31:0] _T_1595 = _T_1587 | _T_1588; // @[Mux.scala 27:72]
   wire [31:0] _T_1596 = _T_1595 | _T_1589; // @[Mux.scala 27:72]
   wire [31:0] _T_1597 = _T_1596 | _T_1590; // @[Mux.scala 27:72]
   wire [31:0] _T_1598 = _T_1597 | _T_1591; // @[Mux.scala 27:72]
   wire [31:0] _T_1599 = _T_1598 | _T_1592; // @[Mux.scala 27:72]
   wire [31:0] _T_1600 = _T_1599 | _T_1593; // @[Mux.scala 27:72]
-  wire [31:0] _T_1602 = head[0] ? fb_uop_ram_0_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1603 = head[1] ? fb_uop_ram_2_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1604 = head[2] ? fb_uop_ram_4_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1605 = head[3] ? fb_uop_ram_6_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1606 = head[4] ? fb_uop_ram_8_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1607 = head[5] ? fb_uop_ram_10_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1608 = head[6] ? fb_uop_ram_12_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1609 = head[7] ? fb_uop_ram_14_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_1610 = _T_1602 | _T_1603; // @[Mux.scala 27:72]
-  wire [31:0] _T_1611 = _T_1610 | _T_1604; // @[Mux.scala 27:72]
-  wire [31:0] _T_1612 = _T_1611 | _T_1605; // @[Mux.scala 27:72]
-  wire [31:0] _T_1613 = _T_1612 | _T_1606; // @[Mux.scala 27:72]
-  wire [31:0] _T_1614 = _T_1613 | _T_1607; // @[Mux.scala 27:72]
-  wire [31:0] _T_1615 = _T_1614 | _T_1608; // @[Mux.scala 27:72]
-  wire [1:0] _T_1902 = head[0] ? fb_uop_ram_1_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1903 = head[1] ? fb_uop_ram_3_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1904 = head[2] ? fb_uop_ram_5_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1905 = head[3] ? fb_uop_ram_7_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1906 = head[4] ? fb_uop_ram_9_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1907 = head[5] ? fb_uop_ram_11_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1908 = head[6] ? fb_uop_ram_13_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1909 = head[7] ? fb_uop_ram_15_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
-  wire [1:0] _T_1910 = _T_1902 | _T_1903; // @[Mux.scala 27:72]
-  wire [1:0] _T_1911 = _T_1910 | _T_1904; // @[Mux.scala 27:72]
-  wire [1:0] _T_1912 = _T_1911 | _T_1905; // @[Mux.scala 27:72]
-  wire [1:0] _T_1913 = _T_1912 | _T_1906; // @[Mux.scala 27:72]
-  wire [1:0] _T_1914 = _T_1913 | _T_1907; // @[Mux.scala 27:72]
-  wire [1:0] _T_1915 = _T_1914 | _T_1908; // @[Mux.scala 27:72]
-  wire [5:0] _T_2637 = head[0] ? fb_uop_ram_1_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2638 = head[1] ? fb_uop_ram_3_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2639 = head[2] ? fb_uop_ram_5_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2640 = head[3] ? fb_uop_ram_7_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2641 = head[4] ? fb_uop_ram_9_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2642 = head[5] ? fb_uop_ram_11_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2643 = head[6] ? fb_uop_ram_13_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2644 = head[7] ? fb_uop_ram_15_pc_lob : 6'h0; // @[Mux.scala 27:72]
-  wire [5:0] _T_2645 = _T_2637 | _T_2638; // @[Mux.scala 27:72]
-  wire [5:0] _T_2646 = _T_2645 | _T_2639; // @[Mux.scala 27:72]
-  wire [5:0] _T_2647 = _T_2646 | _T_2640; // @[Mux.scala 27:72]
-  wire [5:0] _T_2648 = _T_2647 | _T_2641; // @[Mux.scala 27:72]
-  wire [5:0] _T_2649 = _T_2648 | _T_2642; // @[Mux.scala 27:72]
-  wire [5:0] _T_2650 = _T_2649 | _T_2643; // @[Mux.scala 27:72]
-  wire [4:0] _T_2667 = head[0] ? fb_uop_ram_1_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2668 = head[1] ? fb_uop_ram_3_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2669 = head[2] ? fb_uop_ram_5_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2670 = head[3] ? fb_uop_ram_7_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2671 = head[4] ? fb_uop_ram_9_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2672 = head[5] ? fb_uop_ram_11_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2673 = head[6] ? fb_uop_ram_13_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2674 = head[7] ? fb_uop_ram_15_ftq_idx : 5'h0; // @[Mux.scala 27:72]
-  wire [4:0] _T_2675 = _T_2667 | _T_2668; // @[Mux.scala 27:72]
-  wire [4:0] _T_2676 = _T_2675 | _T_2669; // @[Mux.scala 27:72]
-  wire [4:0] _T_2677 = _T_2676 | _T_2670; // @[Mux.scala 27:72]
-  wire [4:0] _T_2678 = _T_2677 | _T_2671; // @[Mux.scala 27:72]
-  wire [4:0] _T_2679 = _T_2678 | _T_2672; // @[Mux.scala 27:72]
-  wire [4:0] _T_2680 = _T_2679 | _T_2673; // @[Mux.scala 27:72]
-  wire [39:0] _T_3012 = head[0] ? fb_uop_ram_1_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3013 = head[1] ? fb_uop_ram_3_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3014 = head[2] ? fb_uop_ram_5_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3015 = head[3] ? fb_uop_ram_7_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3016 = head[4] ? fb_uop_ram_9_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3017 = head[5] ? fb_uop_ram_11_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3018 = head[6] ? fb_uop_ram_13_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3019 = head[7] ? fb_uop_ram_15_debug_pc : 40'h0; // @[Mux.scala 27:72]
-  wire [39:0] _T_3020 = _T_3012 | _T_3013; // @[Mux.scala 27:72]
-  wire [39:0] _T_3021 = _T_3020 | _T_3014; // @[Mux.scala 27:72]
-  wire [39:0] _T_3022 = _T_3021 | _T_3015; // @[Mux.scala 27:72]
-  wire [39:0] _T_3023 = _T_3022 | _T_3016; // @[Mux.scala 27:72]
-  wire [39:0] _T_3024 = _T_3023 | _T_3017; // @[Mux.scala 27:72]
-  wire [39:0] _T_3025 = _T_3024 | _T_3018; // @[Mux.scala 27:72]
-  wire [31:0] _T_3042 = head[0] ? fb_uop_ram_1_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3043 = head[1] ? fb_uop_ram_3_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3044 = head[2] ? fb_uop_ram_5_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3045 = head[3] ? fb_uop_ram_7_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3046 = head[4] ? fb_uop_ram_9_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3047 = head[5] ? fb_uop_ram_11_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3048 = head[6] ? fb_uop_ram_13_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3049 = head[7] ? fb_uop_ram_15_debug_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3050 = _T_3042 | _T_3043; // @[Mux.scala 27:72]
-  wire [31:0] _T_3051 = _T_3050 | _T_3044; // @[Mux.scala 27:72]
-  wire [31:0] _T_3052 = _T_3051 | _T_3045; // @[Mux.scala 27:72]
-  wire [31:0] _T_3053 = _T_3052 | _T_3046; // @[Mux.scala 27:72]
-  wire [31:0] _T_3054 = _T_3053 | _T_3047; // @[Mux.scala 27:72]
-  wire [31:0] _T_3055 = _T_3054 | _T_3048; // @[Mux.scala 27:72]
-  wire [31:0] _T_3057 = head[0] ? fb_uop_ram_1_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3058 = head[1] ? fb_uop_ram_3_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3059 = head[2] ? fb_uop_ram_5_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3060 = head[3] ? fb_uop_ram_7_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3061 = head[4] ? fb_uop_ram_9_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3062 = head[5] ? fb_uop_ram_11_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3063 = head[6] ? fb_uop_ram_13_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3064 = head[7] ? fb_uop_ram_15_inst : 32'h0; // @[Mux.scala 27:72]
-  wire [31:0] _T_3065 = _T_3057 | _T_3058; // @[Mux.scala 27:72]
-  wire [31:0] _T_3066 = _T_3065 | _T_3059; // @[Mux.scala 27:72]
-  wire [31:0] _T_3067 = _T_3066 | _T_3060; // @[Mux.scala 27:72]
-  wire [31:0] _T_3068 = _T_3067 | _T_3061; // @[Mux.scala 27:72]
-  wire [31:0] _T_3069 = _T_3068 | _T_3062; // @[Mux.scala 27:72]
-  wire [31:0] _T_3070 = _T_3069 | _T_3063; // @[Mux.scala 27:72]
-  wire  _GEN_6211 = in_mask_0 | in_mask_1 | in_mask_2 | in_mask_3 | maybe_full; // @[fetch-buffer.scala 178:33 fetch-buffer.scala 179:18 fetch-buffer.scala 64:27]
+  wire [1:0] _T_1632 = head[0] ? fb_uop_ram_1_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1633 = head[1] ? fb_uop_ram_3_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1634 = head[2] ? fb_uop_ram_5_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1635 = head[3] ? fb_uop_ram_7_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1636 = head[4] ? fb_uop_ram_9_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1637 = head[5] ? fb_uop_ram_11_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1638 = head[6] ? fb_uop_ram_13_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1639 = head[7] ? fb_uop_ram_15_debug_fsrc : 2'h0; // @[Mux.scala 27:72]
+  wire [1:0] _T_1640 = _T_1632 | _T_1633; // @[Mux.scala 27:72]
+  wire [1:0] _T_1641 = _T_1640 | _T_1634; // @[Mux.scala 27:72]
+  wire [1:0] _T_1642 = _T_1641 | _T_1635; // @[Mux.scala 27:72]
+  wire [1:0] _T_1643 = _T_1642 | _T_1636; // @[Mux.scala 27:72]
+  wire [1:0] _T_1644 = _T_1643 | _T_1637; // @[Mux.scala 27:72]
+  wire [1:0] _T_1645 = _T_1644 | _T_1638; // @[Mux.scala 27:72]
+  wire [5:0] _T_2367 = head[0] ? fb_uop_ram_1_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2368 = head[1] ? fb_uop_ram_3_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2369 = head[2] ? fb_uop_ram_5_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2370 = head[3] ? fb_uop_ram_7_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2371 = head[4] ? fb_uop_ram_9_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2372 = head[5] ? fb_uop_ram_11_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2373 = head[6] ? fb_uop_ram_13_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2374 = head[7] ? fb_uop_ram_15_pc_lob : 6'h0; // @[Mux.scala 27:72]
+  wire [5:0] _T_2375 = _T_2367 | _T_2368; // @[Mux.scala 27:72]
+  wire [5:0] _T_2376 = _T_2375 | _T_2369; // @[Mux.scala 27:72]
+  wire [5:0] _T_2377 = _T_2376 | _T_2370; // @[Mux.scala 27:72]
+  wire [5:0] _T_2378 = _T_2377 | _T_2371; // @[Mux.scala 27:72]
+  wire [5:0] _T_2379 = _T_2378 | _T_2372; // @[Mux.scala 27:72]
+  wire [5:0] _T_2380 = _T_2379 | _T_2373; // @[Mux.scala 27:72]
+  wire [4:0] _T_2397 = head[0] ? fb_uop_ram_1_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2398 = head[1] ? fb_uop_ram_3_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2399 = head[2] ? fb_uop_ram_5_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2400 = head[3] ? fb_uop_ram_7_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2401 = head[4] ? fb_uop_ram_9_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2402 = head[5] ? fb_uop_ram_11_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2403 = head[6] ? fb_uop_ram_13_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2404 = head[7] ? fb_uop_ram_15_ftq_idx : 5'h0; // @[Mux.scala 27:72]
+  wire [4:0] _T_2405 = _T_2397 | _T_2398; // @[Mux.scala 27:72]
+  wire [4:0] _T_2406 = _T_2405 | _T_2399; // @[Mux.scala 27:72]
+  wire [4:0] _T_2407 = _T_2406 | _T_2400; // @[Mux.scala 27:72]
+  wire [4:0] _T_2408 = _T_2407 | _T_2401; // @[Mux.scala 27:72]
+  wire [4:0] _T_2409 = _T_2408 | _T_2402; // @[Mux.scala 27:72]
+  wire [4:0] _T_2410 = _T_2409 | _T_2403; // @[Mux.scala 27:72]
+  wire [39:0] _T_2727 = head[0] ? fb_uop_ram_1_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2728 = head[1] ? fb_uop_ram_3_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2729 = head[2] ? fb_uop_ram_5_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2730 = head[3] ? fb_uop_ram_7_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2731 = head[4] ? fb_uop_ram_9_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2732 = head[5] ? fb_uop_ram_11_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2733 = head[6] ? fb_uop_ram_13_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2734 = head[7] ? fb_uop_ram_15_debug_pc : 40'h0; // @[Mux.scala 27:72]
+  wire [39:0] _T_2735 = _T_2727 | _T_2728; // @[Mux.scala 27:72]
+  wire [39:0] _T_2736 = _T_2735 | _T_2729; // @[Mux.scala 27:72]
+  wire [39:0] _T_2737 = _T_2736 | _T_2730; // @[Mux.scala 27:72]
+  wire [39:0] _T_2738 = _T_2737 | _T_2731; // @[Mux.scala 27:72]
+  wire [39:0] _T_2739 = _T_2738 | _T_2732; // @[Mux.scala 27:72]
+  wire [39:0] _T_2740 = _T_2739 | _T_2733; // @[Mux.scala 27:72]
+  wire [31:0] _T_2757 = head[0] ? fb_uop_ram_1_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2758 = head[1] ? fb_uop_ram_3_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2759 = head[2] ? fb_uop_ram_5_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2760 = head[3] ? fb_uop_ram_7_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2761 = head[4] ? fb_uop_ram_9_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2762 = head[5] ? fb_uop_ram_11_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2763 = head[6] ? fb_uop_ram_13_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2764 = head[7] ? fb_uop_ram_15_debug_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2765 = _T_2757 | _T_2758; // @[Mux.scala 27:72]
+  wire [31:0] _T_2766 = _T_2765 | _T_2759; // @[Mux.scala 27:72]
+  wire [31:0] _T_2767 = _T_2766 | _T_2760; // @[Mux.scala 27:72]
+  wire [31:0] _T_2768 = _T_2767 | _T_2761; // @[Mux.scala 27:72]
+  wire [31:0] _T_2769 = _T_2768 | _T_2762; // @[Mux.scala 27:72]
+  wire [31:0] _T_2770 = _T_2769 | _T_2763; // @[Mux.scala 27:72]
+  wire [31:0] _T_2772 = head[0] ? fb_uop_ram_1_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2773 = head[1] ? fb_uop_ram_3_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2774 = head[2] ? fb_uop_ram_5_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2775 = head[3] ? fb_uop_ram_7_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2776 = head[4] ? fb_uop_ram_9_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2777 = head[5] ? fb_uop_ram_11_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2778 = head[6] ? fb_uop_ram_13_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2779 = head[7] ? fb_uop_ram_15_inst : 32'h0; // @[Mux.scala 27:72]
+  wire [31:0] _T_2780 = _T_2772 | _T_2773; // @[Mux.scala 27:72]
+  wire [31:0] _T_2781 = _T_2780 | _T_2774; // @[Mux.scala 27:72]
+  wire [31:0] _T_2782 = _T_2781 | _T_2775; // @[Mux.scala 27:72]
+  wire [31:0] _T_2783 = _T_2782 | _T_2776; // @[Mux.scala 27:72]
+  wire [31:0] _T_2784 = _T_2783 | _T_2777; // @[Mux.scala 27:72]
+  wire [31:0] _T_2785 = _T_2784 | _T_2778; // @[Mux.scala 27:72]
+  wire  _GEN_5059 = in_mask_0 | in_mask_1 | in_mask_2 | in_mask_3 | maybe_full; // @[fetch-buffer.scala 178:33 fetch-buffer.scala 179:18 fetch-buffer.scala 64:27]
   wire [6:0] hi_12 = head[6:0]; // @[fetch-buffer.scala 132:12]
-  wire [7:0] _T_3346 = {hi_12,head[7]}; // @[Cat.scala 30:58]
+  wire [7:0] _T_2806 = {hi_12,head[7]}; // @[Cat.scala 30:58]
   assign io_enq_ready = ~(at_head & maybe_full | might_hit_head); // @[fetch-buffer.scala 82:16]
   assign io_deq_valid = deq_valids_0 | deq_valids_1; // @[fetch-buffer.scala 170:38]
   assign io_deq_bits_uops_0_valid = reset ? 1'h0 : deq_valids_0; // @[fetch-buffer.scala 195:23 fetch-buffer.scala 196:41 fetch-buffer.scala 168:72]
-  assign io_deq_bits_uops_0_bits_switch = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_switch_off = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_is_unicore = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_shift = 3'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_lrs3_rtype = 2'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_rflag = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_wflag = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_prflag = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_pwflag = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_pflag_busy = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_stale_pflag = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_op1_sel = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_op2_sel = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_split_num = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_self_index = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_rob_inst_idx = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_address_num = 6'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_uopc = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_inst = _T_1615 | _T_1609; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_debug_inst = _T_1600 | _T_1594; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_inst = _T_1600 | _T_1594; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_debug_inst = _T_1585 | _T_1579; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_is_rvc = head[0] & fb_uop_ram_0_is_rvc | head[1] & fb_uop_ram_2_is_rvc | head[2] &
     fb_uop_ram_4_is_rvc | head[3] & fb_uop_ram_6_is_rvc | head[4] & fb_uop_ram_8_is_rvc | head[5] & fb_uop_ram_10_is_rvc
      | head[6] & fb_uop_ram_12_is_rvc | head[7] & fb_uop_ram_14_is_rvc; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_debug_pc = _T_1570 | _T_1564; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_debug_pc = _T_1555 | _T_1549; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_iq_type = 3'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_fu_code = 10'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_ctrl_br_type = 4'h0; // @[Mux.scala 27:72]
@@ -1021,7 +968,6 @@ module FetchBuffer(
   assign io_deq_bits_uops_0_bits_ctrl_is_load = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_ctrl_is_sta = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_ctrl_is_std = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_ctrl_op3_sel = 2'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_iw_state = 2'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_iw_p1_poisoned = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_iw_p2_poisoned = 1'h0; // @[Mux.scala 27:72]
@@ -1044,19 +990,19 @@ module FetchBuffer(
   assign io_deq_bits_uops_0_bits_imm_packed = 20'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_csr_addr = 12'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_rob_idx = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_ldq_idx = 5'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_stq_idx = 5'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_ldq_idx = 4'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_stq_idx = 4'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_rxq_idx = 2'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_pdst = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_prs1 = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_prs2 = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_prs3 = 7'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_pdst = 6'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_prs1 = 6'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_prs2 = 6'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_prs3 = 6'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_ppred = 5'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_prs1_busy = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_prs2_busy = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_prs3_busy = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_ppred_busy = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_0_bits_stale_pdst = 7'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_0_bits_stale_pdst = 6'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_exception = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_exc_cause = 64'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_bypassable = 1'h0; // @[Mux.scala 27:72]
@@ -1099,30 +1045,13 @@ module FetchBuffer(
   assign io_deq_bits_uops_0_bits_debug_fsrc = _T_460 | _T_454; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_0_bits_debug_tsrc = 2'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_valid = reset ? 1'h0 : deq_valids_1; // @[fetch-buffer.scala 195:23 fetch-buffer.scala 196:41 fetch-buffer.scala 168:72]
-  assign io_deq_bits_uops_1_bits_switch = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_switch_off = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_is_unicore = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_shift = 3'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_lrs3_rtype = 2'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_rflag = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_wflag = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_prflag = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_pwflag = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_pflag_busy = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_stale_pflag = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_op1_sel = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_op2_sel = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_split_num = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_self_index = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_rob_inst_idx = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_address_num = 6'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_uopc = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_inst = _T_3070 | _T_3064; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_debug_inst = _T_3055 | _T_3049; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_inst = _T_2785 | _T_2779; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_debug_inst = _T_2770 | _T_2764; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_is_rvc = head[0] & fb_uop_ram_1_is_rvc | head[1] & fb_uop_ram_3_is_rvc | head[2] &
     fb_uop_ram_5_is_rvc | head[3] & fb_uop_ram_7_is_rvc | head[4] & fb_uop_ram_9_is_rvc | head[5] & fb_uop_ram_11_is_rvc
      | head[6] & fb_uop_ram_13_is_rvc | head[7] & fb_uop_ram_15_is_rvc; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_debug_pc = _T_3025 | _T_3019; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_debug_pc = _T_2740 | _T_2734; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_iq_type = 3'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_fu_code = 10'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_ctrl_br_type = 4'h0; // @[Mux.scala 27:72]
@@ -1135,7 +1064,6 @@ module FetchBuffer(
   assign io_deq_bits_uops_1_bits_ctrl_is_load = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_ctrl_is_sta = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_ctrl_is_std = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_ctrl_op3_sel = 2'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_iw_state = 2'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_iw_p1_poisoned = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_iw_p2_poisoned = 1'h0; // @[Mux.scala 27:72]
@@ -1147,30 +1075,30 @@ module FetchBuffer(
      | head[6] & fb_uop_ram_13_is_sfb | head[7] & fb_uop_ram_15_is_sfb; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_br_mask = 12'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_br_tag = 4'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_ftq_idx = _T_2680 | _T_2674; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_ftq_idx = _T_2410 | _T_2404; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_edge_inst = head[0] & fb_uop_ram_1_edge_inst | head[1] & fb_uop_ram_3_edge_inst | head[
     2] & fb_uop_ram_5_edge_inst | head[3] & fb_uop_ram_7_edge_inst | head[4] & fb_uop_ram_9_edge_inst | head[5] &
     fb_uop_ram_11_edge_inst | head[6] & fb_uop_ram_13_edge_inst | head[7] & fb_uop_ram_15_edge_inst; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_pc_lob = _T_2650 | _T_2644; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_pc_lob = _T_2380 | _T_2374; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_taken = head[0] & fb_uop_ram_1_taken | head[1] & fb_uop_ram_3_taken | head[2] &
     fb_uop_ram_5_taken | head[3] & fb_uop_ram_7_taken | head[4] & fb_uop_ram_9_taken | head[5] & fb_uop_ram_11_taken |
     head[6] & fb_uop_ram_13_taken | head[7] & fb_uop_ram_15_taken; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_imm_packed = 20'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_csr_addr = 12'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_rob_idx = 6'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_ldq_idx = 5'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_stq_idx = 5'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_ldq_idx = 4'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_stq_idx = 4'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_rxq_idx = 2'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_pdst = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_prs1 = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_prs2 = 7'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_prs3 = 7'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_pdst = 6'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_prs1 = 6'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_prs2 = 6'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_prs3 = 6'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_ppred = 5'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_prs1_busy = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_prs2_busy = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_prs3_busy = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_ppred_busy = 1'h0; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_stale_pdst = 7'h0; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_stale_pdst = 6'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_exception = 1'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_exc_cause = 64'h0; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_bypassable = 1'h0; // @[Mux.scala 27:72]
@@ -1210,7 +1138,7 @@ module FetchBuffer(
   assign io_deq_bits_uops_1_bits_bp_xcpt_if = head[0] & fb_uop_ram_1_bp_xcpt_if | head[1] & fb_uop_ram_3_bp_xcpt_if |
     head[2] & fb_uop_ram_5_bp_xcpt_if | head[3] & fb_uop_ram_7_bp_xcpt_if | head[4] & fb_uop_ram_9_bp_xcpt_if | head[5]
      & fb_uop_ram_11_bp_xcpt_if | head[6] & fb_uop_ram_13_bp_xcpt_if | head[7] & fb_uop_ram_15_bp_xcpt_if; // @[Mux.scala 27:72]
-  assign io_deq_bits_uops_1_bits_debug_fsrc = _T_1915 | _T_1909; // @[Mux.scala 27:72]
+  assign io_deq_bits_uops_1_bits_debug_fsrc = _T_1645 | _T_1639; // @[Mux.scala 27:72]
   assign io_deq_bits_uops_1_bits_debug_tsrc = 2'h0; // @[Mux.scala 27:72]
   always @(posedge clock) begin
     if (do_enq & in_mask_3 & enq_idxs_3[0]) begin // @[fetch-buffer.scala 144:53]
@@ -3234,7 +3162,7 @@ module FetchBuffer(
     end else if (io_clear) begin // @[fetch-buffer.scala 188:19]
       head <= 8'h1; // @[fetch-buffer.scala 189:10]
     end else if (do_deq) begin // @[fetch-buffer.scala 183:17]
-      head <= _T_3346; // @[fetch-buffer.scala 184:10]
+      head <= _T_2806; // @[fetch-buffer.scala 184:10]
     end
     if (reset) begin // @[fetch-buffer.scala 62:21]
       tail <= 16'h1; // @[fetch-buffer.scala 62:21]
@@ -3254,7 +3182,7 @@ module FetchBuffer(
     end else if (do_deq) begin // @[fetch-buffer.scala 183:17]
       maybe_full <= 1'h0; // @[fetch-buffer.scala 185:16]
     end else if (do_enq) begin // @[fetch-buffer.scala 176:17]
-      maybe_full <= _GEN_6211;
+      maybe_full <= _GEN_5059;
     end
   end
 // Register and memory initialization

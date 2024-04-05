@@ -1,4 +1,4 @@
-[debug] Copy resource mappings: 
-[debug] 	(/root/bossa/generators/chipyard/src/main/resources/vsrc/ClockDividerN.sv,/root/bossa/generators/chipyard/target/scala-2.12/classes/vsrc/ClockDividerN.sv)
-[debug] 	(/root/bossa/generators/chipyard/src/main/resources/vsrc/GCDMMIOBlackBox.v,/root/bossa/generators/chipyard/target/scala-2.12/classes/vsrc/GCDMMIOBlackBox.v)
-[debug] 	(/root/bossa/generators/chipyard/src/main/resources/csrc/emulator.cc,/root/bossa/generators/chipyard/target/scala-2.12/classes/csrc/emulator.cc)
+[0m[[0m[0mdebug[0m] [0m[0mCopy resource mappings: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/bossa/generators/chipyard/src/main/resources/vsrc/ClockDividerN.sv,/root/bossa/generators/chipyard/target/scala-2.12/classes/vsrc/ClockDividerN.sv)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/bossa/generators/chipyard/src/main/resources/vsrc/GCDMMIOBlackBox.v,/root/bossa/generators/chipyard/target/scala-2.12/classes/vsrc/GCDMMIOBlackBox.v)[0m
+[0m[[0m[0mdebug[0m] [0m[0m	(/root/bossa/generators/chipyard/src/main/resources/csrc/emulator.cc,/root/bossa/generators/chipyard/target/scala-2.12/classes/csrc/emulator.cc)[0m

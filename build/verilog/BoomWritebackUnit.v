@@ -7,19 +7,19 @@ module BoomWritebackUnit(
   input  [5:0]  io_req_bits_idx,
   input  [1:0]  io_req_bits_source,
   input  [2:0]  io_req_bits_param,
-  input         io_req_bits_way_en,
+  input  [3:0]  io_req_bits_way_en,
   input         io_req_bits_voluntary,
   input         io_meta_read_ready,
   output        io_meta_read_valid,
   output [5:0]  io_meta_read_bits_idx,
-  output        io_meta_read_bits_way_en,
+  output [3:0]  io_meta_read_bits_way_en,
   output [19:0] io_meta_read_bits_tag,
   output        io_resp,
   output        io_idx_valid,
   output [5:0]  io_idx_bits,
   input         io_data_req_ready,
   output        io_data_req_valid,
-  output        io_data_req_bits_way_en,
+  output [3:0]  io_data_req_bits_way_en,
   output [11:0] io_data_req_bits_addr,
   input  [63:0] io_data_resp,
   input         io_mem_grant,
@@ -67,7 +67,7 @@ module BoomWritebackUnit(
   reg [19:0] req_tag; // @[dcache.scala 37:16]
   reg [5:0] req_idx; // @[dcache.scala 37:16]
   reg [2:0] req_param; // @[dcache.scala 37:16]
-  reg  req_way_en; // @[dcache.scala 37:16]
+  reg [3:0] req_way_en; // @[dcache.scala 37:16]
   reg  req_voluntary; // @[dcache.scala 37:16]
   reg [2:0] state; // @[dcache.scala 39:22]
   reg  r1_data_req_fired; // @[dcache.scala 40:34]
@@ -127,7 +127,7 @@ module BoomWritebackUnit(
   assign io_req_ready = state == 3'h0; // @[dcache.scala 80:15]
   assign io_meta_read_valid = state == 3'h0 ? 1'h0 : _GEN_88; // @[dcache.scala 80:30 dcache.scala 54:22]
   assign io_meta_read_bits_idx = req_idx; // @[dcache.scala 88:41 dcache.scala 90:27]
-  assign io_meta_read_bits_way_en = 1'h0;
+  assign io_meta_read_bits_way_en = 4'h0;
   assign io_meta_read_bits_tag = req_tag; // @[dcache.scala 88:41 dcache.scala 91:27]
   assign io_resp = state == 3'h0 ? 1'h0 : _GEN_107; // @[dcache.scala 80:30 dcache.scala 58:22]
   assign io_idx_valid = state != 3'h0; // @[dcache.scala 49:31]
@@ -362,7 +362,7 @@ initial begin
   _RAND_2 = {1{`RANDOM}};
   req_param = _RAND_2[2:0];
   _RAND_3 = {1{`RANDOM}};
-  req_way_en = _RAND_3[0:0];
+  req_way_en = _RAND_3[3:0];
   _RAND_4 = {1{`RANDOM}};
   req_voluntary = _RAND_4[0:0];
   _RAND_5 = {1{`RANDOM}};

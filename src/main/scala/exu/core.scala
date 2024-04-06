@@ -563,11 +563,42 @@ class BoomCore(usingTrace: Boolean)(implicit p: Parameters) extends BoomModule
     event_counters.io.event_signals(w) := 0.U
   }
 
+    // count the short-lived operand 
+  // val cnt_op   = RegInit(0.U(64.W))
+  // cnt_op := cnt_op + rename_stage.io.cnt_op
+
+  // val cnt_slo = RegInit(0.U(64.W)) 
+  // cnt_slo := cnt_slo + rename_stage.io.cnt_slo
+   
+  // counting the cycle number for debug purposes
+  val debug_cycle = RegInit(0.U(64.W)) 
+  debug_cycle := debug_cycle + 1.U
+
+  val dyn_insts = RegInit(0.U(64.W)) 
+  dyn_insts := dyn_insts + rob.io.commit.arch_valids.asUInt
+
+
+  // data commit
+  val cnt_data_com = RegInit(0.U(64.W)) 
+  cnt_data_com := cnt_data_com + PopCount((rob.io.commit.valids zip rob.io.commit.uops).map{case (v, u) => v && (u.dst_rtype === RT_FIX || u.dst_rtype === RT_FLT) && u.ldst_val})
+
+  // all rs
+  val cnt_all_rs = RegInit(0.U(64.W))
+  cnt_all_rs := cnt_all_rs + PopCount((iss_valids zip iss_uops).map{case (v, u) => v && u.lrs1_rtype === RT_FIX}) + 
+    PopCount((iss_valids zip iss_uops).map{case (v, u) => v && u.lrs2_rtype === RT_FIX}) 
+
+  XSDebug(debug_cycle % 1000.U === 0.U, p"curr_cycle: ${debug_cycle}, curr_instrs: ${dyn_insts}, cnt_data_com: ${cnt_data_com}, cnt_all_rs: ${cnt_all_rs}\n")
+
+  when(debug_cycle >= 90000.U) {
+    XSDebug(debug_cycle % 1000.U === 0.U, p"curr_cycle: ${debug_cycle}, curr_instrs: ${dyn_insts}, cnt_data_com: ${cnt_data_com}, cnt_all_rs: ${cnt_all_rs}\n")
+  }
   when (startCounter) {
     event_counters.io.event_signals(0) :=   1.U  //cycles
     event_counters.io.event_signals(1) :=  RegNext(PopCount(rob.io.commit.arch_valids.asUInt)) // commit inst
-    event_counters.io.event_signals(2) :=  Mux(io.ifu.icache_valid_access, 1.U, 0.U) //i-cache valid access number
-    event_counters.io.event_signals(3) :=  Mux(io.ifu.icache_hit, 1.U, 0.U)  //icache hit number
+    event_counters.io.event_signals(2) :=  PopCount((rob.io.commit.valids zip rob.io.commit.uops).map{case (v, u) => v && (u.dst_rtype === RT_FIX || u.dst_rtype === RT_FLT) && u.ldst_val})
+    event_counters.io.event_signals(3) :=  PopCount((iss_valids zip iss_uops).map{case (v, u) => v && u.lrs1_rtype === RT_FIX}) + 
+    PopCount((iss_valids zip iss_uops).map{case (v, u) => v && u.lrs2_rtype === RT_FIX}) 
+
     event_counters.io.event_signals(4) :=  Mux(io.ifu.perf.acquire, 1.U, 0.U) //i-cache send req to next level cache
     event_counters.io.event_signals(5) :=  Mux(io.ifu.itlb_valid_access, 1.U, 0.U) //itlb valid access number
     event_counters.io.event_signals(6) :=  Mux(io.ifu.itlb_hit, 1.U, 0.U) //itlb hit number

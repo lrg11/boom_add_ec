@@ -147,14 +147,15 @@ class WithNMediumBooms(n: Int = 1, overrideIdOffset: Option[Int] = None) extends
                 IssueParams(issueWidth=2, numEntries=18, iqType=IQT_INT.litValue, dispatchWidth=2),
                 IssueParams(issueWidth=1, numEntries=16, iqType=IQT_FP.litValue , dispatchWidth=2)),
               numIntPhysRegisters = 64, //80
-              numFpPhysRegisters = 64,
+              // numFpPhysRegisters = 64,
               numLdqEntries = 16,
               numStqEntries = 16,
               maxBrCount = 12,
               numFetchBufferEntries = 16,
               ftq = FtqParameters(nEntries=32),
-              nPerfCounters = 4,
-              fpu = Some(freechips.rocketchip.tile.FPUParams(sfmaLatency=4, dfmaLatency=4, divSqrt=true))
+              nPerfCounters = 4
+              // ,
+              // fpu = Some(freechips.rocketchip.tile.FPUParams(sfmaLatency=4, dfmaLatency=4, divSqrt=true))
             ),
             dcache = Some(
               DCacheParams(rowBits = site(SystemBusKey).beatBits, nSets=64, nWays=4, nMSHRs=2, nTLBWays=8)
